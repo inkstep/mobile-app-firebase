@@ -11,7 +11,7 @@ class NewJourneyRoute extends StatefulWidget {
 
 class _NewJourneyRouteState extends State<NewJourneyRoute> {
   final controller = PageController(
-    initialPage: 1,
+    initialPage: 0,
   );
 
   Widget get styleQ => JourneyCard("style");
