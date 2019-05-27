@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
-      home: TattooConcept(),//TopTabs(),
+      home: NewJourneyRoute(),//TopTabs(),
     );
   }
 }

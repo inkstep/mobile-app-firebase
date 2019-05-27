@@ -10,72 +10,88 @@ class TattooConcept extends StatefulWidget {
 }
 
 class _TattooConceptState extends State<TattooConcept> {
+
   Future<File> imageFile;
 
-  pickImageFromGallery(ImageSource source) {
+  pickImageFromGallery(ImageSource source, int index) {
     setState(() {
       imageFile = ImagePicker.pickImage(source: source);
     });
   }
 
-  List<Widget> _buildGridTiles(numberOfTiles) {
-    List<Container> containers =
-    new List<Container>.generate(numberOfTiles, (int index) {
-      final imageName = index < 9
-          ? 'images/image0${index + 1}.JPG'
-          : 'images/image${index + 1}.JPG';
-      return new Container(
-        child: new Image.asset(imageName, fit: BoxFit.fill),
-      );
-    });
-    return containers;
-  }
-
-  Widget showImage() {
+  Widget showImage(int index) {
     return FutureBuilder<File>(
       future: imageFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+        var ret;
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          return Image.file(
+          ret = Image.file(
             snapshot.data,
-            width: 300,
-            height: 300,
+            width: 150,
+            height: 150,
           );
         } else if (snapshot.error != null) {
-          return const Text(
+          ret = const Text(
             'Error Picking Image',
             textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
           );
         } else {
-          return const Text(
+          ret = const Text(
             'No Image Selected',
             textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
           );
         }
+
+        return GestureDetector(
+          //onTap: pickImageFromGallery(ImageSource.gallery),
+          child: Container(
+              margin: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(border: Border.all(), color: Colors.black),
+              height: 150,
+              width: 150,
+              child: ret,
+          ),
+        );
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          GridView.extent(
-            maxCrossAxisExtent: 150.0,
-            mainAxisSpacing: 5.0,
-            crossAxisSpacing: 5.0,
-            padding: const EdgeInsets.all(5.0),
-            children: [showImage()],
+          Text("Choose some reference images, showing what you want. You'll get to talk about these later."),
+
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[showImage(0), showImage(1)]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[showImage(2), showImage(3)]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[showImage(4), showImage(5)]),
+              ],
+            ),
           ),
-          RaisedButton(
-            child: Text("Select Image from Gallery"),
-            onPressed: () {
-              pickImageFromGallery(ImageSource.gallery);
-            },
-          ),
+
+          SizedBox(height: 20),
         ],
       ),
     );
