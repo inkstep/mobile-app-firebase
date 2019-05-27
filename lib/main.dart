@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/info_gathering.dart';
 import 'package:my_app/widgets.dart';
+
+import 'info_gathering/concept_question.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
-      home: TopTabs(),
+      home: TattooConcept(),//TopTabs(),
     );
   }
 }
