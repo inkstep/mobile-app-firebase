@@ -1,22 +1,45 @@
-version: 2
+version: 2.1
+
+exectors:
+  flutter-exec:
+    docker:
+    - image: cirrusci/flutter
+
 jobs:
+  check_dependencies:
+    executor: flutter-exec
+    steps:
+      - checkout
+      - run: flutter doctor
   test:
-    docker:
-      - image: cirrusci/flutter
+    executor: flutter-exec
+    steps:
+    - checkout
+    - run: flutter test
+  style:
+    executor: flutter-exec
+    steps:
+    - checkout
+    - run: flutter analyze
+  deploy-android:
+    executor: flutter-exec
     steps:
       - checkout
-      - run: flutter doctor
-      - run: flutter test
-  build:
-    docker:
-      - image: cirrusci/flutter
-    steps:
-      - checkout
-      - run: flutter doctor
       - run: flutter -v build apk
+      - store_artifacts:
+          path: build/app/outputs/apk/debug/app-debug.apk
 workflows:
   version: 2
-  build_and_test:
+  full:
     jobs:
+    - check_dependencies
     - test
-    - build
+      requires:
+        - check_dependencies
+    - style
+      requires:
+        - check_dependencies
+    - deploy
+      requires:
+        - test
+        - style
