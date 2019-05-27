@@ -10,18 +10,17 @@ class TattooConcept extends StatefulWidget {
 }
 
 class _TattooConceptState extends State<TattooConcept> {
+  Future<File> _tattooImage;
 
-  Future<File> imageFile;
-
-  pickImageFromGallery(ImageSource source, int index) {
+  pickImageFromGallery(ImageSource source) {
     setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
+      _tattooImage = ImagePicker.pickImage(source: source);
     });
   }
 
-  Widget showImage(int index) {
+  Widget showImage() {
     return FutureBuilder<File>(
-      future: imageFile,
+      future: _tattooImage,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         var ret;
         if (snapshot.connectionState == ConnectionState.done &&
@@ -35,28 +34,46 @@ class _TattooConceptState extends State<TattooConcept> {
           ret = const Text(
             'Error Picking Image',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
           );
         } else {
           ret = const Text(
             'No Image Selected',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
           );
         }
-
         return GestureDetector(
-          //onTap: pickImageFromGallery(ImageSource.gallery),
+          // onTap: pickImageFromGallery(ImageSource.gallery, index),
           child: Container(
-              margin: const EdgeInsets.all(5.0),
-              padding: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(border: Border.all(), color: Colors.black),
-              height: 150,
-              width: 150,
-              child: ret,
+            margin: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(border: Border.all(), color: Colors.black),
+            height: 150,
+            width: 150,
+            child: ret,
           ),
         );
       },
+    );
+  }
+
+  Widget getTattooImages() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[showImage(), showImage()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[showImage(), showImage()]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[showImage(), showImage()]),
+      ],
     );
   }
 
@@ -65,34 +82,24 @@ class _TattooConceptState extends State<TattooConcept> {
     return Container(
       margin: const EdgeInsets.all(10.0),
       padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text("Choose some reference images, showing what you want. You'll get to talk about these later."),
-
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[showImage(0), showImage(1)]),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[showImage(2), showImage(3)]),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[showImage(4), showImage(5)]),
-              ],
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+                "Choose some reference images, showing what you want. You'll get to talk about these later."),
+            Expanded(
+              child: getTattooImages(),
             ),
-          ),
-
-          SizedBox(height: 20),
-        ],
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            pickImageFromGallery(ImageSource.gallery);
+          },
+        ),
       ),
     );
   }
