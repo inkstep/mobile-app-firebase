@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/info_gathering.dart';
-import 'package:my_app/widgets.dart';
+import 'package:inkstep/info_gathering.dart';
+import 'package:inkstep/widgets.dart';
 
 void main() => runApp(Inkstep());
 

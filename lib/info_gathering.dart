@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/widgets.dart';
+import 'package:inkstep/widgets.dart';
+import 'package:inkstep/info_gathering/short_text_input.dart';
 
 import 'info_gathering/concept_question.dart';
 
