@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/info_gathering.dart';
 import 'package:inkstep/widgets.dart';
+
+import 'boarding.dart';
 
 var darkColor = Color(0xFF0A0D18);
 var grayColor = Color(0xFF6B7080);
@@ -19,7 +20,7 @@ class Inkstep extends StatelessWidget {
         // Cursor colors
         primaryColor: darkColor,
       ),
-      home: NewJourneyRoute(),//TopTabs(),
+      home: Boarding(), //TopTabs(),
     );
   }
 }
