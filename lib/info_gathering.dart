@@ -2,20 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/widgets.dart';
 
+import 'info_gathering/concept_question.dart';
+
 class NewJourneyRoute extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _NewJourneyRouteState();
 }
 
 class _NewJourneyRouteState extends State<NewJourneyRoute> {
-
   final controller = PageController(
     initialPage: 1,
   );
 
   Widget get styleQ => JourneyCard("style");
 
-  Widget get conceptQ => JourneyCard("concept");
+  Widget get conceptQ => TattooConcept();
 
   Widget get positionQ => JourneyCard("position");
 
@@ -37,13 +38,13 @@ class _NewJourneyRouteState extends State<NewJourneyRoute> {
         controller: controller,
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          styleQ,
           conceptQ,
-          positionQ,
-          sizeQ,
-          availabilityQ,
-          depositQ,
-          legalQ,
+//          styleQ,
+//          positionQ,
+//          sizeQ,
+//          availabilityQ,
+//          depositQ,
+//          legalQ,
         ],
       ),
     );

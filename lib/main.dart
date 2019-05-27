@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/info_gathering.dart';
 import 'package:my_app/widgets.dart';
 
 void main() => runApp(Inkstep());
@@ -9,7 +10,7 @@ class Inkstep extends StatelessWidget {
     return MaterialApp(
       title: 'Inkstep',
       theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
-      home: TopTabs(),
+      home: NewJourneyRoute(),//TopTabs(),
     );
   }
 }
