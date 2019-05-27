@@ -12,8 +12,10 @@ class NewJourneyRoute extends StatefulWidget {
 
 class _NewJourneyRouteState extends State<NewJourneyRoute> {
   final controller = PageController(
-    initialPage: 1,
+    initialPage: 0,
   );
+
+  Widget get nameQ => ShortTextInput(controller, "What do your friends call you?", "Natasha");
 
   Widget get styleQ => JourneyCard("style");
 
@@ -39,6 +41,7 @@ class _NewJourneyRouteState extends State<NewJourneyRoute> {
         controller: controller,
         scrollDirection: Axis.vertical,
         children: <Widget>[
+          nameQ,
           conceptQ,
 //          styleQ,
 //          positionQ,
