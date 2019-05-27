@@ -46,6 +46,11 @@ class ShortTextInput extends StatelessWidget {
           ),
           focusNode: focus,
           textInputAction: TextInputAction.next,
+          onFieldSubmitted: (term){
+            print('NAME: $term');
+            focus.unfocus();
+            formController.animateToPage(1, duration: kDuration, curve: kCurve);
+          },
         ),
       )
     );
