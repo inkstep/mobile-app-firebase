@@ -37,7 +37,6 @@ class TopTabs extends StatelessWidget {
               Icon(Icons.brush),
             ],
           ),
-        )
-    );
+        ));
   }
 }

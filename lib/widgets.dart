@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/info_gathering.dart';
 
 class JourneyPage extends StatelessWidget {
   @override
@@ -14,9 +15,12 @@ class JourneyPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          print("New journey");
-        },
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewJourneyRoute()),
+            );
+          }
       ),
     );
   }
