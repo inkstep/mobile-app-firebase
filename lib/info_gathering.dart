@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/widgets.dart';
+import 'package:inkstep/widgets.dart';
+import 'package:inkstep/info_gathering/short_text_input.dart';
 
 import 'info_gathering/concept_question.dart';
 
@@ -11,8 +12,10 @@ class NewJourneyRoute extends StatefulWidget {
 
 class _NewJourneyRouteState extends State<NewJourneyRoute> {
   final controller = PageController(
-    initialPage: 1,
+    initialPage: 0,
   );
+
+  Widget get nameQ => ShortTextInput(controller, "What do your friends call you?", "Natasha");
 
   Widget get styleQ => JourneyCard("style");
 
@@ -38,6 +41,7 @@ class _NewJourneyRouteState extends State<NewJourneyRoute> {
         controller: controller,
         scrollDirection: Axis.vertical,
         children: <Widget>[
+          nameQ,
           conceptQ,
 //          styleQ,
 //          positionQ,

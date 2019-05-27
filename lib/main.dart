@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/info_gathering.dart';
-import 'package:my_app/widgets.dart';
-import 'info_gathering/concept_question.dart';
+import 'package:inkstep/info_gathering.dart';
+import 'package:inkstep/widgets.dart';
+
+var darkColor = Color(0xFF0A0D18);
+var grayColor = Color(0xFF6B7080);
+var hintStyle = TextStyle(color: grayColor);
 
 void main() => runApp(Inkstep());
 
@@ -10,7 +13,12 @@ class Inkstep extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inkstep',
-      theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.white,
+        // Cursor colors
+        primaryColor: darkColor,
+      ),
       home: NewJourneyRoute(),//TopTabs(),
     );
   }
