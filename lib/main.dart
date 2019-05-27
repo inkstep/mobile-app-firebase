@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/info_gathering.dart';
 import 'package:my_app/widgets.dart';
+import 'info_gathering/concept_question.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Inkstep());
 
-class MyApp extends StatelessWidget {
+class Inkstep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Inkstep',
       theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
-      home: TopTabs(),
+      home: NewJourneyRoute(),//TopTabs(),
     );
   }
 }
@@ -37,7 +39,6 @@ class TopTabs extends StatelessWidget {
               Icon(Icons.brush),
             ],
           ),
-        )
-    );
+        ));
   }
 }
