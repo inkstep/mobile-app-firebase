@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/widgets.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Inkstep());
 
-class MyApp extends StatelessWidget {
+class Inkstep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Inkstep',
       theme: ThemeData(brightness: Brightness.dark, accentColor: Colors.white),
       home: TopTabs(),
     );
