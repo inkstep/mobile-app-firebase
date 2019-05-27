@@ -12,7 +12,7 @@ class TattooConcept extends StatefulWidget {
 class _TattooConceptState extends State<TattooConcept> {
   Future<File> _tattooImage;
 
-  pickImageFromGallery(ImageSource source) {
+  void pickImageFromGallery(ImageSource source) {
     setState(() {
       _tattooImage = ImagePicker.pickImage(source: source);
     });
@@ -22,7 +22,7 @@ class _TattooConceptState extends State<TattooConcept> {
     return FutureBuilder<File>(
       future: _tattooImage,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-        var ret;
+        Image ret;
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
           ret = Image.file(
@@ -31,15 +31,9 @@ class _TattooConceptState extends State<TattooConcept> {
             height: 150,
           );
         } else if (snapshot.error != null) {
-          ret = const Text(
-            'Error Picking Image',
-            textAlign: TextAlign.center,
-          );
+          ret = Image.network('https://dummyimage.com/400/000/fff.png&text=Error+selecting');
         } else {
-          ret = const Text(
-            'No Image Selected',
-            textAlign: TextAlign.center,
-          );
+          ret = Image.network('https://dummyimage.com/400/000/fff.png&text=No+image+selected');
         }
         return GestureDetector(
           // onTap: pickImageFromGallery(ImageSource.gallery, index),
@@ -86,7 +80,7 @@ class _TattooConceptState extends State<TattooConcept> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
                 "Choose some reference images, showing what you want. You'll get to talk about these later."),
             Expanded(
               child: getTattooImages(),
@@ -95,7 +89,7 @@ class _TattooConceptState extends State<TattooConcept> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             pickImageFromGallery(ImageSource.gallery);
           },

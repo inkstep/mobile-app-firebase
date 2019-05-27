@@ -33,10 +33,10 @@ class TopTabs extends StatelessWidget {
           appBar: AppBar(
             title: Text('Inkstep.'),
             bottom: TabBar(
-              tabs: [
-                Tab(text: "Journeys"),
-                Tab(text: "Studios"),
-                Tab(text: "Artists"),
+              tabs: const [
+                Tab(text: 'Journeys'),
+                Tab(text: 'Studios'),
+                Tab(text: 'Artists'),
               ],
             ),
           ),
