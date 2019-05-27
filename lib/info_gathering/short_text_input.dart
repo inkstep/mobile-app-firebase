@@ -18,17 +18,24 @@ class ShortTextInput extends StatelessWidget {
   final nameFontSize = 40.0;
   final labelFontSize = 16.0;
 
+  final underlineBorder = UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: darkColor,
+      style: BorderStyle.solid,
+    ),
+  );
+
+  final kPadding = EdgeInsets.all(30);
+
   @override
   Widget build(BuildContext context) {
-    final underlineBorder = UnderlineInputBorder(
-        borderSide: BorderSide(color: darkColor, style: BorderStyle.solid));
     return Container(
       width: 100,
       height: height,
       decoration: new BoxDecoration(
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(30),
+      padding: kPadding,
       child: Center(
         child:
         TextFormField(
