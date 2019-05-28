@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:257661179999:android:1b5069767e6016b1",
         "android_client_info": {
-          "package_name": "com.example.inkstep"
+          "package_name": "uk.ac.ic.inkstep"
         }
       },
       "oauth_client": [
