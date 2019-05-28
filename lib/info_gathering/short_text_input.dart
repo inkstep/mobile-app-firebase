@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../theming.dart';
 
 class ShortTextInput extends StatelessWidget {
   ShortTextInput(this.formController, this.labelText, this.hintText,

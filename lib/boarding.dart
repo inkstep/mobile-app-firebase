@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/theming.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'info_gathering.dart';
