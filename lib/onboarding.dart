@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'info_gathering.dart';
 import 'main.dart';
+import 'onboarding/user_flow_button.dart';
 
 class LogoWidget extends StatelessWidget {
   @override
@@ -134,10 +135,10 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
     final bottom = Container(
       child: Column(
-        children: const <Widget>[
+        children: <Widget>[
           DefaultFlowButton(),
           Padding(padding: EdgeInsets.only(top: 32.0)),
-          UserFlowButton(),
+          UserFlowButton(destination: TopTabs()),
         ],
       ),
     );
@@ -151,30 +152,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         ],
       ),
       backgroundColor: darkColor,
-    );
-  }
-}
-
-class UserFlowButton extends StatelessWidget {
-  const UserFlowButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push<dynamic>(context,
-            MaterialPageRoute<dynamic>(builder: (context) => TopTabs()));
-      },
-      child: Text(
-        "I'M ON A NEW DEVICE",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 15.0,
-          fontFamily: 'Signika',
-        ),
-      ),
     );
   }
 }
