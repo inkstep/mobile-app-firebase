@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/journeys/journeys.dart';
+import 'package:inkstep/onboarding.dart';
+import 'package:inkstep/studios_page.dart';
 import 'package:inkstep/theming.dart';
-import 'package:inkstep/widgets.dart';
-
-import 'onboarding.dart';
-
-import 'journeys/journeys.dart';
 
 void main() => runApp(Inkstep());
 

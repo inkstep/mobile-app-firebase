@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'journeys/journeys.dart';
 
 class StudiosPage extends StatelessWidget {
@@ -16,8 +17,7 @@ class StudiosPage extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Search',
-              )
-          ),
+              )),
           const SizedBox(
             height: 20,
           ),
@@ -25,7 +25,10 @@ class StudiosPage extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          const JourneyCard('South City Market', height: 50,),
+          JourneyCard(
+            'South City Market',
+            height: 50,
+          ),
           const Divider(),
           Expanded(
             child: ListView(
