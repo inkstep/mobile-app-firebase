@@ -14,14 +14,13 @@ class JourneyPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push<dynamic>(
               context,
               MaterialPageRoute<dynamic>(builder: (context) => NewJourneyRoute()),
             );
-          }
-      ),
+          }),
     );
   }
 }
@@ -55,7 +54,6 @@ class StudiosPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -76,19 +74,26 @@ class StudiosPage extends StatelessWidget {
           ),
           const JourneyCard('South City Market', height: 50,),
           const Divider(),
-
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: const <Widget>[
-                JourneyCard('Studio 1', height: 50,),
-                JourneyCard('Studio 2', height: 50,),
-                JourneyCard('Studio 3', height: 50,),
+                JourneyCard(
+                  'Studio 1',
+                  height: 50,
+                ),
+                JourneyCard(
+                  'Studio 2',
+                  height: 50,
+                ),
+                JourneyCard(
+                  'Studio 3',
+                  height: 50,
+                ),
               ],
             ),
           ),
         ],
-
       ),
     );
   }
