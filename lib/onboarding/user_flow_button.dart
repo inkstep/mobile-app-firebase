@@ -6,7 +6,7 @@ class UserFlowButton extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  Widget destination;
+  final Widget destination;
 
   @override
   Widget build(BuildContext context) {

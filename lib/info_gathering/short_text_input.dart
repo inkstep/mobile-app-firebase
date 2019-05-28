@@ -32,7 +32,7 @@ class ShortTextInput extends StatelessWidget {
     return Container(
         width: 100,
         height: height,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
         ),
         padding: kPadding,

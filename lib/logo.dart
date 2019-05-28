@@ -9,11 +9,12 @@ class LogoWidget extends StatelessWidget {
 }
 
 class GrowTransition extends StatelessWidget {
-  GrowTransition({this.child, this.animation});
+  const GrowTransition({this.child, this.animation});
 
   final Widget child;
   final Animation<double> animation;
 
+  @override
   Widget build(BuildContext context) => Center(
         child: AnimatedBuilder(
             animation: animation,
@@ -27,6 +28,7 @@ class GrowTransition extends StatelessWidget {
 }
 
 class Logo extends StatefulWidget {
+  @override
   _LogoState createState() => _LogoState();
 }
 

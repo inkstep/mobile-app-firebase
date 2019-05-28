@@ -17,7 +17,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   String _name = '';
 
   Future<String> getNamePreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _name = prefs.getString('name') ?? '';
     });
@@ -54,7 +54,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             Logo(),
-            _header('Hi there,'),
+            _header('Hi $_name,'),
             _header("We're here to help"),
             Padding(
               padding: const EdgeInsets.only(top: 64.0),
