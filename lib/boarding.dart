@@ -5,17 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'info_gathering.dart';
 import 'main.dart';
 
-// #docregion LogoWidget
 class LogoWidget extends StatelessWidget {
-  // Leave out the height and width so it fills the animating parent
+  @override
   Widget build(BuildContext context) => Container(
         margin: EdgeInsets.symmetric(vertical: 10),
-        child: Image.asset("assets/images/logo.png"),
+        child: Image.asset('assets/images/logo.png'),
       );
 }
-// #enddocregion LogoWidget
 
-// #docregion GrowTransition
 class GrowTransition extends StatelessWidget {
   GrowTransition({this.child, this.animation});
 
@@ -33,13 +30,11 @@ class GrowTransition extends StatelessWidget {
             child: child),
       );
 }
-// #enddocregion GrowTransition
 
 class Logo extends StatefulWidget {
   _LogoState createState() => _LogoState();
 }
 
-// #docregion print-state
 class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
@@ -73,7 +68,6 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
     controller.dispose();
     super.dispose();
   }
-// #docregion print-state
 }
 
 class Boarding extends StatefulWidget {
@@ -87,9 +81,9 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
   Future<String> getNamePreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _name = prefs.getString("name") ?? "";
+      _name = prefs.getString('name') ?? '';
     });
-    return prefs.getString("name") ?? "";
+    return prefs.getString('name') ?? '';
   }
 
   Widget subheader(String text) {
@@ -98,7 +92,7 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
       style: TextStyle(
           color: Colors.grey,
           fontSize: 25.0,
-          fontFamily: "Signika",
+          fontFamily: 'Signika',
           fontWeight: FontWeight.w100),
     );
   }
@@ -109,7 +103,7 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
       style: TextStyle(
           color: Colors.white,
           fontSize: 40.0,
-          fontFamily: "Signika",
+          fontFamily: 'Signika',
           fontWeight: FontWeight.w600),
     );
   }
@@ -139,8 +133,10 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
         children: <Widget>[
           RaisedButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NewJourneyRoute()));
+              Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => NewJourneyRoute()));
             },
             elevation: 15.0,
             color: Colors.white,
@@ -150,21 +146,21 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(30.0)),
             child: Text(
               "Let's get started!",
-              style: TextStyle(fontSize: 20.0, fontFamily: "Signika"),
+              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
             ),
           ),
           Padding(padding: EdgeInsets.only(top: 32.0)),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => TopTabs()));
+              Navigator.push<dynamic>(context,
+                  MaterialPageRoute<dynamic>(builder: (context) => TopTabs()));
             },
             child: Text(
               "I'M ON A NEW DEVICE",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 15.0,
-                fontFamily: "Signika",
+                fontFamily: 'Signika',
               ),
             ),
           ),
