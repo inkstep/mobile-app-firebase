@@ -86,7 +86,7 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
     return prefs.getString('name') ?? '';
   }
 
-  Widget subheader(String text) {
+  Widget _sub(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -97,7 +97,7 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
     );
   }
 
-  Widget header(String text) {
+  Widget _header(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -116,13 +116,13 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             Logo(),
-            header('Hi there,'),
-            header("We're here to help"),
+            _header('Hi there,'),
+            _header("We're here to help"),
             Padding(
               padding: const EdgeInsets.only(top: 64.0),
             ),
-            subheader('Every step'),
-            subheader('of the way'),
+            _sub('Every step'),
+            _sub('of the way'),
           ],
         ),
       ),
@@ -130,40 +130,10 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
 
     final bottom = Container(
       child: Column(
-        children: <Widget>[
-          RaisedButton(
-            onPressed: () {
-              Navigator.push<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => NewJourneyRoute()));
-            },
-            elevation: 15.0,
-            color: Colors.white,
-            textColor: darkColor,
-            padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            child: Text(
-              "Let's get started!",
-              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
-            ),
-          ),
+        children: const <Widget>[
+          DefaultFlowButton(),
           Padding(padding: EdgeInsets.only(top: 32.0)),
-          GestureDetector(
-            onTap: () {
-              Navigator.push<dynamic>(context,
-                  MaterialPageRoute<dynamic>(builder: (context) => TopTabs()));
-            },
-            child: Text(
-              "I'M ON A NEW DEVICE",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-                fontFamily: 'Signika',
-              ),
-            ),
-          ),
+          UserFlowButton(),
         ],
       ),
     );
@@ -177,6 +147,57 @@ class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
         ],
       ),
       backgroundColor: darkColor,
+    );
+  }
+}
+
+class UserFlowButton extends StatelessWidget {
+  const UserFlowButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push<dynamic>(context,
+            MaterialPageRoute<dynamic>(builder: (context) => TopTabs()));
+      },
+      child: Text(
+        "I'M ON A NEW DEVICE",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15.0,
+          fontFamily: 'Signika',
+        ),
+      ),
+    );
+  }
+}
+
+class DefaultFlowButton extends StatelessWidget {
+  const DefaultFlowButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () {
+        Navigator.push<dynamic>(
+            context,
+            MaterialPageRoute<dynamic>(
+                builder: (context) => NewJourneyRoute()));
+      },
+      elevation: 15.0,
+      color: Colors.white,
+      textColor: darkColor,
+      padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      child: Text(
+        "Let's get started!",
+        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+      ),
     );
   }
 }
