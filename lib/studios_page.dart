@@ -1,52 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/info_gathering.dart';
 
-class JourneyPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(8.0),
-        children: const <Widget>[
-          JourneyCard('Journey 1'),
-          JourneyCard('Journey 2'),
-          JourneyCard('Journey 3'),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(builder: (context) => NewJourneyRoute()),
-            );
-          }),
-    );
-  }
-}
-
-class JourneyCard extends StatelessWidget {
-  const JourneyCard(this.text, {this.height=100});
-
-  final String text;
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          print('Card tapped');
-        },
-        child: Container(
-          width: 300,
-          height: height,
-          child: Text(text),
-        ),
-      ),
-    );
-  }
-}
+import 'journeys/journeys.dart';
 
 class StudiosPage extends StatelessWidget {
   @override
@@ -63,8 +17,7 @@ class StudiosPage extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Search',
-              )
-          ),
+              )),
           const SizedBox(
             height: 20,
           ),
@@ -72,7 +25,10 @@ class StudiosPage extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          const JourneyCard('South City Market', height: 50,),
+          JourneyCard(
+            'South City Market',
+            height: 50,
+          ),
           const Divider(),
           Expanded(
             child: ListView(
