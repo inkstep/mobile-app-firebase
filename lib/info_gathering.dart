@@ -11,31 +11,24 @@ class NewJourneyRoute extends StatefulWidget {
 }
 
 class _NewJourneyRouteState extends State<NewJourneyRoute> {
-  final controller = PageController(
+  final PageController controller = PageController(
     initialPage: 0,
   );
 
-  Widget get nameQ => ShortTextInput(controller, "What do your friends call you?", "Natasha");
-
-  Widget get styleQ => JourneyCard("style");
-
+  Widget get nameQ => ShortTextInput(controller, 'What do your friends call you?', 'Natasha');
+  Widget get styleQ => const JourneyCard('style');
   Widget get conceptQ => TattooConcept();
-
-  Widget get positionQ => JourneyCard("position");
-
-  Widget get sizeQ => JourneyCard("size");
-
-  Widget get availabilityQ => JourneyCard("availability");
-
-  Widget get depositQ => JourneyCard("deposit");
-
-  Widget get legalQ => JourneyCard("legal");
+  Widget get positionQ => const JourneyCard('position');
+  Widget get sizeQ => const JourneyCard('size');
+  Widget get availabilityQ => const JourneyCard('availability');
+  Widget get depositQ => const JourneyCard('deposit');
+  Widget get legalQ => const JourneyCard('legal');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a new journey'),
+        title: const Text('Create a new journey'),
       ),
       body: PageView(
         controller: controller,

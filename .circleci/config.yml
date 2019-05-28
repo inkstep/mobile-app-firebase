@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  check_dependencies:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter doctor
+  test:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+    - checkout
+    - run: flutter test
+  style:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+    - checkout
+    - run: flutter analyze
+  deploy-android:
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run: flutter -v build apk
+      - store_artifacts:
+          path: build/app/outputs/apk/debug/app-release.apk
+          destination: app-release.apk
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+    - check_dependencies
+    - test:
+          requires:
+            - check_dependencies
+    - style:
+          requires:
+            - check_dependencies
+    - deploy-android:
+          requires:
+            - test
+            - style

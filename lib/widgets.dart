@@ -7,18 +7,18 @@ class JourneyPage extends StatelessWidget {
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(8.0),
-        children: <Widget>[
-          JourneyCard("Journey 1"),
-          JourneyCard("Journey 2"),
-          JourneyCard("Journey 3"),
+        children: const <Widget>[
+          JourneyCard('Journey 1'),
+          JourneyCard('Journey 2'),
+          JourneyCard('Journey 3'),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
           onPressed: () {
-            Navigator.push(
+            Navigator.push<dynamic>(
               context,
-              MaterialPageRoute(builder: (context) => NewJourneyRoute()),
+              MaterialPageRoute<dynamic>(builder: (context) => NewJourneyRoute()),
             );
           }
       ),
@@ -27,7 +27,7 @@ class JourneyPage extends StatelessWidget {
 }
 
 class JourneyCard extends StatelessWidget {
-  JourneyCard(String this.text, {double this.height=100});
+  const JourneyCard(this.text, {this.height=100});
 
   final String text;
   final double height;
@@ -64,26 +64,26 @@ class StudiosPage extends StatelessWidget {
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "Search",
+                labelText: 'Search',
               )
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text("Featured"),
-          SizedBox(
+          Text('Featured'),
+          const SizedBox(
             height: 5,
           ),
-          JourneyCard("South City Market", height: 50,),
+          const JourneyCard('South City Market', height: 50,),
           const Divider(),
 
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8.0),
-              children: <Widget>[
-                JourneyCard("Studio 1", height: 50,),
-                JourneyCard("Studio 2", height: 50,),
-                JourneyCard("Studio 3", height: 50,),
+              children: const <Widget>[
+                JourneyCard('Studio 1', height: 50,),
+                JourneyCard('Studio 2', height: 50,),
+                JourneyCard('Studio 3', height: 50,),
               ],
             ),
           ),
