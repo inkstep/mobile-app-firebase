@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/journeys/journeys.dart';
-import 'package:inkstep/onboarding.dart';
-import 'package:inkstep/studios_page.dart';
+import 'package:inkstep/page/journey.dart';
+import 'package:inkstep/page/onboarding.dart';
+import 'package:inkstep/page/studios.dart';
 import 'package:inkstep/theming.dart';
 
 void main() => runApp(Inkstep());
@@ -9,16 +9,25 @@ void main() => runApp(Inkstep());
 class Inkstep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final app = MaterialApp(
       title: 'inkstep',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
         accentColor: baseColors['light'],
         primaryColor: baseColors['dark'],
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+          title: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
+          body1: TextStyle(
+            fontSize: 14.0,
+          ),
+        ),
       ),
-      debugShowCheckedModeBanner: false,
       home: Onboarding(), //TopTabs(),
     );
+
+    return app;
   }
 }
 

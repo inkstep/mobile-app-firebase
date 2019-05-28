@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'journeys/journeys.dart';
+import 'package:inkstep/journeys/journeys.dart';
 
 class StudiosPage extends StatelessWidget {
   @override

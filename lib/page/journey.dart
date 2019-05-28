@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../info_gathering.dart';
+import 'package:inkstep/page/info_gathering.dart';
 
 class JourneyPage extends StatelessWidget {
   @override
@@ -20,8 +19,7 @@ class JourneyPage extends StatelessWidget {
           onPressed: () {
             Navigator.push<dynamic>(
               context,
-              MaterialPageRoute<dynamic>(
-                  builder: (context) => NewJourneyRoute()),
+              MaterialPageRoute<dynamic>(builder: (context) => InfoScreen()),
             );
           }),
     );
@@ -29,7 +27,7 @@ class JourneyPage extends StatelessWidget {
 }
 
 class JourneyCard extends StatelessWidget {
-  const JourneyCard(this.text, {this.height = 100});
+  JourneyCard(String this.text, {double this.height = 100});
 
   final String text;
   final double height;
@@ -58,7 +56,7 @@ class ArtistProfileRow extends StatelessWidget {
       children: <Widget>[
         CircleAvatar(
           radius: 30.0,
-          backgroundImage: AssetImage('assets/ricky.png'),
+          backgroundImage: AssetImage("assets/ricky.png"),
           backgroundColor: Colors.transparent,
         ),
         SizedBox(width: 20),
@@ -67,13 +65,13 @@ class ArtistProfileRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Ricky Williams',
+                "Ricky Williams",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text('South City Market')
+              Text("South City Market")
             ],
           ),
         )

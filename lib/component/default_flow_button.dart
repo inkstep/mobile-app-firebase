@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../theming.dart';
 
-class DefaultFlowButton extends StatelessWidget {
-  DefaultFlowButton({
+class BoldCallToAction extends StatelessWidget {
+  BoldCallToAction({
     this.destination,
     Key key,
   }) : super(key: key);
