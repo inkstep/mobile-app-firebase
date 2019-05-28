@@ -13,8 +13,8 @@ class Inkstep extends StatelessWidget {
       title: 'inkstep',
       theme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.white,
-        primaryColor: darkColor,
+        accentColor: baseColors['light'],
+        primaryColor: baseColors['dark'],
       ),
       debugShowCheckedModeBanner: false,
       home: Onboarding(), //TopTabs(),

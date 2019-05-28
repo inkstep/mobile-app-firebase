@@ -20,7 +20,7 @@ class ShortTextInput extends StatelessWidget {
 
   final InputBorder underlineBorder = UnderlineInputBorder(
     borderSide: BorderSide(
-      color: darkColor,
+      color: baseColors['dark'],
       style: BorderStyle.solid,
     ),
   );
@@ -33,21 +33,22 @@ class ShortTextInput extends StatelessWidget {
         width: 100,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: baseColors['light'],
         ),
         padding: kPadding,
         child: Center(
           child: TextFormField(
             autofocus: true,
             key: Key('name'),
-            style: TextStyle(color: darkColor, fontSize: nameFontSize),
-            cursorColor: darkColor,
+            style: TextStyle(color: baseColors['dark'], fontSize: nameFontSize),
+            cursorColor: baseColors['dark'],
             decoration: InputDecoration(
               hintText: hintText,
               labelText: labelText,
               focusedBorder: underlineBorder,
               enabledBorder: underlineBorder,
-              labelStyle: TextStyle(color: darkColor, fontSize: labelFontSize),
+              labelStyle:
+                  TextStyle(color: baseColors['dark'], fontSize: labelFontSize),
               hintStyle: hintStyle,
             ),
             focusNode: focus,

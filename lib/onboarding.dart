@@ -39,7 +39,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     return Text(
       text,
       style: TextStyle(
-          color: Colors.white,
+          color: baseColors['light'],
           fontSize: 40.0,
           fontFamily: 'Signika',
           fontWeight: FontWeight.w600),
@@ -84,7 +84,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
           bottom
         ],
       ),
-      backgroundColor: darkColor,
+      backgroundColor: baseColors['dark'],
     );
   }
 }
