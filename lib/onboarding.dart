@@ -39,20 +39,24 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
 
+  final startSize = 80.0;
+  final endSize = 90.0;
+  final duration = Duration(seconds: 2);
+
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = Tween<double>(begin: 80, end: 90).animate(controller)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          controller.forward();
-        }
-      })
-      ..addStatusListener((state) => print('$state'));
+    controller = AnimationController(duration: duration, vsync: this);
+    animation =
+        Tween<double>(begin: startSize, end: endSize).animate(controller)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              controller.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+              controller.forward();
+            }
+          })
+          ..addStatusListener((state) => print('$state'));
     controller.forward();
   }
   // #enddocregion print-state
@@ -70,12 +74,12 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
   }
 }
 
-class Boarding extends StatefulWidget {
+class Onboarding extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _BoardingState();
+  State<StatefulWidget> createState() => _OnboardingState();
 }
 
-class _BoardingState extends State<Boarding> with TickerProviderStateMixin {
+class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   String _name = "";
 
   Future<String> getNamePreferences() async {

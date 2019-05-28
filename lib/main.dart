@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/theming.dart';
 import 'package:inkstep/widgets.dart';
 
-import 'boarding.dart';
+import 'onboarding.dart';
 
 void main() => runApp(Inkstep());
 
@@ -17,7 +17,7 @@ class Inkstep extends StatelessWidget {
         // Cursor colors
         primaryColor: darkColor,
       ),
-      home: Boarding(), //TopTabs(),
+      home: Onboarding(), //TopTabs(),
     );
   }
 }

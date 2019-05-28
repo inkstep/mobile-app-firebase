@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/info_gathering/short_text_input.dart';
 import 'package:inkstep/widgets.dart';
 
-import 'boarding.dart';
 import 'info_gathering/concept_question.dart';
+import 'onboarding.dart';
 
 class NewJourneyRoute extends StatefulWidget {
   @override
@@ -16,7 +16,8 @@ class _NewJourneyRouteState extends State<NewJourneyRoute> {
     initialPage: 0,
   );
 
-  Widget get nameQ => ShortTextInput(controller, 'What do your friends call you?', 'Natasha');
+  Widget get nameQ =>
+      ShortTextInput(controller, 'What do your friends call you?', 'Natasha');
   Widget get styleQ => const JourneyCard('style');
   Widget get conceptQ => TattooConcept();
   Widget get positionQ => const JourneyCard('position');
