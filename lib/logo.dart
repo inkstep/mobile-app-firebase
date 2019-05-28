@@ -29,16 +29,18 @@ class GrowTransition extends StatelessWidget {
 
 class Logo extends StatefulWidget {
   @override
-  _LogoState createState() => _LogoState();
+  _LogoState createState() => _LogoState(80.0, 90.0);
 }
 
 class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
+  _LogoState(this.startSize, this.endSize);
+
   Animation<double> animation;
   AnimationController controller;
 
-  final startSize = 80.0;
-  final endSize = 90.0;
   final duration = Duration(seconds: 2);
+  final double startSize;
+  final double endSize;
 
   @override
   void initState() {

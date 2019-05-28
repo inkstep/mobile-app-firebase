@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/info_gathering/short_text_input.dart';
+import 'package:inkstep/component/grid_image_picker.dart';
+import 'package:inkstep/component/short_text_input.dart';
 import 'package:inkstep/logo.dart';
+import 'package:inkstep/page/journey.dart';
 
-import 'info_gathering/concept_question.dart';
-import 'journeys/journeys.dart';
-
-class NewJourneyRoute extends StatefulWidget {
+class InfoScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _NewJourneyRouteState();
+  State<StatefulWidget> createState() => _InfoScreenState();
 }
 
-class _NewJourneyRouteState extends State<NewJourneyRoute> {
+class _InfoScreenState extends State<InfoScreen> {
   final PageController controller = PageController(
     initialPage: 0,
   );

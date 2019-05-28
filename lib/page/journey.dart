@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../info_gathering.dart';
+import 'package:inkstep/page/info_gathering.dart';
 
 class JourneyPage extends StatelessWidget {
   @override
@@ -20,8 +19,7 @@ class JourneyPage extends StatelessWidget {
           onPressed: () {
             Navigator.push<dynamic>(
               context,
-              MaterialPageRoute<dynamic>(
-                  builder: (context) => NewJourneyRoute()),
+              MaterialPageRoute<dynamic>(builder: (context) => InfoScreen()),
             );
           }),
     );
