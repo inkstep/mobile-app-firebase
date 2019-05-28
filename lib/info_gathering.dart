@@ -5,6 +5,7 @@ import 'package:inkstep/logo.dart';
 import 'package:inkstep/widgets.dart';
 
 import 'info_gathering/concept_question.dart';
+import 'journeys/journeys.dart';
 
 class NewJourneyRoute extends StatefulWidget {
   @override

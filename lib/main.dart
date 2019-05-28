@@ -4,6 +4,8 @@ import 'package:inkstep/widgets.dart';
 
 import 'onboarding.dart';
 
+import 'journeys/journeys.dart';
+
 void main() => runApp(Inkstep());
 
 class Inkstep extends StatelessWidget {
