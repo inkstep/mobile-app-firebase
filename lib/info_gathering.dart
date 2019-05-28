@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/info_gathering/short_text_input.dart';
+import 'package:inkstep/logo.dart';
 import 'package:inkstep/widgets.dart';
 
 import 'info_gathering/concept_question.dart';
-import 'onboarding.dart';
 
 class NewJourneyRoute extends StatefulWidget {
   @override

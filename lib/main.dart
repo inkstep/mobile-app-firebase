@@ -10,13 +10,13 @@ class Inkstep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Inkstep',
+      title: 'inkstep',
       theme: ThemeData(
         brightness: Brightness.dark,
         accentColor: Colors.white,
-        // Cursor colors
         primaryColor: darkColor,
       ),
+      debugShowCheckedModeBanner: false,
       home: Onboarding(), //TopTabs(),
     );
   }
@@ -29,7 +29,7 @@ class TopTabs extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Inkstep.'),
+            title: Text('inkstep.'),
             bottom: TabBar(
               tabs: const [
                 Tab(text: 'Journeys'),
