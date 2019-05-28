@@ -33,14 +33,14 @@ class Logo extends StatefulWidget {
 }
 
 class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
+  _LogoState(this.startSize, this.endSize);
+
   Animation<double> animation;
   AnimationController controller;
 
+  final duration = Duration(seconds: 2);
   final double startSize;
   final double endSize;
-  final duration = Duration(seconds: 2);
-
-  _LogoState(this.startSize, this.endSize);
 
   @override
   void initState() {
