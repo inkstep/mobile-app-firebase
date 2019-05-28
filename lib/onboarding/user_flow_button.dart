@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/theming.dart';
 
 class UserFlowButton extends StatelessWidget {
   UserFlowButton({
@@ -18,7 +19,7 @@ class UserFlowButton extends StatelessWidget {
       child: Text(
         "I'M ON A NEW DEVICE",
         style: TextStyle(
-          color: Colors.white,
+          color: baseColors['light'],
           fontSize: 15.0,
           fontFamily: 'Signika',
         ),

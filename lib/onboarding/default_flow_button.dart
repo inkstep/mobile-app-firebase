@@ -18,8 +18,8 @@ class DefaultFlowButton extends StatelessWidget {
             MaterialPageRoute<dynamic>(builder: (context) => destination));
       },
       elevation: 15.0,
-      color: Colors.white,
-      textColor: darkColor,
+      color: baseColors['light'],
+      textColor: baseColors['dark'],
       padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
