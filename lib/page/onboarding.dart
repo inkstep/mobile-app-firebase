@@ -53,7 +53,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             Logo(),
-            _header('Hi $_name,'),
+            _header('Hi there'),
             _header("We're here to help"),
             Padding(
               padding: const EdgeInsets.only(top: 64.0),
