@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'InkstepNotify',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -19,14 +19,14 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.black,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelesslWidget {
+class MyHomePage extends StatelessWidget {
   final String appTitle = 'InkstepNotify';
   
   @override
@@ -41,18 +41,23 @@ class MyHomePage extends StatelesslWidget {
 
 class MessagingWidget extends StatefulWidget {
   @override
-  _MessagingWidgetState createState() => _MessagingWidgetState();
+  MessagingWidgetState createState() => MessagingWidgetState();
 }
 
 class MessagingWidgetState extends State<MessagingWidget> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  
+  final List<Message> messages = [];
+
   @override
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("OnMessage: $message");
+        final notification = message['notification'];
+        setState(() {
+          messages.add(Message(title: notification['title'],body: notification['body']));
+        });
       },
 
       onLaunch: (Map<String, dynamic> message) async {
@@ -62,5 +67,25 @@ class MessagingWidgetState extends State<MessagingWidget> {
         print("OnResume: $message");
       }
     );
+    _firebaseMessaging.requestNotificationPermissions(const IosNotificationSettings(sound:true, badge:true, alert:true));
   }
+
+  @override
+  Widget build(BuildContext context) => ListView(children: messages.map(buildMessage).toList());
+
+  Widget buildMessage(Message message) => ListTile(
+    title: Text(message.title),
+    subtitle: Text(message.body),
+  );
+}
+
+
+class Message {
+  final String title;
+  final String body;
+
+  const Message({
+    @required this.title,
+    @required this.body,
+  });
 }
