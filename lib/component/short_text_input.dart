@@ -11,7 +11,7 @@ class ShortTextInput extends StatelessWidget {
   final double height;
   final FocusNode focus = FocusNode();
 
-  final kDuration = Duration(milliseconds: 300);
+  final kDuration = Duration(milliseconds: 500);
   final kCurve = Curves.ease;
 
   final nameFontSize = 40.0;
@@ -53,8 +53,7 @@ class ShortTextInput extends StatelessWidget {
             onFieldSubmitted: (term) {
               print('NAME: $term');
               focus.unfocus();
-              formController.animateToPage(1,
-                  duration: kDuration, curve: kCurve);
+              formController.nextPage(duration: kDuration, curve: kCurve);
             },
           ),
         ));
