@@ -18,26 +18,28 @@ class Inkstep extends StatelessWidget {
       title: 'inkstep',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Colors.deepPurple,
-        primaryColor: baseColors['dark'],
-        backgroundColor: baseColors['dark'],
-        cardColor: baseColors['light'],
-        cardTheme: CardTheme(
-          color: baseColors['light'],
-          elevation: 4.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+          brightness: Brightness.dark,
+          accentColor: Colors.deepPurple,
+          primaryColor: baseColors['dark'],
+          backgroundColor: baseColors['dark'],
+          cardColor: baseColors['light'],
+          cardTheme: CardTheme(
+            color: baseColors['light'],
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
           ),
-        ),
-        textTheme: TextTheme(
-          headline: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
-          title: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
-          body1: TextStyle(
-            fontSize: 14.0,
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+            title: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
+            body1: TextStyle(
+              fontSize: 14.0,
+            ),
           ),
-        ),
-      ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: baseColors['dark'],
+          )),
       home: Onboarding(),
     );
 
