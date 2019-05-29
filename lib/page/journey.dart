@@ -34,8 +34,8 @@ class _JourneyPageState extends State<JourneyPage>
 
   @override
   Widget build(BuildContext context) {
-    var _isLoading = false;
-    var _length = 1;
+    const _isLoading = false;
+    const _length = 1;
 
     if (!_isLoading) {
       _controller.forward();
@@ -79,7 +79,7 @@ class _JourneyPageState extends State<JourneyPage>
         onNotification: (notification) {
           if (notification is ScrollEndNotification) {
             print('ScrollNotification = ${_pageController.page}');
-            var currentPage = _pageController.page.round().toInt();
+            final currentPage = _pageController.page.round().toInt();
             if (_currentPageIndex != currentPage) {
               setState(() => _currentPageIndex = currentPage);
             }
@@ -188,7 +188,7 @@ class AddCard extends StatelessWidget {
 typedef JourneyGetter<T, V> = V Function(T value);
 
 class JourneyCard extends StatelessWidget {
-  JourneyCard();
+  const JourneyCard();
 
   @override
   Widget build(BuildContext context) {
