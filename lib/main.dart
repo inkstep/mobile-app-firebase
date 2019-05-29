@@ -44,30 +44,3 @@ class Inkstep extends StatelessWidget {
     return app;
   }
 }
-
-class TopTabs extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('inkstep.'),
-            bottom: TabBar(
-              tabs: const [
-                Tab(text: 'Journeys'),
-                Tab(text: 'Studios'),
-                Tab(text: 'Artists'),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              JourneyPage(),
-              StudiosPage(),
-              Icon(Icons.brush),
-            ],
-          ),
-        ));
-  }
-}
