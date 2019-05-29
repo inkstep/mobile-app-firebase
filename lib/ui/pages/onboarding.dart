@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/component/default_flow_button.dart';
-import 'package:inkstep/component/user_flow_button.dart';
-import 'package:inkstep/logo.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/page/info_gathering.dart';
-import 'package:inkstep/page/journey.dart';
+import 'package:inkstep/ui/components/default_flow_button.dart';
+import 'package:inkstep/ui/components/logo.dart';
+import 'package:inkstep/ui/components/user_flow_button.dart';
+import 'package:inkstep/ui/pages/info_gathering.dart';
+import 'package:inkstep/ui/pages/journey_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding extends StatefulWidget {
