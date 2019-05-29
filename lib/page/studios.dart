@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/page/journey.dart';
 
 class StudiosPage extends StatelessWidget {
   @override
@@ -24,26 +23,22 @@ class StudiosPage extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          JourneyCard(
+          Text(
             'South City Market',
-            height: 50,
           ),
           const Divider(),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: const <Widget>[
-                JourneyCard(
+                Text(
                   'Studio 1',
-                  height: 50,
                 ),
-                JourneyCard(
+                Text(
                   'Studio 2',
-                  height: 50,
                 ),
-                JourneyCard(
+                Text(
                   'Studio 3',
-                  height: 50,
                 ),
               ],
             ),

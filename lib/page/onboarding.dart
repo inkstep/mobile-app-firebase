@@ -4,7 +4,7 @@ import 'package:inkstep/component/user_flow_button.dart';
 import 'package:inkstep/logo.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/page/info_gathering.dart';
-import 'package:inkstep/theming.dart';
+import 'package:inkstep/page/journey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding extends StatefulWidget {
@@ -70,7 +70,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           BoldCallToAction(destination: InfoScreen()),
           Padding(padding: EdgeInsets.only(top: 32.0)),
-          UserFlowButton(destination: TopTabs()),
+          UserFlowButton(destination: JourneyPage()),
         ],
       ),
     );

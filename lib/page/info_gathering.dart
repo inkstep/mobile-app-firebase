@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/component/grid_image_picker.dart';
 import 'package:inkstep/component/short_text_input.dart';
 import 'package:inkstep/logo.dart';
-import 'package:inkstep/page/journey.dart';
 
 class InfoScreen extends StatefulWidget {
   @override
@@ -15,15 +14,17 @@ class _InfoScreenState extends State<InfoScreen> {
     initialPage: 0,
   );
 
+  // Should contain existing user flag to skip nameQ / contactQ
+
   Widget get nameQ =>
       ShortTextInput(controller, 'What do your friends call you?', 'Natasha');
-  Widget get styleQ => JourneyCard('style');
+  //Widget get styleQ => ('style');
   Widget get conceptQ => TattooConcept();
-  Widget get positionQ => JourneyCard('position');
-  Widget get sizeQ => JourneyCard('size');
-  Widget get availabilityQ => JourneyCard('availability');
-  Widget get depositQ => JourneyCard('deposit');
-  Widget get legalQ => JourneyCard('legal');
+//  Widget get positionQ => JourneyCard('position');
+//  Widget get sizeQ => JourneyCard('size');
+//  Widget get availabilityQ => JourneyCard('availability');
+//  Widget get depositQ => JourneyCard('deposit');
+//  Widget get legalQ => JourneyCard('legal');
 
   @override
   Widget build(BuildContext context) {

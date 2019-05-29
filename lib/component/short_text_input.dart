@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../theming.dart';
+import 'package:inkstep/main.dart';
 
 class ShortTextInput extends StatelessWidget {
   ShortTextInput(this.formController, this.labelText, this.hintText,
@@ -12,7 +11,7 @@ class ShortTextInput extends StatelessWidget {
   final double height;
   final FocusNode focus = FocusNode();
 
-  final kDuration = Duration(milliseconds: 300);
+  final kDuration = Duration(milliseconds: 500);
   final kCurve = Curves.ease;
 
   final nameFontSize = 40.0;
@@ -30,8 +29,6 @@ class ShortTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 100,
-        height: height,
         decoration: BoxDecoration(
           color: baseColors['light'],
         ),
@@ -56,8 +53,7 @@ class ShortTextInput extends StatelessWidget {
             onFieldSubmitted: (term) {
               print('NAME: $term');
               focus.unfocus();
-              formController.animateToPage(1,
-                  duration: kDuration, curve: kCurve);
+              formController.nextPage(duration: kDuration, curve: kCurve);
             },
           ),
         ));

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/theming.dart';
+import 'package:inkstep/main.dart';
 
 class UserFlowButton extends StatelessWidget {
   UserFlowButton({
