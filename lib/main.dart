@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/page/journey.dart';
 import 'package:inkstep/page/onboarding.dart';
-import 'package:inkstep/page/studios.dart';
-import 'package:inkstep/theming.dart';
 
 void main() => runApp(Inkstep());
+
+var hintStyle = TextStyle(color: baseColors['gray']);
+
+const baseColors = ColorSwatch<String>(0xFF0A0D18, {
+  'dark': Color(0xFF313639),
+  'gray': Color(0xFF6b7080),
+  'light': Color(0xFFFFFFFF),
+});
 
 class Inkstep extends StatelessWidget {
   @override
@@ -14,8 +19,17 @@ class Inkstep extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: baseColors['light'],
+        accentColor: Colors.deepPurple,
         primaryColor: baseColors['dark'],
+        backgroundColor: baseColors['dark'],
+        cardColor: baseColors['light'],
+        cardTheme: CardTheme(
+          color: baseColors['light'],
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+        ),
         textTheme: TextTheme(
           headline: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
           title: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
@@ -24,7 +38,7 @@ class Inkstep extends StatelessWidget {
           ),
         ),
       ),
-      home: Onboarding(), //TopTabs(),
+      home: Onboarding(),
     );
 
     return app;

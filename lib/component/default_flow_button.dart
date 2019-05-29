@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../theming.dart';
+import 'package:inkstep/main.dart';
 
 class BoldCallToAction extends StatelessWidget {
   BoldCallToAction({
