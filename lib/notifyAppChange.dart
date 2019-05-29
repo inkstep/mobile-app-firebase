@@ -62,6 +62,22 @@ class MessagingWidgetState extends State<MessagingWidget> {
 
       onLaunch: (Map<String, dynamic> message) async {
         print("OnLaunch: $message");
+
+        setState(() {
+          messages.add(Message(
+            title: 'OnLaunch',
+            body: 'OnLaunch',
+          ));
+        });
+
+        final notification = message['notification'];
+
+        setState(() {
+          messages.add(Message(
+            title: 'On Launch: ${notification['title']}',
+            body: 'On Launch: ${notification['body']}',
+          ));
+        });
       },
       onResume: (Map<String, dynamic> message) async {
         print("OnResume: $message");
