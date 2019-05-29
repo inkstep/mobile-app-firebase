@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
-
-import 'journey_cards.dart';
+import 'package:inkstep/ui/components/journey_cards.dart';
 
 class JourneyPage extends StatefulWidget {
   @override
@@ -12,10 +10,9 @@ class JourneyPage extends StatefulWidget {
 }
 
 class WelcomeBackHeader extends StatelessWidget {
+  const WelcomeBackHeader({Key key, @required this.name}) : super(key: key);
 
   final String name;
-
-  const WelcomeBackHeader({Key key, @required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +23,7 @@ class WelcomeBackHeader extends StatelessWidget {
         children: <Widget>[
           Text(
             'Welcome back,',
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .title
                 .copyWith(color: Colors.white.withOpacity(0.7)),
@@ -35,8 +31,7 @@ class WelcomeBackHeader extends StatelessWidget {
           Container(
             child: Text(
               'Natasha',
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .headline
                   .copyWith(color: Colors.white),
@@ -45,8 +40,7 @@ class WelcomeBackHeader extends StatelessWidget {
           Container(height: 16.0),
           Text(
             'You have some journey tasks to complete',
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .body1
                 .copyWith(color: Colors.white.withOpacity(0.7)),
@@ -86,13 +80,15 @@ class _JourneyPageState extends State<JourneyPage>
     final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
     final int length = journeyBloc.currentState.length;
 
-    // TODO: move to state
+    // TODO(matt-malarkey): move to state
     const _isLoading = false;
 
     if (!_isLoading) {
       _controller.forward();
     }
 
+    // TODO(matt-malarkey): correctly hookup page
+    // ignore: unused_element
     Widget loadingPage() {
       return Center(
         child: CircularProgressIndicator(
@@ -103,9 +99,7 @@ class _JourneyPageState extends State<JourneyPage>
     }
 
     return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(''),
         centerTitle: true,
@@ -127,10 +121,9 @@ class _JourneyPageState extends State<JourneyPage>
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is ScrollEndNotification) {
-                        print(
-                            'ScrollNotification = ${_pageController.page}');
+                        print('ScrollNotification = ${_pageController.page}');
                         final currentPage =
-                        _pageController.page.round().toInt();
+                            _pageController.page.round().toInt();
                         if (_currentPageIndex != currentPage) {
                           setState(() => _currentPageIndex = currentPage);
                         }
@@ -166,5 +159,3 @@ class _JourneyPageState extends State<JourneyPage>
     super.dispose();
   }
 }
-
-

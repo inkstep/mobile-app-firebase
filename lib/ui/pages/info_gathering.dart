@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/grid_image_picker.dart';
-import 'package:inkstep/ui/short_text_input.dart';
-import 'package:inkstep/ui/logo.dart';
+import 'package:inkstep/ui/components/grid_image_picker.dart';
+import 'package:inkstep/ui/components/logo.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 
 class InfoScreen extends StatefulWidget {
   @override

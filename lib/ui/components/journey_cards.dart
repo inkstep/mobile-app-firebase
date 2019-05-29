@@ -2,27 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
-
-import '../main.dart';
 
 class AddCard extends StatelessWidget {
   const AddCard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme
-        .of(context)
-        .backgroundColor;
+    final textColor = Theme.of(context).backgroundColor;
     final JourneyBloc _journeyBloc = BlocProvider.of<JourneyBloc>(context);
 
     return Card(
       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       child: Material(
         borderRadius: BorderRadius.circular(16.0),
-        color: Theme
-            .of(context)
-            .cardColor,
+        color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
             _journeyBloc.dispatch(JourneyEvent.add);
@@ -58,9 +53,9 @@ class AddCard extends StatelessWidget {
 }
 
 class JourneyCard extends StatelessWidget {
-  final JourneyModel model;
-
   const JourneyCard({Key key, @required this.model}) : super(key: key);
+
+  final JourneyModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +81,22 @@ class JourneyCard extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 4.0),
-                      // TODO: Should be Hero-d
+                      // TODO(DJRHails): Should be Hero-d
                       child: Text(
                         '${model.artistName}',
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .textTheme
                             .body1
                             .copyWith(color: baseColors['gray']),
                       ),
                     ),
                     Container(
-                      // TODO: Should be Hero-d
+                      // TODO(DJRHails): Should be Hero-d
                       child: Text('${model.studioName}',
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .textTheme
                               .title
-                              .copyWith(color: Theme
-                              .of(context)
-                              .accentColor)),
+                              .copyWith(color: Theme.of(context).accentColor)),
                     ),
                     Spacer(),
                   ],
