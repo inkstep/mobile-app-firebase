@@ -19,7 +19,7 @@ class _InfoScreenState extends State<InfoScreen> {
   Widget get nameQ =>
       ShortTextInput(controller, 'What do your friends call you?', 'Natasha');
   //Widget get styleQ => ('style');
-  Widget get conceptQ => TattooConcept();
+  Widget get conceptQ => GridImagePicker();
 //  Widget get positionQ => JourneyCard('position');
 //  Widget get sizeQ => JourneyCard('size');
 //  Widget get availabilityQ => JourneyCard('availability');
@@ -28,35 +28,33 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          body: PageView(
-            controller: controller,
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              nameQ,
-              conceptQ,
+    return Scaffold(
+      backgroundColor: Theme.of(context).cardColor,
+      appBar: AppBar(
+        title: Hero(
+          tag: 'logo',
+          child: LogoWidget(),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        iconTheme: Theme.of(context)
+            .iconTheme
+            .copyWith(color: Theme.of(context).backgroundColor),
+      ),
+      body: PageView(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          nameQ,
+          conceptQ,
 //          styleQ,
 //          positionQ,
 //          sizeQ,
 //          availabilityQ,
 //          depositQ,
 //          legalQ,
-            ],
-          ),
-        ),
-        SafeArea(
-          child: Container(
-              child: Hero(
-                tag: 'logo',
-                child: LogoWidget(),
-              ),
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 30.0),
-              width: 100),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

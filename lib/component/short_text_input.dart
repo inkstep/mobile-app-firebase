@@ -29,9 +29,6 @@ class ShortTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          color: baseColors['light'],
-        ),
         padding: kPadding,
         child: Center(
           child: TextFormField(

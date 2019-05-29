@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TattooConcept extends StatefulWidget {
+class GridImagePicker extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TattooConceptState();
+  State<StatefulWidget> createState() => _GridImagePickerState();
 }
 
-class _TattooConceptState extends State<TattooConcept> {
+class _GridImagePickerState extends State<GridImagePicker> {
   Future<File> _tattooImage;
 
   void pickImageFromGallery(ImageSource source) {
@@ -31,16 +31,19 @@ class _TattooConceptState extends State<TattooConcept> {
             height: 150,
           );
         } else if (snapshot.error != null) {
-          ret = Image.network('https://dummyimage.com/400/000/fff.png&text=Error+selecting');
+          ret = Image.network(
+              'https://dummyimage.com/400/000/fff.png&text=Error+selecting');
         } else {
-          ret = Image.network('https://dummyimage.com/400/000/fff.png&text=No+image+selected');
+          ret = Image.network(
+              'https://dummyimage.com/400/000/fff.png&text=No+image+selected');
         }
         return GestureDetector(
           // onTap: pickImageFromGallery(ImageSource.gallery, index),
           child: Container(
             margin: const EdgeInsets.all(5.0),
             padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(border: Border.all(), color: Colors.black),
+            decoration:
+                BoxDecoration(border: Border.all(), color: Colors.black),
             height: 150,
             width: 150,
             child: ret,
