@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/page/onboarding.dart';
+import 'package:inkstep/ui/onboarding.dart';
 
 void main() => runApp(Inkstep());
 

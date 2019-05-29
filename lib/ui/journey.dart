@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/page/info_gathering.dart';
+import 'package:inkstep/ui/info_gathering.dart';
 
 class JourneyPage extends StatefulWidget {
   @override
