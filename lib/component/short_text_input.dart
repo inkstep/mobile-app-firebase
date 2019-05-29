@@ -29,8 +29,6 @@ class ShortTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 100,
-        height: height,
         decoration: BoxDecoration(
           color: baseColors['light'],
         ),
