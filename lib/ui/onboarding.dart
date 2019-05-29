@@ -4,7 +4,7 @@ import 'package:inkstep/ui/user_flow_button.dart';
 import 'package:inkstep/ui/logo.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/info_gathering.dart';
-import 'package:inkstep/ui/journey.dart';
+import 'package:inkstep/ui/journey_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding extends StatefulWidget {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/onboarding.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/ui/journey_page.dart';
 
 void main() => runApp(Inkstep());
 
@@ -11,10 +13,17 @@ const baseColors = ColorSwatch<String>(0xFF0A0D18, {
   'light': Color(0xFFFFFFFF),
 });
 
-class Inkstep extends StatelessWidget {
+class Inkstep extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => InkstepState();
+}
+
+class InkstepState extends State<Inkstep> {
+  final JourneyBloc _journeyBloc = JourneyBloc();
+
   @override
   Widget build(BuildContext context) {
-    final app = MaterialApp(
+    return MaterialApp(
       title: 'inkstep',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -38,9 +47,16 @@ class Inkstep extends StatelessWidget {
           ),
         ),
       ),
-      home: Onboarding(),
+      home: BlocProvider<JourneyBloc>(
+        child: JourneyPage(), //Onboarding(),
+        bloc: _journeyBloc,
+      ),
     );
+  }
 
-    return app;
+  @override
+  void dispose() {
+    _journeyBloc.dispose();
+    super.dispose();
   }
 }
