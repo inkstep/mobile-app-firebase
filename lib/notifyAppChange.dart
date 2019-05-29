@@ -48,5 +48,19 @@ class MessagingWidgetState extends State<MessagingWidget> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   
   @override
-  Widget build(BuildContext context) => Container();
+  void initState() {
+    super.initState();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("OnMessage: $message");
+      },
+
+      onLaunch: (Map<String, dynamic> message) async {
+        print("OnLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("OnResume: $message");
+      }
+    );
+  }
 }
