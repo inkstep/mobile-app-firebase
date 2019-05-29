@@ -16,15 +16,15 @@ class _InfoScreenState extends State<InfoScreen> {
     initialPage: 0,
   );
 
-  List<Asset> images = List<Asset>();
+  List<Asset> images = <Asset>[];
+  // ignore: unused_field
   String _error;
 
   int get autoScrollDuration => 500;
 
-  Widget showImage(int i, double size) {
+  Widget buildImageThumbnail(int i, double size) {
     Widget inner;
     if (i < images.length) {
-      print('rerendering');
       final Asset asset = images[i];
       inner = AssetThumb(
         asset: asset,
@@ -40,9 +40,6 @@ class _InfoScreenState extends State<InfoScreen> {
     }
     return Container(
       margin: EdgeInsets.all(8.0),
-//      decoration: BoxDecoration(
-//        color: Theme.of(context).backgroundColor,
-//      ),
       width: size,
       height: size,
       child: InkWell(
@@ -82,7 +79,7 @@ class _InfoScreenState extends State<InfoScreen> {
       label: 'What do your friends call you?',
       hint: 'Natasha',
       duration: autoScrollDuration);
-  //Widget get styleQ => ('style');
+
   Widget get conceptQ {
     final double thumbSize = MediaQuery.of(context).size.width * 0.4;
     return Column(
@@ -108,22 +105,22 @@ class _InfoScreenState extends State<InfoScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              showImage(0, thumbSize),
-              showImage(1, thumbSize)
+              buildImageThumbnail(0, thumbSize),
+              buildImageThumbnail(1, thumbSize)
             ]),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              showImage(2, thumbSize),
-              showImage(3, thumbSize)
+              buildImageThumbnail(2, thumbSize),
+              buildImageThumbnail(3, thumbSize)
             ]),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              showImage(4, thumbSize),
-              showImage(5, thumbSize)
+              buildImageThumbnail(4, thumbSize),
+              buildImageThumbnail(5, thumbSize)
             ]),
         images.length > 1
             ? RaisedButton(
