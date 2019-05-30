@@ -4,7 +4,6 @@ PODS:
     - BSGridCollectionViewLayout (= 1.2.3)
     - BSImageView (= 1.0.3)
   - BSImageView (1.0.3)
-    - Flutter
   - Flutter (1.0.0)
   - image_picker (0.0.1):
     - Flutter
@@ -25,10 +24,6 @@ SPEC REPOS:
     - BSGridCollectionViewLayout
     - BSImagePicker
     - BSImageView
-    - GoogleAppMeasurement
-    - GoogleUtilities
-    - nanopb
-    - Protobuf
 
 EXTERNAL SOURCES:
   Flutter:
