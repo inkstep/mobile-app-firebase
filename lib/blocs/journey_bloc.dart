@@ -4,14 +4,14 @@ import 'package:inkstep/resources/journey_provider.dart';
 
 enum JourneyEvent { add }
 
-class JourneyBloc extends Bloc<JourneyEvent, List<JourneyModel>> {
+class JourneyBloc extends Bloc<JourneyEvent, List<Journey>> {
   final JourneysProvider _provider = JourneysProvider();
 
   @override
-  List<JourneyModel> get initialState => [];
+  List<Journey> get initialState => [];
 
   @override
-  Stream<List<JourneyModel>> mapEventToState(JourneyEvent event) async* {
+  Stream<List<Journey>> mapEventToState(JourneyEvent event) async* {
     print('Adding new journey');
     yield await _provider.getClientJourneys();
   }

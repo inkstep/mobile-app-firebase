@@ -54,7 +54,7 @@ class AddCard extends StatelessWidget {
 class JourneyCard extends StatelessWidget {
   const JourneyCard({Key key, @required this.model}) : super(key: key);
 
-  final JourneyModel model;
+  final Journey model;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class JourneyCard extends StatelessWidget {
       },
       child: BlocBuilder(
           bloc: _journeyBlock,
-          builder: (BuildContext context, List<JourneyModel> journeys) {
+          builder: (BuildContext context, List<Journey> journeys) {
             return Card(
               margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
               child: Padding(

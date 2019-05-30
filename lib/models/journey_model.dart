@@ -1,7 +1,7 @@
-class JourneyModel {
-  JourneyModel(this.artistName, this.studioName);
+class Journey {
+  Journey(this.artistName, this.studioName);
 
-  JourneyModel.fromJson(Map<String, dynamic> json)
+  Journey.fromJson(Map<String, dynamic> json)
       : artistName = json['artist'],
         studioName = json['studio'];
 

@@ -112,9 +112,9 @@ class _JourneyScreenState extends State<JourneyScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             WelcomeBackHeader(name: 'Natasha'),
-            BlocBuilder<JourneyEvent, List<JourneyModel>>(
+            BlocBuilder<JourneyEvent, List<Journey>>(
               bloc: journeyBloc,
-              builder: (BuildContext context, List<JourneyModel> journeys) {
+              builder: (BuildContext context, List<Journey> journeys) {
                 return Expanded(
                   key: _backdropKey,
                   flex: 1,
