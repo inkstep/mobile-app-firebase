@@ -9,6 +9,8 @@ import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
 import 'package:inkstep/ui/components/sizing_question.dart';
 
+import '../../main.dart';
+
 class NewScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _NewScreenState();
@@ -61,11 +63,6 @@ class _NewScreenState extends State<NewScreen> {
             autoScrollDuration: autoScrollDuration,
             func: (term){size = term;},
           ),
-          EmailQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){email = term;},
-          ),
           AvailabilityQuestion(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
@@ -75,6 +72,22 @@ class _NewScreenState extends State<NewScreen> {
             controller: controller,
             autoScrollDuration: autoScrollDuration,
             func: (term){deposit = term;},
+          ),
+          EmailQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
+            func: (term){email = term;},
+          ),
+          RaisedButton(
+            elevation: 15.0,
+            color: baseColors['dark'],
+            textColor: baseColors['light'],
+            padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            child: Text(
+              "Let's contact your artist!",
+              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+            ),
           )
         ],
       ),
