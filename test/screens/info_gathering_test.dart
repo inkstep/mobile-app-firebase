@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/ui/pages/journey_page.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/pages/new_screen.dart';
 
 void main() {
   group('Having New Journey Screen', () {
+    Widget screen;
+
     setUp(() {
       setup();
+      screen = MaterialApp(home: NewScreen());
     });
 
     testWidgets(
-        'App should start with requesting a name if not already provided',
+        'Journey should start with requesting a name if not already provided',
         (WidgetTester tester) async {
-      await tester.pumpWidget(JourneyPage());
+      await tester.pumpWidget(screen);
 
-      expect(find.text('Register'), findsOneWidget);
-      expect(find.byType(TextFormField), findsNWidgets(1));
-//      expect(find.byType(OutlineButton), findsOneWidget);
-//      expect(find.byType(Checkbox), findsOneWidget);
+      expect(find.text('What do your friends call you?'), findsOneWidget);
+      expect(find.byType(ShortTextInput), findsOneWidget);
     });
 
-    testWidgets('Onboarding can be successfully completed with default names',
+    testWidgets('Inspiration accessible via scroll',
         (WidgetTester tester) async {
-//      await tester.pumpWidget(app);
+//      await tester.pumpWidget(screen);
+//      tester.
 //      final Finder nickname = find.widgetWithText(TextFormField, 'Nickname');
 //      final Finder fullName = find.widgetWithText(TextFormField, 'Full name');
 //      final Finder submit = find.widgetWithText(OutlineButton, 'Register');

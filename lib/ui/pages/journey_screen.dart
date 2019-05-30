@@ -49,12 +49,12 @@ class WelcomeBackHeader extends StatelessWidget {
   }
 }
 
-class JourneyPage extends StatefulWidget {
+class JourneyScreen extends StatefulWidget {
   @override
-  _JourneyPageState createState() => _JourneyPageState();
+  _JourneyScreenState createState() => _JourneyScreenState();
 }
 
-class _JourneyPageState extends State<JourneyPage>
+class _JourneyScreenState extends State<JourneyScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
 
