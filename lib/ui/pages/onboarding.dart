@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/ui/components/default_flow_button.dart';
+import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/logo.dart';
-import 'package:inkstep/ui/components/user_flow_button.dart';
+import 'package:inkstep/ui/components/text_button.dart';
 import 'package:inkstep/ui/pages/info_gathering.dart';
 import 'package:inkstep/ui/pages/journey_page.dart';
 
@@ -80,7 +80,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           BoldCallToAction(destination: InfoScreen()),
           Padding(padding: buttonPadding),
-          UserFlowButton(
+          TextButton(
             destination: BlocProvider<JourneyBloc>(
               child: JourneyPage(),
               bloc: _journeyBloc,

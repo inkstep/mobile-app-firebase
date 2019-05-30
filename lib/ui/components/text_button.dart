@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
 
-class UserFlowButton extends StatelessWidget {
-  UserFlowButton({
+class TextButton extends StatelessWidget {
+  TextButton({
     this.destination,
     Key key,
   }) : super(key: key);
