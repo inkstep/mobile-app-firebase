@@ -12,7 +12,6 @@ class AddCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).backgroundColor;
-    final JourneyBloc _journeyBloc = BlocProvider.of<JourneyBloc>(context);
 
     return Card(
       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
