@@ -79,6 +79,7 @@ class _NewScreenState extends State<NewScreen> {
             func: (term){email = term;},
           ),
           RaisedButton(
+            onPressed: (){},
             elevation: 15.0,
             color: baseColors['dark'],
             textColor: baseColors['light'],
