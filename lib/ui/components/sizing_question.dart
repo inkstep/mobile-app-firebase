@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class SizingQuestion extends StatelessWidget {
-  const SizingQuestion({Key key, this.controller, this.autoScrollDuration})
-      : super(key: key);
+  const SizingQuestion({Key key, this.controller, this.textController,
+    this.autoScrollDuration}) : super(key: key);
 
   final PageController controller;
+  final TextEditingController textController;
   final int autoScrollDuration;
 
   @override

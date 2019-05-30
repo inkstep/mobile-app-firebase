@@ -18,6 +18,12 @@ class _NewScreenState extends State<NewScreen> {
   final PageController controller = PageController(
     initialPage: 0,
   );
+  TextEditingController nameController = TextEditingController();
+  TextEditingController mentalImageController = TextEditingController();
+  TextEditingController sizingController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController availabilityController = TextEditingController();
+  TextEditingController depositController = TextEditingController();
 
   int get autoScrollDuration => 500;
 

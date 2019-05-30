@@ -7,9 +7,9 @@ class ShortTextInput extends StatelessWidget {
     this.label,
     this.hint,
     this.duration = 500,
-    this.height = 100,
+    this.height = 100, this.textController,
   });
-
+  final TextEditingController textController;
   final PageController formController;
   final String label;
   final String hint;
@@ -52,7 +52,7 @@ class ShortTextInput extends StatelessWidget {
             focusNode: focus,
             textInputAction: TextInputAction.next,
             onFieldSubmitted: (term) {
-              print('NAME: $term');
+              textController.text=term;
               focus.unfocus();
               formController.nextPage(duration: Duration(milliseconds: duration), curve: kCurve);
             },
