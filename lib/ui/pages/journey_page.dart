@@ -4,11 +4,6 @@ import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 
-class JourneyPage extends StatefulWidget {
-  @override
-  _JourneyPageState createState() => _JourneyPageState();
-}
-
 class WelcomeBackHeader extends StatelessWidget {
   const WelcomeBackHeader({Key key, @required this.name}) : super(key: key);
 
@@ -52,6 +47,11 @@ class WelcomeBackHeader extends StatelessWidget {
       ),
     );
   }
+}
+
+class JourneyPage extends StatefulWidget {
+  @override
+  _JourneyPageState createState() => _JourneyPageState();
 }
 
 class _JourneyPageState extends State<JourneyPage>

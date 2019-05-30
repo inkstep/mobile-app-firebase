@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/ui/pages/info_gathering.dart';
 
 class AddCard extends StatelessWidget {
   const AddCard({Key key}) : super(key: key);
@@ -20,11 +21,10 @@ class AddCard extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            _journeyBloc.dispatch(JourneyEvent.add);
-//            Navigator.push<dynamic>(context,
-//                MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-//              return InfoScreen();
-//            }));
+            Navigator.push<dynamic>(context,
+                MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+              return InfoScreen();
+            }));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
