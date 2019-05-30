@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/blocs/journey_event.dart';
+import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
 import 'package:inkstep/ui/components/concept_question.dart';
 import 'package:inkstep/ui/components/deposit_question.dart';
@@ -93,7 +97,25 @@ class _NewScreenState extends State<NewScreen> {
                 },
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final JourneyBloc journeyBloc =
+                      BlocProvider.of<JourneyBloc>(context);
+                  journeyBloc.dispatch(
+                    AddJourney(
+                      Journey(
+                        // TODO(DJRHails): Don't hardcode these
+                        artistName: 'Ricky',
+                        studioName: 'South City Market',
+                        name: name,
+                        size: size,
+                        email: email,
+                        availability: availability,
+                        deposit: deposit,
+                        mentalImage: mentalImage,
+                      ),
+                    ),
+                  );
+                },
                 elevation: 15.0,
                 color: baseColors['dark'],
                 textColor: baseColors['light'],
