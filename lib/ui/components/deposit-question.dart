@@ -14,6 +14,7 @@ class DepositQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('deposit'),
       label: 'Are you happy to leave a deposit?',
       hint: 'Yes!',
       duration: autoScrollDuration,

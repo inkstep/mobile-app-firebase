@@ -13,6 +13,7 @@ class NameQ extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('name'),
       func: func,
       label: 'What do your friends call you?',
       hint: 'Natasha',

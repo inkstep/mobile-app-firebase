@@ -13,6 +13,7 @@ class MentalImageQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('visualisation'),
       label: 'Describe the image in your head of the tattoo you want?',
       hint: 'I picture a fierce fiery red dragon coiled around my neck',
       duration: autoScrollDuration,

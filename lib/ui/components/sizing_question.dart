@@ -13,6 +13,7 @@ class SizingQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('sizing'),
       label: 'How big would you like your tattoo to be?(cm)',
       hint: '7x3',
       duration: autoScrollDuration,

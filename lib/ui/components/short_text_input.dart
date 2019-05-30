@@ -6,7 +6,8 @@ import 'package:inkstep/main.dart';
 
 class ShortTextInput extends StatelessWidget {
   ShortTextInput(
-    this.formController, {
+    this.formController,
+    this.textFieldKey, {
     this.label,
     this.hint,
     this.duration = 500,
@@ -16,6 +17,7 @@ class ShortTextInput extends StatelessWidget {
 
   final void Function(String) func;
   final PageController formController;
+  final Key textFieldKey;
   final String label;
   final String hint;
   final double height;
@@ -43,7 +45,7 @@ class ShortTextInput extends StatelessWidget {
         child: Center(
           child: TextFormField(
             autofocus: true,
-            key: Key('name'),
+            key: textFieldKey,
             style: TextStyle(color: baseColors['dark'], fontSize: nameFontSize),
             cursorColor: baseColors['dark'],
             decoration: InputDecoration(

@@ -13,6 +13,7 @@ class EmailQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('email'),
       label: 'What is your email address?',
       hint: 'example@inkstep.com',
       duration: autoScrollDuration,

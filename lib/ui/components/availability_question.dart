@@ -13,6 +13,7 @@ class AvailabilityQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key('availability'),
       label: 'What days of the week are you normally available?',
       hint: 'Mondays, Tuesdays and Saturdays',
       duration: autoScrollDuration,
