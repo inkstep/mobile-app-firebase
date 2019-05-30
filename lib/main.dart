@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/ui/pages/journey_page.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 void main() => runApp(Inkstep());

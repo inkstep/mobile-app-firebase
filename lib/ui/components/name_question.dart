@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class NameQ extends StatelessWidget {
-  final PageController controller;
-  final int autoScrollDuration;
-
   const NameQ({Key key, this.controller, this.autoScrollDuration})
       : super(key: key);
+
+  final PageController controller;
+  final int autoScrollDuration;
 
   @override
   Widget build(BuildContext context) {

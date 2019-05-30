@@ -7,10 +7,10 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../main.dart';
 
 class ConceptQ extends StatefulWidget {
+  const ConceptQ({Key key, this.controller, this.autoScrollDuration}) : super(key: key);
+
   final PageController controller;
   final int autoScrollDuration;
-
-  const ConceptQ({Key key, this.controller, this.autoScrollDuration}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() =>
@@ -18,6 +18,8 @@ class ConceptQ extends StatefulWidget {
 }
 
 class _ConceptQState extends State<StatefulWidget> {
+  _ConceptQState(this.controller, this.autoScrollDuration);
+
   final PageController controller;
   final int autoScrollDuration;
 
@@ -26,7 +28,6 @@ class _ConceptQState extends State<StatefulWidget> {
   // ignore: unused_field
   String _error;
 
-  _ConceptQState(this.controller, this.autoScrollDuration);
 
   Widget buildImageThumbnail(int i, double size) {
     Widget inner;

@@ -36,7 +36,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final topPadding = const EdgeInsets.only(top: 120.0);
+    const topPadding = const EdgeInsets.only(top: 120.0);
     final top = Padding(
       padding: topPadding,
       child: Center(
@@ -65,7 +65,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       ),
     );
 
-    final buttonPadding = EdgeInsets.only(top: 32.0);
+    const buttonPadding = EdgeInsets.only(top: 32.0);
     final bottom = Container(
       child: Column(
         children: <Widget>[
