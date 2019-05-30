@@ -18,18 +18,14 @@ class _NewScreenState extends State<NewScreen> {
   final PageController controller = PageController(
     initialPage: 0,
   );
-  TextEditingController nameController = TextEditingController();
-  TextEditingController mentalImageController = TextEditingController();
-  TextEditingController sizingController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController availabilityController = TextEditingController();
-  TextEditingController depositController = TextEditingController();
 
+  String name, mentalImage, size, email, availability, deposit;
+  final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Form(key: formKey,child: Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
         title: Hero(
@@ -49,6 +45,7 @@ class _NewScreenState extends State<NewScreen> {
           NameQ(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
+            func: (term){name = term;} ,
           ),
           ConceptQ(
             controller: controller,
@@ -56,25 +53,31 @@ class _NewScreenState extends State<NewScreen> {
           ),
           MentalImageQuestion(
             controller: controller,
-            autoScrollDuration: autoScrollDuration,),
+            autoScrollDuration: autoScrollDuration,
+            func: (term){mentalImage = term;},
+          ),
           SizingQuestion(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
+            func: (term){size = term;},
           ),
           EmailQuestion(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
+            func: (term){email = term;},
           ),
           AvailabilityQuestion(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
+            func: (term){availability = term;},
           ),
           DepositQuestion(
             controller: controller,
             autoScrollDuration: autoScrollDuration,
+            func: (term){deposit = term;},
           )
         ],
       ),
-    );
+    ));
   }
 }

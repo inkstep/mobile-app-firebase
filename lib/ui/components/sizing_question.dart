@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class SizingQuestion extends StatelessWidget {
-  const SizingQuestion({Key key, this.controller, this.textController,
-    this.autoScrollDuration}) : super(key: key);
+  const SizingQuestion({Key key, this.controller,
+    this.autoScrollDuration, this.func}) : super(key: key);
 
+  final void Function(String) func;
   final PageController controller;
-  final TextEditingController textController;
   final int autoScrollDuration;
 
   @override
@@ -16,6 +16,7 @@ class SizingQuestion extends StatelessWidget {
       label: 'How big would you like your tattoo to be?(cm)',
       hint: '7x3',
       duration: autoScrollDuration,
+      func: func,
     );
   }
 }

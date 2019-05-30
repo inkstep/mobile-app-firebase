@@ -2,16 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class NameQ extends StatelessWidget {
-  const NameQ({Key key, this.controller, this.textController,
-    this.autoScrollDuration}) : super(key: key);
+  const NameQ({Key key, this.func, this.controller,
+    this.autoScrollDuration,}) : super(key: key);
 
+
+  final void Function(String) func;
   final PageController controller;
-  final TextEditingController textController;
   final int autoScrollDuration;
   @override
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      func: func,
       label: 'What do your friends call you?',
       hint: 'Natasha',
       duration: autoScrollDuration,

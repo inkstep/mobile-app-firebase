@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class EmailQuestion extends StatelessWidget {
-  const EmailQuestion({Key key, this.controller, this.textController,
-    this.autoScrollDuration}) : super(key: key);
+  const EmailQuestion({Key key, this.controller,
+    this.autoScrollDuration, this.func}) : super(key: key);
 
+  final void Function(String) func;
   final PageController controller;
-  final TextEditingController textController;
   final int autoScrollDuration;
 
   @override
@@ -16,6 +16,7 @@ class EmailQuestion extends StatelessWidget {
       label: 'What is your email address?',
       hint: 'example@inkstep.com',
       duration: autoScrollDuration,
+      func: func,
     );
   }
 }
