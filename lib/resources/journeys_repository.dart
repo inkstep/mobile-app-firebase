@@ -30,8 +30,6 @@ class WebClient {
     this.delay = const Duration(milliseconds: 300),
   ]);
 
-  final String url = 'inkstep-backend.eu-west-2.elasticbeanstalk.com';
-
   final Duration delay;
 
   Future<List<Map<String, dynamic>>> fetchJourneys() async {
@@ -48,10 +46,10 @@ class WebClient {
 
   Future<bool> postJourneys(List<Map<String, dynamic>> journeys) async {
     for (Map<String, dynamic> journeyMap in journeys) {
-      String jsonStr = jsonEncode(journeyMap);
+      final String jsonStr = jsonEncode(journeyMap);
       print(jsonStr);
 
-      var response = await http.put(
+      final http.Response response = await http.put(
           'http://inkstep-backend.eu-west-2.elasticbeanstalk.com/journey',
           body: jsonStr,
           headers: {'Content-Type': 'application/json'});
