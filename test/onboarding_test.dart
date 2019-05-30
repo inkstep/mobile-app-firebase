@@ -1,41 +1,60 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/main.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/text_button.dart';
-import 'package:inkstep/ui/pages/info_gathering.dart';
-import 'package:inkstep/ui/pages/journey_page.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:mockito/mockito.dart';
 
-class MockJourneyBloc extends Mock implements JourneyBloc {}
+class MockNavigator extends Mock implements ScreenNavigator {}
 
 void main() {
-  testWidgets('App should start with onboarding', (WidgetTester tester) async {
-    await tester.pumpWidget(Inkstep());
-    expect(find.byType(Inkstep), findsOneWidget);
-    expect(find.byType(Onboarding), findsOneWidget);
-  });
+  group('Having Onboarding Screen', () {
+    final MockNavigator nav = MockNavigator();
 
-  testWidgets('Can get to journey page from onboarding',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(Onboarding(MockJourneyBloc()));
+    setUp(() {
+      setup();
+      sl.allowReassignment = true;
+      sl.registerFactory<ScreenNavigator>(() => nav);
+    });
 
-    final Finder journeyButton = find.byType(TextButton);
-    await tester.tap(journeyButton);
-    await tester.pump();
+//    testWidgets('renders correctly', (WidgetTester tester) async {
+//      await tester.pumpWidget(
+//        MaterialApp(
+//          home: Onboarding(),
+//        ),
+//      );
+//
+//      await tester.pumpAndSettle();
+//      expect(find.text('Hi there,'), findsOneWidget);
+//    });
 
-    expect(find.byType(JourneyPage), findsOneWidget);
-  });
+    testWidgets('Can get to journey page from onboarding',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Onboarding(),
+        ),
+      );
 
-  testWidgets('Can get to new journey page from onboarding',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(Onboarding(MockJourneyBloc()));
+      final Finder journeyButton = find.byType(TextButton);
+      expect(journeyButton, findsOneWidget);
+      await tester.tap(journeyButton);
+      await tester.pump();
 
-    final Finder journeyButton = find.byType(BoldCallToAction);
-    await tester.tap(journeyButton);
-    await tester.pump();
+      verify(nav.openJourneyScreen(any));
+    });
 
-    expect(find.byType(InfoScreen), findsOneWidget);
+    testWidgets('Can get to new journey page from onboarding',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(Onboarding());
+
+      final Finder journeyButton = find.byType(BoldCallToAction);
+      await tester.tap(journeyButton);
+      await tester.pump();
+
+      verify(nav.openNewScreen(any));
+    });
   });
 }
