@@ -55,51 +55,44 @@ class JourneyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final JourneyBloc _journeyBlock = BlocProvider.of<JourneyBloc>(context);
-
     return GestureDetector(
-      onTap: () {
-        print('Existing card tapped');
-      },
-      child: BlocBuilder(
-          bloc: _journeyBlock,
-          builder: (BuildContext context, List<Journey> journeys) {
-            return Card(
-              margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Spacer(
-                      flex: 8,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 4.0),
-                      // TODO(DJRHails): Should be Hero-d
-                      child: Text(
-                        '${model.artistName}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .body1
-                            .copyWith(color: baseColors['gray']),
-                      ),
-                    ),
-                    Container(
-                      // TODO(DJRHails): Should be Hero-d
-                      child: Text('${model.studioName}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .title
-                              .copyWith(color: Theme.of(context).accentColor)),
-                    ),
-                    Spacer(),
-                  ],
+        onTap: () {
+          print('Existing card tapped');
+        },
+        child: Card(
+          margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Spacer(
+                  flex: 8,
                 ),
-              ),
-            );
-          }),
-    );
+                Container(
+                  margin: EdgeInsets.only(bottom: 4.0),
+                  // TODO(DJRHails): Should be Hero-d
+                  child: Text(
+                    '${model.artistName}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: baseColors['gray']),
+                  ),
+                ),
+                Container(
+                  // TODO(DJRHails): Should be Hero-d
+                  child: Text('${model.studioName}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .title
+                          .copyWith(color: Theme.of(context).accentColor)),
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+        ));
   }
 }
