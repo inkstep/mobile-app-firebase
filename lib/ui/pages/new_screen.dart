@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
 import 'package:inkstep/ui/components/concept_question.dart';
-import 'package:inkstep/ui/components/deposit-question.dart';
-import 'package:inkstep/ui/components/email-question.dart';
+import 'package:inkstep/ui/components/deposit_question.dart';
+import 'package:inkstep/ui/components/email_question.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
@@ -27,71 +27,86 @@ class _NewScreenState extends State<NewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(key: formKey,child: Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      appBar: AppBar(
-        title: Hero(
-          tag: 'logo',
-          child: LogoWidget(),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        iconTheme: Theme.of(context)
-            .iconTheme
-            .copyWith(color: Theme.of(context).backgroundColor),
-      ),
-      body: PageView(
-        controller: controller,
-        scrollDirection: Axis.vertical,
-        children: <Widget>[
-          NameQ(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){name = term;} ,
-          ),
-          ConceptQ(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-          ),
-          MentalImageQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){mentalImage = term;},
-          ),
-          SizingQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){size = term;},
-          ),
-          AvailabilityQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){availability = term;},
-          ),
-          DepositQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){deposit = term;},
-          ),
-          EmailQuestion(
-            controller: controller,
-            autoScrollDuration: autoScrollDuration,
-            func: (term){email = term;},
-          ),
-          RaisedButton(
-            onPressed: (){},
-            elevation: 15.0,
-            color: baseColors['dark'],
-            textColor: baseColors['light'],
-            padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-            child: Text(
-              "Let's contact your artist!",
-              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+    return Form(
+        key: formKey,
+        child: Scaffold(
+          backgroundColor: Theme.of(context).cardColor,
+          appBar: AppBar(
+            title: Hero(
+              tag: 'logo',
+              child: LogoWidget(),
             ),
-          )
-        ],
-      ),
-    ));
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
+            iconTheme: Theme.of(context)
+                .iconTheme
+                .copyWith(color: Theme.of(context).backgroundColor),
+          ),
+          body: PageView(
+            controller: controller,
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              NameQ(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  name = term;
+                },
+              ),
+              ConceptQ(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+              ),
+              MentalImageQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  mentalImage = term;
+                },
+              ),
+              SizingQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  size = term;
+                },
+              ),
+              AvailabilityQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  availability = term;
+                },
+              ),
+              DepositQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  deposit = term;
+                },
+              ),
+              EmailQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  email = term;
+                },
+              ),
+              RaisedButton(
+                onPressed: () {},
+                elevation: 15.0,
+                color: baseColors['dark'],
+                textColor: baseColors['light'],
+                padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                child: Text(
+                  "Let's contact your artist!",
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
