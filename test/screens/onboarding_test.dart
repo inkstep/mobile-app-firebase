@@ -12,11 +12,14 @@ class MockNavigator extends Mock implements ScreenNavigator {}
 void main() {
   group('Having Onboarding Screen', () {
     final MockNavigator nav = MockNavigator();
-
+    Widget app;
     setUp(() {
       setup();
       sl.allowReassignment = true;
       sl.registerFactory<ScreenNavigator>(() => nav);
+      app = MaterialApp(
+        home: Onboarding(),
+      );
     });
 
 //    testWidgets('renders correctly', (WidgetTester tester) async {
@@ -32,15 +35,12 @@ void main() {
 
     testWidgets('Can get to journey page from onboarding',
         (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Onboarding(),
-        ),
-      );
+      await tester.pumpWidget(app);
 
-      final Finder journeyButton = find.byType(TextButton);
-      expect(journeyButton, findsOneWidget);
-      await tester.tap(journeyButton);
+      final Finder button = find.byType(TextButton);
+      expect(button, findsOneWidget);
+
+      await tester.tap(button);
       await tester.pump();
 
       verify(nav.openJourneyScreen(any));
@@ -48,10 +48,12 @@ void main() {
 
     testWidgets('Can get to new journey page from onboarding',
         (WidgetTester tester) async {
-      await tester.pumpWidget(Onboarding());
+      await tester.pumpWidget(app);
 
-      final Finder journeyButton = find.byType(BoldCallToAction);
-      await tester.tap(journeyButton);
+      final Finder button = find.byType(BoldCallToAction);
+      expect(button, findsOneWidget);
+
+      await tester.tap(button);
       await tester.pump();
 
       verify(nav.openNewScreen(any));
