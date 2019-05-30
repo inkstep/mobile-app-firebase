@@ -53,7 +53,7 @@ class MessagingWidgetState extends State<MessagingWidget> {
     super.initState();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("OnMessage: $message");
+        print('OnMessage: $message');
         final notification = message['notification'];
         setState(() {
           messages.add(Message(title: notification['title'],body: notification['body']));
@@ -61,7 +61,7 @@ class MessagingWidgetState extends State<MessagingWidget> {
       },
 
       onLaunch: (Map<String, dynamic> message) async {
-        print("OnLaunch: $message");
+        print('OnLaunch: $message');
 
         setState(() {
           messages.add(Message(
@@ -80,7 +80,7 @@ class MessagingWidgetState extends State<MessagingWidget> {
         });
       },
       onResume: (Map<String, dynamic> message) async {
-        print("OnResume: $message");
+        print('OnResume: $message');
       }
     );
     _firebaseMessaging.requestNotificationPermissions(const IosNotificationSettings(sound:true, badge:true, alert:true));
@@ -97,11 +97,12 @@ class MessagingWidgetState extends State<MessagingWidget> {
 
 
 class Message {
-  final String title;
-  final String body;
 
   const Message({
     @required this.title,
     @required this.body,
   });
+
+  final String title;
+  final String body;
 }

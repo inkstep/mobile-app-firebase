@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/ui/pages/journey_page.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:inkstep/notifyAppChange.dart';
 
 void main() => runApp(Inkstep());
 
