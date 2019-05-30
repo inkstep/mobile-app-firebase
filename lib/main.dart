@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
@@ -56,10 +55,7 @@ class InkstepState extends State<Inkstep> {
           buttonColor: baseColors['dark'],
         ),
       ),
-      home: BlocProvider<JourneyBloc>(
-        child: Onboarding(),
-        bloc: _journeyBloc,
-      ),
+      home: Onboarding(_journeyBloc),
     );
   }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/components/default_flow_button.dart';
 import 'package:inkstep/ui/components/logo.dart';
@@ -7,11 +9,18 @@ import 'package:inkstep/ui/pages/info_gathering.dart';
 import 'package:inkstep/ui/pages/journey_page.dart';
 
 class Onboarding extends StatefulWidget {
+  JourneyBloc _journeyBloc;
+  Onboarding(this._journeyBloc);
+
   @override
-  State<StatefulWidget> createState() => _OnboardingState();
+  State<StatefulWidget> createState() => _OnboardingState(_journeyBloc);
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
+  _OnboardingState(this._journeyBloc);
+
+  JourneyBloc _journeyBloc;
+
   Widget _sub(String text) {
     return Text(
       text,
@@ -71,7 +80,12 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           BoldCallToAction(destination: InfoScreen()),
           Padding(padding: buttonPadding),
-          UserFlowButton(destination: JourneyPage()),
+          UserFlowButton(
+            destination: BlocProvider<JourneyBloc>(
+              child: JourneyPage(),
+              bloc: _journeyBloc,
+            ),
+          ),
           Padding(padding: buttonPadding),
         ],
       ),
