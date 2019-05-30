@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/blocs/journey_event.dart';
+import 'package:inkstep/blocs/journey_state.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 
 class WelcomeBackHeader extends StatelessWidget {
-  const WelcomeBackHeader({Key key, @required this.name}) : super(key: key);
+  const WelcomeBackHeader({
+    Key key,
+    @required this.name,
+    @required this.tasksToComplete,
+  }) : super(key: key);
 
   final String name;
+  final int tasksToComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +56,12 @@ class WelcomeBackHeader extends StatelessWidget {
 }
 
 class JourneyScreen extends StatefulWidget {
+  const JourneyScreen({Key key, this.onInit}) : super(key: key);
+
   @override
   _JourneyScreenState createState() => _JourneyScreenState();
+
+  final void Function() onInit;
 }
 
 class _JourneyScreenState extends State<JourneyScreen>
@@ -66,13 +76,14 @@ class _JourneyScreenState extends State<JourneyScreen>
 
   @override
   void initState() {
-    super.initState();
+    widget.onInit();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
+    super.initState();
   }
 
   @override
