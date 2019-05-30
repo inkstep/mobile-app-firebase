@@ -31,7 +31,9 @@ class Inkstep extends StatefulWidget {
 }
 
 class InkstepState extends State<Inkstep> {
-  final JourneyBloc _journeyBloc = JourneyBloc();
+  final JourneyBloc _journeyBloc = JourneyBloc(
+    journeysRepository: JourneysRepository(),
+  );
 
   @override
   Widget build(BuildContext context) {
