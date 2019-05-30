@@ -13,6 +13,7 @@ void main() {
   group('Having Onboarding Screen', () {
     final MockNavigator nav = MockNavigator();
     Widget app;
+
     setUp(() {
       setup();
       sl.allowReassignment = true;

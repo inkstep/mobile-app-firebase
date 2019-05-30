@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/ui/pages/new_screen.dart';
 
@@ -9,7 +8,6 @@ void main() {
     Widget screen;
 
     setUp(() {
-      setup();
       screen = MaterialApp(home: NewScreen());
     });
 
