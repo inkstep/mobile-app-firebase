@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/ui/components/availability_question.dart';
 import 'package:inkstep/ui/components/concept_question.dart';
+import 'package:inkstep/ui/components/deposit-question.dart';
+import 'package:inkstep/ui/components/email-question.dart';
 import 'package:inkstep/ui/components/logo.dart';
+import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
+import 'package:inkstep/ui/components/sizing_question.dart';
 
 class NewScreen extends StatefulWidget {
   @override
@@ -43,6 +48,25 @@ class _NewScreenState extends State<NewScreen> {
             controller: controller,
             autoScrollDuration: autoScrollDuration,
           ),
+          MentalImageQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,),
+          SizingQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
+          ),
+          EmailQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
+          ),
+          AvailabilityQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
+          ),
+          DepositQuestion(
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
+          )
         ],
       ),
     );
