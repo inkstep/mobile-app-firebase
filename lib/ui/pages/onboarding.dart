@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/text_button.dart';
-import 'package:inkstep/ui/pages/info_gathering.dart';
-import 'package:inkstep/ui/pages/journey_page.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class Onboarding extends StatefulWidget {
-  JourneyBloc _journeyBloc;
-  Onboarding(this._journeyBloc);
-
   @override
-  State<StatefulWidget> createState() => _OnboardingState(_journeyBloc);
+  State<StatefulWidget> createState() => _OnboardingState();
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
-  _OnboardingState(this._journeyBloc);
-
-  JourneyBloc _journeyBloc;
+  _OnboardingState();
 
   Widget _sub(String text) {
     return Text(
@@ -75,16 +68,18 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     );
 
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 32.0);
+    final ScreenNavigator nav = sl.get<ScreenNavigator>();
     final bottom = Container(
       child: Column(
         children: <Widget>[
-          BoldCallToAction(destination: InfoScreen()),
+          BoldCallToAction(onTap: () {
+            nav.openNewScreen(context);
+          }),
           Padding(padding: buttonPadding),
           TextButton(
-            destination: BlocProvider<JourneyBloc>(
-              child: JourneyPage(),
-              bloc: _journeyBloc,
-            ),
+            onTap: () {
+              nav.openJourneyScreen(context);
+            },
           ),
           Padding(padding: buttonPadding),
         ],

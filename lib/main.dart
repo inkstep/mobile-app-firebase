@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
-void main() => runApp(Inkstep());
+void main() {
+  setup();
+  runApp(Inkstep());
+}
 
 var hintStyle = TextStyle(color: baseColors['gray']);
 
@@ -22,40 +27,43 @@ class InkstepState extends State<Inkstep> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'inkstep',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Colors.deepPurple,
-        primaryColor: baseColors['dark'],
-        backgroundColor: baseColors['dark'],
-        cardColor: baseColors['light'],
-        cardTheme: CardTheme(
-          color: baseColors['light'],
-          elevation: 4.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+    return BlocProvider<JourneyBloc>(
+      child: MaterialApp(
+        title: 'inkstep',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          accentColor: Colors.deepPurple,
+          primaryColor: baseColors['dark'],
+          backgroundColor: baseColors['dark'],
+          cardColor: baseColors['light'],
+          cardTheme: CardTheme(
+            color: baseColors['light'],
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+          ),
+          textTheme: TextTheme(
+            headline: TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.w400,
+            ),
+            title: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.w500,
+            ),
+            body1: TextStyle(
+              fontSize: 14.0,
+            ),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: baseColors['dark'],
           ),
         ),
-        textTheme: TextTheme(
-          headline: TextStyle(
-            fontSize: 32.0,
-            fontWeight: FontWeight.w400,
-          ),
-          title: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.w500,
-          ),
-          body1: TextStyle(
-            fontSize: 14.0,
-          ),
-        ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: baseColors['dark'],
-        ),
+        home: Onboarding(),
       ),
-      home: Onboarding(_journeyBloc),
+      bloc: _journeyBloc,
     );
   }
 
