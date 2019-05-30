@@ -29,10 +29,10 @@ class Journey extends Equatable {
         ]);
 
   Journey.fromJson(Map<String, dynamic> json)
-      : artistName = json['artistName'],
+      : artistName = json['artist_name'],
         studioName = '',
-        artistEmail = json['artistEmail'],
-        name = json['userName'],
+        artistEmail = json['artist_email'],
+        name = json['user_name'],
         type = json['tattoo'],
         mentalImage = json['desc'],
         size = json['size'],
@@ -54,14 +54,15 @@ class Journey extends Equatable {
   final String type;
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'artistName': artistName,
-      'artistEmail': artistEmail,
-      'userName': name,
+    final x = <String, dynamic>{
+      'artist_name': artistName,
+      'artist_email': artistEmail,
+      'user_name': name,
       'tattoo': type,
       'desc': mentalImage,
       'size': size,
       'pos': position,
     };
+    return x;
   }
 }
