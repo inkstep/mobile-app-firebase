@@ -5,7 +5,6 @@ import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/user_flow_button.dart';
 import 'package:inkstep/ui/pages/info_gathering.dart';
 import 'package:inkstep/ui/pages/journey_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding extends StatefulWidget {
   @override
@@ -13,16 +12,6 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
-  String _name = '';
-
-  Future<String> getNamePreferences() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _name = prefs.getString('name') ?? '';
-    });
-    return prefs.getString('name') ?? '';
-  }
-
   Widget _sub(String text) {
     return Text(
       text,
@@ -53,7 +42,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         child: Column(
           children: <Widget>[
             Logo(),
-            _header('Hi $_name,'),
+            _header('Hi there,'),
             _header("We're here to help"),
             Padding(
               padding: const EdgeInsets.only(top: 64.0),

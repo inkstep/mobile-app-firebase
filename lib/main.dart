@@ -40,11 +40,20 @@ class InkstepState extends State<Inkstep> {
           ),
         ),
         textTheme: TextTheme(
-          headline: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
-          title: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
+          headline: TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.w400,
+          ),
+          title: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+          ),
           body1: TextStyle(
             fontSize: 14.0,
           ),
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: baseColors['dark'],
         ),
       ),
       home: BlocProvider<JourneyBloc>(
