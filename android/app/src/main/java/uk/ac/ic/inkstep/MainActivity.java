@@ -1,4 +1,4 @@
-package com.example.my_app;
+package uk.ac.ic.inkstep;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
