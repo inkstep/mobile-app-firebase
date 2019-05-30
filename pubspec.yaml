@@ -20,13 +20,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  image_picker: ^0.5.0
-  multi_image_picker: ^4.3.3
-
-  shared_preferences: ^0.5.0
-
-  bloc: ^0.14.0
-  flutter_bloc: ^0.14.0
+#  firebase_messaging:
+  image_picker:
+  multi_image_picker:
+  shared_preferences:
+  bloc:
+  flutter_bloc:
+  get_it:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -35,7 +35,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mockito:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

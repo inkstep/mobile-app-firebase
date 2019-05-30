@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
 
-class UserFlowButton extends StatelessWidget {
-  UserFlowButton({
-    this.destination,
+class TextButton extends StatelessWidget {
+  TextButton({
+    this.onTap,
     Key key,
   }) : super(key: key);
 
-  final Widget destination;
+  final GestureTapCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push<dynamic>(context,
-            MaterialPageRoute<dynamic>(builder: (context) => destination));
-      },
+      onTap: onTap,
       child: Text(
         "I'M ON A NEW DEVICE",
         style: TextStyle(

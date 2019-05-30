@@ -3,19 +3,16 @@ import 'package:inkstep/main.dart';
 
 class BoldCallToAction extends StatelessWidget {
   BoldCallToAction({
-    this.destination,
+    this.onTap,
     Key key,
   }) : super(key: key);
 
-  final Widget destination;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      onPressed: () {
-        Navigator.push<dynamic>(context,
-            MaterialPageRoute<dynamic>(builder: (context) => destination));
-      },
+      onPressed: onTap,
       elevation: 15.0,
       color: baseColors['light'],
       textColor: baseColors['dark'],

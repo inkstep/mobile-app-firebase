@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/ui/components/default_flow_button.dart';
+import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/logo.dart';
-import 'package:inkstep/ui/components/user_flow_button.dart';
-import 'package:inkstep/ui/pages/info_gathering.dart';
-import 'package:inkstep/ui/pages/journey_page.dart';
+import 'package:inkstep/ui/components/text_button.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class Onboarding extends StatefulWidget {
   @override
@@ -12,6 +12,8 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
+  _OnboardingState();
+
   Widget _sub(String text) {
     return Text(
       text,
@@ -66,12 +68,19 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     );
 
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 32.0);
+    final ScreenNavigator nav = sl.get<ScreenNavigator>();
     final bottom = Container(
       child: Column(
         children: <Widget>[
-          BoldCallToAction(destination: InfoScreen()),
+          BoldCallToAction(onTap: () {
+            nav.openNewScreen(context);
+          }),
           Padding(padding: buttonPadding),
-          UserFlowButton(destination: JourneyPage()),
+          TextButton(
+            onTap: () {
+              nav.openJourneyScreen(context);
+            },
+          ),
           Padding(padding: buttonPadding),
         ],
       ),

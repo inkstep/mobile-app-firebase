@@ -4,12 +4,12 @@ import 'package:inkstep/ui/components/concept_question.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/name_question.dart';
 
-class InfoScreen extends StatefulWidget {
+class NewScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _InfoScreenState();
+  State<StatefulWidget> createState() => _NewScreenState();
 }
 
-class _InfoScreenState extends State<InfoScreen> {
+class _NewScreenState extends State<NewScreen> {
   final PageController controller = PageController(
     initialPage: 0,
   );
@@ -36,8 +36,8 @@ class _InfoScreenState extends State<InfoScreen> {
         scrollDirection: Axis.vertical,
         children: <Widget>[
           NameQ(
-              controller: controller,
-              autoScrollDuration: autoScrollDuration,
+            controller: controller,
+            autoScrollDuration: autoScrollDuration,
           ),
           ConceptQ(
             controller: controller,
