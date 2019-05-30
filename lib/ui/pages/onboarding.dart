@@ -36,40 +36,53 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = const EdgeInsets.only(top: 120.0);
     final top = Padding(
-      padding: const EdgeInsets.only(top: 120.0),
+      padding: topPadding,
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Logo(),
-            _header('Hi there,'),
-            _header("We're here to help"),
-            Padding(
-              padding: const EdgeInsets.only(top: 64.0),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Logo(),
+                  _header('Hi there,'),
+                  _header("We're here to help"),
+                ],
+              ),
             ),
-            _sub('Every step'),
-            _sub('of the way'),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  _sub('Every step'),
+                  _sub('of the way'),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
 
+    final buttonPadding = EdgeInsets.only(top: 32.0);
     final bottom = Container(
       child: Column(
         children: <Widget>[
           BoldCallToAction(destination: InfoScreen()),
-          Padding(padding: EdgeInsets.only(top: 32.0)),
+          Padding(padding: buttonPadding),
           UserFlowButton(destination: JourneyPage()),
+          Padding(padding: buttonPadding),
         ],
       ),
     );
 
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           top,
-          Padding(padding: EdgeInsets.only(top: 275.0)),
-          bottom
+          bottom,
         ],
       ),
       backgroundColor: baseColors['dark'],
