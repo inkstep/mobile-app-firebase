@@ -29,7 +29,7 @@ class GrowTransition extends StatelessWidget {
 
 class Logo extends StatefulWidget {
   @override
-  _LogoState createState() => _LogoState(90.0, 90.0);
+  _LogoState createState() => _LogoState(100.0, 100.0);
 }
 
 class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
@@ -54,8 +54,7 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
             } else if (status == AnimationStatus.dismissed) {
               controller.forward();
             }
-          })
-          ..addStatusListener((state) => print('$state'));
+          });
     controller.forward();
   }
 

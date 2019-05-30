@@ -6,41 +6,11 @@ PODS:
   - BSImageView (1.0.3)
     - Flutter
   - Flutter (1.0.0)
-  - GoogleAppMeasurement (6.0.1):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (6.2.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.2.0)
-  - GoogleUtilities/Logger (6.2.0):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.2.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.2.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.2.0)"
-  - GoogleUtilities/Reachability (6.2.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.2.0):
-    - GoogleUtilities/Logger
   - image_picker (0.0.1):
     - Flutter
   - multi_image_picker (4.3.3):
     - BSImagePicker (~> 2.10.0)
     - Flutter
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
-  - Protobuf (3.8.0)
   - shared_preferences (0.0.1):
     - Flutter
 
@@ -75,12 +45,8 @@ SPEC CHECKSUMS:
   BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
-  GoogleUtilities: 996e0db07153674fd1b54b220fda3a3dc3547cba
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   multi_image_picker: d6f2d6fad79ced3a6547658c86a68f49814e3bac
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
 
 PODFILE CHECKSUM: 31ae2accfa1f055825f0184b23ccadf7b6533aea
