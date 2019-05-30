@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "257661179999",
+    "firebase_url": "https://inkstep-e6cc8.firebaseio.com",
+    "project_id": "inkstep-e6cc8",
+    "storage_bucket": "inkstep-e6cc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257661179999:android:1b5069767e6016b1",
+        "android_client_info": {
+          "package_name": "uk.ac.ic.inkstep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257661179999-hbff6gsobqf9lq901pg8hk0job3l61d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPA_MMWI8yItgifxVn-tdrsQQhPE8kqQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257661179999-hbff6gsobqf9lq901pg8hk0job3l61d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
