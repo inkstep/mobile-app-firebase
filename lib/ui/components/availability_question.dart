@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
-class NameQ extends StatelessWidget {
-  const NameQ({Key key, this.func, this.controller,
-    this.autoScrollDuration,}) : super(key: key);
-
+class AvailabilityQuestion extends StatelessWidget {
+  const AvailabilityQuestion({Key key, this.controller,
+    this.autoScrollDuration, this.func}) : super(key: key);
 
   final void Function(String) func;
   final PageController controller;
   final int autoScrollDuration;
+
   @override
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
-      func: func,
-      label: 'What do your friends call you?',
-      hint: 'Natasha',
+      label: 'What days of the week are you normally available?',
+      hint: 'Mondays, Tuesdays and Saturdays',
       duration: autoScrollDuration,
+      func: func,
     );
   }
 }

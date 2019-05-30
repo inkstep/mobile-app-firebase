@@ -1,3 +1,6 @@
+import 'dart:core' as prefix0;
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
 
@@ -8,8 +11,10 @@ class ShortTextInput extends StatelessWidget {
     this.hint,
     this.duration = 500,
     this.height = 100,
+    this.func
   });
 
+  final void Function(String) func;
   final PageController formController;
   final String label;
   final String hint;
@@ -52,7 +57,7 @@ class ShortTextInput extends StatelessWidget {
             focusNode: focus,
             textInputAction: TextInputAction.next,
             onFieldSubmitted: (term) {
-              print('NAME: $term');
+              func(term);
               focus.unfocus();
               formController.nextPage(duration: Duration(milliseconds: duration), curve: kCurve);
             },
