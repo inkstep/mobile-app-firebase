@@ -7,7 +7,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../main.dart';
 
 class ConceptQ extends StatefulWidget {
-  const ConceptQ({Key key, this.controller, this.autoScrollDuration}) : super(key: key);
+  const ConceptQ({Key key, this.controller, this.autoScrollDuration})
+      : super(key: key);
 
   final PageController controller;
   final int autoScrollDuration;
@@ -27,7 +28,6 @@ class _ConceptQState extends State<StatefulWidget> {
 
   // ignore: unused_field
   String _error;
-
 
   Widget buildImageThumbnail(int i, double size) {
     Widget inner;
@@ -86,7 +86,7 @@ class _ConceptQState extends State<StatefulWidget> {
     return Column(
       children: <Widget>[
         Text(
-          "Let's get started!",
+          'Show us your inspiration',
           style: Theme.of(context)
               .textTheme
               .title
@@ -125,13 +125,14 @@ class _ConceptQState extends State<StatefulWidget> {
             ]),
         images.length > 1
             ? RaisedButton(
-          child: Text('Ok?'),
-          onPressed: () {
-            controller.nextPage(
-                duration: Duration(milliseconds: autoScrollDuration),
-                curve: Curves.ease);
-          },
-        ) : Container(),
+                child: Text('That enough?'),
+                onPressed: () {
+                  controller.nextPage(
+                      duration: Duration(milliseconds: autoScrollDuration),
+                      curve: Curves.ease);
+                },
+              )
+            : Container(),
       ],
     );
   }
