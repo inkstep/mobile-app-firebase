@@ -20,8 +20,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_messaging:
-
   image_picker: ^0.5.0
   multi_image_picker: ^4.3.3
 
