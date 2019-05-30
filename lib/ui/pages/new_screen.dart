@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/blocs/journey_event.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
 import 'package:inkstep/ui/components/concept_question.dart';
@@ -12,6 +13,7 @@ import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
 import 'package:inkstep/ui/components/sizing_question.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 import '../../main.dart';
 
@@ -115,6 +117,8 @@ class _NewScreenState extends State<NewScreen> {
                       ),
                     ),
                   );
+                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                  nav.openJourneyScreen(context);
                 },
                 elevation: 15.0,
                 color: baseColors['dark'],
