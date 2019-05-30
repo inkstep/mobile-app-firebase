@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/ui/pages/info_gathering.dart';
+import 'package:inkstep/ui/pages/new_screen.dart';
 
 class AddCard extends StatelessWidget {
   const AddCard({Key key}) : super(key: key);
@@ -22,7 +22,7 @@ class AddCard extends StatelessWidget {
           onTap: () {
             Navigator.push<dynamic>(context,
                 MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-              return InfoScreen();
+              return NewScreen();
             }));
           },
           child: Padding(
