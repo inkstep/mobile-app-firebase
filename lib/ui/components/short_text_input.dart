@@ -46,8 +46,7 @@ class ShortTextInput extends StatelessWidget {
               labelText: label,
               focusedBorder: underlineBorder,
               enabledBorder: underlineBorder,
-              labelStyle:
-                  TextStyle(color: baseColors['dark'], fontSize: labelFontSize),
+              labelStyle: TextStyle(color: baseColors['dark'], fontSize: labelFontSize),
               hintStyle: hintStyle,
             ),
             focusNode: focus,
@@ -55,8 +54,7 @@ class ShortTextInput extends StatelessWidget {
             onFieldSubmitted: (term) {
               print('NAME: $term');
               focus.unfocus();
-              formController.nextPage(
-                  duration: Duration(milliseconds: duration), curve: kCurve);
+              formController.nextPage(duration: Duration(milliseconds: duration), curve: kCurve);
             },
           ),
         ));
