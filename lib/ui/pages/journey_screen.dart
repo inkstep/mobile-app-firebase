@@ -78,78 +78,73 @@ class _JourneyScreenState extends State<JourneyScreen>
   @override
   Widget build(BuildContext context) {
     final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
-    final int length = journeyBloc.currentState.length;
-
-    // TODO(matt-malarkey): move to state
-    const _isLoading = false;
-
-    if (!_isLoading) {
-      _controller.forward();
-    }
-
-    // TODO(matt-malarkey): correctly hookup page
-    // ignore: unused_element
-    Widget loadingPage() {
-      return Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 1.0,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
-      );
-    }
-
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text(''),
-        centerTitle: true,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: FadeTransition(
-        opacity: _animation,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            WelcomeBackHeader(name: 'Natasha'),
-            BlocBuilder<JourneyEvent, List<Journey>>(
-              bloc: journeyBloc,
-              builder: (BuildContext context, List<Journey> journeys) {
-                return Expanded(
-                  key: _backdropKey,
-                  flex: 1,
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      if (notification is ScrollEndNotification) {
-                        print('ScrollNotification = ${_pageController.page}');
-                        final currentPage =
-                            _pageController.page.round().toInt();
-                        if (_currentPageIndex != currentPage) {
-                          setState(() => _currentPageIndex = currentPage);
-                        }
-                      }
-                    },
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index == length) {
-                          return AddCard();
-                        } else {
-                          return JourneyCard(model: journeys[index]);
+    return BlocBuilder<JourneyEvent, JourneyState>(
+      bloc: journeyBloc,
+      builder: (BuildContext context, JourneyState state) {
+        if (state is JourneyUninitialised) {
+          return Container(
+            decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+            child: Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 1.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+          );
+        } else if (state is JourneyLoaded) {
+          _controller.forward();
+          return Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
+            appBar: AppBar(
+              title: Text(''),
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+            ),
+            body: FadeTransition(
+              opacity: _animation,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  WelcomeBackHeader(
+                    name: 'Natasha',
+                    tasksToComplete: 0,
+                  ),
+                  Expanded(
+                    key: _backdropKey,
+                    flex: 1,
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollEndNotification) {
+                          final currentPage =
+                              _pageController.page.round().toInt();
+                          if (_currentPageIndex != currentPage) {
+                            setState(() => _currentPageIndex = currentPage);
+                          }
                         }
                       },
-                      itemCount: length + 1,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == state.journeys.length) {
+                            return AddCard();
+                          } else {
+                            return JourneyCard(model: state.journeys[index]);
+                          }
+                        },
+                        itemCount: state.journeys.length + 1,
+                      ),
                     ),
                   ),
-                );
-              },
+                  Container(
+                    margin: EdgeInsets.only(bottom: 32.0),
+                  ),
+                ],
+              ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 32.0),
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 
