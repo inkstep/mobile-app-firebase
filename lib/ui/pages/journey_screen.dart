@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/blocs/journey_event.dart';
+import 'package:inkstep/blocs/journey_state.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 
 class WelcomeBackHeader extends StatelessWidget {
-  const WelcomeBackHeader({Key key, @required this.name}) : super(key: key);
+  const WelcomeBackHeader({
+    Key key,
+    @required this.name,
+    @required this.tasksToComplete,
+  }) : super(key: key);
 
   final String name;
+  final int tasksToComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +56,12 @@ class WelcomeBackHeader extends StatelessWidget {
 }
 
 class JourneyScreen extends StatefulWidget {
+  const JourneyScreen({Key key, this.onInit}) : super(key: key);
+
   @override
   _JourneyScreenState createState() => _JourneyScreenState();
+
+  final void Function() onInit;
 }
 
 class _JourneyScreenState extends State<JourneyScreen>
@@ -66,90 +76,86 @@ class _JourneyScreenState extends State<JourneyScreen>
 
   @override
   void initState() {
-    super.initState();
+    widget.onInit();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
-    final int length = journeyBloc.currentState.length;
-
-    // TODO(matt-malarkey): move to state
-    const _isLoading = false;
-
-    if (!_isLoading) {
-      _controller.forward();
-    }
-
-    // TODO(matt-malarkey): correctly hookup page
-    // ignore: unused_element
-    Widget loadingPage() {
-      return Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 1.0,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
-      );
-    }
-
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text(''),
-        centerTitle: true,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: FadeTransition(
-        opacity: _animation,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            WelcomeBackHeader(name: 'Natasha'),
-            BlocBuilder<JourneyEvent, List<JourneyModel>>(
-              bloc: journeyBloc,
-              builder: (BuildContext context, List<JourneyModel> journeys) {
-                return Expanded(
-                  key: _backdropKey,
-                  flex: 1,
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      if (notification is ScrollEndNotification) {
-                        print('ScrollNotification = ${_pageController.page}');
-                        final currentPage =
-                            _pageController.page.round().toInt();
-                        if (_currentPageIndex != currentPage) {
-                          setState(() => _currentPageIndex = currentPage);
-                        }
-                      }
-                    },
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index == length) {
-                          return AddCard();
-                        } else {
-                          return JourneyCard(model: journeys[index]);
+    return BlocBuilder<JourneyEvent, JourneyState>(
+      bloc: journeyBloc,
+      builder: (BuildContext context, JourneyState state) {
+        if (state is JourneyUninitialised) {
+          return Container(
+            decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+            child: Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 1.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+          );
+        } else if (state is JourneyLoaded) {
+          _controller.forward();
+          return Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
+            appBar: AppBar(
+              title: Text(''),
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+            ),
+            body: FadeTransition(
+              opacity: _animation,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  WelcomeBackHeader(
+                    name: 'Natasha',
+                    tasksToComplete: 0,
+                  ),
+                  Expanded(
+                    key: _backdropKey,
+                    flex: 1,
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollEndNotification) {
+                          final currentPage =
+                              _pageController.page.round().toInt();
+                          if (_currentPageIndex != currentPage) {
+                            setState(() => _currentPageIndex = currentPage);
+                          }
                         }
                       },
-                      itemCount: length + 1,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == state.journeys.length) {
+                            return AddCard();
+                          } else {
+                            return JourneyCard(model: state.journeys[index]);
+                          }
+                        },
+                        itemCount: state.journeys.length + 1,
+                      ),
                     ),
                   ),
-                );
-              },
+                  Container(
+                    margin: EdgeInsets.only(bottom: 32.0),
+                  ),
+                ],
+              ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 32.0),
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 

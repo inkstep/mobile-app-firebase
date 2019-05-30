@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/ui/pages/new_screen.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class AddCard extends StatelessWidget {
   const AddCard({Key key}) : super(key: key);
@@ -20,10 +19,8 @@ class AddCard extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
-            Navigator.push<dynamic>(context,
-                MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-              return NewScreen();
-            }));
+            final nav = sl.get<ScreenNavigator>();
+            nav.openNewScreen(context);
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -54,55 +51,48 @@ class AddCard extends StatelessWidget {
 class JourneyCard extends StatelessWidget {
   const JourneyCard({Key key, @required this.model}) : super(key: key);
 
-  final JourneyModel model;
+  final Journey model;
 
   @override
   Widget build(BuildContext context) {
-    final JourneyBloc _journeyBlock = BlocProvider.of<JourneyBloc>(context);
-
     return GestureDetector(
-      onTap: () {
-        print('Existing card tapped');
-      },
-      child: BlocBuilder(
-          bloc: _journeyBlock,
-          builder: (BuildContext context, List<JourneyModel> journeys) {
-            return Card(
-              margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Spacer(
-                      flex: 8,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 4.0),
-                      // TODO(DJRHails): Should be Hero-d
-                      child: Text(
-                        '${model.artistName}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .body1
-                            .copyWith(color: baseColors['gray']),
-                      ),
-                    ),
-                    Container(
-                      // TODO(DJRHails): Should be Hero-d
-                      child: Text('${model.studioName}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .title
-                              .copyWith(color: Theme.of(context).accentColor)),
-                    ),
-                    Spacer(),
-                  ],
+        onTap: () {
+          print('Existing card tapped');
+        },
+        child: Card(
+          margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Spacer(
+                  flex: 8,
                 ),
-              ),
-            );
-          }),
-    );
+                Container(
+                  margin: EdgeInsets.only(bottom: 4.0),
+                  // TODO(DJRHails): Should be Hero-d
+                  child: Text(
+                    '${model.artistName}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: baseColors['gray']),
+                  ),
+                ),
+                Container(
+                  // TODO(DJRHails): Should be Hero-d
+                  child: Text('${model.studioName}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .title
+                          .copyWith(color: Theme.of(context).accentColor)),
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+        ));
   }
 }
