@@ -4,8 +4,8 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 typedef ElementBuilder = Widget Function(
-    BuildContext context, FocusNode focus, SubmitCallback onSubmit);
-typedef SubmitCallback = void Function(String);
+    BuildContext context, FocusNode focus, VoidCallback onSubmit);
+
 
 class FormElementBuilder extends StatelessWidget {
   FormElementBuilder({
@@ -13,10 +13,8 @@ class FormElementBuilder extends StatelessWidget {
     @required this.controller,
     this.fieldKey,
     this.duration = 500,
-    @required this.onSubmitCallback,
   });
 
-  final void Function(String) onSubmitCallback;
   final PageController controller;
   final Key fieldKey;
   final int duration;
@@ -30,16 +28,13 @@ class FormElementBuilder extends StatelessWidget {
     return Container(
       padding: kPadding,
       child: Center(
-          child: builder(context, focus, _attachFocusNext(onSubmitCallback))),
+          child: builder(context, focus, _focusNext())),
     );
   }
 
-  SubmitCallback _attachFocusNext(SubmitCallback func) {
-    return (term) {
-      func(term);
-      focus.unfocus();
-      controller.nextPage(
-          duration: Duration(milliseconds: duration), curve: Curves.ease);
-    };
-  }
+  VoidCallback _focusNext() => () {
+    focus.unfocus();
+    controller.nextPage(
+        duration: Duration(milliseconds: duration), curve: Curves.ease);
+  };
 }

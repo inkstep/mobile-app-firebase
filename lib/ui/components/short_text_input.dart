@@ -5,21 +5,19 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 class ShortTextInput extends StatelessWidget {
   ShortTextInput({
     @required this.controller,
-    @required this.callback,
+    @required this.pageController,
     @required this.label,
     @required this.hint,
-    this.input,
     // ignore: avoid_init_to_null
     this.maxLength = null,
     Key key,
   }) : super(key: key);
 
-  final SubmitCallback callback;
-  final PageController controller;
+  final PageController pageController;
+  final TextEditingController controller;
 
   final String label;
   final String hint;
-  final String input;
   final int maxLength;
 
   final kCurve = Curves.ease;
@@ -36,7 +34,7 @@ class ShortTextInput extends StatelessWidget {
           borderSide: BorderSide(color: theme.backgroundColor),
         );
         return TextFormField(
-          initialValue: input,
+          controller: controller,
           autofocus: true,
           maxLength: maxLength,
           style: theme.accentTextTheme.headline,
@@ -52,11 +50,9 @@ class ShortTextInput extends StatelessWidget {
           ),
           focusNode: focus,
           textInputAction: TextInputAction.next,
-          onFieldSubmitted: submitCallback,
         );
       },
-      onSubmitCallback: callback,
-      controller: controller,
+      controller: pageController,
       fieldKey: key,
     );
   }

@@ -4,7 +4,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 class LongTextInput extends StatelessWidget {
   LongTextInput({
     @required this.controller,
-    @required this.callback,
+    @required this.pageController,
     @required this.label,
     @required this.hint,
     this.input,
@@ -12,8 +12,8 @@ class LongTextInput extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  final SubmitCallback callback;
-  final PageController controller;
+  final PageController pageController;
+  final TextEditingController controller;
 
   final String label;
   final String hint;
@@ -38,6 +38,7 @@ class LongTextInput extends StatelessWidget {
             Spacer(flex: 1),
             Flexible(
               child: TextFormField(
+                controller: controller,
                 autofocus: true,
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
@@ -56,15 +57,13 @@ class LongTextInput extends StatelessWidget {
                 ),
                 focusNode: focus,
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: submitCallback,
               ),
               flex: 20,
             ),
           ],
         );
       },
-      onSubmitCallback: callback,
-      controller: controller,
+      controller: pageController,
       fieldKey: key,
     );
   }

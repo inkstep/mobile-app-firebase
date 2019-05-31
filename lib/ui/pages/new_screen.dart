@@ -27,6 +27,14 @@ class _NewScreenState extends State<NewScreen> {
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController availabilityController = TextEditingController();
+  final TextEditingController depositController = TextEditingController();
+  final TextEditingController positionController = TextEditingController();
+  final TextEditingController mentalImageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -47,73 +55,51 @@ class _NewScreenState extends State<NewScreen> {
             scrollDirection: Axis.vertical,
             children: <Widget>[
               ShortTextInput(
-                controller: controller,
+                controller: nameController,
+                pageController: controller,
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
-                input: name,
                 maxLength: 16,
-                callback: (text) {
-                  name = text;
-                },
               ),
               InspirationImages(
                 controller: controller,
               ),
               LongTextInput(
-                controller: controller,
+                controller: mentalImageController,
                 label:
                     'Describe the image in your head of the tattoo you want?',
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
-                input: mentalImage,
-                callback: (term) {
-                  mentalImage = term;
-                },
               ),
               ShortTextInput(
-                controller: controller,
+                controller: positionController,
+                pageController: controller,
                 label: 'Where on your body do you want the tattoo',
                 hint: 'Lower left forearm',
-                input: position,
-                callback: (term) {
-                  position = term;
-                },
               ),
               ShortTextInput(
-                controller: controller,
+                controller: sizeController,
+                pageController: controller,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
-                input: size,
-                callback: (text) {
-                  size = text;
-                },
               ),
               ShortTextInput(
-                controller: controller,
+                controller: availabilityController,
+                pageController: controller,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
-                input: availability,
-                callback: (text) {
-                  availability = text;
-                },
               ),
               ShortTextInput(
-                controller: controller,
+                controller: depositController,
+                pageController: controller,
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
-                input: deposit,
-                callback: (text) {
-                  deposit = text;
-                },
               ),
               ShortTextInput(
-                controller: controller,
+                controller: emailController,
+                pageController: controller,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
-                input: email,
-                callback: (text) {
-                  email = text;
-                },
               ),
               RaisedButton(
                 onPressed: () {
@@ -125,13 +111,13 @@ class _NewScreenState extends State<NewScreen> {
                         // TODO(DJRHails): Don't hardcode these
                         artistName: 'Ricky',
                         studioName: 'South City Market',
-                        name: name,
-                        size: size,
-                        email: email,
-                        availability: availability,
-                        deposit: deposit,
-                        mentalImage: mentalImage,
-                        position: position,
+                        name: nameController.text,
+                        size: sizeController.text,
+                        email: emailController.text,
+                        availability: availabilityController.text,
+                        deposit: depositController.text,
+                        mentalImage: mentalImageController.text,
+                        position: positionController.text,
                       ),
                     ),
                   );
