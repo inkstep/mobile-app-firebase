@@ -7,6 +7,7 @@ class LongTextInput extends StatelessWidget {
     @required this.callback,
     @required this.label,
     @required this.hint,
+    this.input,
     this.height = 400,
     Key key,
   }) : super(key: key);
@@ -16,6 +17,7 @@ class LongTextInput extends StatelessWidget {
 
   final String label;
   final String hint;
+  final String input;
   final double height;
 
   @override
@@ -41,6 +43,7 @@ class LongTextInput extends StatelessWidget {
                 maxLines: 5,
                 style: Theme.of(context).accentTextTheme.body1,
                 cursorColor: Theme.of(context).backgroundColor,
+                initialValue: input,
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: Theme.of(context).accentTextTheme.body1,

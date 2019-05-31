@@ -48,13 +48,13 @@ class _NewScreenState extends State<NewScreen> {
             children: <Widget>[
               ShortTextInput(
                 controller: controller,
-                callback: (text) {
-                  name = text;
-                },
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
                 input: name,
                 maxLength: 16,
+                callback: (text) {
+                  name = text;
+                },
               ),
               InspirationImages(
                 controller: controller,
@@ -65,6 +65,7 @@ class _NewScreenState extends State<NewScreen> {
                     'Describe the image in your head of the tattoo you want?',
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
+                input: mentalImage,
                 callback: (term) {
                   mentalImage = term;
                 },
@@ -73,6 +74,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'Where on your body do you want the tattoo',
                 hint: 'Lower left forearm',
+                input: position,
                 callback: (term) {
                   position = term;
                 },
@@ -81,6 +83,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
+                input: size,
                 callback: (text) {
                   size = text;
                 },
@@ -89,6 +92,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
+                input: availability,
                 callback: (text) {
                   availability = text;
                 },
@@ -97,6 +101,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
+                input: deposit,
                 callback: (text) {
                   deposit = text;
                 },
@@ -105,6 +110,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
+                input: email,
                 callback: (text) {
                   email = text;
                 },
