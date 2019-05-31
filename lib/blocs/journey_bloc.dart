@@ -19,6 +19,7 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     JourneyEvent event,
   ) async* {
     if (event is AddJourney) {
+      assert(event.journey != null);
       yield* _mapAddJourneyState(event);
     } else if (event is LoadJourneys) {
       yield* _mapLoadJourneyState(event);
