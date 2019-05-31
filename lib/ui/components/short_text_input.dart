@@ -12,14 +12,18 @@ class ShortTextInput extends StatelessWidget {
     this.hint,
     this.duration = 500,
     this.height = 100,
-    this.func
+    this.func,
+    this.input,
   });
+
+
 
   final void Function(String) func;
   final PageController formController;
   final Key textFieldKey;
   final String label;
   final String hint;
+  final String input;
   final double height;
   final int duration;
   final FocusNode focus = FocusNode();
@@ -44,6 +48,7 @@ class ShortTextInput extends StatelessWidget {
         padding: kPadding,
         child: Center(
           child: TextFormField(
+            initialValue: input,
             autofocus: true,
             key: textFieldKey,
             style: TextStyle(color: baseColors['dark'], fontSize: nameFontSize),
@@ -63,6 +68,7 @@ class ShortTextInput extends StatelessWidget {
               focus.unfocus();
               formController.nextPage(duration: Duration(milliseconds: duration), curve: kCurve);
             },
+            
           ),
         ));
   }

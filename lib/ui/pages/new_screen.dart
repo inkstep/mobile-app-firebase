@@ -59,6 +59,7 @@ class _NewScreenState extends State<NewScreen> {
                 func: (term) {
                   name = term;
                 },
+                name: name,
               ),
               ConceptQ(
                 controller: controller,
