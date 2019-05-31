@@ -19,20 +19,12 @@ class NewScreen extends StatefulWidget {
 }
 
 class _NewScreenState extends State<NewScreen> {
-  _NewScreenState() {
-    for (var key in formFields) {
-      formData.putIfAbsent(key, () => '');
-    }
-  }
-
   final PageController controller = PageController(
     initialPage: 0,
   );
 
-  List<String> formFields = ['name', 'email', 'mentalImage', 'position', 'size',
-    'availability', 'deposit', 'email'];
-
-  Map<String, String> formData = Map();
+  Map<String, String> formData = {'name':'', 'email':'', 'mentalImage':'',
+    'position':'', 'size':'', 'availability':'', 'depost':'', 'email':''};
 
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
@@ -62,11 +54,11 @@ class _NewScreenState extends State<NewScreen> {
               ShortTextInput(
                 controller: controller,
                 callback: (text) {
-                  formData["name"] = text;
+                  formData['name'] = text;
                 },
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
-                input: formData["name"],
+                input: formData['name'],
                 maxLength: 16,
               ),
               InspirationImages(
@@ -79,7 +71,7 @@ class _NewScreenState extends State<NewScreen> {
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
                 callback: (term) {
-                  formData["mentalImage"] = term;
+                  formData['mentalImage'] = term;
                 },
               ),
               ShortTextInput(
@@ -87,7 +79,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'Where on your body do you want the tattoo',
                 hint: 'Lower left forearm',
                 callback: (term) {
-                  formData["position"] = term;
+                  formData['position'] = term;
                 },
               ),
               ShortTextInput(
@@ -95,7 +87,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
                 callback: (text) {
-                  formData["size"] = text;
+                  formData['size'] = text;
                 },
               ),
               ShortTextInput(
@@ -103,7 +95,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
                 callback: (text) {
-                  formData["availability"] = text;
+                  formData['availability'] = text;
                 },
               ),
               ShortTextInput(
@@ -111,7 +103,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
                 callback: (text) {
-                  formData["deposit"] = text;
+                  formData['deposit'] = text;
                 },
               ),
               ShortTextInput(
@@ -119,23 +111,23 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
                 callback: (text) {
-                  formData["email"] = text;
+                  formData['email'] = text;
                 },
               ),
               RaisedButton(
                 onPressed: () {
                   bool missingParams = false;
 
-                  String missing = "";
+                  String missing = '';
 
                   for (var key in formData.keys) {
                     if (formData[key] == '') {
                       missingParams = true;
 
-                      if (missing == "") {
+                      if (missing == '') {
                         missing = key;
                       } else {
-                        missing += ", " + key;
+                        missing += ', ' + key;
                       }
                     }
                   }
@@ -143,7 +135,7 @@ class _NewScreenState extends State<NewScreen> {
                   if (missingParams) {
                     final snackbar = SnackBar(
                       content: Text(
-                        "You still need to provide us with " + missing,
+                        'You still need to provide us with ' + missing,
                         style: Theme.of(context).textTheme.subtitle,
                       ),
                       backgroundColor: Theme.of(context).backgroundColor,
@@ -159,13 +151,13 @@ class _NewScreenState extends State<NewScreen> {
                           // TODO(DJRHails): Don't hardcode these
                           artistName: 'Ricky',
                           studioName: 'South City Market',
-                          name: formData["name"],
-                          size: formData["size"],
-                          email: formData["email"],
-                          availability: formData["availability"],
-                          deposit: formData["deposit"],
-                          mentalImage: formData["mentalImage"],
-                          position: formData["position"],
+                          name: formData['name'],
+                          size: formData['size'],
+                          email: formData['email'],
+                          availability: formData['availability'],
+                          deposit: formData['deposit'],
+                          mentalImage: formData['mentalImage'],
+                          position: formData['position'],
                         ),
                       ),
                     );
