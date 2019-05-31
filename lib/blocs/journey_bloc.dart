@@ -32,18 +32,22 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
           List.from((currentState as JourneyLoaded).journeys)
             ..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
-      _saveJourneys(updatedJourneys);
+      _saveJourneys([event.journey]);
     }
   }
 
   void _saveJourneys(List<Journey> journeys) {
-    journeysRepository.saveJourneys(
-      journeys
-          .map<Map<String, dynamic>>(
-            (journey) => journey.toJson(),
-          )
-          .toList(),
-    );
+    for (Journey j in journeys) {
+      final mapped = j.toJson();
+      journeysRepository.saveJourneys([mapped]);
+    }
+//    final journeyMap = journeys
+//        .map<Map<String, dynamic>>(
+//          (journey) => journey.toJson(),
+//        )
+//        .toList();
+//    print(journeyMap);
+//    journeysRepository.saveJourneys(journeyMap);
   }
 
   Future<List<Journey>> _loadJourneys() async {
@@ -60,21 +64,4 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
       yield JourneyLoaded(journeys: journeys);
     }
   }
-
-//  Future<List<Post>> _fetchPosts(int startIndex, int limit) async {
-//    final response = await httpClient.get(
-//        'https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit');
-//    if (response.statusCode == 200) {
-//      final data = json.decode(response.body) as List;
-//      return data.map((rawPost) {
-//        return Post(
-//          id: rawPost['id'],
-//          title: rawPost['title'],
-//          body: rawPost['body'],
-//        );
-//      }).toList();
-//    } else {
-//      throw Exception('error fetching posts');
-//    }
-//  }
 }

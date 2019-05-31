@@ -32,7 +32,7 @@ class Inkstep extends StatefulWidget {
 
 class InkstepState extends State<Inkstep> {
   final JourneyBloc _journeyBloc = JourneyBloc(
-    journeysRepository: JourneysRepository(),
+    journeysRepository: JourneysRepository(webClient: WebClient()),
   );
 
   @override
