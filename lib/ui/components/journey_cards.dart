@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -75,19 +74,13 @@ class JourneyCard extends StatelessWidget {
                   // TODO(DJRHails): Should be Hero-d
                   child: Text(
                     '${model.artistName}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .body1
-                        .copyWith(color: baseColors['gray']),
+                    style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
                 Container(
                   // TODO(DJRHails): Should be Hero-d
                   child: Text('${model.studioName}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .title
-                          .copyWith(color: Theme.of(context).accentColor)),
+                      style: Theme.of(context).accentTextTheme.title),
                 ),
                 Spacer(),
               ],

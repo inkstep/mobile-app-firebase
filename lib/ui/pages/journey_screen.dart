@@ -32,10 +32,7 @@ class WelcomeBackHeader extends StatelessWidget {
           Container(
             child: Text(
               'Natasha',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headline,
             ),
           ),
           Container(height: 16.0),
