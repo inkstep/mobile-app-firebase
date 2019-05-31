@@ -19,18 +19,18 @@ class NewScreen extends StatefulWidget {
 }
 
 class _NewScreenState extends State<NewScreen> {
-  final PageController controller = PageController(
-    initialPage: 0,
-  );
-
-  var formFields = ["name", "email", "mentalImage", "position", "size",
-  "availability", "deposit", "email"];
-
   _NewScreenState() {
     for (var key in formFields) {
       formData.putIfAbsent(key, () => '');
     }
   }
+
+  final PageController controller = PageController(
+    initialPage: 0,
+  );
+
+  List<String> formFields = ['name', 'email', 'mentalImage', 'position', 'size',
+    'availability', 'deposit', 'email'];
 
   Map<String, String> formData = Map();
 
