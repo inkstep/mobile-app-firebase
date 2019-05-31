@@ -149,9 +149,8 @@ class _NewScreenState extends State<NewScreen> {
   }
 }
 
-class InspirationImagesQuestion extends StatefulWidget {
-  const InspirationImagesQuestion(
-      {Key key, this.controller, this.autoScrollDuration})
+class InspirationImages extends StatefulWidget {
+  const InspirationImages({Key key, this.controller, this.autoScrollDuration})
       : super(key: key);
 
   final PageController controller;
@@ -159,11 +158,11 @@ class InspirationImagesQuestion extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      _InspirationImagesQuestionState(controller, autoScrollDuration);
+      _InspirationImagesState(controller, autoScrollDuration);
 }
 
-class _InspirationImagesQuestionState extends State<StatefulWidget> {
-  _InspirationImagesQuestionState(this.controller, this.autoScrollDuration);
+class _InspirationImagesState extends State<StatefulWidget> {
+  _InspirationImagesState(this.controller, this.autoScrollDuration);
 
   final PageController controller;
   final int autoScrollDuration;
