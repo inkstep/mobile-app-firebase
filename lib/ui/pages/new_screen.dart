@@ -5,10 +5,11 @@ import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/blocs/journey_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
 import 'package:inkstep/ui/components/concept_question.dart';
-import 'package:inkstep/ui/components/deposit-question.dart';
-import 'package:inkstep/ui/components/email-question.dart';
+import 'package:inkstep/ui/components/deposit_question.dart';
+import 'package:inkstep/ui/components/email_question.dart';
 import 'package:inkstep/ui/components/location_question.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
@@ -28,7 +29,7 @@ class _NewScreenState extends State<NewScreen> {
     initialPage: 0,
   );
 
-  String name, mentalImage, size, email, availability, deposit;
+  String name, mentalImage, size, email, availability, deposit, position;
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
 
@@ -69,6 +70,13 @@ class _NewScreenState extends State<NewScreen> {
                 autoScrollDuration: autoScrollDuration,
                 func: (term) {
                   mentalImage = term;
+                },
+              ),
+              PositionQuestion(
+                controller: controller,
+                autoScrollDuration: autoScrollDuration,
+                func: (term) {
+                  position = term;
                 },
               ),
               SizingQuestion(
@@ -115,6 +123,7 @@ class _NewScreenState extends State<NewScreen> {
                         availability: availability,
                         deposit: deposit,
                         mentalImage: mentalImage,
+                        position: position,
                       ),
                     ),
                   );

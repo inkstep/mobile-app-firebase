@@ -13,6 +13,7 @@ class PositionQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShortTextInput(
       controller,
+      Key ('position'),
       label: 'Where on your body do you want the tattoo',
       hint: 'Lower left forearm',
       duration: autoScrollDuration,
