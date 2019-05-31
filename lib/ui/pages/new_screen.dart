@@ -53,56 +53,48 @@ class _NewScreenState extends State<NewScreen> {
             controller: controller,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              NameQ(
+              NameQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
                 func: (term) {
                   name = term;
                 },
               ),
               InspirationImagesQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
               ),
               MentalImageQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   mentalImage = term;
                 },
               ),
               PositionQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   position = term;
                 },
               ),
               SizingQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   size = term;
                 },
               ),
               AvailabilityQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   availability = term;
                 },
               ),
               DepositQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   deposit = term;
                 },
               ),
               EmailQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   email = term;
                 },
               ),
