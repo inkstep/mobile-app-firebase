@@ -7,9 +7,9 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
-import 'package:inkstep/ui/components/concept_question.dart';
 import 'package:inkstep/ui/components/deposit_question.dart';
 import 'package:inkstep/ui/components/email_question.dart';
+import 'package:inkstep/ui/components/inspiration_images_question.dart';
 import 'package:inkstep/ui/components/location_question.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
@@ -60,7 +60,7 @@ class _NewScreenState extends State<NewScreen> {
                   name = term;
                 },
               ),
-              ConceptQ(
+              InspirationImagesQuestion(
                 controller: controller,
                 autoScrollDuration: autoScrollDuration,
               ),
