@@ -35,12 +35,7 @@ class WebClient {
   Future<List<Map<String, dynamic>>> fetchJourneys() async {
     return Future.delayed(
       delay,
-      () => [
-            <String, dynamic>{
-              'artist': 'Ricky',
-              'studio': 'South City Market',
-            },
-          ],
+      () => [],
     );
   }
 

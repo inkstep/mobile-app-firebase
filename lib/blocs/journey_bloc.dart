@@ -19,35 +19,35 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     JourneyEvent event,
   ) async* {
     if (event is AddJourney) {
+      assert(event.journey != null);
       yield* _mapAddJourneyState(event);
     } else if (event is LoadJourneys) {
       yield* _mapLoadJourneyState(event);
     }
   }
 
+  Stream<JourneyState> _mapLoadJourneyState(LoadJourneys event) async* {
+    if (currentState is JourneyUninitialised) {
+      final List<Journey> journeys = await _loadJourneys();
+      yield JourneyLoaded(journeys: journeys);
+    }
+  }
+
   Stream<JourneyState> _mapAddJourneyState(AddJourney event) async* {
     if (currentState is JourneyLoaded) {
-      final List<Journey> updatedJourneys =
-          // ignore: avoid_as
-          List.from((currentState as JourneyLoaded).journeys)
-            ..add(event.journey);
+      final JourneyLoaded loadedState = currentState;
+      final updatedJourneys = List<Journey>.from(loadedState.journeys)
+        ..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
       _saveJourneys([event.journey]);
     }
   }
 
   void _saveJourneys(List<Journey> journeys) {
-    for (Journey j in journeys) {
-      final mapped = j.toJson();
-      journeysRepository.saveJourneys([mapped]);
-    }
-//    final journeyMap = journeys
-//        .map<Map<String, dynamic>>(
-//          (journey) => journey.toJson(),
-//        )
-//        .toList();
-//    print(journeyMap);
-//    journeysRepository.saveJourneys(journeyMap);
+    final journeyMap =
+        journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
+
+    journeysRepository.saveJourneys(journeyMap);
   }
 
   Future<List<Journey>> _loadJourneys() async {
@@ -56,12 +56,5 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     return jsonJourneys
         .map((jsonJourney) => Journey.fromJson(jsonJourney))
         .toList();
-  }
-
-  Stream<JourneyState> _mapLoadJourneyState(LoadJourneys event) async* {
-    if (currentState is JourneyUninitialised) {
-      final List<Journey> journeys = await _loadJourneys();
-      yield JourneyLoaded(journeys: journeys);
-    }
   }
 }

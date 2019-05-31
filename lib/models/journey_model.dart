@@ -5,7 +5,7 @@ class Journey extends Equatable {
   Journey({
     @required this.artistName,
     this.studioName = '',
-    this.artistEmail = 'daniel@hails.info',
+    this.artistEmail = 'james.dalboth@gmail.com',
     this.type = '',
     @required this.name,
     @required this.mentalImage,
