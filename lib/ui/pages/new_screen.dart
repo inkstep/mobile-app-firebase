@@ -1,22 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/blocs/journey_event.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/ui/components/availability_question.dart';
-import 'package:inkstep/ui/components/deposit_question.dart';
-import 'package:inkstep/ui/components/email_question.dart';
-import 'package:inkstep/ui/components/inspiration_images_question.dart';
-import 'package:inkstep/ui/components/location_question.dart';
 import 'package:inkstep/ui/components/logo.dart';
-import 'package:inkstep/ui/components/mental_image_question.dart';
-import 'package:inkstep/ui/components/name_question.dart';
-import 'package:inkstep/ui/components/sizing_question.dart';
+import 'package:inkstep/ui/components/long_text_input.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
-
-import '../../main.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class NewScreen extends StatefulWidget {
   @override
@@ -51,50 +46,67 @@ class _NewScreenState extends State<NewScreen> {
             controller: controller,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              NameQuestion(
+              ShortTextInput(
                 controller: controller,
-                func: (term) {
-                  name = term;
+                callback: (text) {
+                  name = text;
                 },
-                name: name,
+                label: 'What do your friends call you?',
+                hint: 'Natasha',
+                input: name,
+                maxLength: 16,
               ),
-              InspirationImagesQuestion(
+              InspirationImages(
                 controller: controller,
               ),
-              MentalImageQuestion(
+              LongTextInput(
                 controller: controller,
-                submitCallback: (term) {
+                label:
+                    'Describe the image in your head of the tattoo you want?',
+                hint:
+                    'A sleeping deer protecting a crown with stars splayed behind it',
+                callback: (term) {
                   mentalImage = term;
                 },
               ),
-              PositionQuestion(
+              ShortTextInput(
                 controller: controller,
-                submitCallback: (term) {
+                label: 'Where on your body do you want the tattoo',
+                hint: 'Lower left forearm',
+                callback: (term) {
                   position = term;
                 },
               ),
-              SizingQuestion(
+              ShortTextInput(
                 controller: controller,
-                submitCallback: (term) {
-                  size = term;
+                label: 'How big would you like your tattoo to be?(cm)',
+                hint: '7x3',
+                callback: (text) {
+                  size = text;
                 },
               ),
-              AvailabilityQuestion(
+              ShortTextInput(
                 controller: controller,
-                submitCallback: (term) {
-                  availability = term;
+                label: 'What days of the week are you normally available?',
+                hint: 'Mondays, Tuesdays and Saturdays',
+                callback: (text) {
+                  availability = text;
                 },
               ),
-              DepositQuestion(
+              ShortTextInput(
                 controller: controller,
-                submitCallback: (term) {
-                  deposit = term;
+                label: 'Are you happy to leave a deposit?',
+                hint: 'Yes!',
+                callback: (text) {
+                  deposit = text;
                 },
               ),
-              EmailQuestion(
+              ShortTextInput(
                 controller: controller,
-                submitCallback: (term) {
-                  email = term;
+                label: 'What is your email address?',
+                hint: 'example@inkstep.com',
+                callback: (text) {
+                  email = text;
                 },
               ),
               RaisedButton(
@@ -134,5 +146,161 @@ class _NewScreenState extends State<NewScreen> {
             ],
           ),
         ));
+  }
+}
+
+class InspirationImages extends StatefulWidget {
+  const InspirationImages({Key key, this.controller, this.autoScrollDuration})
+      : super(key: key);
+
+  final PageController controller;
+  final int autoScrollDuration;
+
+  @override
+  State<StatefulWidget> createState() =>
+      _InspirationImagesState(controller, autoScrollDuration);
+}
+
+class _InspirationImagesState extends State<StatefulWidget> {
+  _InspirationImagesState(this.controller, this.autoScrollDuration);
+
+  final PageController controller;
+  final int autoScrollDuration;
+
+  List<Asset> images = <Asset>[];
+
+  // ignore: unused_field
+  String _error;
+
+  Widget buildImageThumbnail(int i, double size) {
+    Widget inner;
+    if (i < images.length) {
+      final Asset asset = images[i];
+      inner = Container(
+        decoration: BoxDecoration(
+          border: Border.all(),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 3,
+              offset: Offset(-1, 1),
+            )
+          ],
+        ),
+        child: AssetThumb(
+          asset: asset,
+          width: size.floor(),
+          height: size.floor(),
+        ),
+      );
+    } else {
+      inner = Icon(
+        Icons.add,
+        size: 60.0,
+        color: baseColors['dark'],
+      );
+    }
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      width: size,
+      height: size,
+      child: InkWell(
+        child: inner,
+        onTap: updateAssets,
+      ),
+    );
+  }
+
+  Future<void> updateAssets() async {
+    List<Asset> resultList;
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+          maxImages: 6, selectedAssets: images);
+    } on PlatformException catch (e) {
+      setState(() {
+        _error = e.message;
+      });
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      images = resultList;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double thumbSizeFactor = images.length > 1 ? 0.18 : 0.2;
+    final double thumbSize =
+        MediaQuery.of(context).size.height * thumbSizeFactor;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              'Show us your inspiration',
+              style: Theme.of(context).accentTextTheme.title,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Choose some reference images, showing what you want. You'll get to talk about these later.",
+                    style: Theme.of(context).accentTextTheme.subhead,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(0, thumbSize),
+                  buildImageThumbnail(1, thumbSize)
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(2, thumbSize),
+                  buildImageThumbnail(3, thumbSize)
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(4, thumbSize),
+                  buildImageThumbnail(5, thumbSize)
+                ]),
+          ],
+        ),
+        images.length > 1
+            ? RaisedButton(
+                child: Text('That enough?'),
+                onPressed: () {
+                  controller.nextPage(
+                      duration: Duration(milliseconds: autoScrollDuration),
+                      curve: Curves.ease);
+                },
+              )
+            : Container(),
+      ],
+    );
   }
 }
