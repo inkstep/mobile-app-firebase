@@ -3,20 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 void main() {
-  const Key nameFieldKey = Key('name');
-
   group('Short Text Input', () {
     testWidgets('renders label and hint properly', (WidgetTester tester) async {
       await tester.pumpWidget(
-          MaterialApp(
-              home: Scaffold(
-                  body: ShortTextInput(
-                      null,
-                      nameFieldKey,
-                      label: 'label',
-                      hint: 'hint')
-              )
-          )
+        MaterialApp(
+          home: Scaffold(
+            body: ShortTextInput(
+                controller: null,
+                callback: (x) {},
+                label: 'label',
+                hint: 'hint'),
+          ),
+        ),
       );
       await tester.pumpAndSettle();
       expect(find.text('label'), findsOneWidget);
@@ -24,21 +22,24 @@ void main() {
     });
 
     // TODO(matt-malarkey): verify the transition with mock controller
-    testWidgets('transitions to next view on enter', (WidgetTester tester) async {
+    testWidgets('transitions to next view on enter',
+        (WidgetTester tester) async {
+      final inputKey = UniqueKey();
       await tester.pumpWidget(
-          MaterialApp(
-              home: Scaffold(
-                  body: ShortTextInput(
-                      null,
-                      nameFieldKey,
-                      label: 'label',
-                      hint: 'hint')
-              )
-          )
+        MaterialApp(
+          home: Scaffold(
+            body: ShortTextInput(
+                key: inputKey,
+                controller: null,
+                callback: (x) {},
+                label: 'label',
+                hint: 'hint'),
+          ),
+        ),
       );
       await tester.pumpAndSettle();
 
-      await tester.enterText(find.byKey(nameFieldKey), 'matthew');
+      await tester.enterText(find.byKey(inputKey), 'matthew');
     });
   });
 }
