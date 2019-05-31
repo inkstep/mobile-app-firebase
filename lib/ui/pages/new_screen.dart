@@ -23,15 +23,20 @@ class _NewScreenState extends State<NewScreen> {
     initialPage: 0,
   );
 
-  String name, mentalImage, size, email, availability, deposit, position;
+  Map<String, String> formData = {'name':'', 'email':'', 'mentalImage':'',
+    'position':'', 'size':'', 'availability':'', 'depost':'', 'email':''};
+
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
         key: formKey,
         child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Theme.of(context).cardColor,
           appBar: AppBar(
             title: Hero(
@@ -49,11 +54,11 @@ class _NewScreenState extends State<NewScreen> {
               ShortTextInput(
                 controller: controller,
                 callback: (text) {
-                  name = text;
+                  formData['name'] = text;
                 },
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
-                input: name,
+                input: formData['name'],
                 maxLength: 16,
               ),
               InspirationImages(
@@ -66,7 +71,7 @@ class _NewScreenState extends State<NewScreen> {
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
                 callback: (term) {
-                  mentalImage = term;
+                  formData['mentalImage'] = term;
                 },
               ),
               ShortTextInput(
@@ -74,7 +79,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'Where on your body do you want the tattoo',
                 hint: 'Lower left forearm',
                 callback: (term) {
-                  position = term;
+                  formData['position'] = term;
                 },
               ),
               ShortTextInput(
@@ -82,7 +87,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
                 callback: (text) {
-                  size = text;
+                  formData['size'] = text;
                 },
               ),
               ShortTextInput(
@@ -90,7 +95,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
                 callback: (text) {
-                  availability = text;
+                  formData['availability'] = text;
                 },
               ),
               ShortTextInput(
@@ -98,7 +103,7 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
                 callback: (text) {
-                  deposit = text;
+                  formData['deposit'] = text;
                 },
               ),
               ShortTextInput(
@@ -106,31 +111,59 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
                 callback: (text) {
-                  email = text;
+                  formData['email'] = text;
                 },
               ),
               RaisedButton(
                 onPressed: () {
-                  final JourneyBloc journeyBloc =
-                      BlocProvider.of<JourneyBloc>(context);
-                  journeyBloc.dispatch(
-                    AddJourney(
-                      Journey(
-                        // TODO(DJRHails): Don't hardcode these
-                        artistName: 'Ricky',
-                        studioName: 'South City Market',
-                        name: name,
-                        size: size,
-                        email: email,
-                        availability: availability,
-                        deposit: deposit,
-                        mentalImage: mentalImage,
-                        position: position,
+                  bool missingParams = false;
+
+                  String missing = '';
+
+                  for (var key in formData.keys) {
+                    if (formData[key] == '') {
+                      missingParams = true;
+
+                      if (missing == '') {
+                        missing = key;
+                      } else {
+                        missing += ', ' + key;
+                      }
+                    }
+                  }
+
+                  if (missingParams) {
+                    final snackbar = SnackBar(
+                      content: Text(
+                        'You still need to provide us with ' + missing,
+                        style: Theme.of(context).textTheme.subtitle,
                       ),
-                    ),
-                  );
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openJourneyScreen(context);
+                      backgroundColor: Theme.of(context).backgroundColor,
+                    );
+
+                    _scaffoldKey.currentState.showSnackBar(snackbar);
+                  } else {
+                    final JourneyBloc journeyBloc =
+                    BlocProvider.of<JourneyBloc>(context);
+                    journeyBloc.dispatch(
+                      AddJourney(
+                        Journey(
+                          // TODO(DJRHails): Don't hardcode these
+                          artistName: 'Ricky',
+                          studioName: 'South City Market',
+                          name: formData['name'],
+                          size: formData['size'],
+                          email: formData['email'],
+                          availability: formData['availability'],
+                          deposit: formData['deposit'],
+                          mentalImage: formData['mentalImage'],
+                          position: formData['position'],
+                        ),
+                      ),
+                    );
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openJourneyScreen(context);
+                  }
                 },
                 elevation: 15.0,
                 color: baseColors['dark'],
