@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class NameQ extends StatelessWidget {
