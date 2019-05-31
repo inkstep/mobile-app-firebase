@@ -23,7 +23,7 @@ void main() {
       expect(find.text('hint'), findsOneWidget);
     });
 
-    // TODO: verify the transition with mock controller
+    // TODO(matt-malarkey): verify the transition with mock controller
     testWidgets('transitions to next view on enter', (WidgetTester tester) async {
       await tester.pumpWidget(
           MaterialApp(
