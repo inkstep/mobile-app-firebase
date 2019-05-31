@@ -28,15 +28,28 @@ class _NewScreenState extends State<NewScreen> {
     initialPage: 0,
   );
 
-  String name, mentalImage, size, email, availability, deposit, position;
+  var formFields = ["name", "email", "mentalImage", "position", "size",
+  "availability", "deposit", "email"];
+
+  _NewScreenState() {
+    for (var key in formFields) {
+      formData.putIfAbsent(key, () => '');
+    }
+  }
+
+  Map<String, String> formData = Map();
+
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
         key: formKey,
         child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Theme.of(context).cardColor,
           appBar: AppBar(
             title: Hero(
@@ -54,9 +67,9 @@ class _NewScreenState extends State<NewScreen> {
               NameQuestion(
                 controller: controller,
                 func: (term) {
-                  name = term;
+                  formData["name"] = term;
                 },
-                name: name,
+                name: formData["name"],
               ),
               InspirationImagesQuestion(
                 controller: controller,
@@ -64,61 +77,89 @@ class _NewScreenState extends State<NewScreen> {
               MentalImageQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  mentalImage = term;
+                  formData["mentalImage"] = term;
                 },
               ),
               PositionQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  position = term;
+                  formData["position"] = term;
                 },
               ),
               SizingQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  size = term;
+                  formData["size"] = term;
                 },
               ),
               AvailabilityQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  availability = term;
+                  formData["availability"] = term;
                 },
               ),
               DepositQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  deposit = term;
+                  formData["deposit"] = term;
                 },
               ),
               EmailQuestion(
                 controller: controller,
                 submitCallback: (term) {
-                  email = term;
+                  formData["email"] = term;
                 },
               ),
               RaisedButton(
                 onPressed: () {
-                  final JourneyBloc journeyBloc =
-                      BlocProvider.of<JourneyBloc>(context);
-                  journeyBloc.dispatch(
-                    AddJourney(
-                      Journey(
-                        // TODO(DJRHails): Don't hardcode these
-                        artistName: 'Ricky',
-                        studioName: 'South City Market',
-                        name: name,
-                        size: size,
-                        email: email,
-                        availability: availability,
-                        deposit: deposit,
-                        mentalImage: mentalImage,
-                        position: position,
+                  bool missingParams = false;
+
+                  String missing = "";
+
+                  for (var key in formData.keys) {
+                    if (formData[key] == '') {
+                      missingParams = true;
+
+                      if (missing == "") {
+                        missing = key;
+                      } else {
+                        missing += ", " + key;
+                      }
+                    }
+                  }
+
+                  if (missingParams) {
+                    final snackbar = SnackBar(
+                      content: Text(
+                        "You still need to provide us with " + missing,
+                        style: Theme.of(context).textTheme.subtitle,
                       ),
-                    ),
-                  );
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openJourneyScreen(context);
+                      backgroundColor: Theme.of(context).backgroundColor,
+                    );
+
+                    _scaffoldKey.currentState.showSnackBar(snackbar);
+                  } else {
+                    final JourneyBloc journeyBloc =
+                    BlocProvider.of<JourneyBloc>(context);
+                    journeyBloc.dispatch(
+                      AddJourney(
+                        Journey(
+                          // TODO(DJRHails): Don't hardcode these
+                          artistName: 'Ricky',
+                          studioName: 'South City Market',
+                          name: formData["name"],
+                          size: formData["size"],
+                          email: formData["email"],
+                          availability: formData["availability"],
+                          deposit: formData["deposit"],
+                          mentalImage: formData["mentalImage"],
+                          position: formData["position"],
+                        ),
+                      ),
+                    );
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openJourneyScreen(context);
+                  }
                 },
                 elevation: 15.0,
                 color: baseColors['dark'],

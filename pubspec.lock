@@ -89,7 +89,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0"
+    version: "0.15.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -136,7 +136,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4+3"
+    version: "0.6.0+8"
   matcher:
     dependency: transitive
     description:
@@ -206,7 +206,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2+1"
+    version: "0.5.2+2"
   sky_engine:
     dependency: transitive
     description: flutter
