@@ -33,10 +33,22 @@ class _ConceptQState extends State<StatefulWidget> {
     Widget inner;
     if (i < images.length) {
       final Asset asset = images[i];
-      inner = AssetThumb(
-        asset: asset,
-        width: size.round(),
-        height: size.round(),
+      inner = Container(
+        decoration: BoxDecoration(
+          border: Border.all(),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 3,
+              offset: Offset(-1, 1),
+            )
+          ],
+        ),
+        child: AssetThumb(
+          asset: asset,
+          width: size.floor(),
+          height: size.floor(),
+        ),
       );
     } else {
       inner = Icon(
@@ -82,47 +94,65 @@ class _ConceptQState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double thumbSize = MediaQuery.of(context).size.width * 0.4;
+    final double thumbSizeFactor = images.length > 1 ? 0.18 : 0.2;
+    final double thumbSize =
+        MediaQuery.of(context).size.height * thumbSizeFactor;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          'Show us your inspiration',
-          style: Theme.of(context)
-              .textTheme
-              .title
-              .copyWith(color: baseColors['dark']),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              'Show us your inspiration',
+              style: Theme.of(context)
+                  .textTheme
+                  .title
+                  .copyWith(color: baseColors['dark']),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Choose some reference images, showing what you want. You'll get to talk about these later.",
+                    style: Theme.of(context)
+                        .textTheme
+                        .subhead
+                        .copyWith(color: baseColors['dark']),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: Text(
-            "Choose some reference images, showing what you want. You'll get to talk about these later.",
-            style: Theme.of(context)
-                .textTheme
-                .subhead
-                .copyWith(color: baseColors['dark']),
-          ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(0, thumbSize),
+                  buildImageThumbnail(1, thumbSize)
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(2, thumbSize),
+                  buildImageThumbnail(3, thumbSize)
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  buildImageThumbnail(4, thumbSize),
+                  buildImageThumbnail(5, thumbSize)
+                ]),
+          ],
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              buildImageThumbnail(0, thumbSize),
-              buildImageThumbnail(1, thumbSize)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              buildImageThumbnail(2, thumbSize),
-              buildImageThumbnail(3, thumbSize)
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              buildImageThumbnail(4, thumbSize),
-              buildImageThumbnail(5, thumbSize)
-            ]),
         images.length > 1
             ? RaisedButton(
                 child: Text('That enough?'),
