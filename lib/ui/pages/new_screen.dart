@@ -5,12 +5,12 @@ import 'package:inkstep/blocs/journey_bloc.dart';
 import 'package:inkstep/blocs/journey_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/availability_question.dart';
-import 'package:inkstep/ui/components/concept_question.dart';
 import 'package:inkstep/ui/components/deposit_question.dart';
 import 'package:inkstep/ui/components/email_question.dart';
+import 'package:inkstep/ui/components/inspiration_images_question.dart';
 import 'package:inkstep/ui/components/location_question.dart';
+import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
 import 'package:inkstep/ui/components/sizing_question.dart';
@@ -45,65 +45,55 @@ class _NewScreenState extends State<NewScreen> {
             ),
             elevation: 0.0,
             backgroundColor: Colors.transparent,
-            iconTheme: Theme.of(context)
-                .iconTheme
-                .copyWith(color: Theme.of(context).backgroundColor),
+            iconTheme: Theme.of(context).accentIconTheme,
           ),
           body: PageView(
             controller: controller,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              NameQ(
+              NameQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
                 func: (term) {
                   name = term;
                 },
                 name: name,
               ),
-              ConceptQ(
+              InspirationImagesQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
               ),
               MentalImageQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   mentalImage = term;
                 },
               ),
               PositionQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   position = term;
                 },
               ),
               SizingQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   size = term;
                 },
               ),
               AvailabilityQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   availability = term;
                 },
               ),
               DepositQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   deposit = term;
                 },
               ),
               EmailQuestion(
                 controller: controller,
-                autoScrollDuration: autoScrollDuration,
-                func: (term) {
+                submitCallback: (term) {
                   email = term;
                 },
               ),

@@ -6,8 +6,9 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 
 import '../../main.dart';
 
-class ConceptQ extends StatefulWidget {
-  const ConceptQ({Key key, this.controller, this.autoScrollDuration})
+class InspirationImagesQuestion extends StatefulWidget {
+  const InspirationImagesQuestion(
+      {Key key, this.controller, this.autoScrollDuration})
       : super(key: key);
 
   final PageController controller;
@@ -15,11 +16,11 @@ class ConceptQ extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      _ConceptQState(controller, autoScrollDuration);
+      _InspirationImagesQuestionState(controller, autoScrollDuration);
 }
 
-class _ConceptQState extends State<StatefulWidget> {
-  _ConceptQState(this.controller, this.autoScrollDuration);
+class _InspirationImagesQuestionState extends State<StatefulWidget> {
+  _InspirationImagesQuestionState(this.controller, this.autoScrollDuration);
 
   final PageController controller;
   final int autoScrollDuration;
@@ -105,10 +106,7 @@ class _ConceptQState extends State<StatefulWidget> {
           children: <Widget>[
             Text(
               'Show us your inspiration',
-              style: Theme.of(context)
-                  .textTheme
-                  .title
-                  .copyWith(color: baseColors['dark']),
+              style: Theme.of(context).accentTextTheme.title,
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -116,10 +114,7 @@ class _ConceptQState extends State<StatefulWidget> {
                 children: <Widget>[
                   Text(
                     "Choose some reference images, showing what you want. You'll get to talk about these later.",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subhead
-                        .copyWith(color: baseColors['dark']),
+                    style: Theme.of(context).accentTextTheme.subhead,
                     textAlign: TextAlign.center,
                   ),
                 ],
