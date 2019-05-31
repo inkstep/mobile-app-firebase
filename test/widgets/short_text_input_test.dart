@@ -10,7 +10,7 @@ void main() {
           home: Scaffold(
             body: ShortTextInput(
                 controller: null,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),
@@ -31,7 +31,7 @@ void main() {
             body: ShortTextInput(
                 key: inputKey,
                 controller: null,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),
