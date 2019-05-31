@@ -1,75 +1,62 @@
-import 'dart:core' as prefix0;
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
+import 'package:inkstep/ui/components/form_element_builder.dart';
 
 class ShortTextInput extends StatelessWidget {
-  ShortTextInput(
-    this.formController,
-    this.textFieldKey, {
-    this.label,
-    this.hint,
-    this.duration = 500,
-    this.height = 100,
-    this.func,
+  ShortTextInput({
+    @required this.controller,
+    @required this.callback,
+    @required this.label,
+    @required this.hint,
     this.input,
-  });
+    this.height = 100,
+    Key key,
+  }) : super(key: key);
 
+  final SubmitCallback callback;
+  final PageController controller;
 
-
-  final void Function(String) func;
-  final PageController formController;
-  final Key textFieldKey;
   final String label;
   final String hint;
   final String input;
   final double height;
-  final int duration;
-  final FocusNode focus = FocusNode();
 
   final kCurve = Curves.ease;
 
   final nameFontSize = 40.0;
   final labelFontSize = 16.0;
 
-  final InputBorder underlineBorder = UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: baseColors['dark'],
-      style: BorderStyle.solid,
-    ),
-  );
-
-  final EdgeInsets kPadding = const EdgeInsets.all(30);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: kPadding,
-        child: Center(
-          child: TextFormField(
-            initialValue: input,
-            autofocus: true,
-            key: textFieldKey,
-            style: TextStyle(color: baseColors['dark'], fontSize: nameFontSize),
-            cursorColor: baseColors['dark'],
-            decoration: InputDecoration(
-              hintText: hint,
-              labelText: label,
-              focusedBorder: underlineBorder,
-              enabledBorder: underlineBorder,
-              labelStyle: TextStyle(color: baseColors['dark'], fontSize: labelFontSize),
-              hintStyle: hintStyle,
-            ),
-            focusNode: focus,
-            textInputAction: TextInputAction.next,
-            onFieldSubmitted: (term) {
-              func(term);
-              focus.unfocus();
-              formController.nextPage(duration: Duration(milliseconds: duration), curve: kCurve);
-            },
-            
+    return FormElementBuilder(
+      builder: (context, focus, submitCallback) {
+        final theme = Theme.of(context);
+        final underline = UnderlineInputBorder(
+          borderSide: BorderSide(color: theme.backgroundColor),
+        );
+        return TextFormField(
+          initialValue: input,
+          autofocus: true,
+          maxLength: 16,
+          style: theme.accentTextTheme.headline,
+          cursorColor: theme.backgroundColor,
+          decoration: InputDecoration(
+            hintText: hint,
+            labelText: label,
+            focusedBorder: underline,
+            enabledBorder: underline,
+            labelStyle: theme.accentTextTheme.title,
+            hintStyle: hintStyle,
+            helperStyle: hintStyle,
           ),
-        ));
+          focusNode: focus,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: submitCallback,
+        );
+      },
+      onSubmitCallback: callback,
+      controller: controller,
+      fieldKey: key,
+    );
   }
 }

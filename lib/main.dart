@@ -54,28 +54,45 @@ class InkstepState extends State<Inkstep> {
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
-          textTheme: TextTheme(
-            headline: TextStyle(
-              fontSize: 32.0,
-              fontWeight: FontWeight.w400,
-            ),
-            title: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.w500,
-            ),
-            body1: TextStyle(
-              fontSize: 14.0,
-            ),
-          ),
+          textTheme: _getTextWithColor(baseColors['light']),
+          accentTextTheme: _getTextWithColor(baseColors['dark']),
+          iconTheme: _getIconWithColor(baseColors['light']),
+          accentIconTheme: _getIconWithColor(baseColors['light']),
           buttonTheme: ButtonThemeData(
             buttonColor: baseColors['dark'],
           ),
+          cursorColor: baseColors['dark'],
         ),
         home: Onboarding(),
       ),
       bloc: _journeyBloc,
     );
   }
+
+  TextTheme _getTextWithColor(Color color) => TextTheme(
+        headline: TextStyle(
+          fontSize: 40.0,
+          fontWeight: FontWeight.w400,
+          color: color,
+        ),
+        title: TextStyle(
+          fontSize: 28.0,
+          fontWeight: FontWeight.w500,
+          color: color,
+        ),
+        subhead: TextStyle(
+          fontSize: 20.0,
+          color: color,
+        ),
+        body1: TextStyle(
+          fontSize: 18.0,
+          color: color,
+        ),
+      );
+
+  IconThemeData _getIconWithColor(Color color) => IconThemeData(
+        color: color,
+      );
 
   @override
   void dispose() {
