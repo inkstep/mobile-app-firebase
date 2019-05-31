@@ -36,7 +36,7 @@ class _ConceptQState extends State<StatefulWidget> {
       inner = Container(
         decoration: BoxDecoration(
           border: Border.all(),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black,
               blurRadius: 3,
