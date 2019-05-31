@@ -11,7 +11,6 @@ import 'package:inkstep/ui/components/concept_question.dart';
 import 'package:inkstep/ui/components/deposit_question.dart';
 import 'package:inkstep/ui/components/email_question.dart';
 import 'package:inkstep/ui/components/location_question.dart';
-import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/mental_image_question.dart';
 import 'package:inkstep/ui/components/name_question.dart';
 import 'package:inkstep/ui/components/sizing_question.dart';
