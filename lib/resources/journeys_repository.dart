@@ -45,7 +45,7 @@ class WebClient {
       print(jsonStr);
 
       final http.Response response = await http.put(
-          'http://inkstep-backend.eu-west-2.elasticbeanstalk.com/journey',
+          'http://inkstep-backend.eu-west-2.elasticbeanstalk.com/v1/journey',
           body: jsonStr,
           headers: {'Content-Type': 'application/json'});
       print('Status Code: ${response.statusCode}');
