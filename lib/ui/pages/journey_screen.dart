@@ -32,10 +32,7 @@ class WelcomeBackHeader extends StatelessWidget {
           Container(
             child: Text(
               'Natasha',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.headline,
             ),
           ),
           Container(height: 16.0),
@@ -103,6 +100,7 @@ class _JourneyScreenState extends State<JourneyScreen>
             ),
           );
         } else if (state is JourneyLoaded) {
+          final JourneyLoaded loadedState = state;
           _controller.forward();
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
@@ -118,7 +116,8 @@ class _JourneyScreenState extends State<JourneyScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   WelcomeBackHeader(
-                    name: 'Natasha',
+                    // TODO(DJRHails): Use a user bloc
+                    name: loadedState.journeys.first.name,
                     tasksToComplete: 0,
                   ),
                   Expanded(

@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/long_text_input.dart';
 
 class MentalImageQuestion extends StatelessWidget {
-  const MentalImageQuestion({Key key, this.controller,
-    this.autoScrollDuration, this.func}) : super(key: key);
+  const MentalImageQuestion(
+      {Key key, this.controller, this.autoScrollDuration, this.submitCallback})
+      : super(key: key);
 
-  final void Function(String) func;
+  final void Function(String) submitCallback;
   final PageController controller;
   final int autoScrollDuration;
 
   @override
   Widget build(BuildContext context) {
-    return ShortTextInput(
-      controller,
-      Key('visualisation'),
+    return LongTextInput(
+      controller: controller,
       label: 'Describe the image in your head of the tattoo you want?',
-      hint: 'I picture a fierce fiery red dragon coiled around my neck',
-      duration: autoScrollDuration,
-      func: func,
+      hint: 'A sleeping deer protecting a crown with stars splayed behind it',
+      callback: submitCallback,
     );
   }
 }
