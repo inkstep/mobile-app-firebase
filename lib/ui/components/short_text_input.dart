@@ -9,7 +9,8 @@ class ShortTextInput extends StatelessWidget {
     @required this.label,
     @required this.hint,
     this.input,
-    this.height = 100,
+    // ignore: avoid_init_to_null
+    this.maxLength = null,
     Key key,
   }) : super(key: key);
 
@@ -19,7 +20,7 @@ class ShortTextInput extends StatelessWidget {
   final String label;
   final String hint;
   final String input;
-  final double height;
+  final int maxLength;
 
   final kCurve = Curves.ease;
 
@@ -37,7 +38,7 @@ class ShortTextInput extends StatelessWidget {
         return TextFormField(
           initialValue: input,
           autofocus: true,
-          maxLength: 16,
+          maxLength: maxLength,
           style: theme.accentTextTheme.headline,
           cursorColor: theme.backgroundColor,
           decoration: InputDecoration(
