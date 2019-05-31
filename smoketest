@@ -1,1 +1,3 @@
+#!/bin/sh
+
 flutter analyze && flutter test && flutter build apk
