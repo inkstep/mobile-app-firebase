@@ -26,6 +26,13 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     }
   }
 
+  Stream<JourneyState> _mapLoadJourneyState(LoadJourneys event) async* {
+    if (currentState is JourneyUninitialised) {
+      final List<Journey> journeys = await _loadJourneys();
+      yield JourneyLoaded(journeys: journeys);
+    }
+  }
+
   Stream<JourneyState> _mapAddJourneyState(AddJourney event) async* {
     if (currentState is JourneyLoaded) {
       final List<Journey> updatedJourneys =
@@ -57,12 +64,5 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     return jsonJourneys
         .map((jsonJourney) => Journey.fromJson(jsonJourney))
         .toList();
-  }
-
-  Stream<JourneyState> _mapLoadJourneyState(LoadJourneys event) async* {
-    if (currentState is JourneyUninitialised) {
-      final List<Journey> journeys = await _loadJourneys();
-      yield JourneyLoaded(journeys: journeys);
-    }
   }
 }
