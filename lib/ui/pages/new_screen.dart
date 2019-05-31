@@ -55,8 +55,8 @@ class _NewScreenState extends State<NewScreen> {
             scrollDirection: Axis.vertical,
             children: <Widget>[
               ShortTextInput(
-                controller: nameController,
-                pageController: controller,
+                controller: controller,
+                textController: nameController,
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
                 maxLength: 16,
@@ -65,39 +65,40 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
               ),
               LongTextInput(
-                controller: mentalImageController,
+                controller: controller,
+                textController: mentalImageController,
                 label:
                     'Describe the image in your head of the tattoo you want?',
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
               ),
               ShortTextInput(
-                controller: positionController,
-                pageController: controller,
+                controller: controller,
+                textController: positionController,
                 label: 'Where on your body do you want the tattoo',
                 hint: 'Lower left forearm',
               ),
               ShortTextInput(
-                controller: sizeController,
-                pageController: controller,
+                controller: controller,
+                textController: sizeController,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
               ),
               ShortTextInput(
-                controller: availabilityController,
-                pageController: controller,
+                controller: controller,
+                textController: availabilityController,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
               ),
               ShortTextInput(
-                controller: depositController,
-                pageController: controller,
+                controller: controller,
+                textController: depositController,
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
               ),
               ShortTextInput(
-                controller: emailController,
-                pageController: controller,
+                controller: controller,
+                textController: emailController,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
               ),

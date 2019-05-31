@@ -5,7 +5,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 class ShortTextInput extends StatelessWidget {
   ShortTextInput({
     @required this.controller,
-    @required this.pageController,
+    @required this.textController,
     @required this.label,
     @required this.hint,
     // ignore: avoid_init_to_null
@@ -13,8 +13,8 @@ class ShortTextInput extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  final PageController pageController;
-  final TextEditingController controller;
+  final PageController controller;
+  final TextEditingController textController;
 
   final String label;
   final String hint;
@@ -34,7 +34,7 @@ class ShortTextInput extends StatelessWidget {
           borderSide: BorderSide(color: theme.backgroundColor),
         );
         return TextFormField(
-          controller: controller,
+          controller: textController,
           autofocus: true,
           maxLength: maxLength,
           style: theme.accentTextTheme.headline,
@@ -52,7 +52,7 @@ class ShortTextInput extends StatelessWidget {
           textInputAction: TextInputAction.next,
         );
       },
-      controller: pageController,
+      controller: controller,
       fieldKey: key,
     );
   }
