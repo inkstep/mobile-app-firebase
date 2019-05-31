@@ -98,71 +98,104 @@ class _ConceptQState extends State<StatefulWidget> {
     final double thumbSize =
         MediaQuery.of(context).size.height * thumbSizeFactor;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'Show us your inspiration',
-              style: Theme.of(context)
-                  .textTheme
-                  .title
-                  .copyWith(color: baseColors['dark']),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Choose some reference images, showing what you want. You'll get to talk about these later.",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subhead
-                        .copyWith(color: baseColors['dark']),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+        Expanded(
+          flex: 8,
+          child: Column(
+            children: <Widget>[
+              Text(
+                'Show us your inspiration',
+                style: Theme.of(context)
+                    .textTheme
+                    .title
+                    .copyWith(color: baseColors['dark']),
               ),
-            ),
-          ],
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Choose some reference images, showing what you want. You'll get to talk about these later.",
+                      style: Theme.of(context)
+                          .textTheme
+                          .subhead
+                          .copyWith(color: baseColors['dark']),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  buildImageThumbnail(0, thumbSize),
-                  buildImageThumbnail(1, thumbSize)
-                ]),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  buildImageThumbnail(2, thumbSize),
-                  buildImageThumbnail(3, thumbSize)
-                ]),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  buildImageThumbnail(4, thumbSize),
-                  buildImageThumbnail(5, thumbSize)
-                ]),
-          ],
+        Expanded(
+          flex: 26,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(0, thumbSize),
+                      ),
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(1, thumbSize),
+                      ),
+                    ]),
+              ),
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(2, thumbSize),
+                      ),
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(3, thumbSize),
+                      ),
+                    ]),
+              ),
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(4, thumbSize),
+                      ),
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: buildImageThumbnail(5, thumbSize),
+                      ),
+                    ]),
+              ),
+            ],
+          ),
         ),
+        Spacer(flex: 1),
         images.length > 1
-            ? RaisedButton(
-                child: Text('That enough?'),
-                onPressed: () {
-                  controller.nextPage(
-                      duration: Duration(milliseconds: autoScrollDuration),
-                      curve: Curves.ease);
-                },
-              )
+            ? Expanded(
+                flex: 2,
+                child: RaisedButton(
+                  child: Text('That enough?'),
+                  onPressed: () {
+                    controller.nextPage(
+                        duration: Duration(milliseconds: autoScrollDuration),
+                        curve: Curves.ease);
+                  },
+                ))
             : Container(),
+        Spacer(flex: 1),
       ],
     );
   }
