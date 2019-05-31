@@ -66,7 +66,7 @@ class _NewScreenState extends State<NewScreen> {
                 },
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
-                input: name,
+                input: formData["name"],
                 maxLength: 16,
               ),
               InspirationImages(
