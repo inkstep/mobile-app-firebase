@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class DropdownMenu extends StatelessWidget {
   const DropdownMenu({
-    this.hintText,
-    this.items,
-    this.onChange,
+    @required this.hintText,
+    @required this.items,
+    @required this.onChange,
     Key key}) : super (key: key);
 
   final String hintText;

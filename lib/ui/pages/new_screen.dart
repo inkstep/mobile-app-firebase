@@ -31,7 +31,7 @@ class _NewScreenState extends State<NewScreen> {
     'position': '',
     'size': '',
     'availability': '',
-    'depost': '',
+    'deposit': '',
     'email': ''
   };
 
@@ -85,12 +85,7 @@ class _NewScreenState extends State<NewScreen> {
               ),
               PositionPicker(
                 controller: controller,
-              ),
-              ShortTextInput(
-                controller: controller,
-                label: 'help',
-                hint: '7x3',
-                callback: (text) {},
+                formData: formData,
               ),
               ShortTextInput(
                 controller: controller,
@@ -193,16 +188,22 @@ class _NewScreenState extends State<NewScreen> {
 }
 
 class PositionPicker extends StatefulWidget {
-  const PositionPicker({Key key, this.controller}) : super(key: key);
+  const PositionPicker({Key key,
+    @required this.controller,
+    @required this.formData}) : super(key:
+  key);
+
 
   final PageController controller;
+  final Map formData;
 
   @override
-  State<StatefulWidget> createState() => _PositionPickerState(controller);
+  State<StatefulWidget> createState() => _PositionPickerState(controller,
+      formData);
 }
 
 class _PositionPickerState extends State<StatefulWidget> {
-  _PositionPickerState(this.controller) {
+  _PositionPickerState(this.controller, this.formData) {
     positions = {
       'Leg': ['Lower Leg', 'Calf'],
       'Arm': ['Inner Wrist', 'Inner Arm', 'Biceps', 'Upper Arm', 'Side'],
@@ -216,6 +217,7 @@ class _PositionPickerState extends State<StatefulWidget> {
   }
 
   final PageController controller;
+  final Map formData;
 
   String generalPos;
   String specificPos;
@@ -280,6 +282,7 @@ class _PositionPickerState extends State<StatefulWidget> {
                       onChange: (value) {
                         setState(() {
                           specificPos = value;
+                          formData['position'] = specificPos;
                         });
                       },
                       items: generalPos == null ? [] : positions[generalPos],
