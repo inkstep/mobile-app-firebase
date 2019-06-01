@@ -7,6 +7,7 @@ import 'package:inkstep/blocs/journey_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/ui/components/dropdown_menu.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
@@ -23,8 +24,16 @@ class _NewScreenState extends State<NewScreen> {
     initialPage: 0,
   );
 
-  Map<String, String> formData = {'name':'', 'email':'', 'mentalImage':'',
-    'position':'', 'size':'', 'availability':'', 'depost':'', 'email':''};
+  Map<String, String> formData = {
+    'name': '',
+    'email': '',
+    'mentalImage': '',
+    'position': '',
+    'size': '',
+    'availability': '',
+    'depost': '',
+    'email': ''
+  };
 
   final dynamic formKey = GlobalKey<FormState>();
   int get autoScrollDuration => 500;
@@ -74,13 +83,14 @@ class _NewScreenState extends State<NewScreen> {
                   formData['mentalImage'] = term;
                 },
               ),
+              PositionPicker(
+                controller: controller,
+              ),
               ShortTextInput(
                 controller: controller,
-                label: 'Where on your body do you want the tattoo',
-                hint: 'Lower left forearm',
-                callback: (term) {
-                  formData['position'] = term;
-                },
+                label: 'help',
+                hint: '7x3',
+                callback: (text) {},
               ),
               ShortTextInput(
                 controller: controller,
@@ -144,7 +154,7 @@ class _NewScreenState extends State<NewScreen> {
                     _scaffoldKey.currentState.showSnackBar(snackbar);
                   } else {
                     final JourneyBloc journeyBloc =
-                    BlocProvider.of<JourneyBloc>(context);
+                        BlocProvider.of<JourneyBloc>(context);
                     journeyBloc.dispatch(
                       AddJourney(
                         Journey(
@@ -179,6 +189,106 @@ class _NewScreenState extends State<NewScreen> {
             ],
           ),
         ));
+  }
+}
+
+class PositionPicker extends StatefulWidget {
+  const PositionPicker({Key key, this.controller}) : super(key: key);
+
+  final PageController controller;
+
+  @override
+  State<StatefulWidget> createState() => _PositionPickerState(controller);
+}
+
+class _PositionPickerState extends State<StatefulWidget> {
+  _PositionPickerState(this.controller) {
+    positions = {
+      'Leg': ['Lower Leg', 'Calf'],
+      'Arm': ['Inner Wrist', 'Inner Arm', 'Biceps', 'Upper Arm', 'Side'],
+      'Chest': ['Full Front Chest', 'Pec', 'Ribs'],
+      'Foot': ['Ankle'],
+      'Head': ['Inner Ear', 'Behind Ear'],
+      'Hand': ['Fingers'],
+      'Back': ['Back', 'Shoulders', 'Neck'],
+      'Other': [],
+    };
+  }
+
+  final PageController controller;
+
+  String generalPos;
+  String specificPos;
+
+  Map<String, List<String>> positions;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Flexible(
+            flex: generalPos == 'Other' ? 10 : 4,
+              child: Text(
+            'Where would you like your tattoo? (Arm, leg,'
+            ' etc)',
+            style: Theme.of(context).accentTextTheme.title,
+            textAlign: TextAlign.center,
+          )),
+          Spacer(flex: 1),
+          Flexible(
+            flex: generalPos == 'Other' ? 10 : 3,
+            child: DropdownMenu(
+              hintText: generalPos == null ? 'General Area' : generalPos,
+              onChange: (value) {
+                setState(() {
+                  generalPos = value;
+                  specificPos = null;
+                });
+              },
+              items: positions.keys.toList(),
+            ),
+          ),
+          Spacer(flex: 1),
+          generalPos == 'Other' ? Spacer(flex: 1) : Flexible(
+            flex: 2,
+            child: Text(
+              'Specifics...',
+              style: Theme.of(context).accentTextTheme.title,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Spacer(flex: 1),
+          Flexible(
+            flex: generalPos == 'Other' ? 30 : 4,
+            child: Container(
+              child: generalPos == 'Other'
+                  ? ShortTextInput(
+                      controller: controller,
+                      callback: (text) {
+                        specificPos = text;
+                      },
+                      label: 'Enter custom location',
+                      hint: 'Bottom of foot',
+                      input: specificPos,
+                      maxLength: 30,
+                    )
+                  : DropdownMenu(
+                      hintText:
+                          specificPos == null ? 'Specifc Area' : specificPos,
+                      onChange: (value) {
+                        setState(() {
+                          specificPos = value;
+                        });
+                      },
+                      items: generalPos == null ? [] : positions[generalPos],
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
