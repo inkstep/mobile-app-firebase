@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/ui/components/text_button.dart';
 
 void main() {
@@ -12,6 +11,7 @@ void main() {
           home: Scaffold(
             body: TextButton(
               label: 'label',
+              onTap: () {},
             )
           ),
         ),
