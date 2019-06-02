@@ -71,7 +71,7 @@ class _JourneyScreenState extends State<JourneyScreen>
                 children: <Widget>[
                   WelcomeBackHeader(
                     // TODO(DJRHails): Use a user bloc
-                    name: loadedState.journeys.length == 0 ? '' : loadedState
+                    name: loadedState.journeys.isEmpty ? '' : loadedState
                         .journeys.first.name,
                     tasksToComplete: 0,
                   ),
