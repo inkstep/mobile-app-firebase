@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 class MockController extends Mock implements PageController {}
 
 void main() {
-  group('Short Text Input', () {
+  group('Short Text Input Form Element', () {
     testWidgets('renders label and hint properly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
