@@ -9,16 +9,16 @@ void main() {
   group('Form Element Builder', ()
   {
     testWidgets('Builds Text Object', (WidgetTester tester) async {
-      Text text = Text('test');
+      final Text text = Text('test');
 
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
               body: FormElementBuilder(
-                onSubmitCallback: (String ) {},
+                onSubmitCallback: (text) {},
                 controller: null,
                 builder: (BuildContext context, FocusNode focus,
-                    SubmitCallbackonSubmit) {return text;},
+                    SubmitCallback onSubmit) {return text;},
               )
           ),
         ),
@@ -31,7 +31,7 @@ void main() {
     testWidgets('Passes callback correctly', (WidgetTester tester) async {
       String testData = '';
 
-      PageController pageController = MockController();
+      final PageController pageController = MockController();
 
       await tester.pumpWidget(
         MaterialApp(
@@ -42,10 +42,10 @@ void main() {
                 },
                 controller: pageController,
                 builder: (BuildContext context, FocusNode focus,
-                    SubmitCallbackonSubmit) {
+                    SubmitCallback onSubmit) {
                   return FlatButton(
                     onPressed: () {
-                      SubmitCallbackonSubmit('test');
+                      onSubmit('test');
                     },
                     child: null,
                   );
