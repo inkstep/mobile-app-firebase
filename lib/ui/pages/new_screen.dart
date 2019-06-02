@@ -7,6 +7,7 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/dropdown_menu.dart';
+import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/inspiration_images.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input.dart';
@@ -224,75 +225,94 @@ class _PositionPickerState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Flexible(
-              flex: generalPos == 'Other' ? 10 : 4,
-              child: Text(
-                'Where would you like your tattoo? (Arm, leg,'
-                ' etc)',
-                style: Theme.of(context).accentTextTheme.title,
-                textAlign: TextAlign.center,
-              )),
-          Spacer(flex: 1),
-          Flexible(
-            flex: generalPos == 'Other' ? 10 : 3,
-            child: DropdownMenu(
-              hintText: generalPos == null ? 'General Area' : generalPos,
-              callback: (value) {
-                setState(() {
-                  generalPos = value;
-                  specificPos = null;
-                });
-              },
-              items: positions.keys.toList(),
-              controller: controller,
-            ),
-          ),
-          Spacer(flex: 1),
-          generalPos == 'Other'
-              ? Spacer(flex: 1)
-              : Flexible(
-                  flex: 2,
+    final theme = Theme.of(context);
+    final underline = UnderlineInputBorder(
+      borderSide: BorderSide(color: theme.backgroundColor),
+    );
+    return FormElementBuilder(
+      builder: (context, focus, onSubmitCallback) {
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Flexible(
+                  flex: generalPos == 'Other' ? 10 : 4,
                   child: Text(
-                    'Specifics...',
+                    'Where would you like your tattoo? (Arm, leg,'
+                    ' etc)',
                     style: Theme.of(context).accentTextTheme.title,
                     textAlign: TextAlign.center,
-                  ),
+                  )),
+              Spacer(flex: 1),
+              Flexible(
+                flex: generalPos == 'Other' ? 10 : 3,
+                child: DropdownMenu(
+                  hintText: generalPos == null ? 'General Area' : generalPos,
+                  callback: (value) {
+                    setState(() {
+                      generalPos = value;
+                      specificPos = null;
+                    });
+                  },
+                  items: positions.keys.toList(),
                 ),
-          Spacer(flex: 1),
-          Flexible(
-            flex: generalPos == 'Other' ? 30 : 4,
-            child: Container(
-              child: generalPos == 'Other'
-                  ? ShortTextInput(
-                      controller: controller,
-                      callback: (text) {
-                        specificPos = text;
-                      },
-                      label: 'Enter custom location',
-                      hint: 'Bottom of foot',
-                      input: specificPos,
-                      maxLength: 30,
-                    )
-                  : DropdownMenu(
-                      hintText:
-                          specificPos == null ? 'Specifc Area' : specificPos,
-                      callback: (value) {
-                        setState(() {
-                          specificPos = value;
-                          formData['position'] = specificPos;
-                        });
-                      },
-                      items: generalPos == null ? [] : positions[generalPos],
-                      controller: controller,
+              ),
+              Spacer(flex: 1),
+              generalPos == 'Other'
+                  ? Spacer(flex: 1)
+                  : Flexible(
+                      flex: 2,
+                      child: Text(
+                        'Specifics...',
+                        style: Theme.of(context).accentTextTheme.title,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-            ),
+              Spacer(flex: 1),
+              Flexible(
+                flex: generalPos == 'Other' ? 30 : 4,
+                child: Container(
+                  child: generalPos == 'Other'
+                      ? TextFormField(
+                          initialValue: specificPos,
+                          autofocus: true,
+                          maxLength: 20,
+                          style: theme.accentTextTheme.headline,
+                          cursorColor: theme.backgroundColor,
+                          decoration: InputDecoration(
+                            hintText: 'Specifc Area',
+                            labelText: 'Enter position',
+                            focusedBorder: underline,
+                            enabledBorder: underline,
+                            labelStyle: theme.accentTextTheme.title,
+                            hintStyle: hintStyle,
+                            helperStyle: hintStyle,
+                          ),
+                          focusNode: focus,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: onSubmitCallback,
+                        )
+                      : DropdownMenu(
+                          hintText: specificPos == null
+                              ? 'Specifc Area'
+                              : specificPos,
+                          callback: onSubmitCallback,
+                          items:
+                              generalPos == null ? [] : positions[generalPos],
+                        ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+      onSubmitCallback: (value) {
+        setState(() {
+          specificPos = value;
+          formData['position'] = specificPos;
+        });
+      }, 
+      controller: controller,
     );
   }
 }
