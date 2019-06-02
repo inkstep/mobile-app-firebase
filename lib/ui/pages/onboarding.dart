@@ -72,9 +72,10 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     final bottom = Container(
       child: Column(
         children: <Widget>[
-          BoldCallToAction(onTap: () {
-            nav.openNewScreen(context);
-          }),
+          BoldCallToAction(
+            onTap: () {nav.openNewScreen(context);},
+            label: "Let's get started!",
+          ),
           Padding(padding: buttonPadding),
           TextButton(
             onTap: () {

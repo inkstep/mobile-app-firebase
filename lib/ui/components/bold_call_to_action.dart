@@ -3,11 +3,13 @@ import 'package:inkstep/main.dart';
 
 class BoldCallToAction extends StatelessWidget {
   BoldCallToAction({
-    this.onTap,
+    @required this.onTap,
+    @required this.label,
     Key key,
   }) : super(key: key);
 
   final VoidCallback onTap;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class BoldCallToAction extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
-        "Let's get started!",
+        label,
         style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
       ),
     );

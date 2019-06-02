@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/text_button.dart';
+import 'package:inkstep/ui/components/bold_call_to_action.dart';
 
 void main() {
-  group('Text Button', ()
+  group('Bold Call To Action', ()
   {
     testWidgets('renders text properly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TextButton(
+            body: BoldCallToAction(
               label: 'label',
               onTap: () {},
             )
