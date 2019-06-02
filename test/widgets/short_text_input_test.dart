@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
-import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:mockito/mockito.dart';
 
 class MockController extends Mock implements PageController {}
@@ -13,9 +12,12 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ShortTextInput(
-                callback: (x) {},
-                label: 'label',
-                hint: 'hint'),
+              callback: (x) {},
+              label: 'label',
+              hint: 'hint',
+              maxLength: 40,
+              input: null,
+            ),
           ),
         ),
       );
@@ -35,6 +37,7 @@ void main() {
               label: 'label',
               hint: 'hint',
               maxLength: 4,
+              input: null,
             ),
           ),
         ),
