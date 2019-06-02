@@ -22,11 +22,6 @@ class ShortTextInputFormElement extends StatelessWidget {
   final String input;
   final int maxLength;
 
-  final kCurve = Curves.ease;
-
-  final nameFontSize = 40.0;
-  final labelFontSize = 16.0;
-
   @override
   Widget build(BuildContext context) {
     return FormElementBuilder(
