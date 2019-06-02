@@ -7,7 +7,6 @@ class LongTextInput extends StatelessWidget {
     @required this.callback,
     @required this.label,
     @required this.hint,
-    this.height = 400,
     Key key,
   }) : super(key: key);
 
@@ -16,7 +15,6 @@ class LongTextInput extends StatelessWidget {
 
   final String label;
   final String hint;
-  final double height;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/long_text_input.dart';
 import 'package:mockito/mockito.dart';
 
 class MockController extends Mock implements PageController {}
@@ -11,7 +11,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInput(
+            body: LongTextInput(
                 controller: null,
                 callback: (x) {},
                 label: 'label',
@@ -32,7 +32,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInput(
+            body: LongTextInput(
                 key: inputKey,
                 controller: controller,
                 callback: (x) {},
@@ -50,32 +50,9 @@ void main() {
       expect(find.text('matthew'), findsOneWidget);
 
       verify(controller.nextPage(
-          duration: anyNamed('duration'), curve: anyNamed('curve')));
+          duration: anyNamed('duration'),
+          curve: anyNamed('curve'))
+      );
     });
-  });
-
-  testWidgets('max length works correct', (WidgetTester tester) async {
-    final PageController controller = MockController();
-
-    final inputKey = UniqueKey();
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: ShortTextInput(
-            key: inputKey,
-            controller: controller,
-            callback: (x) {},
-            label: 'label',
-            hint: 'hint',
-            maxLength: 4,
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    await tester.enterText(find.byKey(inputKey), 'matthew');
-
-    expect(find.text('matt'), findsOneWidget);
   });
 }
