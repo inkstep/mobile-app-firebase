@@ -75,8 +75,10 @@ class _NewScreenState extends State<NewScreen> {
               ),
               LongTextInput(
                 controller: controller,
-                label: 'Describe the image in your head of the tattoo you want?',
-                hint: 'A sleeping deer protecting a crown with stars splayed behind it',
+                label:
+                    'Describe the image in your head of the tattoo you want?',
+                hint:
+                    'A sleeping deer protecting a crown with stars splayed behind it',
                 callback: (term) {
                   formData['mentalImage'] = term;
                 },
@@ -146,7 +148,8 @@ class _NewScreenState extends State<NewScreen> {
 
                     _scaffoldKey.currentState.showSnackBar(snackbar);
                   } else {
-                    final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
+                    final JourneyBloc journeyBloc =
+                        BlocProvider.of<JourneyBloc>(context);
                     journeyBloc.dispatch(
                       AddJourney(
                         Journey(
@@ -171,7 +174,8 @@ class _NewScreenState extends State<NewScreen> {
                 color: baseColors['dark'],
                 textColor: baseColors['light'],
                 padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   "Let's contact your artist!",
                   style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
@@ -184,14 +188,16 @@ class _NewScreenState extends State<NewScreen> {
 }
 
 class PositionPicker extends StatefulWidget {
-  const PositionPicker({Key key, @required this.controller, @required this.formData})
+  const PositionPicker(
+      {Key key, @required this.controller, @required this.formData})
       : super(key: key);
 
   final PageController controller;
   final Map formData;
 
   @override
-  State<StatefulWidget> createState() => _PositionPickerState(controller, formData);
+  State<StatefulWidget> createState() =>
+      _PositionPickerState(controller, formData);
 }
 
 class _PositionPickerState extends State<StatefulWidget> {
@@ -235,13 +241,14 @@ class _PositionPickerState extends State<StatefulWidget> {
             flex: generalPos == 'Other' ? 10 : 3,
             child: DropdownMenu(
               hintText: generalPos == null ? 'General Area' : generalPos,
-              onChange: (value) {
+              callback: (value) {
                 setState(() {
                   generalPos = value;
                   specificPos = null;
                 });
               },
               items: positions.keys.toList(),
+              controller: controller,
             ),
           ),
           Spacer(flex: 1),
@@ -271,14 +278,16 @@ class _PositionPickerState extends State<StatefulWidget> {
                       maxLength: 30,
                     )
                   : DropdownMenu(
-                      hintText: specificPos == null ? 'Specifc Area' : specificPos,
-                      onChange: (value) {
+                      hintText:
+                          specificPos == null ? 'Specifc Area' : specificPos,
+                      callback: (value) {
                         setState(() {
                           specificPos = value;
                           formData['position'] = specificPos;
                         });
                       },
                       items: generalPos == null ? [] : positions[generalPos],
+                      controller: controller,
                     ),
             ),
           ),
