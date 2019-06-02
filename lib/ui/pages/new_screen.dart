@@ -10,7 +10,7 @@ import 'package:inkstep/ui/components/dropdown_menu.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/inspiration_images.dart';
 import 'package:inkstep/ui/components/logo.dart';
-import 'package:inkstep/ui/components/long_text_input.dart';
+import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -74,7 +74,7 @@ class _NewScreenState extends State<NewScreen> {
               InspirationImages(
                 controller: controller,
               ),
-              LongTextInput(
+              LongTextInputFormElement(
                 controller: controller,
                 label:
                     'Describe the image in your head of the tattoo you want?',

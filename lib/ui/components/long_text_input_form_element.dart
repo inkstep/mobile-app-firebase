@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
-class LongTextInput extends StatelessWidget {
-  LongTextInput({
+class LongTextInputFormElement extends StatelessWidget {
+  LongTextInputFormElement({
     @required this.controller,
     @required this.callback,
     @required this.label,
