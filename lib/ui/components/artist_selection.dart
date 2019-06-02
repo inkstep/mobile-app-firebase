@@ -17,7 +17,7 @@ class ArtistProfileRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AssetImage profileImage;
-    File profileFile = File(imagePath);
+    final File profileFile = File(imagePath);
     if (profileFile.existsSync()) {
       profileImage = AssetImage(imagePath);
     } else {
