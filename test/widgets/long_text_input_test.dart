@@ -19,7 +19,6 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('label'), findsOneWidget);
       expect(find.text('hint'), findsOneWidget);
     });
   });
