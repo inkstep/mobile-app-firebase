@@ -80,6 +80,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
             onTap: () {
               nav.openJourneyScreen(context);
             },
+            label: "I'M ON A NEW DEVICE",
           ),
           Padding(padding: buttonPadding),
         ],
