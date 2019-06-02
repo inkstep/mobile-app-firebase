@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:mockito/mockito.dart';
+
+class MockController extends Mock implements PageController {}
 
 void main() {
   group('Short Text Input', () {
@@ -21,16 +24,17 @@ void main() {
       expect(find.text('hint'), findsOneWidget);
     });
 
-    // TODO(matt-malarkey): verify the transition with mock controller
     testWidgets('transitions to next view on enter',
         (WidgetTester tester) async {
+      final PageController controller = MockController();
+
       final inputKey = UniqueKey();
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: ShortTextInput(
                 key: inputKey,
-                controller: null,
+                controller: controller,
                 callback: (x) {},
                 label: 'label',
                 hint: 'hint'),
@@ -40,6 +44,15 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byKey(inputKey), 'matthew');
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pump();
+
+      expect(find.text('matthew'), findsOneWidget);
+
+      verify(controller.nextPage(
+          duration: anyNamed('duration'),
+          curve: anyNamed('curve'))
+      );
     });
   });
 }
