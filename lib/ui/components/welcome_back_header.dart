@@ -27,13 +27,14 @@ class WelcomeBackHeader extends StatelessWidget {
           ),
           Container(
             child: Text(
-              'Natasha',
+              name,
               style: Theme.of(context).textTheme.headline,
             ),
           ),
           Container(height: 16.0),
           Text(
-            'You have some journey tasks to complete',
+            'You have ' + tasksToComplete.toString() +
+                ' journey tasks to complete',
             style: Theme.of(context)
                 .textTheme
                 .body1
