@@ -226,10 +226,6 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final underline = UnderlineInputBorder(
-      borderSide: BorderSide(color: theme.backgroundColor),
-    );
     return FormElementBuilder(
       builder: (context, focus, onSubmitCallback) {
         return Container(

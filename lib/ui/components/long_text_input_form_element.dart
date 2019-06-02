@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
+import 'long_text_input.dart';
+
 class LongTextInputFormElement extends StatelessWidget {
   LongTextInputFormElement({
     @required this.controller,
@@ -33,25 +35,10 @@ class LongTextInputFormElement extends StatelessWidget {
             ),
             Spacer(flex: 1),
             Flexible(
-              child: TextFormField(
-                autofocus: true,
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
-                style: Theme.of(context).accentTextTheme.body1,
-                cursorColor: Theme.of(context).backgroundColor,
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: Theme.of(context).accentTextTheme.body1,
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide()),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).accentColor,
-                    ),
-                  ),
-                ),
-                focusNode: focus,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: submitCallback,
+              child: LongTextInput(
+                hint: hint,
+                focus: focus,
+                callback: submitCallback,
               ),
               flex: 20,
             ),
@@ -64,3 +51,5 @@ class LongTextInputFormElement extends StatelessWidget {
     );
   }
 }
+
+
