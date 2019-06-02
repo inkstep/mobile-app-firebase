@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:mockito/mockito.dart';
 
@@ -11,8 +12,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInputFormElement(
-                controller: null,
+            body: ShortTextInput(
                 callback: (x) {},
                 label: 'label',
                 hint: 'hint'),
@@ -24,44 +24,13 @@ void main() {
       expect(find.text('hint'), findsOneWidget);
     });
 
-    testWidgets('transitions to next view on enter',
-        (WidgetTester tester) async {
-      final PageController controller = MockController();
-
-      final inputKey = UniqueKey();
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: ShortTextInputFormElement(
-                key: inputKey,
-                controller: controller,
-                callback: (x) {},
-                label: 'label',
-                hint: 'hint'),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(inputKey), 'matthew');
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pump();
-
-      expect(find.text('matthew'), findsOneWidget);
-
-      verify(controller.nextPage(
-          duration: anyNamed('duration'), curve: anyNamed('curve'))
-      );
-    });
-
     testWidgets('max length works correct', (WidgetTester tester) async {
       final inputKey = UniqueKey();
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInputFormElement(
+            body: ShortTextInput(
               key: inputKey,
-              controller: null,
               callback: (x) {},
               label: 'label',
               hint: 'hint',
