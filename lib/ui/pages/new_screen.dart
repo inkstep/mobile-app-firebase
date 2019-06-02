@@ -11,6 +11,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/inspiration_images.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input_form_element.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -84,7 +85,7 @@ class _NewScreenState extends State<NewScreen> {
                   formData['mentalImage'] = term;
                 },
               ),
-              PositionPicker(
+              PositionPickerFormElement(
                 controller: controller,
                 formData: formData,
               ),
@@ -188,8 +189,8 @@ class _NewScreenState extends State<NewScreen> {
   }
 }
 
-class PositionPicker extends StatefulWidget {
-  const PositionPicker(
+class PositionPickerFormElement extends StatefulWidget {
+  const PositionPickerFormElement(
       {Key key, @required this.controller, @required this.formData})
       : super(key: key);
 
@@ -198,11 +199,11 @@ class PositionPicker extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      _PositionPickerState(controller, formData);
+      _PositionPickerFormElementState(controller, formData);
 }
 
-class _PositionPickerState extends State<StatefulWidget> {
-  _PositionPickerState(this.controller, this.formData) {
+class _PositionPickerFormElementState extends State<StatefulWidget> {
+  _PositionPickerFormElementState(this.controller, this.formData) {
     positions = {
       'Leg': ['Lower Leg', 'Calf'],
       'Arm': ['Inner Wrist', 'Inner Arm', 'Biceps', 'Upper Arm', 'Side'],
@@ -273,24 +274,12 @@ class _PositionPickerState extends State<StatefulWidget> {
                 flex: generalPos == 'Other' ? 30 : 4,
                 child: Container(
                   child: generalPos == 'Other'
-                      ? TextFormField(
-                          initialValue: specificPos,
-                          autofocus: true,
+                      ? ShortTextInput(
+                          label: 'Specific Area',
+                          input: specificPos,
+                          hint: 'butt hole',
                           maxLength: 20,
-                          style: theme.accentTextTheme.headline,
-                          cursorColor: theme.backgroundColor,
-                          decoration: InputDecoration(
-                            hintText: 'Specifc Area',
-                            labelText: 'Enter position',
-                            focusedBorder: underline,
-                            enabledBorder: underline,
-                            labelStyle: theme.accentTextTheme.title,
-                            hintStyle: hintStyle,
-                            helperStyle: hintStyle,
-                          ),
-                          focusNode: focus,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: onSubmitCallback,
+                          callback: onSubmitCallback,
                         )
                       : DropdownMenu(
                           hintText: specificPos == null

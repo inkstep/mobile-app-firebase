@@ -50,7 +50,8 @@ void main() {
       expect(find.text('matthew'), findsOneWidget);
 
       verify(controller.nextPage(
-          duration: anyNamed('duration'), curve: anyNamed('curve')));
+          duration: anyNamed('duration'), curve: anyNamed('curve'))
+      );
     });
   });
 

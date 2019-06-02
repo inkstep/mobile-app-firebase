@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 
 class ShortTextInputFormElement extends StatelessWidget {
   ShortTextInputFormElement({
@@ -31,29 +31,15 @@ class ShortTextInputFormElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormElementBuilder(
       builder: (context, focus, submitCallback) {
-        final theme = Theme.of(context);
-        final underline = UnderlineInputBorder(
-          borderSide: BorderSide(color: theme.backgroundColor),
-        );
-        return TextFormField(
-          initialValue: input,
-          autofocus: true,
-          maxLength: maxLength,
-          style: theme.accentTextTheme.headline,
-          cursorColor: theme.backgroundColor,
-          decoration: InputDecoration(
-            hintText: hint,
-            labelText: label,
-            focusedBorder: underline,
-            enabledBorder: underline,
-            labelStyle: theme.accentTextTheme.title,
-            hintStyle: hintStyle,
-            helperStyle: hintStyle,
-          ),
-          focusNode: focus,
-          textInputAction: TextInputAction.next,
-          onFieldSubmitted: submitCallback,
-        );
+        return
+          ShortTextInput(
+            input: input,
+            maxLength: maxLength,
+            hint: hint,
+            label: label,
+            focus: focus,
+            callback: submitCallback,
+          );
       },
       onSubmitCallback: callback,
       controller: controller,
@@ -61,3 +47,4 @@ class ShortTextInputFormElement extends StatelessWidget {
     );
   }
 }
+
