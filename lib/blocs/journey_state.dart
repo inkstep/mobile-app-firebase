@@ -16,9 +16,7 @@ class JourneyError extends JourneyState {
 }
 
 class JourneyLoaded extends JourneyState {
-  JourneyLoaded({
-    this.journeys,
-  }) : super(<dynamic>[journeys]);
+  JourneyLoaded({this.journeys}) : super(<dynamic>[journeys]);
 
   final List<Journey> journeys;
 
