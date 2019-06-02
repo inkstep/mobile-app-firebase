@@ -15,12 +15,11 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
   JourneyState get initialState => JourneyUninitialised();
 
   @override
-  Stream<JourneyState> mapEventToState(
-    JourneyEvent event,
-  ) async* {
+  Stream<JourneyState> mapEventToState(JourneyEvent event,) async* {
     if (event is AddJourney) {
-      assert(event.journey != null);
-      yield* _mapAddJourneyState(event);
+      if (event.journey != null) {
+        yield* _mapAddJourneyState(event);
+      }
     } else if (event is LoadJourneys) {
       yield* _mapLoadJourneyState(event);
     }
@@ -36,25 +35,19 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
   Stream<JourneyState> _mapAddJourneyState(AddJourney event) async* {
     if (currentState is JourneyLoaded) {
       final JourneyLoaded loadedState = currentState;
-      final updatedJourneys = List<Journey>.from(loadedState.journeys)
-        ..add(event.journey);
+      final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
       _saveJourneys([event.journey]);
     }
   }
 
   void _saveJourneys(List<Journey> journeys) {
-    final journeyMap =
-        journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
-
+    final journeyMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
     journeysRepository.saveJourneys(journeyMap);
   }
 
   Future<List<Journey>> _loadJourneys() async {
-    final List<Map<String, dynamic>> jsonJourneys =
-        await journeysRepository.loadJourneys();
-    return jsonJourneys
-        .map((jsonJourney) => Journey.fromJson(jsonJourney))
-        .toList();
+    final List<Map<String, dynamic>> jsonJourneys = await journeysRepository.loadJourneys();
+    return jsonJourneys.map((jsonJourney) => Journey.fromJson(jsonJourney)).toList();
   }
 }

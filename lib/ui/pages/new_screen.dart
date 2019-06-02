@@ -36,6 +36,7 @@ class _NewScreenState extends State<NewScreen> {
   };
 
   final dynamic formKey = GlobalKey<FormState>();
+
   int get autoScrollDuration => 500;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -75,10 +76,8 @@ class _NewScreenState extends State<NewScreen> {
               ),
               LongTextInput(
                 controller: controller,
-                label:
-                    'Describe the image in your head of the tattoo you want?',
-                hint:
-                    'A sleeping deer protecting a crown with stars splayed behind it',
+                label: 'Describe the image in your head of the tattoo you want?',
+                hint: 'A sleeping deer protecting a crown with stars splayed behind it',
                 callback: (term) {
                   formData['mentalImage'] = term;
                 },
@@ -148,8 +147,7 @@ class _NewScreenState extends State<NewScreen> {
 
                     _scaffoldKey.currentState.showSnackBar(snackbar);
                   } else {
-                    final JourneyBloc journeyBloc =
-                        BlocProvider.of<JourneyBloc>(context);
+                    final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
                     journeyBloc.dispatch(
                       AddJourney(
                         Journey(
@@ -174,8 +172,7 @@ class _NewScreenState extends State<NewScreen> {
                 color: baseColors['dark'],
                 textColor: baseColors['light'],
                 padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   "Let's contact your artist!",
                   style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
@@ -188,18 +185,14 @@ class _NewScreenState extends State<NewScreen> {
 }
 
 class PositionPicker extends StatefulWidget {
-  const PositionPicker({Key key,
-    @required this.controller,
-    @required this.formData}) : super(key:
-  key);
-
+  const PositionPicker({Key key, @required this.controller, @required this.formData})
+      : super(key: key);
 
   final PageController controller;
   final Map formData;
 
   @override
-  State<StatefulWidget> createState() => _PositionPickerState(controller,
-      formData);
+  State<StatefulWidget> createState() => _PositionPickerState(controller, formData);
 }
 
 class _PositionPickerState extends State<StatefulWidget> {
@@ -231,13 +224,13 @@ class _PositionPickerState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Flexible(
-            flex: generalPos == 'Other' ? 10 : 4,
+              flex: generalPos == 'Other' ? 10 : 4,
               child: Text(
-            'Where would you like your tattoo? (Arm, leg,'
-            ' etc)',
-            style: Theme.of(context).accentTextTheme.title,
-            textAlign: TextAlign.center,
-          )),
+                'Where would you like your tattoo? (Arm, leg,'
+                ' etc)',
+                style: Theme.of(context).accentTextTheme.title,
+                textAlign: TextAlign.center,
+              )),
           Spacer(flex: 1),
           Flexible(
             flex: generalPos == 'Other' ? 10 : 3,
@@ -253,14 +246,16 @@ class _PositionPickerState extends State<StatefulWidget> {
             ),
           ),
           Spacer(flex: 1),
-          generalPos == 'Other' ? Spacer(flex: 1) : Flexible(
-            flex: 2,
-            child: Text(
-              'Specifics...',
-              style: Theme.of(context).accentTextTheme.title,
-              textAlign: TextAlign.center,
-            ),
-          ),
+          generalPos == 'Other'
+              ? Spacer(flex: 1)
+              : Flexible(
+                  flex: 2,
+                  child: Text(
+                    'Specifics...',
+                    style: Theme.of(context).accentTextTheme.title,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
           Spacer(flex: 1),
           Flexible(
             flex: generalPos == 'Other' ? 30 : 4,
@@ -277,8 +272,7 @@ class _PositionPickerState extends State<StatefulWidget> {
                       maxLength: 30,
                     )
                   : DropdownMenu(
-                      hintText:
-                          specificPos == null ? 'Specifc Area' : specificPos,
+                      hintText: specificPos == null ? 'Specifc Area' : specificPos,
                       onChange: (value) {
                         setState(() {
                           specificPos = value;
@@ -296,15 +290,13 @@ class _PositionPickerState extends State<StatefulWidget> {
 }
 
 class InspirationImages extends StatefulWidget {
-  const InspirationImages({Key key, this.controller, this.autoScrollDuration})
-      : super(key: key);
+  const InspirationImages({Key key, this.controller, this.autoScrollDuration}) : super(key: key);
 
   final PageController controller;
   final int autoScrollDuration;
 
   @override
-  State<StatefulWidget> createState() =>
-      _InspirationImagesState(controller, autoScrollDuration);
+  State<StatefulWidget> createState() => _InspirationImagesState(controller, autoScrollDuration);
 }
 
 class _InspirationImagesState extends State<StatefulWidget> {
@@ -361,8 +353,7 @@ class _InspirationImagesState extends State<StatefulWidget> {
     List<Asset> resultList;
 
     try {
-      resultList = await MultiImagePicker.pickImages(
-          maxImages: 6, selectedAssets: images);
+      resultList = await MultiImagePicker.pickImages(maxImages: 6, selectedAssets: images);
     } on PlatformException catch (e) {
       setState(() {
         _error = e.message;
@@ -384,8 +375,7 @@ class _InspirationImagesState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     final double thumbSizeFactor = images.length > 1 ? 0.18 : 0.2;
-    final double thumbSize =
-        MediaQuery.of(context).size.height * thumbSizeFactor;
+    final double thumbSize = MediaQuery.of(context).size.height * thumbSizeFactor;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -441,8 +431,7 @@ class _InspirationImagesState extends State<StatefulWidget> {
                 child: Text('That enough?'),
                 onPressed: () {
                   controller.nextPage(
-                      duration: Duration(milliseconds: autoScrollDuration),
-                      curve: Curves.ease);
+                      duration: Duration(milliseconds: autoScrollDuration), curve: Curves.ease);
                 },
               )
             : Container(),
