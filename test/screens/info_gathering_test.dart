@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/ui/pages/new_screen.dart';
 
 void main() {
@@ -17,7 +17,7 @@ void main() {
       await tester.pumpWidget(screen);
 
       expect(find.text('What do your friends call you?'), findsOneWidget);
-      expect(find.byType(ShortTextInput), findsOneWidget);
+      expect(find.byType(ShortTextInputFormElement), findsOneWidget);
     });
 
     testWidgets('Inspiration accessible via scroll',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:mockito/mockito.dart';
 
 class MockController extends Mock implements PageController {}
@@ -11,7 +11,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInput(
+            body: ShortTextInputFormElement(
                 controller: null,
                 callback: (x) {},
                 label: 'label',
@@ -32,7 +32,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: ShortTextInput(
+            body: ShortTextInputFormElement(
                 key: inputKey,
                 controller: controller,
                 callback: (x) {},
@@ -61,7 +61,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: ShortTextInput(
+          body: ShortTextInputFormElement(
             key: inputKey,
             controller: controller,
             callback: (x) {},

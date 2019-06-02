@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
-class ShortTextInput extends StatelessWidget {
-  ShortTextInput({
+class ShortTextInputFormElement extends StatelessWidget {
+  ShortTextInputFormElement({
     @required this.controller,
     @required this.callback,
     @required this.label,

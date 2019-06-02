@@ -11,7 +11,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/inspiration_images.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class NewScreen extends StatefulWidget {
@@ -61,7 +61,7 @@ class _NewScreenState extends State<NewScreen> {
             controller: controller,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              ShortTextInput(
+              ShortTextInputFormElement(
                 controller: controller,
                 callback: (text) {
                   formData['name'] = text;
@@ -88,7 +88,7 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 formData: formData,
               ),
-              ShortTextInput(
+              ShortTextInputFormElement(
                 controller: controller,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
@@ -96,7 +96,7 @@ class _NewScreenState extends State<NewScreen> {
                   formData['size'] = text;
                 },
               ),
-              ShortTextInput(
+              ShortTextInputFormElement(
                 controller: controller,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
@@ -104,7 +104,7 @@ class _NewScreenState extends State<NewScreen> {
                   formData['availability'] = text;
                 },
               ),
-              ShortTextInput(
+              ShortTextInputFormElement(
                 controller: controller,
                 label: 'Are you happy to leave a deposit?',
                 hint: 'Yes!',
@@ -112,7 +112,7 @@ class _NewScreenState extends State<NewScreen> {
                   formData['deposit'] = text;
                 },
               ),
-              ShortTextInput(
+              ShortTextInputFormElement(
                 controller: controller,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
@@ -311,7 +311,7 @@ class _PositionPickerState extends State<StatefulWidget> {
           specificPos = value;
           formData['position'] = specificPos;
         });
-      }, 
+      },
       controller: controller,
     );
   }
