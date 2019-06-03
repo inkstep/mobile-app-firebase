@@ -18,9 +18,10 @@ class WebClient {
     for (Map<String, dynamic> journeyMap in journeys) {
       final String jsonStr = jsonEncode(journeyMap);
       print(jsonStr);
+      print('About to send');
 
       final http.Response response = await http.put(
-          'http://inkstep-backend.eu-west-2.elasticbeanstalk.com/v1/journey',
+          'http://inkstep-backend.eu-west-2.elasticbeanstalk.com/journey',
           body: jsonStr,
           headers: {'Content-Type': 'application/json'});
       print('Status Code: ${response.statusCode}');

@@ -6,7 +6,6 @@ class Journey extends Equatable {
     @required this.artistName,
     this.studioName = '',
     this.artistEmail = 'james.dalboth@gmail.com',
-    this.type = '',
     @required this.name,
     @required this.mentalImage,
     @required this.size,
@@ -18,7 +17,6 @@ class Journey extends Equatable {
           artistName,
           studioName,
           artistEmail,
-          type,
           name,
           mentalImage,
           size,
@@ -33,7 +31,6 @@ class Journey extends Equatable {
         studioName = '',
         artistEmail = json['artist_email'],
         name = json['user_name'],
-        type = json['tattoo'],
         mentalImage = json['desc'],
         size = json['size'],
         position = json['pos'],
@@ -51,17 +48,19 @@ class Journey extends Equatable {
   final String email;
   final String availability;
   final String deposit;
-  final String type;
 
   Map<String, dynamic> toJson() {
     final x = <String, dynamic>{
       'artist_name': artistName,
       'artist_email': artistEmail,
       'user_name': name,
-      'tattoo': type,
-      'desc': mentalImage,
+      'user_email' : email,
+      'studio_name' : studioName,
+      'tattoo_desc': mentalImage,
       'size': size,
-      'pos': position,
+      'position': position,
+      'availability' : availability,
+      'deposit' : deposit,
     };
     return x;
   }
