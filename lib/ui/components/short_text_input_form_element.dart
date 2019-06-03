@@ -35,10 +35,12 @@ class ShortTextInputFormElement extends StatelessWidget {
             hint: hint,
             label: label,
             focus: focus,
-            callback: (term) {},
+            //TODO Remove once availability refactored
+            callback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
           );
       },
-      onSubmitCallback: (term) {},
+      //TODO Remove once availability refactored
+      onSubmitCallback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
       controller: controller,
       fieldKey: key,
     );
