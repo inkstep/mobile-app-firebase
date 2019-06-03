@@ -8,7 +8,7 @@ class ShortTextInputFormElement extends StatelessWidget {
     @required this.textController,
     @required this.label,
     @required this.hint,
-    this.input,
+    this.onSubmitCallback,
     // ignore: avoid_init_to_null
     this.maxLength = null,
     Key key,
@@ -17,9 +17,11 @@ class ShortTextInputFormElement extends StatelessWidget {
   final PageController controller;
   final TextEditingController textController;
 
+  //TODO: Remove after availability has been refactored
+  final void Function(String) onSubmitCallback;
+
   final String label;
   final String hint;
-  final String input;
   final int maxLength;
 
   @override

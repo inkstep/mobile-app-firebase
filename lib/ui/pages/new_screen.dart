@@ -42,6 +42,10 @@ class _NewScreenState extends State<NewScreen> {
   int get autoScrollDuration => 500;
 
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -77,6 +81,7 @@ class _NewScreenState extends State<NewScreen> {
               ),
               LongTextInputFormElement(
                 controller: controller,
+                textController: descController,
                 label:
                     'Describe the image in your head of the tattoo you want?',
                 hint:
@@ -88,6 +93,7 @@ class _NewScreenState extends State<NewScreen> {
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: sizeController,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
               ),
@@ -95,6 +101,8 @@ class _NewScreenState extends State<NewScreen> {
                 controller: controller,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
+                //TODO: Refactor availability to 'pills' rather than text input
+                onSubmitCallback: (term) {formData['availability'] = term;},
                 ),
               BinaryInput(
                 controller: controller,
@@ -105,6 +113,7 @@ class _NewScreenState extends State<NewScreen> {
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: emailController,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
               ),
@@ -113,6 +122,9 @@ class _NewScreenState extends State<NewScreen> {
                   bool missingParams = false;
 
                   formData['name'] = nameController.text;
+                  formData['mentalImage'] = descController.text;
+                  formData['email'] = emailController.text;
+                  formData['size'] = sizeController.text;
 
                   String missing = '';
 
