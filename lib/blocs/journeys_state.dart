@@ -22,5 +22,5 @@ class JourneyLoaded extends JourneysState {
   final List<Journey> journeys;
 
   @override
-  String toString() => 'JourneyLoaded { journeys: ${journeys?.length}';
+  String toString() => 'JourneyLoaded { journeys: ${journeys?.length} }';
 }
