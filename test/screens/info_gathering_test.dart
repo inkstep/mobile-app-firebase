@@ -168,7 +168,7 @@ void main() {
           findsNothing);
       expect(find.text('What is your email address?'),
           findsNothing);
-      expect(find.text("Let's contact your artist!"), findsOneWidget);
+      expect(find.text('Check your details!'), findsOneWidget);
     });
 
     testWidgets('Error with imcomplete form', (WidgetTester tester) async {
@@ -177,10 +177,10 @@ void main() {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
-      await tester.tap(find.text("Let's contact your artist!"));
+      await tester.tap(find.text('Check your details!'));
       await tester.pump();
 
-      expect(find.text("Let's contact your artist!"), findsOneWidget);
+      expect(find.text('Check your details!'), findsOneWidget);
     });
 
     testWidgets('Submit disabled if not enough images selected',
