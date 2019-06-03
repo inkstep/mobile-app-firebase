@@ -3,36 +3,29 @@ import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
 
-import 'journey_event.dart';
-import 'journey_state.dart';
+import 'journeys_event.dart';
+import 'journeys_state.dart';
 
-class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
-  JourneyBloc({@required this.journeysRepository});
+class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
+  JourneysBloc({@required this.journeysRepository});
 
   final JourneysRepository journeysRepository;
 
   @override
-  JourneyState get initialState => JourneyUninitialised();
+  JourneysState get initialState => JourneysUninitialised();
 
   @override
-  Stream<JourneyState> mapEventToState(JourneyEvent event,) async* {
+  Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
       if (event.journey != null) {
-        yield* _mapAddJourneyState(event);
+        yield* _mapAddJourneysState(event);
       }
     } else if (event is LoadJourneys) {
-      yield* _mapLoadJourneyState(event);
+      yield* _mapLoadJourneysState(event);
     }
   }
 
-  Stream<JourneyState> _mapLoadJourneyState(LoadJourneys event) async* {
-    if (currentState is JourneyUninitialised) {
-      final List<Journey> journeys = await _loadJourneys();
-      yield JourneyLoaded(journeys: journeys);
-    }
-  }
-
-  Stream<JourneyState> _mapAddJourneyState(AddJourney event) async* {
+  Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
     if (currentState is JourneyLoaded) {
       final JourneyLoaded loadedState = currentState;
       final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
@@ -41,13 +34,20 @@ class JourneyBloc extends Bloc<JourneyEvent, JourneyState> {
     }
   }
 
-  void _saveJourneys(List<Journey> journeys) {
-    final journeyMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
-    journeysRepository.saveJourneys(journeyMap);
+  Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
+    if (currentState is JourneysUninitialised) {
+      final List<Journey> journeys = await _loadJourneys();
+      yield JourneyLoaded(journeys: journeys);
+    }
   }
 
   Future<List<Journey>> _loadJourneys() async {
     final List<Map<String, dynamic>> jsonJourneys = await journeysRepository.loadJourneys();
     return jsonJourneys.map((jsonJourney) => Journey.fromJson(jsonJourney)).toList();
+  }
+
+  void _saveJourneys(List<Journey> journeys) {
+    final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
+    journeysRepository.saveJourneys(journeysMap);
   }
 }

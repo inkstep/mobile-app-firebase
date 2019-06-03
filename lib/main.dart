@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
@@ -31,13 +31,13 @@ class Inkstep extends StatefulWidget {
 }
 
 class InkstepState extends State<Inkstep> {
-  final JourneyBloc _journeyBloc = JourneyBloc(
+  final JourneysBloc _journeyBloc = JourneysBloc(
     journeysRepository: JourneysRepository(webClient: WebClient()),
   );
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<JourneyBloc>(
+    return BlocProvider<JourneysBloc>(
       child: MaterialApp(
         title: 'inkstep',
         debugShowCheckedModeBanner: false,

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/blocs/journey_event.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/journey_model.dart';
@@ -150,8 +150,8 @@ class _NewScreenState extends State<NewScreen> {
 
                     _scaffoldKey.currentState.showSnackBar(snackbar);
                   } else {
-                    final JourneyBloc journeyBloc =
-                        BlocProvider.of<JourneyBloc>(context);
+                    final JourneysBloc journeyBloc =
+                        BlocProvider.of<JourneysBloc>(context);
                     journeyBloc.dispatch(
                       AddJourney(
                         Journey(

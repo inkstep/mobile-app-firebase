@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:inkstep/models/journey_model.dart';
 
-abstract class JourneyState extends Equatable {
-  JourneyState([List<dynamic> props = const <dynamic>[]]) : super(props);
+abstract class JourneysState extends Equatable {
+  JourneysState([List<dynamic> props = const <dynamic>[]]) : super(props);
 }
 
-class JourneyUninitialised extends JourneyState {
+class JourneysUninitialised extends JourneysState {
   @override
   String toString() => 'JourneyUninitialised';
 }
 
-class JourneyError extends JourneyState {
+class JourneyError extends JourneysState {
   @override
   String toString() => 'JourneyError';
 }
 
-class JourneyLoaded extends JourneyState {
+class JourneyLoaded extends JourneysState {
   JourneyLoaded({this.journeys}) : super(<dynamic>[journeys]);
 
   final List<Journey> journeys;

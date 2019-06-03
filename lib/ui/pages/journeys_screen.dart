@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journey_bloc.dart';
-import 'package:inkstep/blocs/journey_event.dart';
-import 'package:inkstep/blocs/journey_state.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
+import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 import 'package:inkstep/ui/components/welcome_back_header.dart';
 
-class JourneyScreen extends StatefulWidget {
-  const JourneyScreen({Key key, this.onInit}) : super(key: key);
+class JourneysScreen extends StatefulWidget {
+  const JourneysScreen({Key key, this.onInit}) : super(key: key);
 
   @override
-  _JourneyScreenState createState() => _JourneyScreenState();
+  _JourneysScreenState createState() => _JourneysScreenState();
 
   final void Function() onInit;
 }
 
-class _JourneyScreenState extends State<JourneyScreen>
+class _JourneysScreenState extends State<JourneysScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
 
@@ -39,11 +39,11 @@ class _JourneyScreenState extends State<JourneyScreen>
 
   @override
   Widget build(BuildContext context) {
-    final JourneyBloc journeyBloc = BlocProvider.of<JourneyBloc>(context);
-    return BlocBuilder<JourneyEvent, JourneyState>(
+    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+    return BlocBuilder<JourneysEvent, JourneysState>(
       bloc: journeyBloc,
-      builder: (BuildContext context, JourneyState state) {
-        if (state is JourneyUninitialised) {
+      builder: (BuildContext context, JourneysState state) {
+        if (state is JourneysUninitialised) {
           return Container(
             decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
             child: Center(
