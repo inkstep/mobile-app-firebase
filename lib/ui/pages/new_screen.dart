@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
@@ -36,6 +37,14 @@ class _NewScreenState extends State<NewScreen> {
     'deposit': '',
     'email': ''
   };
+
+  bool mon = false;
+  bool tues = false;
+  bool wed = false;
+  bool thurs = false;
+  bool fri = false;
+  bool sat = false;
+  bool sun = false;
 
   final dynamic formKey = GlobalKey<FormState>();
 
@@ -97,14 +106,16 @@ class _NewScreenState extends State<NewScreen> {
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
               ),
-              ShortTextInputFormElement(
+              AvailabilitySelector(
                 controller: controller,
-                textController: null,
-                label: 'What days of the week are you normally available?',
-                hint: 'Mondays, Tuesdays and Saturdays',
-                // TODO(Felination): Refactor availability to 'pills' rather than text input
-                onSubmitCallback: (term) {formData['availability'] = term;},
-                ),
+                monday: (checked) {mon = checked;},
+                tuesday: (checked) {tues = checked;},
+                wednesday: (checked) {wed = checked;},
+                thursday: (checked) {thurs = checked;},
+                friday: (checked) {fri = checked;},
+                saturday: (checked) {sat = checked;},
+                sunday: (checked) {sun = checked;},
+              ),
               BinaryInput(
                 controller: controller,
                 label: 'Are you happy to leave a deposit?',
@@ -237,8 +248,11 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                   flex: generalPos == 'Other' ? 10 : 4,
                   child: Text(
                     'Where would you like your tattoo? (Arm, leg,'
-                    ' etc)',
-                    style: Theme.of(context).accentTextTheme.title,
+                        ' etc)',
+                    style: Theme
+                        .of(context)
+                        .accentTextTheme
+                        .title,
                     textAlign: TextAlign.center,
                   )),
               Spacer(flex: 1),
@@ -259,33 +273,36 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
               generalPos == 'Other'
                   ? Spacer(flex: 1)
                   : Flexible(
-                      flex: 2,
-                      child: Text(
-                        'Specifics...',
-                        style: Theme.of(context).accentTextTheme.title,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                flex: 2,
+                child: Text(
+                  'Specifics...',
+                  style: Theme
+                      .of(context)
+                      .accentTextTheme
+                      .title,
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Spacer(flex: 1),
               Flexible(
                 flex: generalPos == 'Other' ? 30 : 4,
                 child: Container(
                   child: generalPos == 'Other'
                       ? ShortTextInput(
-                          controller: null,
-                          label: 'Specific Area',
-                          hint: 'butt hole',
-                          maxLength: 20,
-                          callback: (term) {},
-                        )
+                    controller: null,
+                    label: 'Specific Area',
+                    hint: '...',
+                    maxLength: 20,
+                    callback: onSubmitCallback,
+                  )
                       : DropdownMenu(
-                          hintText: formData['position'] == null
-                              ? 'Specifc Area'
-                              : formData['position'],
-                          callback: onSubmitCallback,
-                          items:
-                              generalPos == null ? [] : positions[generalPos],
-                        ),
+                    hintText: formData['position'] == null
+                        ? 'Specifc Area'
+                        : formData['position'],
+                    callback: onSubmitCallback,
+                    items:
+                    generalPos == null ? [] : positions[generalPos],
+                  ),
                 ),
               ),
             ],
@@ -301,3 +318,153 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
     );
   }
 }
+
+class AvailabilitySelector extends StatelessWidget {
+
+  const AvailabilitySelector({
+    Key key,
+    @required this.controller,
+    this.duration = 500,
+    @required this.monday,
+    @required this.tuesday,
+    @required this.wednesday,
+    @required this.thursday,
+    @required this.friday,
+    @required this.saturday,
+    this.sunday})
+      : super(key: key);
+
+  final PageController controller;
+  final int duration;
+  final BoolCallback monday;
+  final BoolCallback tuesday;
+  final BoolCallback wednesday;
+  final BoolCallback thursday;
+  final BoolCallback friday;
+  final BoolCallback saturday;
+  final BoolCallback sunday;
+
+
+  Widget build(BuildContext context) {
+    return FormElementBuilder(
+        builder: (context, focus, onSubmitCallback) {
+          return Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child:
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                          child:
+                          Text("Mon:", style: Theme.of(context).accentTextTheme.title,),
+                          flex: 1,
+                          ),
+                          Expanded(
+                            child:
+                            Text("Tues:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ),
+                          Expanded(
+                            child:
+                            Text("Wed:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ), Expanded(
+                            child:
+                            Text("Thurs:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ), Expanded(
+                            child:
+                            Text("Fri:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ), Expanded(
+                            child:
+                            Text("Sat:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ), Expanded(
+                            child:
+                            Text("Sun:", style: Theme.of(context).accentTextTheme.title,),
+                            flex: 1,
+                          ),
+                        ],
+                      ),
+                    flex: 10,
+                    ),
+                    Expanded(
+                      child:
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, monday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, tuesday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, wednesday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, thursday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, friday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, saturday),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildSwitch(context, sunday),
+                          ),
+                        ],
+                      ),
+                      flex: 10,
+                    ),
+                    ]
+                  ),
+                ),
+                  RaisedButton(
+                  onPressed: () {controller.nextPage(duration: Duration(milliseconds: duration), curve: Curves.ease);},
+                  elevation: 15.0,
+                  padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  child: Text(
+                    "Next!",
+                    style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+                  ),
+                ),
+              ],
+
+            ),
+          );
+        }
+    );
+  }
+
+  Widget _buildSwitch(BuildContext context, BoolCallback updateDay) {
+    return Switch(
+      value: false,
+      onChanged: updateDay,
+      inactiveTrackColor: Theme.of(context).primaryColor,
+    );
+  }
+
+}
+
+

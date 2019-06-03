@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 typedef ElementBuilder = Widget Function(
     BuildContext context, FocusNode focus, SubmitCallback onSubmit);
+
 typedef SubmitCallback = void Function(String);
+typedef BoolCallback = void Function(bool);
 
 class FormElementBuilder extends StatelessWidget {
   FormElementBuilder({
