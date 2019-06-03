@@ -24,6 +24,7 @@ const baseColors = ColorSwatch<String>(0xFF0A0D18, {
   'dark': Color(0xFF313639),
   'gray': Color(0xFF6b7080),
   'light': Color(0xFFFFFFFF),
+  'error': Color(0xFFFF0000)
 });
 
 class Inkstep extends StatefulWidget {
@@ -59,6 +60,7 @@ class InkstepState extends State<Inkstep> {
           accentTextTheme: _getTextWithColor(baseColors['dark']),
           iconTheme: _getIconWithColor(baseColors['light']),
           accentIconTheme: _getIconWithColor(baseColors['light']),
+          primaryTextTheme: _getTextWithColor(baseColors['error']),
           buttonTheme: ButtonThemeData(
             buttonColor: baseColors['dark'],
           ),
@@ -88,6 +90,11 @@ class InkstepState extends State<Inkstep> {
         body1: TextStyle(
           fontSize: 18.0,
           color: color,
+        ),
+        subtitle: TextStyle(
+          fontSize: 20.0,
+          color: color,
+          fontWeight: FontWeight.w500,
         ),
       );
 
