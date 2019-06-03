@@ -17,9 +17,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
-      print("Hello");
       if (event.journey != null) {
-        print("Hi");
         yield* _mapAddJourneysState(event);
       }
     } else if (event is LoadJourneys) {
@@ -28,9 +26,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    print("1");
     if (currentState is JourneyLoaded) {
-      print("2");
       final JourneyLoaded loadedState = currentState;
       final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
@@ -56,7 +52,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   void _saveJourneys(List<Journey> journeys) {
-    print('delta');
     final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
     journeysRepository.saveJourneys(journeysMap);
   }
