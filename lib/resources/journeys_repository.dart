@@ -11,14 +11,16 @@ class JourneysRepository {
   final WebClient webClient;
 
   /// Loads journeys from a Web Client.
-  Future<List<Map<String, dynamic>>> loadJourneys() async {
-    return await webClient.fetchJourneys();
+  Future<List<Journey>> loadJourneys() async {
+    List<Map<String, dynamic>> mapped = await webClient.loadJourneys();
+    return mapped.map((jsonJourney) => Journey.fromJson(jsonJourney)).toList();
   }
 
   // Persists journeys to the web
-  Future saveJourneys(List<Map<String, dynamic>> journeys) {
+  Future saveJourneys(List<Journey> journeys) {
+    final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
     return Future.wait<dynamic>([
-      webClient.postJourneys(journeys),
+      webClient.saveJourneys(journeysMap),
     ]);
   }
 }
