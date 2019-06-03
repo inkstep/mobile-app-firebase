@@ -41,6 +41,12 @@ class _NewScreenState extends State<NewScreen> {
 
   int get autoScrollDuration => 500;
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -65,12 +71,9 @@ class _NewScreenState extends State<NewScreen> {
             children: <Widget>[
               ShortTextInputFormElement(
                 controller: controller,
-                callback: (text) {
-                  formData['name'] = text;
-                },
+                textController: nameController,
                 label: 'What do your friends call you?',
                 hint: 'Natasha',
-                input: formData['name'],
                 maxLength: 16,
               ),
               InspirationImages(
@@ -78,13 +81,11 @@ class _NewScreenState extends State<NewScreen> {
               ),
               LongTextInputFormElement(
                 controller: controller,
+                textController: descController,
                 label:
                     'Describe the image in your head of the tattoo you want?',
                 hint:
                     'A sleeping deer protecting a crown with stars splayed behind it',
-                callback: (term) {
-                  formData['mentalImage'] = term;
-                },
               ),
               PositionPickerFormElement(
                 controller: controller,
@@ -92,20 +93,18 @@ class _NewScreenState extends State<NewScreen> {
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: sizeController,
                 label: 'How big would you like your tattoo to be?(cm)',
                 hint: '7x3',
-                callback: (text) {
-                  formData['size'] = text;
-                },
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: null,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
-                callback: (text) {
-                  formData['availability'] = text;
-                },
-              ),
+                // TODO(Felination): Refactor availability to 'pills' rather than text input
+                onSubmitCallback: (term) {formData['availability'] = term;},
+                ),
               BinaryInput(
                 controller: controller,
                 label: 'Are you happy to leave a deposit?',
@@ -115,15 +114,18 @@ class _NewScreenState extends State<NewScreen> {
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: emailController,
                 label: 'What is your email address?',
                 hint: 'example@inkstep.com',
-                callback: (text) {
-                  formData['email'] = text;
-                },
               ),
               RaisedButton(
                 onPressed: () {
                   bool missingParams = false;
+
+                  formData['name'] = nameController.text;
+                  formData['mentalImage'] = descController.text;
+                  formData['email'] = emailController.text;
+                  formData['size'] = sizeController.text;
 
                   String missing = '';
 
@@ -220,7 +222,6 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
   final Map formData;
 
   String generalPos;
-  String specificPos;
 
   Map<String, List<String>> positions;
 
@@ -248,7 +249,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                   callback: (value) {
                     setState(() {
                       generalPos = value;
-                      specificPos = null;
+                      formData['position'] = null;
                     });
                   },
                   items: positions.keys.toList(),
@@ -271,16 +272,16 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                 child: Container(
                   child: generalPos == 'Other'
                       ? ShortTextInput(
+                          controller: null,
                           label: 'Specific Area',
-                          input: specificPos,
                           hint: 'butt hole',
                           maxLength: 20,
-                          callback: onSubmitCallback,
+                          callback: (term) {},
                         )
                       : DropdownMenu(
-                          hintText: specificPos == null
+                          hintText: formData['position'] == null
                               ? 'Specifc Area'
-                              : specificPos,
+                              : formData['position'],
                           callback: onSubmitCallback,
                           items:
                               generalPos == null ? [] : positions[generalPos],
@@ -293,8 +294,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
       },
       onSubmitCallback: (value) {
         setState(() {
-          specificPos = value;
-          formData['position'] = specificPos;
+          formData['position'] = value;
         });
       },
       controller: controller,

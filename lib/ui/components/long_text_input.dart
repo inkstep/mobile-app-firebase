@@ -8,16 +8,19 @@ class LongTextInput extends StatelessWidget {
     Key key,
     @required this.hint,
     this.focus,
+    this.controller,
     this.callback,
   }) : super(key: key);
 
   final String hint;
   final FocusNode focus;
+  final TextEditingController controller;
   final SubmitCallback callback;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       autofocus: true,
       keyboardType: TextInputType.multiline,
       maxLines: 5,
