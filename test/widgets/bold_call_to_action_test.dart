@@ -11,7 +11,7 @@ void main() {
           home: Scaffold(
             body: BoldCallToAction(
               label: 'label',
-              onTap: () {},
+              onTap: () {}, textColor: null, color: null,
             )
           ),
         ),
