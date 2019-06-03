@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:meta/meta.dart';
 
 abstract class JourneysState extends Equatable {
   JourneysState([List<dynamic> props = const <dynamic>[]]) : super(props);
@@ -16,10 +17,10 @@ class JourneyError extends JourneysState {
 }
 
 class JourneyLoaded extends JourneysState {
-  JourneyLoaded({this.journeys}) : super(<dynamic>[journeys]);
+  JourneyLoaded({@required this.journeys}) : super(<dynamic>[journeys]);
 
   final List<Journey> journeys;
 
   @override
-  String toString() => 'JourneyLoaded { journeys: ${journeys.length}';
+  String toString() => 'JourneyLoaded { journeys: ${journeys?.length}';
 }

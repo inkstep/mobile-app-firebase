@@ -5,6 +5,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
+import 'package:inkstep/resources/web_client.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 void main() {
