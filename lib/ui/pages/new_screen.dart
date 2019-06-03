@@ -82,10 +82,8 @@ class _NewScreenState extends State<NewScreen> {
               LongTextInputFormElement(
                 controller: controller,
                 textController: descController,
-                label:
-                    'Describe the image in your head of the tattoo you want?',
-                hint:
-                    'A sleeping deer protecting a crown with stars splayed behind it',
+                label: 'Describe the image in your head of the tattoo you want?',
+                hint: 'A sleeping deer protecting a crown with stars splayed behind it',
               ),
               PositionPickerFormElement(
                 controller: controller,
@@ -175,73 +173,71 @@ class ContactForm extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    getLabel(context, 'Name', formData, 'name'),
-                    getLabel(context, 'Description', formData, 'mentalImage'),
-                    getLabel(context, 'Position', formData, 'position'),
-                    getLabel(context, 'Size', formData, 'size'),
-                    getLabel(context, 'Availability', formData, 'availability'),
-                    getLabel(context, 'Deposit', formData, 'deposit'),
-                    getLabel(context, 'Email', formData, 'email'),
-                  ],
-                )
-              ),
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      getLabel(context, 'Name', formData, 'name'),
+                      getLabel(context, 'Description', formData, 'mentalImage'),
+                      getLabel(context, 'Position', formData, 'position'),
+                      getLabel(context, 'Size', formData, 'size'),
+                      getLabel(context, 'Availability', formData, 'availability'),
+                      getLabel(context, 'Deposit', formData, 'deposit'),
+                      getLabel(context, 'Email', formData, 'email'),
+                    ],
+                  )),
               Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    getData(context, formData, 'name'),
-                    getData(context, formData, 'mentalImage'),
-                    getData(context, formData, 'position'),
-                    getData(context, formData, 'size'),
-                    getData(context, formData, 'availability'),
-                    getData(context, formData, 'deposit'),
-                    getData(context, formData, 'email'),
-                  ],
-                )
-              )
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      getData(context, formData, 'name'),
+                      getData(context, formData, 'mentalImage'),
+                      getData(context, formData, 'position'),
+                      getData(context, formData, 'size'),
+                      getData(context, formData, 'availability'),
+                      getData(context, formData, 'deposit'),
+                      getData(context, formData, 'email'),
+                    ],
+                  ))
             ],
           ),
         ),
         Spacer(flex: 1),
         Expanded(
             flex: 2,
-            child:
-            missingData(formData) ? Text(
-              'Please go back and fill in your missing data!',
-              style: Theme.of(context).accentTextTheme.subtitle,
-              textAlign: TextAlign.center,
-            ): BoldCallToAction(
-              label: 'Contact Artist!',
-              color: Theme.of(context).backgroundColor,
-              textColor: Theme.of(context).cardColor,
-              onTap: () {
-                final JourneysBloc journeyBloc =
-                    BlocProvider.of<JourneysBloc>(context);
-                journeyBloc.dispatch(
-                  AddJourney(
-                    Journey(
-                      // TODO(DJRHails): Don't hardcode these
-                      artistName: 'Ricky',
-                      studioName: 'South City Market',
-                      name: formData['name'],
-                      size: formData['size'],
-                      email: formData['email'],
-                      availability: formData['availability'],
-                      deposit: formData['deposit'],
-                      mentalImage: formData['mentalImage'],
-                      position: formData['position'],
-                    ),
-                  ),
-                );
-                final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                nav.openJourneyScreen(context);
-              },
-            )),
+            child: missingData(formData)
+                ? Text(
+                    'Please go back and fill in your missing data!',
+                    style: Theme.of(context).accentTextTheme.subtitle,
+                    textAlign: TextAlign.center,
+                  )
+                : BoldCallToAction(
+                    label: 'Contact Artist!',
+                    color: Theme.of(context).backgroundColor,
+                    textColor: Theme.of(context).cardColor,
+                    onTap: () {
+                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                      journeyBloc.dispatch(
+                        AddJourney(
+                          Journey(
+                            // TODO(DJRHails): Don't hardcode these
+                            artistName: 'Ricky',
+                            studioName: 'South City Market',
+                            name: formData['name'],
+                            size: formData['size'],
+                            email: formData['email'],
+                            availability: formData['availability'],
+                            deposit: formData['deposit'],
+                            mentalImage: formData['mentalImage'],
+                            position: formData['position'],
+                          ),
+                        ),
+                      );
+                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                      nav.openJourneyScreen(context);
+                    },
+                  )),
         Spacer(flex: 1),
       ],
     ));
@@ -257,8 +253,7 @@ class ContactForm extends StatelessWidget {
     return false;
   }
 
-  Widget getData(
-      BuildContext context, Map formData, String param) {
+  Widget getData(BuildContext context, Map formData, String param) {
     String data;
 
     if (formData[param] == '') {
@@ -269,15 +264,11 @@ class ContactForm extends StatelessWidget {
 
     return Expanded(
       flex: 1,
-      child: AutoSizeText(
-        data,
-        style: Theme.of(context).accentTextTheme.body1
-      ),
+      child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
     );
   }
 
-  Widget getLabel(
-      BuildContext context, String dataLabel, Map formData, String param) {
+  Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
     final TextStyle style = formData[param] == ''
         ? Theme.of(context).primaryTextTheme.subtitle
         : Theme.of(context).accentTextTheme.subtitle;
@@ -293,16 +284,14 @@ class ContactForm extends StatelessWidget {
 }
 
 class PositionPickerFormElement extends StatefulWidget {
-  const PositionPickerFormElement(
-      {Key key, @required this.controller, @required this.formData})
+  const PositionPickerFormElement({Key key, @required this.controller, @required this.formData})
       : super(key: key);
 
   final PageController controller;
   final Map formData;
 
   @override
-  State<StatefulWidget> createState() =>
-      _PositionPickerFormElementState(controller, formData);
+  State<StatefulWidget> createState() => _PositionPickerFormElementState(controller, formData);
 }
 
 class _PositionPickerFormElementState extends State<StatefulWidget> {
@@ -380,12 +369,10 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                           callback: (term) {},
                         )
                       : DropdownMenu(
-                          hintText: formData['position'] == null
-                              ? 'Specifc Area'
-                              : formData['position'],
+                          hintText:
+                              formData['position'] == null ? 'Specifc Area' : formData['position'],
                           callback: onSubmitCallback,
-                          items:
-                              generalPos == null ? [] : positions[generalPos],
+                          items: generalPos == null ? [] : positions[generalPos],
                         ),
                 ),
               ),
