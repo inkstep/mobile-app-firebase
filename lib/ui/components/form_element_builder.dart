@@ -36,8 +36,9 @@ class FormElementBuilder extends StatelessWidget {
   }
 
   SubmitCallback _attachFocusNext(SubmitCallback func) {
-    return (term) {
-      func(term);
+    return (textBoxValue) {
+      print(textBoxValue);
+      func(textBoxValue);
       focus.unfocus();
       controller.nextPage(
           duration: Duration(milliseconds: duration), curve: Curves.ease);

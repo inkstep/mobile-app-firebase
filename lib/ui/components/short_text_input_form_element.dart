@@ -8,7 +8,7 @@ class ShortTextInputFormElement extends StatelessWidget {
     @required this.textController,
     @required this.label,
     @required this.hint,
-    this.onSubmitCallback,
+    this.onSubmitCallback = null,
     // ignore: avoid_init_to_null
     this.maxLength = null,
     Key key,
@@ -19,6 +19,7 @@ class ShortTextInputFormElement extends StatelessWidget {
 
   // TODO(Felination): Remove after availability has been refactored
   final void Function(String) onSubmitCallback;
+  void Function(String) callback = (_) {};
 
   final String label;
   final String hint;
@@ -26,6 +27,10 @@ class ShortTextInputFormElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO(Felination): Remove after availability has been refactored
+    //  + make callback final
+    callback = onSubmitCallback == null ? (_) {} : onSubmitCallback;
+
     return FormElementBuilder(
       builder: (context, focus, submitCallback) {
         return
@@ -35,12 +40,10 @@ class ShortTextInputFormElement extends StatelessWidget {
             hint: hint,
             label: label,
             focus: focus,
-            // TODO(Felination): Remove once availability refactored
-            callback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
+            callback: submitCallback,
           );
       },
-      // TODO(Felination): Remove once availability refactored
-      onSubmitCallback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
+      onSubmitCallback: callback,
       controller: controller,
       fieldKey: key,
     );
