@@ -30,24 +30,14 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneyLoaded loadedState = currentState;
       final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
-      _saveJourneys([event.journey]);
+      await journeysRepository.saveJourneys(<Journey>[event.journey]);
     }
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
     if (currentState is JourneysUninitialised) {
-      final List<Journey> journeys = await _loadJourneys();
+      final List<Journey> journeys = await journeysRepository.loadJourneys();
       yield JourneyLoaded(journeys: journeys);
     }
-  }
-
-  Future<List<Journey>> _loadJourneys() async {
-    final List<Map<String, dynamic>> jsonJourneys = await journeysRepository.loadJourneys();
-    return jsonJourneys.map((jsonJourney) => Journey.fromJson(jsonJourney)).toList();
-  }
-
-  void _saveJourneys(List<Journey> journeys) {
-    final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
-    journeysRepository.saveJourneys(journeysMap);
   }
 }

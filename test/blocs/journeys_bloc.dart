@@ -1,47 +1,82 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
+import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
 
-class MockJourneysRepository extends JourneysRepository implements Mock {}
+class MockJourneysRepository extends Mock implements JourneysRepository {}
 
 void main() {
   group('JourneysBloc', () {
+    JourneysBloc journeysBloc;
+    MockJourneysRepository repo;
+
+    final Journey j1 = Journey(
+      availability: 'availability',
+      deposit: 'deposit',
+      size: 'size',
+      artistName: 'artistName',
+      name: 'name',
+      position: 'position',
+      mentalImage: 'mentalImage',
+      email: 'email',
+    );
+
+    final Journey j2 = Journey(
+      availability: 'availability',
+      deposit: 'deposit',
+      size: 'size',
+      artistName: 'artistName',
+      name: 'name',
+      position: 'position',
+      mentalImage: 'mentalImage',
+      email: 'email',
+    );
+
+    setUp(() {
+      repo = MockJourneysRepository();
+      journeysBloc = JourneysBloc(journeysRepository: repo);
+    });
+
     test('initial state is unititialised', () {
-      final MockJourneysRepository journeysRepository = MockJourneysRepository();
-      final JourneysBloc journeyBloc = JourneysBloc(journeysRepository: journeysRepository);
-      expect(journeyBloc.initialState, JourneysUninitialised());
+      expect(journeysBloc.initialState, JourneysUninitialised());
     });
 
-    /*test('add journey event with missing journey does nothing', () async {
-      MockJourneysRepository journeysRepository = MockJourneysRepository();
-      JourneysBloc journeyBloc = JourneysBloc(journeysRepository: journeysRepository);
+    test('add journey event with missing journey does nothing', () async {
+      expect(
+        journeysBloc.state,
+        emitsInOrder(
+          <JourneysState>[
+            JourneysUninitialised(),
+            JourneyLoaded(journeys: <Journey>[]),
+          ],
+        ),
+      );
 
-      when(journeysRepository.loadJourneys()).thenAnswer((_) => Future.value(<Map<String, dynamic>>[]));
+      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[]));
 
-      expectLater(journeyBloc.state, emitsInOrder(<JourneysState>[JourneysUninitialised(), JourneyLoaded(journeys: <Journey>[])]));
-
-      journeyBloc.dispatch(LoadJourneys());
-      journeyBloc.dispatch(AddJourney(null));
+      journeysBloc.dispatch(LoadJourneys());
+      journeysBloc.dispatch(AddJourney(null));
     });
 
-    test('add journey event should emit the the current state plus the additional journey', () {
-      MockJourneysRepository journeysRepository = MockJourneysRepository();
-      JourneysBloc journeyBloc = JourneysBloc(journeysRepository: journeysRepository);
+    test('add journey event should emit with the additional journey in the front', () {
+      expect(
+        journeysBloc.state,
+        emitsInOrder(
+          <JourneysState>[
+            JourneysUninitialised(),
+            JourneyLoaded(journeys: <Journey>[j1]),
+            JourneyLoaded(journeys: <Journey>[j2, j1]),
+          ],
+        ),
+      );
 
-      final Journey testJourney = Journey(
-          availability: 'availability',
-          deposit: 'deposit',
-          size: 'size',
-          artistName: 'artistName',
-          name: 'name',
-          position: 'position',
-          mentalImage: 'mentalImage',
-          email: 'email');
-      expectLater(journeyBloc.state, emits(JourneyLoaded(journeys: [testJourney])));
+      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j1]));
 
-      journeyBloc.dispatch(AddJourney(testJourney));
-    });*/
+      journeysBloc.dispatch(LoadJourneys());
+      journeysBloc.dispatch(AddJourney(j2));
+    });
   });
 }
