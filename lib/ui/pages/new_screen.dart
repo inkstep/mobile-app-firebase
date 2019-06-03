@@ -99,9 +99,10 @@ class _NewScreenState extends State<NewScreen> {
               ),
               ShortTextInputFormElement(
                 controller: controller,
+                textController: null,
                 label: 'What days of the week are you normally available?',
                 hint: 'Mondays, Tuesdays and Saturdays',
-                //TODO: Refactor availability to 'pills' rather than text input
+                // TODO(Felination): Refactor availability to 'pills' rather than text input
                 onSubmitCallback: (term) {formData['availability'] = term;},
                 ),
               BinaryInput(
@@ -271,10 +272,11 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                 child: Container(
                   child: generalPos == 'Other'
                       ? ShortTextInput(
+                          controller: null,
                           label: 'Specific Area',
                           hint: 'butt hole',
                           maxLength: 20,
-                          callback: (String) {},
+                          callback: (term) {},
                         )
                       : DropdownMenu(
                           hintText: formData['position'] == null

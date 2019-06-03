@@ -7,13 +7,11 @@ class LongTextInputFormElement extends StatelessWidget {
   LongTextInputFormElement({
     @required this.controller,
     @required this.textController,
-    @required this.callback,
     @required this.label,
     @required this.hint,
     Key key,
   }) : super(key: key);
 
-  final SubmitCallback callback;
   final PageController controller;
   final TextEditingController textController;
 
@@ -41,14 +39,14 @@ class LongTextInputFormElement extends StatelessWidget {
                 hint: hint,
                 focus: focus,
                 controller: textController,
-                callback: submitCallback,
+                callback: (term) {},
               ),
               flex: 20,
             ),
           ],
         );
       },
-      onSubmitCallback: callback,
+      onSubmitCallback: (term) {},
       controller: controller,
       fieldKey: key,
     );

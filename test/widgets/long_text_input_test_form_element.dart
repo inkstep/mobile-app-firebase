@@ -13,7 +13,7 @@ void main() {
           home: Scaffold(
             body: LongTextInputFormElement(
                 controller: null,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),
@@ -35,7 +35,7 @@ void main() {
             body: LongTextInputFormElement(
                 key: inputKey,
                 controller: controller,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),

@@ -17,7 +17,7 @@ class ShortTextInputFormElement extends StatelessWidget {
   final PageController controller;
   final TextEditingController textController;
 
-  //TODO: Remove after availability has been refactored
+  // TODO(Felination): Remove after availability has been refactored
   final void Function(String) onSubmitCallback;
 
   final String label;
@@ -35,11 +35,11 @@ class ShortTextInputFormElement extends StatelessWidget {
             hint: hint,
             label: label,
             focus: focus,
-            //TODO Remove once availability refactored
+            // TODO(Felination): Remove once availability refactored
             callback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
           );
       },
-      //TODO Remove once availability refactored
+      // TODO(Felination): Remove once availability refactored
       onSubmitCallback: onSubmitCallback == null ? (term) {} : onSubmitCallback,
       controller: controller,
       fieldKey: key,
