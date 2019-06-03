@@ -7,14 +7,14 @@ class WebClient {
 
   final Duration delay;
 
-  Future<List<Map<String, dynamic>>> fetchJourneys() async {
+  Future<List<Map<String, dynamic>>> loadJourneys() async {
     return Future.delayed(
       delay,
       () => [],
     );
   }
 
-  Future<bool> postJourneys(List<Map<String, dynamic>> journeys) async {
+  Future<bool> saveJourneys(List<Map<String, dynamic>> journeys) async {
     for (Map<String, dynamic> journeyMap in journeys) {
       final String jsonStr = jsonEncode(journeyMap);
       print(jsonStr);

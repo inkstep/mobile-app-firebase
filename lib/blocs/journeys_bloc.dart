@@ -30,7 +30,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneyLoaded loadedState = currentState;
       final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
       yield JourneyLoaded(journeys: updatedJourneys);
-      await journeysRepository.saveJourneys([event.journey]);
+      await journeysRepository.saveJourneys(<Journey>[event.journey]);
     }
   }
 
