@@ -75,6 +75,8 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
           BoldCallToAction(
             onTap: () {nav.openNewScreen(context);},
             label: "Let's get started!",
+            textColor: Theme.of(context).primaryColor,
+            color: Theme.of(context).cardColor,
           ),
           Padding(padding: buttonPadding),
           TextButton(
