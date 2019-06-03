@@ -13,7 +13,7 @@ void main() {
           home: Scaffold(
             body: ShortTextInputFormElement(
                 controller: null,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),
@@ -35,7 +35,7 @@ void main() {
             body: ShortTextInputFormElement(
                 key: inputKey,
                 controller: controller,
-                callback: (x) {},
+                textController: null,
                 label: 'label',
                 hint: 'hint'),
           ),
@@ -62,7 +62,7 @@ void main() {
             body: ShortTextInputFormElement(
               key: inputKey,
               controller: null,
-              callback: (x) {},
+              textController: null,
               label: 'label',
               hint: 'hint',
               maxLength: 4,
