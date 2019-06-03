@@ -19,12 +19,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  auto_size_text: ^2.0.0
 
 #  firebase_messaging:
   image_picker:
   multi_image_picker:
   shared_preferences:
+  auto_size_text:
   bloc:
   flutter_bloc:
   get_it:
