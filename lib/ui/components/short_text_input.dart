@@ -7,19 +7,19 @@ import 'form_element_builder.dart';
 class ShortTextInput extends StatelessWidget {
   const ShortTextInput({
     Key key,
-    @required this.input,
     @required this.maxLength,
     @required this.hint,
     @required this.label,
+    @required this.controller,
     this.focus,
-    this.callback,
+    @required this.callback,
   }) : super(key: key);
 
-  final String input;
   final int maxLength;
   final String hint;
   final String label;
   final FocusNode focus;
+  final TextEditingController controller;
   final SubmitCallback callback;
 
   @override
@@ -29,7 +29,7 @@ class ShortTextInput extends StatelessWidget {
       borderSide: BorderSide(color: theme.backgroundColor),
     );
     return TextFormField(
-      initialValue: input,
+      controller: controller,
       autofocus: true,
       maxLength: maxLength,
       style: theme.accentTextTheme.headline,

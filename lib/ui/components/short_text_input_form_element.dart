@@ -5,7 +5,7 @@ import 'package:inkstep/ui/components/short_text_input.dart';
 class ShortTextInputFormElement extends StatelessWidget {
   ShortTextInputFormElement({
     @required this.controller,
-    @required this.callback,
+    @required this.textController,
     @required this.label,
     @required this.hint,
     this.input,
@@ -14,8 +14,8 @@ class ShortTextInputFormElement extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  final SubmitCallback callback;
   final PageController controller;
+  final TextEditingController textController;
 
   final String label;
   final String hint;
@@ -28,15 +28,15 @@ class ShortTextInputFormElement extends StatelessWidget {
       builder: (context, focus, submitCallback) {
         return
           ShortTextInput(
-            input: input,
+            controller: textController,
             maxLength: maxLength,
             hint: hint,
             label: label,
             focus: focus,
-            callback: submitCallback,
+            callback: (term) {},
           );
       },
-      onSubmitCallback: callback,
+      onSubmitCallback: (term) {},
       controller: controller,
       fieldKey: key,
     );
