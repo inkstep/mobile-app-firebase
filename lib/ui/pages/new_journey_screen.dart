@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/components/artist_selection.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/logo.dart';
@@ -75,10 +74,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               label: 'What do your friends call you?',
               hint: 'Natasha',
               maxLength: 16,
-            ),
-            ArtistSelectionTable(
-              label: 'Select a studio',
-              controller: controller,
             ),
             ImageGrid(
               images: inspirationImages,

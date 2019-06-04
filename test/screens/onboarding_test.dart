@@ -44,7 +44,7 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openJourneyScreen(any));
+      verify(nav.openViewJourneysScreen(any));
     });
 
     testWidgets('Can get to new journey page from onboarding',
@@ -57,7 +57,7 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openNewScreen(any));
+      verify(nav.openNewJourneyScreen(any));
     });
   });
 }
