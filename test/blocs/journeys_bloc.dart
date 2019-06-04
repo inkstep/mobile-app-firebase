@@ -50,7 +50,7 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysUninitialised(),
-            JourneyLoaded(journeys: <Journey>[]),
+            JourneysLoaded(journeys: <Journey>[]),
           ],
         ),
       );
@@ -67,8 +67,8 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysUninitialised(),
-            JourneyLoaded(journeys: <Journey>[j1]),
-            JourneyLoaded(journeys: <Journey>[j2, j1]),
+            JourneysLoaded(journeys: <Journey>[j1]),
+            JourneysLoaded(journeys: <Journey>[j2, j1]),
           ],
         ),
       );
