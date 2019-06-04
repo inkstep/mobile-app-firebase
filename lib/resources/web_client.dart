@@ -34,11 +34,19 @@ class WebClient {
 
       final http.Response response = await http.put('$url$journeyEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+      print(response.body);
+
       print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
       if (response.statusCode != 200) {
         return Future.value(false);
       }
     }
     return Future.value(true);
+  }
+
+  Future<int> saveUser(Map<String, dynamic> userMap) {
+
   }
 }

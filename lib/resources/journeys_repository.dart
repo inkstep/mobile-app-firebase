@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/web_client.dart';
 import 'package:meta/meta.dart';
 
@@ -23,5 +24,10 @@ class JourneysRepository {
     return Future.wait<dynamic>([
       webClient.saveJourneys(journeysMap),
     ]);
+  }
+
+  Future<int> saveUser(User user) {
+    final userMap = user.toJson();
+    return null;
   }
 }

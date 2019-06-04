@@ -3,10 +3,8 @@ import 'package:meta/meta.dart';
 
 class Journey extends Equatable {
   Journey({
-    @required this.artistName,
-    this.studioName = '',
-    this.artistEmail = 'james.dalboth@gmail.com',
-    @required this.name,
+    this.artist_id = 2,
+    this.user_id,
     @required this.mentalImage,
     @required this.size,
     @required this.position,
@@ -14,10 +12,8 @@ class Journey extends Equatable {
     @required this.availability,
     @required this.deposit,
   }) : super(<dynamic>[
-          artistName,
-          studioName,
-          artistEmail,
-          name,
+          artist_id,
+          user_id,
           mentalImage,
           size,
           position,
@@ -25,12 +21,11 @@ class Journey extends Equatable {
           availability,
           deposit
         ]);
+
   factory Journey.fromJson(Map<String, dynamic> json) {
     return Journey(
-      artistName: json['artist_name'],
-      studioName: '',
-      artistEmail: json['artist_email'],
-      name: json['user_name'],
+      user_id: json['user_id'],
+      artist_id: json['artist_id'],
       mentalImage: json['desc'],
       size: json['size'],
       position: json['pos'],
@@ -40,10 +35,8 @@ class Journey extends Equatable {
     );
   }
 
-  final String artistName;
-  final String studioName;
-  final String artistEmail;
-  final String name;
+  final int artist_id;
+  int user_id;
   final String mentalImage;
   final String size;
   final String position;
@@ -53,16 +46,14 @@ class Journey extends Equatable {
 
   Map<String, dynamic> toJson() {
     final x = <String, dynamic>{
-      'artist_name': artistName,
-      'artist_email': artistEmail,
-      'user_name': name,
-      'user_email': email,
-      'studio_name': studioName,
+      'artist_id': artist_id,
+      'user_id': user_id,
       'tattoo_desc': mentalImage,
       'size': size,
       'position': position,
       'availability': availability,
       'deposit': deposit,
+      'ref_images': 1,
     };
     return x;
   }

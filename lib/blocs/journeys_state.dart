@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class JourneysState extends Equatable {
@@ -17,8 +18,9 @@ class JourneyError extends JourneysState {
 }
 
 class JourneysLoaded extends JourneysState {
-  JourneysLoaded({@required this.journeys}) : super(<dynamic>[journeys]);
+  JourneysLoaded({@required this.user, @required this.journeys}) : super(<dynamic>[journeys]);
 
+  final User user;
   final List<Journey> journeys;
 
   @override

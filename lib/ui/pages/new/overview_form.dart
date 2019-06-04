@@ -5,6 +5,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -99,16 +100,16 @@ class OverviewForm extends StatelessWidget {
                       journeyBloc.dispatch(
                         AddJourney(
                           Journey(
-                            // TODO(DJRHails): Don't hardcode these
-                            artistName: 'Ricky',
-                            studioName: 'South City Market',
-                            name: formData['name'],
                             size: formData['size'],
                             email: formData['email'],
                             availability: formData['availability'],
                             deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],
                             position: formData['position'],
+                          ),
+                          User(
+                            name: formData['name'],
+                            email: formData['email'],
                           ),
                         ),
                       );
@@ -164,7 +165,6 @@ class OverviewForm extends StatelessWidget {
       ),
     );
   }
-
 
   String getAvailability(WeekCallbacks weekCallbacks) {
     String availabilityString = '';
