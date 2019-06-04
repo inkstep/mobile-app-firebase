@@ -9,7 +9,7 @@ class WebClient {
   String get url => 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
   String get journeyEndpoint => '/journey';
 
-  Future<List<Map<String, dynamic>>> loadArtists() async {
+  Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     return [];
   }
 

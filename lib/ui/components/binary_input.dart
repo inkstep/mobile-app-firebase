@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
+// ignore: must_be_immutable
 class BinaryInput extends StatelessWidget {
   BinaryInput({
     @required this.controller,
@@ -35,12 +36,8 @@ class BinaryInput extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildButton(context, true, () {
-                    submitCallback('1');
-                  }),
-                  _buildButton(context, false, () {
-                    submitCallback('0');
-                  }),
+                  _buildButton(context, true, () {submitCallback('1');},),
+                  _buildButton(context, false, () {submitCallback('0');},),
                 ],
               ),
               flex: 20,
