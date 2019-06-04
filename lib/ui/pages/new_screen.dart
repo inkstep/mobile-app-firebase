@@ -9,6 +9,8 @@ import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+import 'new/position_picker_form_element.dart';
+
 class NewScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _NewScreenState();
@@ -40,6 +42,7 @@ class _NewScreenState extends State<NewScreen> {
   final TextEditingController emailController = TextEditingController();
 
   List<Asset> inspirationImages = <Asset>[];
+
   // ignore: unused_field
   String _imagesError;
 
@@ -122,7 +125,7 @@ class _NewScreenState extends State<NewScreen> {
               label: 'What is your email address?',
               hint: 'example@inkstep.com',
             ),
-            ContactForm(
+            OverviewForm(
               formData: formData,
               nameController: nameController,
               descController: descController,
