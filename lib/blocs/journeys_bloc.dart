@@ -26,18 +26,18 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    if (currentState is JourneyLoaded) {
-      final JourneyLoaded loadedState = currentState;
-      final updatedJourneys = List<Journey>.from(loadedState.journeys)..add(event.journey);
-      yield JourneyLoaded(journeys: updatedJourneys);
-    } else if (currentState is JourneysUninitialised) {
-      final loadedJourneys = await journeysRepository.loadJourneys();
-      final updatedJourneys = List<Journey>.from(loadedJourneys)..add(event.journey);
-      yield JourneyLoaded(journeys: updatedJourneys);
+    if (currentState is JourneysLoaded || currentState is JourneysUninitialised) {
+      List<Journey> loadedJourneys;
+      if (currentState is JourneysLoaded) {
+        final JourneysLoaded loadedState = currentState;
+        loadedJourneys = loadedState.journeys;
+      } else if (currentState is JourneysUninitialised) {
+        loadedJourneys = await journeysRepository.loadJourneys();
+      }
+
+      yield JourneysLoaded(journeys: [event.journey] + loadedJourneys);
       await journeysRepository.saveJourneys(<Journey>[event.journey]);
     }
-
-    await journeysRepository.saveJourneys(<Journey>[event.journey]);
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
