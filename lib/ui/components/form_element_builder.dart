@@ -28,22 +28,23 @@ class FormElementBuilder extends StatelessWidget {
 
   final EdgeInsets kPadding = const EdgeInsets.all(30);
 
+  VoidCallback get navToNextPage => () {
+        controller.nextPage(duration: Duration(milliseconds: duration), curve: Curves.ease);
+      };
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: kPadding,
-      child: Center(
-          child: builder(context, focus, _attachFocusNext(onSubmitCallback))),
+      child: Center(child: builder(context, focus, _attachFocusNext(onSubmitCallback))),
     );
   }
 
   SubmitCallback _attachFocusNext(SubmitCallback func) {
     return (textBoxValue) {
-      print(textBoxValue);
       func(textBoxValue);
       focus.unfocus();
-      controller.nextPage(
-          duration: Duration(milliseconds: duration), curve: Curves.ease);
+      navToNextPage();
     };
   }
 }

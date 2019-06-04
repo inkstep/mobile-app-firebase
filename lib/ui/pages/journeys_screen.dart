@@ -4,7 +4,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
-import 'package:inkstep/ui/components/welcome_back_header.dart';
+import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
 
 class JourneysScreen extends StatefulWidget {
   const JourneysScreen({Key key, this.onInit}) : super(key: key);
@@ -15,10 +15,7 @@ class JourneysScreen extends StatefulWidget {
   final void Function() onInit;
 }
 
-class _JourneysScreenState extends State<JourneysScreen>
-    with SingleTickerProviderStateMixin {
-  final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
-
+class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProviderStateMixin {
   int _currentPageIndex = 0;
 
   AnimationController _controller;
@@ -71,18 +68,15 @@ class _JourneysScreenState extends State<JourneysScreen>
                 children: <Widget>[
                   WelcomeBackHeader(
                     // TODO(DJRHails): Use a user bloc
-                    name: loadedState.journeys.isEmpty ? '' : loadedState
-                        .journeys.first.name,
+                    name: loadedState.journeys.isEmpty ? '' : loadedState.journeys.first.name,
                     tasksToComplete: 0,
                   ),
                   Expanded(
-                    key: _backdropKey,
                     flex: 1,
                     child: NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
                         if (notification is ScrollEndNotification) {
-                          final currentPage =
-                              _pageController.page.round().toInt();
+                          final currentPage = _pageController.page.round().toInt();
                           if (_currentPageIndex != currentPage) {
                             setState(() => _currentPageIndex = currentPage);
                           }

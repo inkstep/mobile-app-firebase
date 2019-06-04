@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:inkstep/main.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 
 void main() {
@@ -12,6 +13,7 @@ void main() {
             body: BoldCallToAction(
               label: 'label',
               onTap: () {},
+              textColor: baseColors['light'], color: baseColors['dark'],
             )
           ),
         ),
