@@ -11,12 +11,12 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'new/position_picker_form_element.dart';
 
-class NewScreen extends StatefulWidget {
+class NewJourneyScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _NewScreenState();
+  State<StatefulWidget> createState() => _NewJourneyScreenState();
 }
 
-class _NewScreenState extends State<NewScreen> {
+class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final PageController controller = PageController(
     initialPage: 0,
   );

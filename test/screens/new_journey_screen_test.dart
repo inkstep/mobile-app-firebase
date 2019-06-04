@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
-import 'package:inkstep/ui/pages/new_screen.dart';
+import 'package:inkstep/ui/pages/new_journey_screen.dart';
 
 void main() {
   group('Having New Journey Screen', () {
@@ -10,7 +10,7 @@ void main() {
     final Offset scroll = Offset(0.0, -600.0);
 
     setUp(() {
-      screen = MaterialApp(home: NewScreen());
+      screen = MaterialApp(home: NewJourneyScreen());
     });
 
     testWidgets('Journey should start with requesting a name if not already provided',
