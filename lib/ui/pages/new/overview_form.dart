@@ -104,17 +104,17 @@ class OverviewForm extends StatelessWidget {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
                         AddJourney(
-                          Journey(
+                          user: User(
+                            name: formData['name'],
+                            email: formData['email'],
+                          ),
+                          journey: Journey(
                             size: formData['size'],
                             email: formData['email'],
                             availability: formData['availability'],
                             deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],
                             position: formData['position'],
-                          ),
-                          User(
-                            name: formData['name'],
-                            email: formData['email'],
                           ),
                         ),
                       );

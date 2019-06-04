@@ -54,7 +54,7 @@ void main() {
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(null, null));
+      journeysBloc.dispatch(AddJourney(user: null, journey: null));
     });
 
     test('add journey event should emit with the additional journey in the front', () {
@@ -72,7 +72,7 @@ void main() {
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j1]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(j2, null));
+      journeysBloc.dispatch(AddJourney(user: null, journey: j2));
     });
   });
 }
