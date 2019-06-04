@@ -17,6 +17,15 @@
 
 # Visual Studio Code related
 .vscode/
+android/.project
+android/.settings
+android/app/.classpath
+android/app/.project
+android/app/.settings/
+
+# .project
+# .classpath
+# .project
 
 # Flutter/Dart/Pub related
 **/doc/api/
