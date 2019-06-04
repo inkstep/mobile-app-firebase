@@ -44,6 +44,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (currentState is JourneysUninitialised) {
       final List<Journey> journeys = await journeysRepository.loadJourneys();
       yield JourneysLoaded(journeys: journeys);
+    } else if (currentState is JourneysLoaded) {
+      final JourneysLoaded loadedState = currentState;
+      final List<Journey> journeys = await journeysRepository.loadJourneys();
+      final combinedJourneys =
+          Set<Journey>.from(loadedState.journeys).union(journeys.toSet()).toList();
+      yield JourneysLoaded(journeys: combinedJourneys);
     }
   }
 }
