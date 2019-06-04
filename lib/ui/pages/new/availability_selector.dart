@@ -31,7 +31,7 @@ class AvailabilitySelector extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              'What days are you normally available?',
+                              'What days of the week are you normally available?',
                               style: Theme
                                   .of(context)
                                   .accentTextTheme
