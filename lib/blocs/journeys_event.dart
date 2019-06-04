@@ -13,7 +13,7 @@ class AddJourney extends JourneysEvent {
   final User user;
 
   @override
-  String toString() => 'AddJourney { journey: $journey }';
+  String toString() => 'AddJourney { journey: $journey, user: $user }';
 }
 
 class LoadJourneys extends JourneysEvent {

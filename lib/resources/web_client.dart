@@ -8,6 +8,7 @@ class WebClient {
   final Duration delay;
   String get url => 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
   String get journeyEndpoint => '/journey';
+  String get userEndpoint => '/user';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     return [];
@@ -46,7 +47,21 @@ class WebClient {
     return Future.value(true);
   }
 
-  Future<int> saveUser(Map<String, dynamic> userMap) {
+  Future<int> saveUser(Map<String, dynamic> userMap) async {
+    final String jsonStr = jsonEncode(userMap);
+    print('Saving User: $jsonStr');
 
+    final http.Response response = await http
+        .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+    final Map<String, dynamic> responseJson = jsonDecode(response.body);
+
+    print(response.body);
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode != 200) {
+      return Future.value(responseJson['user_id']);
+    }
   }
 }

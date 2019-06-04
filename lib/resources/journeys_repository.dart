@@ -19,15 +19,13 @@ class JourneysRepository {
   }
 
   // Persists journeys to the web
-  Future saveJourneys(List<Journey> journeys) {
+  Future<bool> saveJourneys(List<Journey> journeys) async {
     final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
-    return Future.wait<dynamic>([
-      webClient.saveJourneys(journeysMap),
-    ]);
+    return await webClient.saveJourneys(journeysMap);
   }
 
-  Future<int> saveUser(User user) {
+  Future<int> saveUser(User user) async {
     final userMap = user.toJson();
-    return null;
+    return await webClient.saveUser(userMap);
   }
 }

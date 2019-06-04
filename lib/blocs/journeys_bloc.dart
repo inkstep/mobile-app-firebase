@@ -26,8 +26,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    if (currentState is JourneysLoaded) {
-      await journeysRepository.saveUser(event.user);
+    if (currentState is JourneysUninitialised) {
+      int userId = await journeysRepository.saveUser(event.user);
+      event.journey.user_id = userId;
     }
 
     if (currentState is JourneysLoaded || currentState is JourneysUninitialised) {
