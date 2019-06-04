@@ -102,6 +102,11 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
               ),
             ),
           );
+        } else {
+          print(state);
+          return Container(
+            child: Center(child: Text('Abort Mission')),
+          );
         }
       },
     );
