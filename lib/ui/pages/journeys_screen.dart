@@ -68,7 +68,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                 children: <Widget>[
                   WelcomeBackHeader(
                     // TODO(DJRHails): Use a user bloc
-                    name: loadedState.journeys.isEmpty ? '' : loadedState.journeys.first.name,
+                    name: loadedState.journeys.isEmpty ? '' : loadedState.journeys.first.userId.toString(),
                     tasksToComplete: 0,
                   ),
                   Expanded(

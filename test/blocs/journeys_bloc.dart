@@ -17,8 +17,6 @@ void main() {
       availability: 'availability',
       deposit: 'deposit',
       size: 'size',
-      artistName: 'artistName',
-      name: 'name',
       position: 'position',
       mentalImage: 'mentalImage',
       email: 'email',
@@ -28,8 +26,6 @@ void main() {
       availability: 'availability',
       deposit: 'deposit',
       size: 'size',
-      artistName: 'artistName',
-      name: 'name',
       position: 'position',
       mentalImage: 'mentalImage',
       email: 'email',
@@ -50,7 +46,7 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysUninitialised(),
-            JourneysLoaded(journeys: <Journey>[]),
+            JourneysLoaded(journeys: <Journey>[], user: null),
           ],
         ),
       );
@@ -58,7 +54,7 @@ void main() {
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(null));
+      journeysBloc.dispatch(AddJourney(null, null));
     });
 
     test('add journey event should emit with the additional journey in the front', () {
@@ -67,8 +63,8 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysUninitialised(),
-            JourneysLoaded(journeys: <Journey>[j1]),
-            JourneysLoaded(journeys: <Journey>[j2, j1]),
+            JourneysLoaded(journeys: <Journey>[j1], user: null),
+            JourneysLoaded(journeys: <Journey>[j2, j1], user: null),
           ],
         ),
       );
@@ -76,7 +72,7 @@ void main() {
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j1]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(j2));
+      journeysBloc.dispatch(AddJourney(j2, null));
     });
   });
 }

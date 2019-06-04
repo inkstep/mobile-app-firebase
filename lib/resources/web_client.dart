@@ -9,6 +9,7 @@ class WebClient {
 
   static const String url = 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
 
+  static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
   static const String artistsEndpoint = '/artists';
 
@@ -47,11 +48,35 @@ class WebClient {
 
       final http.Response response = await http.put('$url$journeyEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+      print(response.body);
+
       print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
       if (response.statusCode != 200) {
         return Future.value(false);
       }
     }
     return Future.value(true);
+  }
+
+  Future<int> saveUser(Map<String, dynamic> userMap) async {
+    final String jsonStr = jsonEncode(userMap);
+    print('Saving User: $jsonStr');
+
+    final http.Response response = await http
+        .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+    final Map<String, dynamic> responseJson = jsonDecode(response.body);
+
+    print(response.body);
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode == 200) {
+      return Future.value(int.parse(responseJson['user_id']));
+    } else {
+      return Future.value(-1);
+    }
   }
 }
