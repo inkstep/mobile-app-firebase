@@ -61,21 +61,21 @@ class _NewScreenState extends State<NewScreen> {
   @override
   Widget build(BuildContext context) {
 
-    SingleDayCallbacks monday = SingleDayCallbacks((switched) {mon = switched;},
+    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {mon = switched;},
             () {return mon;});
-    SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {tues = switched;},
+    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {tues = switched;},
             () {return tues;});
-    SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {wed = switched;},
+    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {wed = switched;},
             () {return wed;});
-    SingleDayCallbacks thursday = SingleDayCallbacks((switched) {mon = switched;},
-            () {return mon;});
-    SingleDayCallbacks friday = SingleDayCallbacks((switched) {fri = switched;},
+    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {thurs = switched;},
+            () {return thurs;});
+    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {fri = switched;},
             () {return fri;});
-    SingleDayCallbacks saturday = SingleDayCallbacks((switched) {sat = switched;},
+    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {sat = switched;},
             () {return sat;});
-    SingleDayCallbacks sunday = SingleDayCallbacks((switched) {sun = switched;},
+    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {sun = switched;},
             () {return sun;});
-    WeekCallbacks weekCallbacks = WeekCallbacks(monday, tuesday, wednesday, thursday,
+    final WeekCallbacks weekCallbacks = WeekCallbacks(monday, tuesday, wednesday, thursday,
         friday, saturday, sunday);
 
     return Form(
@@ -385,7 +385,7 @@ class AvailabilitySelector extends StatelessWidget {
   final int duration;
   final WeekCallbacks weekCallbacks;
 
-
+  @override
   Widget build(BuildContext context) {
     return FormElementBuilder(
         builder: (context, focus, onSubmitCallback) {
@@ -435,9 +435,6 @@ class AvailabilitySelector extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text('Faked Padding'),
-                    ),
-                    Expanded(
                       child: Text(
                         'Note: You have to slide these switches, not just tap on them!',
                         style: Theme
@@ -469,7 +466,7 @@ class AvailabilitySelector extends StatelessWidget {
   }
 
   Widget _buildSwitch(BuildContext context, SingleDayCallbacks dayCallbacks,String day) {
-    bool initial = dayCallbacks.currentValue();
+    final bool initial = dayCallbacks.currentValue();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -508,7 +505,9 @@ class WeekCallbacks {
 }
 
 class SingleDayCallbacks{
-  SingleDayCallbacks(this.onSwitched, this.currentValue);
+  SingleDayCallbacks(
+      this.onSwitched,
+      this.currentValue);
 
   final BoolCallback onSwitched;
   final bool Function() currentValue;
