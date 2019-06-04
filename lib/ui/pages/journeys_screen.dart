@@ -4,7 +4,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
-import 'package:inkstep/ui/components/welcome_back_header.dart';
+import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
 
 class JourneysScreen extends StatefulWidget {
   const JourneysScreen({Key key, this.onInit}) : super(key: key);

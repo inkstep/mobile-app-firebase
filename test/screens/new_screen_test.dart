@@ -13,8 +13,7 @@ void main() {
       screen = MaterialApp(home: NewScreen());
     });
 
-    testWidgets(
-        'Journey should start with requesting a name if not already provided',
+    testWidgets('Journey should start with requesting a name if not already provided',
         (WidgetTester tester) async {
       await tester.pumpWidget(screen);
 
@@ -22,8 +21,7 @@ void main() {
       expect(find.byType(ShortTextInputFormElement), findsOneWidget);
     });
 
-    testWidgets('Inspiration accessible via scroll',
-        (WidgetTester tester) async {
+    testWidgets('Inspiration accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 1; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -34,8 +32,7 @@ void main() {
       expect(find.text('Show us your inspiration'), findsOneWidget);
     });
 
-    testWidgets('Description accessible via scroll',
-        (WidgetTester tester) async {
+    testWidgets('Description accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 2; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -44,8 +41,10 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsOneWidget);
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
+          findsOneWidget);
     });
 
     testWidgets('Position accessible via scroll', (WidgetTester tester) async {
@@ -57,10 +56,11 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-              'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
-          findsOneWidget);
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
+          findsNothing);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsOneWidget);
     });
 
     testWidgets('Size accessible via scroll', (WidgetTester tester) async {
@@ -72,16 +72,15 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
           findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'),
-          findsOneWidget);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?(cm)'), findsOneWidget);
     });
 
-    testWidgets('Availability accessible via scroll', (WidgetTester tester)
-    async {
+    testWidgets('Availability accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 5; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -90,18 +89,16 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
           findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'),
-          findsNothing);
-      expect(find.text('What days of the week are you normally available?'),
-          findsOneWidget);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('What days of the week are you normally available?'), findsOneWidget);
     });
 
-    testWidgets('Deposite accessible via scroll', (WidgetTester tester)
-    async {
+    testWidgets('Deposite accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 6; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -110,20 +107,17 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
           findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'),
-          findsNothing);
-      expect(find.text('What days of the week are you normally available?'),
-          findsNothing);
-      expect(find.text('Are you happy to leave a deposit?'),
-          findsOneWidget);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('What days of the week are you normally available?'), findsNothing);
+      expect(find.text('Are you happy to leave a deposit?'), findsOneWidget);
     });
 
-    testWidgets('Email accessible via scroll', (WidgetTester tester)
-    async {
+    testWidgets('Email accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 7; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -132,22 +126,18 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
           findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'),
-          findsNothing);
-      expect(find.text('What days of the week are you normally available?'),
-          findsNothing);
-      expect(find.text('Are you happy to leave a deposit?'),
-          findsNothing);
-      expect(find.text('What is your email address?'),
-          findsOneWidget);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('What days of the week are you normally available?'), findsNothing);
+      expect(find.text('Are you happy to leave a deposit?'), findsNothing);
+      expect(find.text('What is your email address?'), findsOneWidget);
     });
 
-    testWidgets('Contact accessible via scroll', (WidgetTester tester)
-    async {
+    testWidgets('Contact accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
       for (int i = 0; i < 8; i++) {
         await tester.drag(find.byType(PageView), scroll);
@@ -156,18 +146,15 @@ void main() {
 
       expect(find.text('What do your friends call you?'), findsNothing);
       expect(find.text('Show us your inspiration'), findsNothing);
-      expect(find.text('Describe the image in your head of the tattoo you '
-          'want?'), findsNothing);
-      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'),
+      expect(
+          find.text('Describe the image in your head of the tattoo you '
+              'want?'),
           findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'),
-          findsNothing);
-      expect(find.text('What days of the week are you normally available?'),
-          findsNothing);
-      expect(find.text('Are you happy to leave a deposit?'),
-          findsNothing);
-      expect(find.text('What is your email address?'),
-          findsNothing);
+      expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('What days of the week are you normally available?'), findsNothing);
+      expect(find.text('Are you happy to leave a deposit?'), findsNothing);
+      expect(find.text('What is your email address?'), findsNothing);
       expect(find.text('Check your details!'), findsOneWidget);
     });
 
@@ -181,22 +168,6 @@ void main() {
       await tester.pump();
 
       expect(find.text('Check your details!'), findsOneWidget);
-    });
-
-    testWidgets('Submit disabled if not enough images selected',
-        (WidgetTester tester) async {
-//    await tester.pumpWidget(app);
-//    final Finder submit = find.widgetWithText(OutlineButton, 'Register');
-//    final Finder tos = find.byType(Checkbox);
-//
-//    expect(tester.widget<OutlineButton>(submit).enabled, isTrue);
-//
-//    await tester.tap(tos);
-//    await tester.tap(submit);
-//    await tester.pump();
-//
-//    expect(tester.widget<OutlineButton>(submit).enabled, isFalse);
-//    expect(find.text('Form submitted'), findsNothing);
     });
   });
 }
