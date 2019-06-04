@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/components/form_element_builder.dart';
 
 class DepositPage extends StatelessWidget {
 
