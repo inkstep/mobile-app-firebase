@@ -4,14 +4,16 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class PositionPickerFormElement extends StatefulWidget {
-  const PositionPickerFormElement({Key key, @required this.controller, @required this.formData})
-      : super(key: key);
+  const PositionPickerFormElement({Key key,
+    @required this.controller,
+    @required this.formData,
+  }) : super(key: key);
 
   final PageController controller;
   final Map formData;
-
   @override
-  State<StatefulWidget> createState() => _PositionPickerFormElementState(controller, formData);
+  State<StatefulWidget> createState() => _PositionPickerFormElementState(controller, formData)
+  ;
 }
 
 class _PositionPickerFormElementState extends State<StatefulWidget> {
@@ -30,6 +32,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
 
   final PageController controller;
   final Map formData;
+  final TextEditingController textController = TextEditingController();
 
   String generalPos;
 
@@ -82,11 +85,11 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                 child: Container(
                   child: generalPos == 'Other'
                       ? ShortTextInput(
-                          controller: null,
+                          controller: textController,
                           label: 'Specific Area',
                           hint: '...',
                           maxLength: 20,
-                          callback: (term) {},
+                          callback: onSubmitCallback,
                         )
                       : DropdownMenu(
                           hintText:

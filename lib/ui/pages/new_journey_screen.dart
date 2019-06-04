@@ -41,6 +41,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final TextEditingController descController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
   bool deposit = false;
 
   bool mon = false;
