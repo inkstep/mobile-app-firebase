@@ -127,17 +127,22 @@ class OverviewForm extends StatelessWidget {
         return true;
       }
     }
-
+    if (formData['availability'] == '0000000') {
+      return true;
+    }
     return false;
   }
 
   Widget getData(BuildContext context, Map formData, String param) {
     String data;
 
-    if (formData[param] == '') {
+    if (formData[param] == '' || formData[param] == '0000000') {
       data = 'MISSING';
     } else {
       data = formData[param];
+      if (param == 'availability') {
+        data = 'Provided';
+      }
     }
 
     return Expanded(
@@ -147,7 +152,7 @@ class OverviewForm extends StatelessWidget {
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = formData[param] == ''
+    final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
         ? Theme.of(context).primaryTextTheme.subtitle
         : Theme.of(context).accentTextTheme.subtitle;
 
