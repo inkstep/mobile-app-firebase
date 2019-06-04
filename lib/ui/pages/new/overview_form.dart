@@ -6,6 +6,7 @@ import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
+import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class OverviewForm extends StatelessWidget {
@@ -16,6 +17,7 @@ class OverviewForm extends StatelessWidget {
     @required this.descController,
     @required this.emailController,
     @required this.sizeController,
+    @required this.weekCallbacks,
   }) : super(key: key);
 
   final Map<String, String> formData;
@@ -23,6 +25,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
+  final WeekCallbacks weekCallbacks;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class OverviewForm extends StatelessWidget {
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
+    formData['availability'] = getAvailability(weekCallbacks);
 
     return Container(
         child: Column(
@@ -123,17 +127,22 @@ class OverviewForm extends StatelessWidget {
         return true;
       }
     }
-
+    if (formData['availability'] == '0000000') {
+      return true;
+    }
     return false;
   }
 
   Widget getData(BuildContext context, Map formData, String param) {
     String data;
 
-    if (formData[param] == '') {
+    if (formData[param] == '' || formData[param] == '0000000') {
       data = 'MISSING';
     } else {
       data = formData[param];
+      if (param == 'availability') {
+        data = 'Provided';
+      }
     }
 
     return Expanded(
@@ -143,7 +152,7 @@ class OverviewForm extends StatelessWidget {
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = formData[param] == ''
+    final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
         ? Theme.of(context).primaryTextTheme.subtitle
         : Theme.of(context).accentTextTheme.subtitle;
 
@@ -154,5 +163,53 @@ class OverviewForm extends StatelessWidget {
         style: style,
       ),
     );
+  }
+
+
+  String getAvailability(WeekCallbacks weekCallbacks) {
+    String availabilityString = '';
+    if (weekCallbacks.monday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.tuesday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.wednesday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.thursday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.friday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.saturday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    if (weekCallbacks.sunday.currentValue()) {
+      availabilityString += '1';
+    }
+    else {
+      availabilityString += '0';
+    }
+    return availabilityString;
   }
 }

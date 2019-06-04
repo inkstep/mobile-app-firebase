@@ -65,6 +65,7 @@ class InkstepState extends State<Inkstep> {
             buttonColor: baseColors['dark'],
           ),
           cursorColor: baseColors['dark'],
+          toggleableActiveColor: baseColors['dark'],
         ),
         home: Onboarding(),
       ),
