@@ -27,8 +27,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
     if (currentState is JourneysUninitialised) {
-      int userId = await journeysRepository.saveUser(event.user);
-      event.journey.user_id = userId;
+      final int userId = await journeysRepository.saveUser(event.user);
+      event.journey.userId = userId;
     }
 
     if (currentState is JourneysLoaded || currentState is JourneysUninitialised) {
@@ -40,7 +40,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         loadedJourneys = await journeysRepository.loadJourneys();
       }
 
-      yield JourneysLoaded(journeys: [event.journey] + loadedJourneys);
+      yield JourneysLoaded(
+          journeys: [event.journey] + loadedJourneys,
+          user: null
+      );
+
       await journeysRepository.saveJourneys(<Journey>[event.journey]);
     }
   }
@@ -48,13 +52,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
     if (currentState is JourneysUninitialised) {
       final List<Journey> journeys = await journeysRepository.loadJourneys();
-      yield JourneysLoaded(journeys: journeys);
+      yield JourneysLoaded(journeys: journeys, user: null);
     } else if (currentState is JourneysLoaded) {
       final JourneysLoaded loadedState = currentState;
       final List<Journey> journeys = await journeysRepository.loadJourneys();
       final combinedJourneys =
           Set<Journey>.from(loadedState.journeys).union(journeys.toSet()).toList();
-      yield JourneysLoaded(journeys: combinedJourneys);
+      yield JourneysLoaded(journeys: combinedJourneys, user: null);
     }
   }
 }

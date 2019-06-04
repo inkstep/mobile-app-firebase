@@ -60,8 +60,10 @@ class WebClient {
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
-    if (response.statusCode != 200) {
-      return Future.value(responseJson['user_id']);
+    if (response.statusCode == 200) {
+      return Future.value(int.parse(responseJson['user_id']));
+    } else {
+      return Future.value(-1);
     }
   }
 }

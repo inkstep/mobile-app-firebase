@@ -73,13 +73,13 @@ class JourneyCard extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 4.0),
                   // TODO(DJRHails): Should be Hero-d
                   child: Text(
-                    '${model.artist_id}',
+                    '${model.artistId.toString()}',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
                 Container(
                   // TODO(DJRHails): Should be Hero-d
-                  child: Text('${model.artist_id}',
+                  child: Text('${model.artistId.toString()}',
                       style: Theme.of(context).accentTextTheme.title),
                 ),
                 Spacer(),

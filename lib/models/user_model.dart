@@ -6,13 +6,13 @@ class User extends Equatable {
       : super(<dynamic>[name, email]);
 
   User.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        email = json['email'];
+      : name = json['user_name'],
+        email = json['user_email'];
 
   final String name;
   final String email;
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{'name': name, 'email': email};
+    return <String, dynamic>{'user_name': name, 'user_email': email};
   }
 }
