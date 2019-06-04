@@ -16,16 +16,13 @@ class OverviewForm extends StatelessWidget {
     @required this.descController,
     @required this.emailController,
     @required this.sizeController,
-    @required GlobalKey<ScaffoldState> scaffoldKey,
-  })  : _scaffoldKey = scaffoldKey,
-        super(key: key);
+  }) : super(key: key);
 
   final Map<String, String> formData;
   final TextEditingController nameController;
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
-  final GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
   Widget build(BuildContext context) {

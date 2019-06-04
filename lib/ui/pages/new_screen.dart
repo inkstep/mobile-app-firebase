@@ -131,7 +131,6 @@ class _NewScreenState extends State<NewScreen> {
               descController: descController,
               emailController: emailController,
               sizeController: sizeController,
-              scaffoldKey: _scaffoldKey,
             )
           ],
         ),
