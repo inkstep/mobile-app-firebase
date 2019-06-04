@@ -8,12 +8,12 @@ abstract class JourneysState extends Equatable {
 
 class JourneysUninitialised extends JourneysState {
   @override
-  String toString() => 'JourneyUninitialised';
+  String toString() => 'JourneysUninitialised';
 }
 
 class JourneyError extends JourneysState {
   @override
-  String toString() => 'JourneyError';
+  String toString() => 'JourneysError';
 }
 
 class JourneyLoaded extends JourneysState {
@@ -22,5 +22,5 @@ class JourneyLoaded extends JourneysState {
   final List<Journey> journeys;
 
   @override
-  String toString() => 'JourneyLoaded { journeys: ${journeys?.length}';
+  String toString() => 'JourneysLoaded { journeys: ${journeys?.length}';
 }

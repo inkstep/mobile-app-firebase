@@ -7,6 +7,10 @@ class WebClient {
 
   final Duration delay;
 
+  Future<List<Map<String, dynamic>>> loadArtists() async {
+    return [];
+  }
+
   Future<List<Map<String, dynamic>>> loadJourneys() async {
     return Future.delayed(
       delay,
