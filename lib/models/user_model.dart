@@ -15,4 +15,7 @@ class User extends Equatable {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{'user_name': name, 'user_email': email};
   }
+
+  @override
+  String toString() => 'User { name: $name, email: $email }';
 }
