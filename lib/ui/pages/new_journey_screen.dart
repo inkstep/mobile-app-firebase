@@ -139,8 +139,11 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             BinaryInput(
               controller: controller,
               label: 'Are you happy to leave a deposit?',
+              selection: formData['deposit'],
               callback: (text) {
-                formData['deposit'] = text;
+                setState(() {
+                  formData['deposit'] = text;
+                });
               },
             ),
             ShortTextInputFormElement(
