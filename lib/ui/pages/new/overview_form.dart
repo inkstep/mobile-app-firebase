@@ -18,6 +18,7 @@ class OverviewForm extends StatelessWidget {
     @required this.emailController,
     @required this.sizeController,
     @required this.weekCallbacks,
+    @required this.deposit,
   }) : super(key: key);
 
   final Map<String, String> formData;
@@ -25,6 +26,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
+  final bool deposit;
   final WeekCallbacks weekCallbacks;
 
   @override
@@ -33,6 +35,9 @@ class OverviewForm extends StatelessWidget {
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
+    formData['deposit'] = deposit==true
+        ? 'Willing to leave a deposit'
+        : '';
     formData['availability'] = getAvailability(weekCallbacks);
 
     return Container(
@@ -116,7 +121,7 @@ class OverviewForm extends StatelessWidget {
                       nav.openViewJourneysScreen(context);
                     },
                   )),
-        Spacer(flex: 1),
+          Spacer(flex: 1),
       ],
     ));
   }
