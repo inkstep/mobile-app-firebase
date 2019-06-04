@@ -7,13 +7,13 @@ abstract class JourneysEvent extends Equatable {
 }
 
 class AddJourney extends JourneysEvent {
-  AddJourney(this.journey, this.user) : super(<dynamic>[journey]);
+  AddJourney(this.user, this.journey) : super(<dynamic>[user, journey]);
 
   final Journey journey;
   final User user;
 
   @override
-  String toString() => 'AddJourney { journey: $journey, user: $user }';
+  String toString() => 'AddJourney { user: $user, journey: $journey }';
 }
 
 class LoadJourneys extends JourneysEvent {
