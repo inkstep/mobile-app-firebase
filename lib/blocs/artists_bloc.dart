@@ -16,9 +16,8 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
 
   @override
   Stream<ArtistsState> mapEventToState(ArtistsEvent event) async* {
-    // At the moment we only have 1 artists event - load artists
-    if (currentState is ArtistsUninitialised) {
-      final List<Artist> artists = await artistsRepository.loadArtists();
+    if (event is LoadArtistsEvent) {
+      final List<Artist> artists = await artistsRepository.loadArtists(event.studioID);
       yield ArtistsLoaded(artists: artists);
     }
   }

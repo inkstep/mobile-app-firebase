@@ -118,7 +118,7 @@ class OverviewForm extends StatelessWidget {
                         ),
                       );
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openJourneyScreen(context);
+                      nav.openViewJourneysScreen(context);
                     },
                   )),
           Spacer(flex: 1),

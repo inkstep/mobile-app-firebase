@@ -34,7 +34,7 @@ void main() {
 
     testWidgets('Description accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 2; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -46,7 +46,7 @@ void main() {
 
     testWidgets('Position accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < 3; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -62,7 +62,7 @@ void main() {
 
     testWidgets('Size accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 4; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -79,7 +79,7 @@ void main() {
 
     testWidgets('Availability accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 5; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -97,7 +97,7 @@ void main() {
 
     testWidgets('Deposite accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 7; i++) {
+      for (int i = 0; i < 6; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -116,7 +116,7 @@ void main() {
 
     testWidgets('Email accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 8; i++) {
+      for (int i = 0; i < 7; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -136,7 +136,7 @@ void main() {
 
     testWidgets('Contact accessible via scroll', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 9; i++) {
+      for (int i = 0; i < 8; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }
@@ -157,7 +157,7 @@ void main() {
 
     testWidgets('Error with imcomplete form', (WidgetTester tester) async {
       await tester.pumpWidget(screen);
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < 9; i++) {
         await tester.drag(find.byType(PageView), scroll);
         await tester.pump();
       }

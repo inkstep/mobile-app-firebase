@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/artist_selection.dart';
+import 'package:inkstep/ui/components/profile_row.dart';
 
 void main() {
   group('Artist Selection', ()
@@ -9,7 +9,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-              body: ArtistProfileRow(
+              body: ProfileRow(
                 name: 'Ricky Williams',
                 studioName: 'South City Market',
                 imagePath: 'assets/ricky.png',
@@ -25,7 +25,7 @@ void main() {
 
     testWidgets('Can build with invalid image path', (WidgetTester tester)
     async {
-      final ArtistProfileRow artistProfileRow = ArtistProfileRow(
+      final ProfileRow artistProfileRow = ProfileRow(
         name: 'Ricky Williams',
         studioName: 'South City Market',
         imagePath: '',

@@ -73,7 +73,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       child: Column(
         children: <Widget>[
           BoldCallToAction(
-            onTap: () {nav.openNewScreen(context);},
+            onTap: () {nav.openNewJourneyScreen(context);},
             label: "Let's get started!",
             textColor: Theme.of(context).primaryColor,
             color: Theme.of(context).cardColor,
@@ -81,7 +81,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
           Padding(padding: buttonPadding),
           TextButton(
             onTap: () {
-              nav.openJourneyScreen(context);
+              nav.openViewJourneysScreen(context);
             },
             label: "I'M ON A NEW DEVICE",
           ),
