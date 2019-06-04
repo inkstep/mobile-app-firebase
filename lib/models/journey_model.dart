@@ -25,18 +25,20 @@ class Journey extends Equatable {
           availability,
           deposit
         ]);
-
-  Journey.fromJson(Map<String, dynamic> json)
-      : artistName = json['artist_name'],
-        studioName = '',
-        artistEmail = json['artist_email'],
-        name = json['user_name'],
-        mentalImage = json['desc'],
-        size = json['size'],
-        position = json['pos'],
-        email = '',
-        availability = '',
-        deposit = '';
+  factory Journey.fromJson(Map<String, dynamic> json) {
+    return Journey(
+      artistName: json['artist_name'],
+      studioName: '',
+      artistEmail: json['artist_email'],
+      name: json['user_name'],
+      mentalImage: json['desc'],
+      size: json['size'],
+      position: json['pos'],
+      email: '',
+      availability: '',
+      deposit: '',
+    );
+  }
 
   final String artistName;
   final String studioName;
@@ -54,13 +56,13 @@ class Journey extends Equatable {
       'artist_name': artistName,
       'artist_email': artistEmail,
       'user_name': name,
-      'user_email' : email,
-      'studio_name' : studioName,
+      'user_email': email,
+      'studio_name': studioName,
       'tattoo_desc': mentalImage,
       'size': size,
       'position': position,
-      'availability' : availability,
-      'deposit' : deposit,
+      'availability': availability,
+      'deposit': deposit,
     };
     return x;
   }
