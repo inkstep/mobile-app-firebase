@@ -50,8 +50,8 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
               ),
             ),
           );
-        } else if (state is JourneyLoaded) {
-          final JourneyLoaded loadedState = state;
+        } else if (state is JourneysLoaded) {
+          final JourneysLoaded loadedState = state;
           _controller.forward();
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,

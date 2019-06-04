@@ -16,8 +16,8 @@ class JourneyError extends JourneysState {
   String toString() => 'JourneyError';
 }
 
-class JourneyLoaded extends JourneysState {
-  JourneyLoaded({@required this.journeys}) : super(<dynamic>[journeys]);
+class JourneysLoaded extends JourneysState {
+  JourneysLoaded({@required this.journeys}) : super(<dynamic>[journeys]);
 
   final List<Journey> journeys;
 

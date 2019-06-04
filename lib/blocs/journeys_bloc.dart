@@ -43,7 +43,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
     if (currentState is JourneysUninitialised) {
       final List<Journey> journeys = await journeysRepository.loadJourneys();
-      yield JourneyLoaded(journeys: journeys);
+      yield JourneysLoaded(journeys: journeys);
     }
   }
 }
