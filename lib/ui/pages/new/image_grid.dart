@@ -142,6 +142,5 @@ class ImageGrid extends StatelessWidget {
     // TODO(DJRHails): Proper error handling to enduser
     inspirationImages =
         await MultiImagePicker.pickImages(maxImages: 6, selectedAssets: inspirationImages);
-    ;
   }
 }
