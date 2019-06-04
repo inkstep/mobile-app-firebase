@@ -18,7 +18,13 @@ class WebClient {
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
-    return [jsonDecode(response.body)];
+    final mappedJourneys = <Map<String, dynamic>>[];
+    final List<dynamic> jsonJourneys = json.decode(response.body);
+    for (dynamic j in jsonJourneys) {
+      final Map<String, dynamic> mappedJourney = j;
+      mappedJourneys.add(mappedJourney);
+    }
+    return mappedJourneys;
   }
 
   Future<bool> saveJourneys(List<Map<String, dynamic>> journeys) async {
