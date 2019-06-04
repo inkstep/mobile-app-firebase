@@ -9,6 +9,7 @@ import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
+import 'new/availability_selector.dart';
 import 'new/position_picker_form_element.dart';
 
 class NewJourneyScreen extends StatefulWidget {
@@ -41,6 +42,14 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
+  bool mon = false;
+  bool tues = false;
+  bool wed = false;
+  bool thurs = false;
+  bool fri = false;
+  bool sat = false;
+  bool sun = false;
+
   List<Asset> inspirationImages = <Asset>[];
 
   // ignore: unused_field
@@ -50,6 +59,22 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {mon = switched;},
+            () {return mon;});
+    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {tues = switched;},
+            () {return tues;});
+    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {wed = switched;},
+            () {return wed;});
+    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {thurs = switched;},
+            () {return thurs;});
+    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {fri = switched;},
+            () {return fri;});
+    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {sat = switched;},
+            () {return sat;});
+    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {sun = switched;},
+            () {return sun;});
+    final WeekCallbacks weekCallbacks = WeekCallbacks(monday, tuesday, wednesday, thursday,
+        friday, saturday, sunday);
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -102,15 +127,9 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               label: 'How big would you like your tattoo to be?(cm)',
               hint: '7x3',
             ),
-            ShortTextInputFormElement(
+            AvailabilitySelector(
               controller: controller,
-              textController: null,
-              label: 'What days of the week are you normally available?',
-              hint: 'Mondays, Tuesdays and Saturdays',
-              // TODO(Felination): Refactor availability to 'pills' rather than text input
-              onSubmitCallback: (term) {
-                formData['availability'] = term;
-              },
+              weekCallbacks: weekCallbacks,
             ),
             BinaryInput(
               controller: controller,
@@ -131,6 +150,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               descController: descController,
               emailController: emailController,
               sizeController: sizeController,
+              weekCallbacks: weekCallbacks,
             )
           ],
         ),
