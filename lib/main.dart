@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/simple_bloc_delegate.dart';
@@ -39,6 +40,10 @@ class InkstepState extends State<Inkstep> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return BlocProvider<JourneysBloc>(
       child: MaterialApp(
         title: 'inkstep',
