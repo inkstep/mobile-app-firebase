@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class ImageGrid extends StatelessWidget {
@@ -140,15 +139,9 @@ class ImageGrid extends StatelessWidget {
   }
 
   Future<void> _updateAssets() async {
-    List<Asset> resultList;
-
-    try {
-      resultList =
-          await MultiImagePicker.pickImages(maxImages: 6, selectedAssets: inspirationImages);
-    } on PlatformException catch (e) {
-      // TODO(DJRHails): Proper error handling to enduser
-    }
-
-    inspirationImages = resultList;
+    // TODO(DJRHails): Proper error handling to enduser
+    inspirationImages =
+        await MultiImagePicker.pickImages(maxImages: 6, selectedAssets: inspirationImages);
+    ;
   }
 }
