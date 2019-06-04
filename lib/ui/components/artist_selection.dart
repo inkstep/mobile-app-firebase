@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'form_element_builder.dart';
+
 class ArtistProfileRow extends StatelessWidget {
   ArtistProfileRow({
     @required this.imagePath,
@@ -37,16 +39,56 @@ class ArtistProfileRow extends StatelessWidget {
             children: <Widget>[
               Text(
                 name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).accentTextTheme.subtitle,
               ),
-              Text(studioName)
+              Text(
+                studioName,
+                style: Theme.of(context).accentTextTheme.subhead,
+              )
             ],
           ),
         )
       ],
+    );
+  }
+}
+
+class ArtistSelectionTable extends StatelessWidget {
+  ArtistSelectionTable({
+    @required this.controller,
+    @required this.label,
+    this.onSubmitCallback,
+    Key key,
+  }) : super(key: key);
+
+  final PageController controller;
+  final String label;
+  final void Function(String) onSubmitCallback;
+
+  @override
+  Widget build(BuildContext context) {
+    return FormElementBuilder(
+      builder: (context, focus, submitCallback) {
+        return Column(
+          children: <Widget>[
+            Text(label, style: Theme.of(context).accentTextTheme.title),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ArtistProfileRow(
+                    name: 'ricky',
+                    studioName: 'scm',
+                    imagePath: 'assets/ricky.png',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+      onSubmitCallback: onSubmitCallback ?? (_) {},
+      controller: controller,
+      fieldKey: key,
     );
   }
 }
