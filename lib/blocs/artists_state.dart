@@ -11,11 +11,6 @@ class ArtistsUninitialised extends ArtistsState {
   String toString() => 'ArtistsUninitialised';
 }
 
-class ArtistsError extends ArtistsState {
-  @override
-  String toString() => 'ArtistsError';
-}
-
 class ArtistsLoaded extends ArtistsState {
   ArtistsLoaded({@required this.artists}) : super(<dynamic>[artists]);
 

@@ -4,8 +4,8 @@ abstract class ArtistsEvent extends Equatable {
   ArtistsEvent([List props = const <dynamic>[]]) : super(props);
 }
 
-class LoadArtistsEvent extends ArtistsEvent {
-  LoadArtistsEvent(this.studioID) : super(<dynamic>[studioID]);
+class LoadArtists extends ArtistsEvent {
+  LoadArtists(this.studioID) : super(<dynamic>[studioID]);
 
   final int studioID;
 }

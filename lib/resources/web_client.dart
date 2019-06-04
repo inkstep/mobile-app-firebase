@@ -6,11 +6,24 @@ class WebClient {
   const WebClient([this.delay = const Duration(milliseconds: 300)]);
 
   final Duration delay;
-  String get url => 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
-  String get journeyEndpoint => '/journey';
+
+  static const String url = 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
+
+  static const String journeyEndpoint = '/journey';
+  static const String artistsEndpoint = '/artists';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
-    return [];
+    final http.Response response = await http.get('$url$artistsEndpoint');
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    final mappedArtists = <Map<String, dynamic>>[];
+    final List<dynamic> jsonArtists = json.decode(response.body);
+    for (dynamic j in jsonArtists) {
+      final Map<String, dynamic> mappedArtist = j;
+      mappedArtists.add(mappedArtist);
+    }
+    return mappedArtists;
   }
 
   Future<List<Map<String, dynamic>>> loadJourneys() async {

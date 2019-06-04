@@ -19,7 +19,7 @@ class AddCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             final nav = sl.get<ScreenNavigator>();
-            nav.openNewJourneyScreen(context);
+            nav.openArtistSelection(context);
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),

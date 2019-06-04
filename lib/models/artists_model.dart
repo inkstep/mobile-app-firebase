@@ -6,9 +6,9 @@ class Artist extends Equatable {
       : super(<dynamic>[name, email, studio]);
 
   Artist.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        email = json['email'],
-        studio = json['studio'];
+      : name = json['name'] ?? '',
+        email = json['email'] ?? '',
+        studio = json['studio'] ?? '';
 
   final String name;
   final String email;
