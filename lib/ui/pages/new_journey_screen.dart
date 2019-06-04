@@ -6,6 +6,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
+import 'package:inkstep/ui/pages/new/deposit_page.dart';
 import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -42,6 +43,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final TextEditingController descController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  bool deposit = false;
 
   bool mon = false;
   bool tues = false;
@@ -136,14 +138,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               controller: controller,
               weekCallbacks: weekCallbacks,
             ),
-            BinaryInput(
-              controller: controller,
-              label: 'Are you happy to leave a deposit?',
-              selection: formData['deposit'],
-              callback: (text) {
-                setState(() {
-                  formData['deposit'] = text;
-                });
+            DepositPage(
+              callback: () {
+                deposit = true;
+                controller.nextPage(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.ease);
               },
             ),
             ShortTextInputFormElement(
