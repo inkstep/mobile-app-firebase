@@ -58,7 +58,7 @@ class WebClient {
 
       print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
         final Map<String, dynamic> responseJson = jsonDecode(response.body);
         return Future.value(int.parse(responseJson['journey_id']));
       }
