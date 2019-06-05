@@ -55,6 +55,5 @@ class JourneyEntity extends Equatable {
       'deposit': deposit,
       'noRefImages': noImages.toString(),
     };
-    ;
   }
 }

@@ -34,8 +34,7 @@ void main() {
 //      expect(find.text('Hi there,'), findsOneWidget);
 //    });
 
-    testWidgets('Can get to journey page from onboarding',
-        (WidgetTester tester) async {
+    testWidgets('Can get to journey page from onboarding', (WidgetTester tester) async {
       await tester.pumpWidget(app);
 
       final Finder button = find.byType(TextButton);
@@ -44,11 +43,10 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openViewJourneysScreen(any));
+      verify(nav.openViewJourneysScreenWithNewDevice(any));
     });
 
-    testWidgets('Can get to new journey page from onboarding',
-        (WidgetTester tester) async {
+    testWidgets('Can get to new journey page from onboarding', (WidgetTester tester) async {
       await tester.pumpWidget(app);
 
       final Finder button = find.byType(BoldCallToAction);

@@ -87,25 +87,32 @@ void main() {
       ];
       when(repo.loadJourneys(userId: 0)).thenAnswer((_) => responses.removeAt(0));
 
-      when(repo.getArtist(0)).thenAnswer((_) => Artist(
-            name: 'Ricky',
-            email: 'someemail',
-            studio: 'scm',
-          ));
+      when(repo.getArtist(0)).thenAnswer(
+        (_) => Future.value(
+              Artist(
+                name: 'Ricky',
+                email: 'someemail',
+                studio: 'scm',
+              ),
+            ),
+      );
       when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(true));
 
       journeysBloc.dispatch(LoadJourneys());
 
-      journeysBloc.dispatch(AddJourney(
+      journeysBloc.dispatch(
+        AddJourney(
           result: FormResult(
-        position: '',
-        availability: '',
-        mentalImage: 'Flower',
-        name: testUser.name,
-        size: '',
-        deposit: '',
-        email: testUser.email,
-      )));
+            position: '',
+            availability: '',
+            mentalImage: 'Flower',
+            name: testUser.name,
+            size: '',
+            deposit: '',
+            email: testUser.email,
+          ),
+        ),
+      );
     });
   });
 }

@@ -31,11 +31,11 @@ class JourneysRepository {
     return await webClient.saveUser(userMap);
   }
 
-  Artist getArtist(int artistId) {
-    return Artist(name: 'Ricky', email: 'ricky@scm.com', studio: 'South City Market');
+  Future<Artist> getArtist(int artistId) {
+    return Future.value(Artist(name: 'Ricky', email: 'ricky@scm.com', studio: 'South City Market'));
   }
 
-  User getUser(int userId) {
-    return User(id: userId, name: 'test.user', email: 'test.email');
+  Future<User> getUser(int userId) {
+    return Future.value(User(id: userId, name: 'test.user', email: 'test.email'));
   }
 }
