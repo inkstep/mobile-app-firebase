@@ -1,5 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/user_entity.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -17,8 +21,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
-      if (event.journey != null) {
-        print('1');
+      if (event.result != null) {
         yield* _mapAddJourneysState(event);
       }
     } else if (event is LoadJourneys) {
@@ -27,46 +30,49 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    print('2');
-    int userId;
-    List<Journey> loadedJourneys;
-
-    JourneysState journeyState = currentState;
-
-    if (journeyState is JourneyError) {
+    if (currentState is JourneyError) {
+      print('Adding when in Error state');
       final JourneyError errorState = currentState;
-      journeyState = errorState.prev;
-    }
-
-    print(journeyState);
-
-    if (journeyState is JourneysNoUser) {
-      userId = await journeysRepository.saveUser(event.user);
-      print('userID=$userId');
-      if (userId == -1) {
-        yield JourneyError(prev: journeyState);
-        return;
-      }
-
-      loadedJourneys = [event.journey];
-
-      journeyState = JourneysWithUser(journeys: loadedJourneys, userId: userId);
-    } else {
-      final JourneysWithUser loadedState = journeyState;
-      loadedJourneys = loadedState.journeys;
-    }
-
-    final bool success = await journeysRepository.saveJourneys(<Journey>[event.journey]);
-
-    print('success=$success');
-
-    if (success) {
-      yield JourneysWithUser(journeys: [event.journey] + loadedJourneys, userId: userId);
-
+      yield errorState.prev;
       return;
     }
 
-    yield JourneyError(prev: journeyState);
+    print('Adding a Journey when in $currentState');
+
+    int userId = -1;
+    if (currentState is JourneysNoUser) {
+      final UserEntity user = UserEntity(name: event.result.name, email: event.result.email);
+      userId = await journeysRepository.saveUser(user);
+      print('userID=$userId');
+      if (userId == -1) {
+        yield JourneyError(prev: currentState);
+        return;
+      }
+    } else if (currentState is JourneysWithUser) {
+      final JourneysWithUser journeysWithUser = currentState;
+      userId = journeysWithUser.user.id;
+    }
+
+    final JourneyEntity newJourney = JourneyEntity(
+      userId: userId,
+      availability: event.result.availability,
+      deposit: event.result.deposit,
+      mentalImage: event.result.mentalImage,
+      position: event.result.position,
+      size: event.result.size,
+      noImages: 0, // TODO(DJRHails): Pass in images here
+    );
+
+    if (!await journeysRepository.saveJourneys(<JourneyEntity>[newJourney])) {
+      print('Failed to save journeys');
+      yield JourneyError(prev: currentState);
+    } else {
+      yield JourneysWithUser(
+        cards: await _getCardsFromJourneys(
+            [newJourney] + await journeysRepository.loadJourneys(userId: userId)),
+        user: journeysRepository.getUser(userId),
+      );
+    }
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
@@ -74,17 +80,36 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     if (journeysState is JourneyError) {
       final JourneyError errorState = journeysState;
-      journeysState = errorState.prev;
+      yield errorState.prev;
     }
 
     if (journeysState is JourneysNoUser) {
-      yield JourneyError(prev: journeysState);
+      final cards = await _getCards(0);
+      print('Loaded initial cards with fake user 0: $cards');
+
+      yield JourneysWithUser(
+          user: User(id: 0, name: 'test.name', email: 'test.email'), cards: cards);
     } else if (currentState is JourneysWithUser) {
-      final JourneysWithUser loadedState = journeysState;
-      final List<Journey> journeys = await journeysRepository.loadJourneys();
-      final combinedJourneys =
-          Set<Journey>.from(loadedState.journeys).union(journeys.toSet()).toList();
-      yield JourneysWithUser(journeys: combinedJourneys, userId: loadedState.userId);
+      final JourneysWithUser userState = currentState;
+
+      final cards = await _getCards(userState.user.id);
+      print('Reloaded cards for user ${userState.user.id}: $cards');
+
+      yield JourneysWithUser(cards: cards, user: userState.user);
     }
+  }
+
+  Future<List<CardModel>> _getCards(int userId) async {
+    final List<JourneyEntity> journeys = await journeysRepository.loadJourneys(userId: userId);
+    return _getCardsFromJourneys(journeys);
+  }
+
+  Future<List<CardModel>> _getCardsFromJourneys(List<JourneyEntity> list) async {
+    List<CardModel> cards = <CardModel>[];
+    for (JourneyEntity je in list) {
+      final Artist artist = await journeysRepository.getArtist(je.artistId);
+      cards.add(CardModel(je.mentalImage, artist.name));
+    }
+    return cards;
   }
 }
