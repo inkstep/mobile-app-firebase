@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
@@ -13,10 +10,7 @@ class ScreenNavigator {
       context,
       MaterialPageRoute<dynamic>(
           builder: (context) => JourneysScreen(
-                onInit: () {
-                  final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                  journeyBloc.dispatch(LoadJourneys());
-                },
+                onInit: () {},
               )),
     );
   }

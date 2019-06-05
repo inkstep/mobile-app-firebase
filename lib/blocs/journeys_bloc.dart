@@ -12,12 +12,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   final JourneysRepository journeysRepository;
 
   @override
-  JourneysState get initialState => JourneysUninitialised();
+  JourneysState get initialState => JourneysNoUser();
 
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
       if (event.journey != null) {
+        print('1');
         yield* _mapAddJourneysState(event);
       }
     } else if (event is LoadJourneys) {
@@ -26,39 +27,64 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    if (currentState is JourneysUninitialised) {
-      final int userId = await journeysRepository.saveUser(event.user);
-      event.journey.userId = userId;
+    print('2');
+    int userId;
+    List<Journey> loadedJourneys;
+
+    JourneysState journeyState = currentState;
+
+    if (journeyState is JourneyError) {
+      final JourneyError errorState = currentState;
+      journeyState = errorState.prev;
     }
 
-    if (currentState is JourneysLoaded || currentState is JourneysUninitialised) {
-      List<Journey> loadedJourneys;
-      if (currentState is JourneysLoaded) {
-        final JourneysLoaded loadedState = currentState;
-        loadedJourneys = loadedState.journeys;
-      } else if (currentState is JourneysUninitialised) {
-        loadedJourneys = await journeysRepository.loadJourneys();
+    print(journeyState);
+
+    if (journeyState is JourneysNoUser) {
+      userId = await journeysRepository.saveUser(event.user);
+      print('userID=$userId');
+      if (userId == -1) {
+        yield JourneyError(prev: journeyState);
+        return;
       }
 
-      yield JourneysLoaded(
-          journeys: [event.journey] + loadedJourneys,
-          user: null
-      );
+      loadedJourneys = [event.journey];
 
-      await journeysRepository.saveJourneys(<Journey>[event.journey]);
+      journeyState = JourneysWithUser(journeys: loadedJourneys, userId: userId);
+    } else {
+      final JourneysWithUser loadedState = journeyState;
+      loadedJourneys = loadedState.journeys;
     }
+
+    final bool success = await journeysRepository.saveJourneys(<Journey>[event.journey]);
+
+    print('success=$success');
+
+    if (success) {
+      yield JourneysWithUser(journeys: [event.journey] + loadedJourneys, userId: userId);
+
+      return;
+    }
+
+    yield JourneyError(prev: journeyState);
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
-    if (currentState is JourneysUninitialised) {
-      final List<Journey> journeys = await journeysRepository.loadJourneys();
-      yield JourneysLoaded(journeys: journeys, user: null);
-    } else if (currentState is JourneysLoaded) {
-      final JourneysLoaded loadedState = currentState;
+    JourneysState journeysState = currentState;
+
+    if (journeysState is JourneyError) {
+      final JourneyError errorState = journeysState;
+      journeysState = errorState.prev;
+    }
+
+    if (journeysState is JourneysNoUser) {
+      yield JourneyError(prev: journeysState);
+    } else if (currentState is JourneysWithUser) {
+      final JourneysWithUser loadedState = journeysState;
       final List<Journey> journeys = await journeysRepository.loadJourneys();
       final combinedJourneys =
           Set<Journey>.from(loadedState.journeys).union(journeys.toSet()).toList();
-      yield JourneysLoaded(journeys: combinedJourneys, user: null);
+      yield JourneysWithUser(journeys: combinedJourneys, userId: loadedState.userId);
     }
   }
 }

@@ -32,6 +32,10 @@ class WebClient {
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
     final mappedJourneys = <Map<String, dynamic>>[];
     final List<dynamic> jsonJourneys = json.decode(response.body);
     for (dynamic j in jsonJourneys) {
@@ -64,16 +68,22 @@ class WebClient {
     final String jsonStr = jsonEncode(userMap);
     print('Saving User: $jsonStr');
 
-    final http.Response response = await http
-        .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
+    http.Response response;
 
-    final Map<String, dynamic> responseJson = jsonDecode(response.body);
-
-    print(response.body);
+    try {
+      response = await http.put(
+          '$url$userEndpoint',
+          body: jsonStr,
+          headers: {'Content-Type': 'application/json'}
+          );
+    } catch (e) {
+      return Future.value(-1);
+    }
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
     if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Future.value(int.parse(responseJson['user_id']));
     } else {
       return Future.value(-1);

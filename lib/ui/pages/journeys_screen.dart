@@ -40,7 +40,12 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
     return BlocBuilder<JourneysEvent, JourneysState>(
       bloc: journeyBloc,
       builder: (BuildContext context, JourneysState state) {
-        if (state is JourneysUninitialised) {
+        if (state is JourneyError) {
+          print('JourneyError');
+          Navigator.pop(context);
+        }
+
+        if (state is JourneysNoUser) {
           return Container(
             decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
             child: Center(
@@ -50,8 +55,8 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
               ),
             ),
           );
-        } else if (state is JourneysLoaded) {
-          final JourneysLoaded loadedState = state;
+        } else if (state is JourneysWithUser) {
+          final JourneysWithUser loadedState = state;
           _controller.forward();
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
@@ -68,7 +73,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                 children: <Widget>[
                   WelcomeBackHeader(
                     // TODO(DJRHails): Use a user bloc
-                    name: loadedState.journeys.isEmpty ? '' : loadedState.journeys.first.userId.toString(),
+                    name: loadedState.journeys.isEmpty ? '' : loadedState.userId.toString(),
                     tasksToComplete: 0,
                   ),
                   Expanded(

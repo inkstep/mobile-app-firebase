@@ -1,28 +1,33 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class JourneysState extends Equatable {
   JourneysState([List<dynamic> props = const <dynamic>[]]) : super(props);
 }
 
-class JourneysUninitialised extends JourneysState {
+class JourneysNoUser extends JourneysState {
   @override
-  String toString() => 'JourneysUninitialised';
+  String toString() => 'JourneysNoUser';
 }
 
 class JourneyError extends JourneysState {
+  JourneyError({@required this.prev}) : super(<dynamic>[prev]);
+
+  final JourneysState prev;
+
   @override
-  String toString() => 'JourneysError';
+  String toString() => 'JourneysError { prev : $prev } ';
 }
 
-class JourneysLoaded extends JourneysState {
-  JourneysLoaded({@required this.user, @required this.journeys}) : super(<dynamic>[user, journeys]);
+class JourneysWithUser extends JourneysState {
+  JourneysWithUser({@required this.userId, @required this.journeys})
+      : super(<dynamic>[userId, journeys]);
 
-  final User user;
+  final int userId;
   final List<Journey> journeys;
 
   @override
-  String toString() => 'JourneysLoaded { user: $user, journeys: ${journeys?.length} }';
+  String toString() => 'JourneysWithUser { userId: $userId, journeys: ${journeys?.length} }';
 }

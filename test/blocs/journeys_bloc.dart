@@ -37,7 +37,7 @@ void main() {
     });
 
     test('initial state is unititialised', () {
-      expect(journeysBloc.initialState, JourneysUninitialised());
+      expect(journeysBloc.initialState, JourneysNoUser());
     });
 
     test('add journey event with missing journey does nothing', () async {
@@ -45,8 +45,8 @@ void main() {
         journeysBloc.state,
         emitsInOrder(
           <JourneysState>[
-            JourneysUninitialised(),
-            JourneysLoaded(journeys: <Journey>[], user: null),
+            JourneysNoUser(),
+            JourneysWithUser(journeys: <Journey>[], userId: -1),
           ],
         ),
       );
@@ -62,9 +62,9 @@ void main() {
         journeysBloc.state,
         emitsInOrder(
           <JourneysState>[
-            JourneysUninitialised(),
-            JourneysLoaded(journeys: <Journey>[j1], user: null),
-            JourneysLoaded(journeys: <Journey>[j2, j1], user: null),
+            JourneysNoUser(),
+            JourneysWithUser(journeys: <Journey>[j1], userId: -1),
+            JourneysWithUser(journeys: <Journey>[j2, j1], userId: -1),
           ],
         ),
       );
