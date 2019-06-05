@@ -97,7 +97,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       mentalImage: result.mentalImage,
       position: result.position,
       size: result.size,
-      noImages: 0, // TODO(DJRHails): Pass in images here
+      noImages: result.images.length,
     );
   }
 
