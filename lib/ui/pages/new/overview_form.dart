@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -104,13 +103,10 @@ class OverviewForm extends StatelessWidget {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
                         AddJourney(
-                          user: User(
+                          result: FormResult(
                             name: formData['name'],
                             email: formData['email'],
-                          ),
-                          journey: Journey(
                             size: formData['size'],
-                            email: formData['email'],
                             availability: formData['availability'],
                             deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],

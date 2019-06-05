@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/web_client.dart';
 import 'package:meta/meta.dart';
@@ -13,19 +15,27 @@ class JourneysRepository {
   final WebClient webClient;
 
   // Loads journeys from a Web Client.
-  Future<List<Journey>> loadJourneys() async {
+  Future<List<JourneyEntity>> loadJourneys({int userId}) async {
     final List<Map<String, dynamic>> mapped = await webClient.loadJourneys();
-    return mapped.map((jsonJourney) => Journey.fromJson(jsonJourney)).toList();
+    return mapped.map((jsonJourney) => JourneyEntity.fromJson(jsonJourney)).toList();
   }
 
   // Persists journeys to the web
-  Future<bool> saveJourneys(List<Journey> journeys) async {
+  Future<bool> saveJourneys(List<JourneyEntity> journeys) async {
     final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
     return await webClient.saveJourneys(journeysMap);
   }
 
-  Future<int> saveUser(User user) async {
+  Future<int> saveUser(UserEntity user) async {
     final userMap = user.toJson();
     return await webClient.saveUser(userMap);
+  }
+
+  Artist getArtist(int artistId) {
+    return Artist(name: 'Ricky', email: 'ricky@scm.com', studio: 'South City Market');
+  }
+
+  User getUser(int userId) {
+    return User(id: userId, name: 'test.user', email: 'test.email');
   }
 }
