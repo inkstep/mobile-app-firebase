@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/form_result_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class JourneysEvent extends Equatable {
@@ -8,13 +7,12 @@ abstract class JourneysEvent extends Equatable {
 }
 
 class AddJourney extends JourneysEvent {
-  AddJourney({@required this.user, @required this.journey}) : super(<dynamic>[user, journey]);
+  AddJourney({@required this.result}) : super(<dynamic>[result]);
 
-  final Journey journey;
-  final User user;
+  final FormResult result;
 
   @override
-  String toString() => 'AddJourney { user: $user, journey: $journey }';
+  String toString() => 'AddJourney { formResult: $result }';
 }
 
 class LoadJourneys extends JourneysEvent {

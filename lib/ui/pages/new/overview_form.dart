@@ -5,8 +5,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
@@ -38,9 +37,7 @@ class OverviewForm extends StatelessWidget {
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
-    formData['deposit'] = deposit==buttonState.True
-        ? 'Willing to leave a deposit'
-        : '';
+    formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
     formData['availability'] = getAvailability(weekCallbacks);
 
     return Container(
@@ -106,13 +103,10 @@ class OverviewForm extends StatelessWidget {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
                         AddJourney(
-                          user: User(
+                          result: FormResult(
                             name: formData['name'],
                             email: formData['email'],
-                          ),
-                          journey: Journey(
                             size: formData['size'],
-                            email: formData['email'],
                             availability: formData['availability'],
                             deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],
@@ -124,7 +118,7 @@ class OverviewForm extends StatelessWidget {
                       nav.openViewJourneysScreen(context);
                     },
                   )),
-          Spacer(flex: 1),
+        Spacer(flex: 1),
       ],
     ));
   }
@@ -161,9 +155,7 @@ class OverviewForm extends StatelessWidget {
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
     final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
-        ? Theme.of(context).accentTextTheme.subtitle.copyWith(
-              color: baseColors['error']
-            )
+        ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).accentTextTheme.subtitle;
 
     return Expanded(
@@ -179,44 +171,37 @@ class OverviewForm extends StatelessWidget {
     String availabilityString = '';
     if (weekCallbacks.monday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.tuesday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.wednesday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.thursday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.friday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.saturday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     if (weekCallbacks.sunday.currentValue()) {
       availabilityString += '1';
-    }
-    else {
+    } else {
       availabilityString += '0';
     }
     return availabilityString;

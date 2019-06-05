@@ -2,7 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/form_result_model.dart';
+import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
 
@@ -13,23 +17,31 @@ void main() {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
 
-    final Journey j1 = Journey(
-      availability: 'availability',
-      deposit: 'deposit',
-      size: 'size',
-      position: 'position',
-      mentalImage: 'mentalImage',
-      email: 'email',
+    final CardModel c1 = CardModel('Star', 'Ricky');
+    final JourneyEntity j1 = JourneyEntity(
+      userId: 0,
+      artistId: 0,
+      mentalImage: 'Star',
+      size: '',
+      position: '',
+      availability: '',
+      deposit: '',
+      noImages: 0,
     );
 
-    final Journey j2 = Journey(
-      availability: 'availability',
-      deposit: 'deposit',
-      size: 'size',
-      position: 'position',
-      mentalImage: 'mentalImage',
-      email: 'email',
+    final CardModel c2 = CardModel('Flower', 'Ricky');
+    final JourneyEntity j2 = JourneyEntity(
+      userId: 0,
+      artistId: 0,
+      mentalImage: 'Flower',
+      size: '',
+      position: '',
+      availability: '',
+      deposit: '',
+      noImages: 0,
     );
+
+    final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
 
     setUp(() {
       repo = MockJourneysRepository();
@@ -46,15 +58,15 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(journeys: <Journey>[], userId: -1),
+            JourneysWithUser(cards: <CardModel>[], user: testUser),
           ],
         ),
       );
 
-      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[]));
+      when(repo.loadJourneys(userId: 0)).thenAnswer((_) => Future.value(<JourneyEntity>[]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(user: null, journey: null));
+      journeysBloc.dispatch(AddJourney(result: null));
     });
 
     test('add journey event should emit with the additional journey in the front', () {
@@ -63,16 +75,44 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(journeys: <Journey>[j1], userId: -1),
-            JourneysWithUser(journeys: <Journey>[j2, j1], userId: -1),
+            JourneysWithUser(cards: <CardModel>[c1], user: testUser),
+            JourneysWithUser(cards: <CardModel>[c2, c1], user: testUser),
           ],
         ),
       );
 
-      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j1]));
+      final responses = [
+        Future.value(<JourneyEntity>[j1]),
+        Future.value(<JourneyEntity>[j2, j1])
+      ];
+      when(repo.loadJourneys(userId: 0)).thenAnswer((_) => responses.removeAt(0));
+
+      when(repo.getArtist(0)).thenAnswer(
+        (_) => Future.value(
+              Artist(
+                name: 'Ricky',
+                email: 'someemail',
+                studio: 'scm',
+              ),
+            ),
+      );
+      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(true));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(user: null, journey: j2));
+
+      journeysBloc.dispatch(
+        AddJourney(
+          result: FormResult(
+            position: '',
+            availability: '',
+            mentalImage: 'Flower',
+            name: testUser.name,
+            size: '',
+            deposit: '',
+            email: testUser.email,
+          ),
+        ),
+      );
     });
   });
 }

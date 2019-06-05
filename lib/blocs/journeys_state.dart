@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/models/journey_model.dart';
+import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class JourneysState extends Equatable {
@@ -22,12 +23,11 @@ class JourneyError extends JourneysState {
 }
 
 class JourneysWithUser extends JourneysState {
-  JourneysWithUser({@required this.userId, @required this.journeys})
-      : super(<dynamic>[userId, journeys]);
+  JourneysWithUser({@required this.user, @required this.cards}) : super(<dynamic>[user, cards]);
 
-  final int userId;
-  final List<Journey> journeys;
+  final User user;
+  final List<CardModel> cards;
 
   @override
-  String toString() => 'JourneysWithUser { userId: $userId, journeys: ${journeys?.length} }';
+  String toString() => 'JourneysWithUser { user: $user, cards: ${cards?.length} }';
 }

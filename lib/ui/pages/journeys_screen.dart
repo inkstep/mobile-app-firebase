@@ -73,7 +73,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                 children: <Widget>[
                   WelcomeBackHeader(
                     // TODO(DJRHails): Use a user bloc
-                    name: loadedState.journeys.isEmpty ? '' : loadedState.userId.toString(),
+                    name: loadedState.cards.isEmpty ? '' : loadedState.user.name,
                     tasksToComplete: 0,
                   ),
                   Expanded(
@@ -90,13 +90,13 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                       child: PageView.builder(
                         controller: _pageController,
                         itemBuilder: (BuildContext context, int index) {
-                          if (index == state.journeys.length) {
+                          if (index == state.cards.length) {
                             return AddCard();
                           } else {
-                            return JourneyCard(model: state.journeys[index]);
+                            return JourneyCard(model: state.cards[index]);
                           }
                         },
-                        itemCount: state.journeys.length + 1,
+                        itemCount: state.cards.length + 1,
                       ),
                     ),
                   ),
