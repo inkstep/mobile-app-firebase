@@ -27,55 +27,5 @@ void main() {
       expect(find.text('Yes'), findsOneWidget);
       expect(find.text('No'), findsOneWidget);
     });
-
-    testWidgets('Pressing Yes advances', (WidgetTester tester) async {
-      final PageController controller = MockController();
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-              body: BinaryInput(
-                label: 'label',
-                controller: controller,
-                currentState: buttonState.Unset,
-                callback: (text) {},
-              )
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Yes'));
-      await tester.pump();
-
-      verify(controller.nextPage(
-          duration: anyNamed('duration'), curve: anyNamed('curve'))
-      );
-    });
-
-    testWidgets('Pressing No advances', (WidgetTester tester) async {
-      final PageController controller = MockController();
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-              body: BinaryInput(
-                label: 'label',
-                controller: controller,
-                currentState: buttonState.Unset,
-                callback: (text) {},
-              )
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('No'));
-      await tester.pump();
-
-      verify(controller.nextPage(
-          duration: anyNamed('duration'), curve: anyNamed('curve'))
-      );
-    });
   });
 }
