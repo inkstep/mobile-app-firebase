@@ -11,11 +11,11 @@ class WebClient {
 
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
-  static const String artistsEndpoint = '/artists';
   static const String imageEndpoint = '/image';
+  static const String artistEndpoint = '/artist';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
-    final http.Response response = await http.get('$url$artistsEndpoint');
+    final http.Response response = await http.get('$url$artistEndpoint');
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
@@ -108,5 +108,21 @@ class WebClient {
       return Future.value(int.parse(responseJson['image_id']));
     }
     return Future.value(-1);
+  }
+
+  Future<Map<String, dynamic>> loadArtist(int artistId) async {
+    final http.Response response = await http.get('$url$artistEndpoint/$artistId');
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    return json.decode(response.body);
+  }
+
+  Future<Map<String, dynamic>> loadUser(int userId) async {
+    return json.decode('{"id": "0", "user_name": "test.user", "user_email": "test.email"}');
   }
 }

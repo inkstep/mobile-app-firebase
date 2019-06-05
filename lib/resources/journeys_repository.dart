@@ -46,8 +46,9 @@ class JourneysRepository {
     return await webClient.saveUser(imageMap);
   }
 
-  Future<Artist> getArtist(int artistId) {
-    return Future.value(Artist(name: 'Ricky', email: 'ricky@scm.com', studio: 'South City Market'));
+  Future<Artist> getArtist(int artistId) async {
+    final Map<String, dynamic> mapped = await webClient.loadArtist(artistId);
+    return Artist.fromJson(mapped);
   }
 
   Future<User> getUser(int userId) {
