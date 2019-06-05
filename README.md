@@ -2,7 +2,7 @@
 with you every step of the way
 
 
-[![CircleCI](https://circleci.com/gh/inkstep/backend.svg?style=svg)](https://circleci.com/gh/inkstep/mobile-app)
+[![CircleCI](https://circleci.com/gh/inkstep/mobile-app.svg?style=svg)](https://circleci.com/gh/inkstep/mobile-app)
 ![](https://img.shields.io/badge/framework-flutter-blue.svg)
 ![](https://img.shields.io/badge/dependencies-gradle-green.svg)
 ![](https://img.shields.io/badge/project-inkstep-black.svg)
