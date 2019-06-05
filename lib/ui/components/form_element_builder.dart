@@ -13,6 +13,7 @@ class FormElementBuilder extends StatelessWidget {
   FormElementBuilder({
     @required this.builder,
     @required this.controller,
+    this.scroll = true,
     this.fieldKey,
     this.duration = 500,
     @required this.onSubmitCallback,
@@ -23,6 +24,7 @@ class FormElementBuilder extends StatelessWidget {
   final PageController controller;
   final Key fieldKey;
   final int duration;
+  final bool scroll;
   final FocusNode focus = FocusNode();
   final ElementBuilder builder;
 
@@ -44,7 +46,9 @@ class FormElementBuilder extends StatelessWidget {
     return (textBoxValue) {
       func(textBoxValue);
       focus.unfocus();
-      navToNextPage();
+      if (scroll) {
+        navToNextPage();
+      }
     };
   }
 }
