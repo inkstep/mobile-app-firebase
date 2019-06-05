@@ -181,6 +181,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               sizeController: sizeController,
               deposit: deposit,
               weekCallbacks: weekCallbacks,
+              images: inspirationImages,
             )
           ],
         ),

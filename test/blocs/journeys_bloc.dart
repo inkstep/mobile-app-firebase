@@ -2,9 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
+import 'package:inkstep/models/journey_info_model.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class MockJourneysRepository extends Mock implements JourneysRepository {}
 
@@ -13,22 +15,24 @@ void main() {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
 
-    final Journey j1 = Journey(
+    final JourneyInfo jInfo = JourneyInfo(
       availability: 'availability',
       deposit: 'deposit',
       size: 'size',
       position: 'position',
       mentalImage: 'mentalImage',
-      email: 'email',
+      images: <Asset>[],
+      userEmail: 'j@e.com',
+      userName: 'jimmy',
     );
 
-    final Journey j2 = Journey(
+    final Journey j = Journey(
       availability: 'availability',
       deposit: 'deposit',
       size: 'size',
       position: 'position',
       mentalImage: 'mentalImage',
-      email: 'email',
+      email: 'j@e.com',
     );
 
     setUp(() {
@@ -54,7 +58,7 @@ void main() {
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[]));
 
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(user: null, journey: null));
+      journeysBloc.dispatch(AddJourney(journeyInfo: null));
     });
 
     test('add journey event should emit with the additional journey in the front', () {
@@ -63,16 +67,19 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(journeys: <Journey>[j1], userId: -1),
-            JourneysWithUser(journeys: <Journey>[j2, j1], userId: -1),
+            JourneysWithUser(journeys: <Journey>[j], userId: 2),
+            JourneysWithUser(journeys: <Journey>[j, j], userId: null),
           ],
         ),
       );
 
-      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j1]));
+      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(true));
+      when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j]));
+      when(repo.saveUser(any, any)).thenAnswer((_) => Future.value(2));
 
+      journeysBloc.dispatch(AddJourney(journeyInfo: jInfo));
       journeysBloc.dispatch(LoadJourneys());
-      journeysBloc.dispatch(AddJourney(user: null, journey: j2));
+      journeysBloc.dispatch(AddJourney(journeyInfo: jInfo));
     });
   });
 }

@@ -5,12 +5,12 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
-import 'package:inkstep/models/journey_model.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/journey_info_model.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class OverviewForm extends StatelessWidget {
   const OverviewForm({
@@ -22,6 +22,7 @@ class OverviewForm extends StatelessWidget {
     @required this.sizeController,
     @required this.weekCallbacks,
     @required this.deposit,
+    @required this.images,
   }) : super(key: key);
 
   final Map<String, String> formData;
@@ -31,6 +32,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController sizeController;
   final buttonState deposit;
   final WeekCallbacks weekCallbacks;
+  final List<Asset> images;
 
   @override
   Widget build(BuildContext context) {
@@ -106,18 +108,16 @@ class OverviewForm extends StatelessWidget {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
                         AddJourney(
-                          user: User(
-                            name: formData['name'],
-                            email: formData['email'],
-                          ),
-                          journey: Journey(
+                          journeyInfo: JourneyInfo(
+                            userName: formData['name'],
+                            userEmail: formData['email'],
                             size: formData['size'],
-                            email: formData['email'],
-                            availability: formData['availability'],
-                            deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],
                             position: formData['position'],
-                          ),
+                            images: images,
+                            deposit: formData['deposit'],
+                            availability: formData['availability'],
+                          )
                         ),
                       );
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();

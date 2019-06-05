@@ -17,7 +17,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
-      if (event.journey != null) {
+      if (event.journeyInfo != null) {
         print('1');
         yield* _mapAddJourneysState(event);
       }
@@ -38,17 +38,25 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       journeyState = errorState.prev;
     }
 
-    print(journeyState);
+    final Journey journey = Journey(
+      availability: event.journeyInfo.availability,
+      deposit: event.journeyInfo.deposit,
+      position: event.journeyInfo.position,
+      email: event.journeyInfo.userEmail,
+      mentalImage: event.journeyInfo.mentalImage,
+      size: event.journeyInfo.size,
+    );
 
     if (journeyState is JourneysNoUser) {
-      userId = await journeysRepository.saveUser(event.user);
+      userId = await journeysRepository.saveUser(
+          event.journeyInfo.userName, event.journeyInfo.userEmail);
       print('userID=$userId');
       if (userId == -1) {
         yield JourneyError(prev: journeyState);
         return;
       }
 
-      loadedJourneys = [event.journey];
+      loadedJourneys = [];
 
       journeyState = JourneysWithUser(journeys: loadedJourneys, userId: userId);
     } else {
@@ -56,12 +64,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       loadedJourneys = loadedState.journeys;
     }
 
-    final bool success = await journeysRepository.saveJourneys(<Journey>[event.journey]);
+    final bool success = await journeysRepository.saveJourneys(<Journey>[journey]);
 
     print('success=$success');
 
     if (success) {
-      yield JourneysWithUser(journeys: [event.journey] + loadedJourneys, userId: userId);
+      yield JourneysWithUser(journeys: [journey] + loadedJourneys, userId: userId);
 
       return;
     }
