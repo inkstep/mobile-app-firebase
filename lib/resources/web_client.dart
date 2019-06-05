@@ -12,6 +12,7 @@ class WebClient {
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
   static const String artistsEndpoint = '/artists';
+  static const String imageEndpoint = '/image';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     final http.Response response = await http.get('$url$artistsEndpoint');
@@ -72,11 +73,8 @@ class WebClient {
     http.Response response;
 
     try {
-      response = await http.put(
-          '$url$userEndpoint',
-          body: jsonStr,
-          headers: {'Content-Type': 'application/json'}
-          );
+      response = await http
+          .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
       return Future.value(-1);
     }
@@ -86,6 +84,28 @@ class WebClient {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Future.value(int.parse(responseJson['user_id']));
+    }
+    return Future.value(-1);
+  }
+
+  Future<int> saveImage(Map<String, dynamic> imageMap) async {
+    final String jsonStr = jsonEncode(imageMap);
+    print('Saving Image: $jsonStr');
+
+    http.Response response;
+
+    try {
+      response = await http.put('$url$journeyEndpoint$imageEndpoint',
+          body: jsonStr, headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      return Future.value(-1);
+    }
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Future.value(int.parse(responseJson['image_id']));
     }
     return Future.value(-1);
   }

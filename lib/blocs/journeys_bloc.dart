@@ -65,6 +65,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final int journeyId = await journeysRepository.saveJourneys(<Journey>[journey]);
 
     if (journeyId != -1) {
+      for (Asset image in event.journeyInfo.images) {
+        final int imageId = await journeysRepository.saveImage(image, journeyId);
+      }
+
       yield JourneysWithUser(journeys: [journey] + loadedJourneys, userId: userId);
       return;
     }
