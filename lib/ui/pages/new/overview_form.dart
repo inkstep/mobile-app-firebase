@@ -19,6 +19,7 @@ class OverviewForm extends StatelessWidget {
     @required this.descController,
     @required this.emailController,
     @required this.sizeController,
+    @required this.posController,
     @required this.weekCallbacks,
     @required this.deposit,
   }) : super(key: key);
@@ -28,6 +29,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
+  final TextEditingController posController;
   final buttonState deposit;
   final WeekCallbacks weekCallbacks;
 
@@ -37,6 +39,11 @@ class OverviewForm extends StatelessWidget {
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
+
+    // if(formData['position']==null||formData['position']!= posController.text) {
+    //   formData['position'] = posController.text==null ? '' : posController.text;
+    // }
+
     formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
     formData['availability'] = getAvailability(weekCallbacks);
 

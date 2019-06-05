@@ -7,17 +7,23 @@ class PositionPickerFormElement extends StatefulWidget {
   const PositionPickerFormElement({Key key,
     @required this.controller,
     @required this.formData,
+    @required this.textController,
   }) : super(key: key);
 
   final PageController controller;
   final Map formData;
+  final TextEditingController textController;
+
   @override
-  State<StatefulWidget> createState() => _PositionPickerFormElementState(controller, formData)
-  ;
+  State<StatefulWidget> createState() => _PositionPickerFormElementState(
+      controller,
+      formData,
+      textController,
+  );
 }
 
 class _PositionPickerFormElementState extends State<StatefulWidget> {
-  _PositionPickerFormElementState(this.controller, this.formData) {
+  _PositionPickerFormElementState(this.controller, this.formData, this.textController) {
     positions = {
       'Leg': ['Lower Leg', 'Calf'],
       'Arm': ['Inner Wrist', 'Inner Arm', 'Biceps', 'Upper Arm', 'Side'],
@@ -32,7 +38,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
 
   final PageController controller;
   final Map formData;
-  final TextEditingController textController = TextEditingController();
+  final TextEditingController textController;
 
   String generalPos;
 
