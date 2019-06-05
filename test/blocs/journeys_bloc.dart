@@ -73,7 +73,7 @@ void main() {
         ),
       );
 
-      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(true));
+      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(2));
       when(repo.loadJourneys()).thenAnswer((_) => Future.value(<Journey>[j]));
       when(repo.saveUser(any, any)).thenAnswer((_) => Future.value(2));
 
