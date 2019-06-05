@@ -15,6 +15,7 @@ void main() {
               body: BinaryInput(
                 label: 'label',
                 controller: null,
+                currentState: buttonState.Unset,
                 callback: (text) {},
               )
           ),
@@ -36,6 +37,7 @@ void main() {
               body: BinaryInput(
                 label: 'label',
                 controller: controller,
+                currentState: buttonState.Unset,
                 callback: (text) {},
               )
           ),
@@ -60,6 +62,7 @@ void main() {
               body: BinaryInput(
                 label: 'label',
                 controller: controller,
+                currentState: buttonState.Unset,
                 callback: (text) {},
               )
           ),
