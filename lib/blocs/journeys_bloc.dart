@@ -40,6 +40,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     print('Adding a Journey when in $currentState');
 
+    // Setup User if not already done
     int userId = -1;
     User user;
     List<CardModel> oldCards = <CardModel>[];
@@ -57,6 +58,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       oldCards = journeysWithUser.cards;
     }
 
+    // Now send the corresponding journey
     final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, event.result);
 
     print('About to save the journey: $newJourney');

@@ -4,10 +4,6 @@ import 'package:meta/meta.dart';
 class UserEntity extends Equatable {
   UserEntity({@required this.name, @required this.email}) : super(<dynamic>[name, email]);
 
-  UserEntity.fromJson(Map<String, dynamic> json)
-      : name = json['user_name'],
-        email = json['user_email'];
-
   final String name;
   final String email;
 

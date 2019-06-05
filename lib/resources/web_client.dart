@@ -11,10 +11,10 @@ class WebClient {
 
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
-  static const String artistsEndpoint = '/artists';
+  static const String artistEndpoint = '/artist';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
-    final http.Response response = await http.get('$url$artistsEndpoint');
+    final http.Response response = await http.get('$url$artistEndpoint');
 
     print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
@@ -71,11 +71,8 @@ class WebClient {
     http.Response response;
 
     try {
-      response = await http.put(
-          '$url$userEndpoint',
-          body: jsonStr,
-          headers: {'Content-Type': 'application/json'}
-          );
+      response = await http
+          .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
       return Future.value(-1);
     }
@@ -88,5 +85,21 @@ class WebClient {
     } else {
       return Future.value(-1);
     }
+  }
+
+  Future<Map<String, dynamic>> loadArtist(int artistId) async {
+    final http.Response response = await http.get('$url$artistEndpoint/$artistId');
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    return json.decode(response.body);
+  }
+
+  Future<Map<String, dynamic>> loadUser(int userId) async {
+    return json.decode('{"id": "0", "user_name": "test.user", "user_email": "test.email"}');
   }
 }
