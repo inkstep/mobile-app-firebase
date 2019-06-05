@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/artists_model.dart';
@@ -8,6 +10,7 @@ import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/web_client.dart';
 import 'package:meta/meta.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 // TODO(DJRHails): provide local file storage as well
 class JourneysRepository {
@@ -30,6 +33,17 @@ class JourneysRepository {
   Future<int> saveUser(UserEntity user) async {
     final userMap = user.toJson();
     return await webClient.saveUser(userMap);
+  }
+
+  Future<int> saveImage(int journeyId, Asset img) async {
+    ByteData byteData = await img.requestOriginal();
+    List<int> data = byteData.buffer.asUint8List();
+
+    final Map imageMap = <String, dynamic>{
+      'journey_id' : journeyId,
+      'image_data' : base64Encode(data),
+    };
+    return await webClient.saveUser(imageMap);
   }
 
   Future<Artist> getArtist(int artistId) {
