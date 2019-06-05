@@ -41,6 +41,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final TextEditingController descController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController posController = TextEditingController();
 
   buttonState deposit = buttonState.Unset;
 
@@ -58,6 +59,16 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   String _imagesError;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    posController.addListener((){
+      setState(() {
+        formData['position'] = posController.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +133,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             PositionPickerFormElement(
               controller: controller,
               formData: formData,
+              textController: posController,
             ),
             ShortTextInputFormElement(
               controller: controller,
