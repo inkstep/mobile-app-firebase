@@ -26,7 +26,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
-  final bool deposit;
+  final buttonState deposit;
   final WeekCallbacks weekCallbacks;
 
   @override
@@ -35,7 +35,7 @@ class OverviewForm extends StatelessWidget {
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
-    formData['deposit'] = deposit==true
+    formData['deposit'] = deposit==buttonState.True
         ? 'Willing to leave a deposit'
         : '';
     formData['availability'] = getAvailability(weekCallbacks);
@@ -155,7 +155,9 @@ class OverviewForm extends StatelessWidget {
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
     final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
-        ? Theme.of(context).primaryTextTheme.subtitle
+        ? Theme.of(context).accentTextTheme.subtitle.copyWith(
+              color: baseColors['error']
+            )
         : Theme.of(context).accentTextTheme.subtitle;
 
     return Expanded(

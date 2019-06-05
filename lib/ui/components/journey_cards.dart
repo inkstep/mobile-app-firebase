@@ -83,6 +83,19 @@ class JourneyCard extends StatelessWidget {
                       Text('${model.description}', style: Theme.of(context).accentTextTheme.title),
                 ),
                 Spacer(),
+                RaisedButton(
+                  onPressed: () {
+                    final ScreenNavigator nav = sl.get();
+                    nav.openAftercareScreen(context);},
+                  elevation: 15.0,
+                  padding: EdgeInsets.fromLTRB(
+                      32.0, 16.0, 32.0, 16.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  child: Text('Aftercare Information', style: TextStyle(
+                      fontSize: 20.0, fontFamily: 'Signika'),
+                  ),
+                ),
               ],
             ),
           ),

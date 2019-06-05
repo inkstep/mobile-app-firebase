@@ -7,11 +7,13 @@ class BinaryInput extends StatelessWidget {
     @required this.controller,
     @required this.callback,
     @required this.label,
+    @required this.currentState,
     Key key,
   }) : super(key: key);
 
   final SubmitCallback callback;
   final PageController controller;
+  final buttonState currentState;
 
   final String label;
 
@@ -36,8 +38,8 @@ class BinaryInput extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildButton(context, true, () {submitCallback('1');},),
-                  _buildButton(context, false, () {submitCallback('0');},),
+                  _buildButton(context, true, () {submitCallback('true');}, currentState!=buttonState.True),
+                  _buildButton(context, false, () {submitCallback('false');}, currentState!=buttonState.False),
                 ],
               ),
               flex: 20,
@@ -48,15 +50,17 @@ class BinaryInput extends StatelessWidget {
       onSubmitCallback: callback,
       controller: controller,
       fieldKey: key,
+      scroll: false,
     );
   }
 
-  Widget _buildButton(BuildContext context, bool left, VoidCallback response) {
+  Widget _buildButton(BuildContext context, bool left, VoidCallback response, bool enabled) {
     final Radius r = Radius.circular(10);
     return FlatButton(
       padding: EdgeInsets.all(20),
       child: Text(left ? 'Yes' : 'No'),
-      onPressed: response,
+      onPressed: enabled ? response : null,
+      disabledColor: Theme.of(context).primaryColorDark,
       color: left
           ? Theme.of(context).accentColor
           : Theme.of(context).backgroundColor,
@@ -71,4 +75,10 @@ class BinaryInput extends StatelessWidget {
       ),
     );
   }
+}
+
+enum buttonState {
+  True,
+  False,
+  Unset,
 }
