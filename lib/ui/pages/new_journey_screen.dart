@@ -63,7 +63,11 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   @override
   void initState() {
     super.initState();
-    posController.addListener((){formData['position'] = posController.text;});
+    posController.addListener((){
+      setState(() {
+        formData['position'] = posController.text;
+      });
+    });
   }
 
   @override
