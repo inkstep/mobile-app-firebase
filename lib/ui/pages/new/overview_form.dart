@@ -19,7 +19,6 @@ class OverviewForm extends StatelessWidget {
     @required this.descController,
     @required this.emailController,
     @required this.sizeController,
-    @required this.posController,
     @required this.weekCallbacks,
     @required this.deposit,
   }) : super(key: key);
@@ -29,7 +28,6 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController sizeController;
-  final TextEditingController posController;
   final buttonState deposit;
   final WeekCallbacks weekCallbacks;
 
