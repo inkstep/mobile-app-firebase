@@ -18,7 +18,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney) {
       if (event.journeyInfo != null) {
-        print('1');
         yield* _mapAddJourneysState(event);
       }
     } else if (event is LoadJourneys) {
@@ -27,7 +26,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
-    print('2');
     int userId;
     List<Journey> loadedJourneys;
 
@@ -50,7 +48,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (journeyState is JourneysNoUser) {
       userId = await journeysRepository.saveUser(
           event.journeyInfo.userName, event.journeyInfo.userEmail);
-      print('userID=$userId');
       if (userId == -1) {
         yield JourneyError(prev: journeyState);
         return;
@@ -65,8 +62,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     final bool success = await journeysRepository.saveJourneys(<Journey>[journey]);
-
-    print('success=$success');
 
     if (success) {
       yield JourneysWithUser(journeys: [journey] + loadedJourneys, userId: userId);
