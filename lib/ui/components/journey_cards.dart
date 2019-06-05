@@ -85,7 +85,7 @@ class JourneyCard extends StatelessWidget {
                 Spacer(),
                 RaisedButton(
                   onPressed: () {
-                    ScreenNavigator nav = sl.get();
+                    final ScreenNavigator nav = sl.get();
                     nav.openAftercareScreen(context);},
                   elevation: 15.0,
                   padding: EdgeInsets.fromLTRB(
