@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:inkstep/models/journey_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'journeys_event.dart';
 import 'journeys_state.dart';
@@ -61,11 +62,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       loadedJourneys = loadedState.journeys;
     }
 
-    final bool success = await journeysRepository.saveJourneys(<Journey>[journey]);
+    final int journeyId = await journeysRepository.saveJourneys(<Journey>[journey]);
 
-    if (success) {
+    if (journeyId != -1) {
       yield JourneysWithUser(journeys: [journey] + loadedJourneys, userId: userId);
-
       return;
     }
 

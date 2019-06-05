@@ -45,7 +45,7 @@ class WebClient {
     return mappedJourneys;
   }
 
-  Future<bool> saveJourneys(List<Map<String, dynamic>> journeys) async {
+  Future<int> saveJourneys(List<Map<String, dynamic>> journeys) async {
     for (Map<String, dynamic> journeyMap in journeys) {
       final String jsonStr = jsonEncode(journeyMap);
       print('Saving Journey: $jsonStr');
@@ -58,10 +58,11 @@ class WebClient {
       print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
       if (response.statusCode != 200) {
-        return Future.value(false);
+        final Map<String, dynamic> responseJson = jsonDecode(response.body);
+        return Future.value(int.parse(responseJson['journey_id']));
       }
     }
-    return Future.value(true);
+    return Future.value(-1);
   }
 
   Future<int> saveUser(Map<String, dynamic> userMap) async {
@@ -85,8 +86,7 @@ class WebClient {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Future.value(int.parse(responseJson['user_id']));
-    } else {
-      return Future.value(-1);
     }
+    return Future.value(-1);
   }
 }
