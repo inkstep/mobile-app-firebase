@@ -40,9 +40,9 @@ class OverviewForm extends StatelessWidget {
     formData['email'] = emailController.text;
     formData['size'] = sizeController.text;
 
-    // if(formData['position']==null||formData['position']!= posController.text) {
-    //   formData['position'] = posController.text==null ? '' : posController.text;
-    // }
+     if(formData['position']==null) {
+       formData['position'] =  '';
+     }
 
     formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
     formData['availability'] = getAvailability(weekCallbacks);
