@@ -10,6 +10,7 @@ import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class OverviewForm extends StatelessWidget {
   const OverviewForm({
@@ -21,6 +22,7 @@ class OverviewForm extends StatelessWidget {
     @required this.sizeController,
     @required this.weekCallbacks,
     @required this.deposit,
+    @required this.images,
   }) : super(key: key);
 
   final Map<String, String> formData;
@@ -30,6 +32,7 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController sizeController;
   final buttonState deposit;
   final WeekCallbacks weekCallbacks;
+  final List<Asset> images;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +119,8 @@ class OverviewForm extends StatelessWidget {
                             deposit: formData['deposit'],
                             mentalImage: formData['mentalImage'],
                             position: formData['position'],
-                          ),
+                            images: images,
+                          )
                         ),
                       );
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();

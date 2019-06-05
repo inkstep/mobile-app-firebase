@@ -11,6 +11,7 @@ class WebClient {
 
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
+  static const String imageEndpoint = '/image';
   static const String artistEndpoint = '/artist';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
@@ -45,7 +46,7 @@ class WebClient {
     return mappedJourneys;
   }
 
-  Future<bool> saveJourneys(List<Map<String, dynamic>> journeys) async {
+  Future<int> saveJourneys(List<Map<String, dynamic>> journeys) async {
     for (Map<String, dynamic> journeyMap in journeys) {
       final String jsonStr = jsonEncode(journeyMap);
       print('Saving Journey: $jsonStr');
@@ -57,11 +58,12 @@ class WebClient {
 
       print('Response(${response.statusCode}): ${response.reasonPhrase}');
 
-      if (response.statusCode != 200) {
-        return Future.value(false);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseJson = jsonDecode(response.body);
+        return Future.value(int.parse(responseJson['journey_id']));
       }
     }
-    return Future.value(true);
+    return Future.value(-1);
   }
 
   Future<int> saveUser(Map<String, dynamic> userMap) async {
@@ -82,9 +84,30 @@ class WebClient {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Future.value(int.parse(responseJson['user_id']));
-    } else {
+    }
+    return Future.value(-1);
+  }
+
+  Future<int> saveImage(Map<String, dynamic> imageMap) async {
+    final String jsonStr = jsonEncode(imageMap);
+    print('Saving Image: $jsonStr');
+
+    http.Response response;
+
+    try {
+      response = await http.put('$url$journeyEndpoint$imageEndpoint',
+          body: jsonStr, headers: {'Content-Type': 'application/json'});
+    } catch (e) {
       return Future.value(-1);
     }
+
+    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Future.value(int.parse(responseJson['image_id']));
+    }
+    return Future.value(-1);
   }
 
   Future<Map<String, dynamic>> loadArtist(int artistId) async {

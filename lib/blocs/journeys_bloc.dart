@@ -7,6 +7,7 @@ import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'journeys_event.dart';
 import 'journeys_state.dart';
@@ -62,10 +63,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, event.result);
 
     print('About to save the journey: $newJourney');
-    if (!await journeysRepository.saveJourneys(<JourneyEntity>[newJourney])) {
+    final int journeyId = await journeysRepository.saveJourneys(<JourneyEntity>[newJourney]);
+    if (journeyId == -1) {
       print('Failed to save journeys');
       yield JourneyError(prev: currentState);
     } else {
+      for (Asset img in event.result.images) {
+        await journeysRepository.saveImage(journeyId, img);
+      }
+
       print('Successfully saved journey');
       final List<CardModel> cards = await _getCards(user?.id ?? userId);
       print('Successfully loaded cards in for ${user?.id ?? userId}: $cards');
@@ -93,7 +99,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       mentalImage: result.mentalImage,
       position: result.position,
       size: result.size,
-      noImages: 0, // TODO(DJRHails): Pass in images here
+      noImages: result.images.length,
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class MockJourneysRepository extends Mock implements JourneysRepository {}
 
@@ -16,7 +17,6 @@ void main() {
   group('JourneysBloc', () {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
-
     final CardModel c1 = CardModel('Star', 'Ricky');
     final JourneyEntity j1 = JourneyEntity(
       userId: 0,
@@ -96,7 +96,7 @@ void main() {
               ),
             ),
       );
-      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(true));
+      when(repo.saveJourneys(any)).thenAnswer((_) => Future.value(1));
 
       journeysBloc.dispatch(LoadJourneys());
 
@@ -110,6 +110,7 @@ void main() {
             size: '',
             deposit: '',
             email: testUser.email,
+            images: <Asset>[],
           ),
         ),
       );

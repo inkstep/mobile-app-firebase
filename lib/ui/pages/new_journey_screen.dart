@@ -72,22 +72,43 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {mon = switched;},
-            () {return mon;});
-    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {tues = switched;},
-            () {return tues;});
-    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {wed = switched;},
-            () {return wed;});
-    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {thurs = switched;},
-            () {return thurs;});
-    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {fri = switched;},
-            () {return fri;});
-    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {sat = switched;},
-            () {return sat;});
-    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {sun = switched;},
-            () {return sun;});
-    final WeekCallbacks weekCallbacks = WeekCallbacks(monday, tuesday, wednesday, thursday,
-        friday, saturday, sunday);
+    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
+      mon = switched;
+    }, () {
+      return mon;
+    });
+    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {
+      tues = switched;
+    }, () {
+      return tues;
+    });
+    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {
+      wed = switched;
+    }, () {
+      return wed;
+    });
+    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {
+      thurs = switched;
+    }, () {
+      return thurs;
+    });
+    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {
+      fri = switched;
+    }, () {
+      return fri;
+    });
+    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {
+      sat = switched;
+    }, () {
+      return sat;
+    });
+    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {
+      sun = switched;
+    }, () {
+      return sun;
+    });
+    final WeekCallbacks weekCallbacks =
+        WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -116,7 +137,9 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             ImageGrid(
               images: inspirationImages,
               updateCallback: (images) {
-                inspirationImages = images;
+                setState(() {
+                  inspirationImages = images;
+                });
               },
               submitCallback: FormElementBuilder(
                 builder: (i, d, c) {},
@@ -149,36 +172,33 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                 label: 'Are you willing to leave a deposit?',
                 controller: controller,
                 currentState: deposit,
-              callback: (buttonPressed) {
-                setState(() {
-                  if (buttonPressed == 'true') {
-                    deposit = buttonState.True;
-                    controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease
-                        );
-                  } else {
-                    deposit = buttonState.False;
-                     showDialog <void> (
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text(
-                            'Are you sure?',
-                            textAlign: TextAlign.center,
-                          ),
-                          // TODO(Felination): Replace this with useful text
-                          content: Text(
+                callback: (buttonPressed) {
+                  setState(() {
+                    if (buttonPressed == 'true') {
+                      deposit = buttonState.True;
+                      controller.nextPage(
+                          duration: Duration(milliseconds: 500), curve: Curves.ease);
+                    } else {
+                      deposit = buttonState.False;
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Are you sure?',
+                              textAlign: TextAlign.center,
+                            ),
+                            // TODO(Felination): Replace this with useful text
+                            content: Text(
                               'Placeholder text',
                               textAlign: TextAlign.center,
-                          ),
-                        );
+                            ),
+                          );
                         },
-                    );
-                  }
-                });
-              }
-            ),
+                      );
+                    }
+                  });
+                }),
             ShortTextInputFormElement(
               controller: controller,
               textController: emailController,
@@ -193,6 +213,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               sizeController: sizeController,
               deposit: deposit,
               weekCallbacks: weekCallbacks,
+              images: inspirationImages,
             )
           ],
         ),
