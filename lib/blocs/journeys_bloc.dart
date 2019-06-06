@@ -64,8 +64,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     // Now send the corresponding journey
-    final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, -1, event
-        .result);
+    final JourneyEntity newJourney =
+        _journeyEntityFromFormResult(user?.id ?? userId, -1, event.result);
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<JourneyEntity>[newJourney]);
@@ -82,11 +82,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Successfully saved journey');
       final List<CardModel> cards = await _getCards(user?.id ?? userId);
       print('Successfully loaded cards in for ${user?.id ?? userId}: $cards');
-      user = user ?? journeysRepository.getUser(userId);
+      user = user ?? await journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      yield JourneysWithUser(
-          cards: cards, user: user, firstTime: firstTime ?? true);
+      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true);
       print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true));
       return;
     }
@@ -140,12 +139,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(
-          cards: cards,
-          user: userState.user,
-          firstTime: userState.firstTime ?? true);
+          cards: cards, user: userState.user, firstTime: userState.firstTime ?? true);
     }
   }
-
 
   Future<List<CardModel>> _getCards(int userId) async {
     print('Loading cards for $userId');
