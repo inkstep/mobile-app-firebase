@@ -60,7 +60,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     } else if (currentState is JourneysWithUser) {
       final JourneysWithUser journeysWithUser = currentState;
       user = journeysWithUser.user;
-      oldCards = journeysWithUser.cards;
       firstTime = journeysWithUser.firstTime;
     }
 
