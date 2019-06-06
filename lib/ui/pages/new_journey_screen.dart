@@ -7,6 +7,7 @@ import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
+import 'package:inkstep/ui/pages/new/size_selector.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'new/availability_selector.dart';
@@ -39,7 +40,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
-  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController widthController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController posController = TextEditingController();
 
@@ -158,12 +160,10 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               formData: formData,
               textController: posController,
             ),
-            ShortTextInputFormElement(
-              controller: controller,
-              textController: sizeController,
-              keyboardType: TextInputType.number,
-              label: 'How big would you like your tattoo to be?(cm)',
-              hint: '7x3',
+            SizeSelector(
+                  controller: controller,
+                  widthController: widthController,
+                  heightController: heightController,
             ),
             AvailabilitySelector(
               controller: controller,
@@ -212,7 +212,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               nameController: nameController,
               descController: descController,
               emailController: emailController,
-              sizeController: sizeController,
+              widthController: widthController,
+              heightController: heightController,
               deposit: deposit,
               weekCallbacks: weekCallbacks,
               images: inspirationImages,
