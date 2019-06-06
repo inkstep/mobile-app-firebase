@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 
 class SizeSelector extends StatelessWidget {
 
-  const SizeSelector({
+  SizeSelector({
     Key key,
     @required this.controller,
     @required this.widthController,
@@ -16,6 +17,7 @@ class SizeSelector extends StatelessWidget {
   final PageController controller;
   final TextEditingController widthController;
   final TextEditingController heightController;
+  final FocusNode focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +60,9 @@ class SizeSelector extends StatelessWidget {
             Spacer(),
             RaisedButton(
               onPressed: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                controller.nextPage(
+                SystemChannels.textInput.invokeMethod<String>('TextInput.hide');
+                print('buffer print');
+                controller.animateToPage(8,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.ease);
               },
@@ -82,7 +85,7 @@ class SizeSelector extends StatelessWidget {
 
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
-      width: 125.0,
+      width: 130.0,
       child: ShortTextInputFormElement(
         controller: null,
         textController: textController,
