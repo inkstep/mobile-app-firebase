@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 class JourneyEntity extends Equatable {
   JourneyEntity({
     @required this.userId,
-    this.artistId = 2,
+    this.artistId = 101,
     @required this.mentalImage,
     @required this.size,
     @required this.position,

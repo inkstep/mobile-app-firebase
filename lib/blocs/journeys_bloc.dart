@@ -111,7 +111,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield errorState.prev;
     }
 
-    if (journeysState is JourneysNoUser) {
+    if (currentState is JourneysNoUser) {
       print('Loading initial cards with fake user 0');
       final cards = await _getCards(0);
       print('Loaded initial cards with fake user 0: $cards');

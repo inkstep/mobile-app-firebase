@@ -36,14 +36,14 @@ class JourneysRepository {
   }
 
   Future<int> saveImage(int journeyId, Asset img) async {
-    final ByteData byteData = await img.requestOriginal();
+    final ByteData byteData = await img.requestThumbnail(100, 100);
     final List<int> data = byteData.buffer.asUint8List();
 
     final Map imageMap = <String, dynamic>{
       'journey_id' : journeyId,
       'image_data' : base64Encode(data),
     };
-    return await webClient.saveUser(imageMap);
+    return await webClient.saveImage(imageMap);
   }
 
   Future<Artist> getArtist(int artistId) async {
