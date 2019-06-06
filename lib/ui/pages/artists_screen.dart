@@ -45,6 +45,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                 return Container(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
                     child: ListView.builder(
+                      itemCount: state.artists.length,
                       itemBuilder: (BuildContext context, int index) {
                         if (state.artists.isEmpty) {
                           return Container();
