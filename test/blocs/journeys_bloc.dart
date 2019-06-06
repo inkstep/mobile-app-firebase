@@ -6,6 +6,7 @@ import 'package:inkstep/models/artists_model.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/journey_status.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
@@ -17,7 +18,14 @@ void main() {
   group('JourneysBloc', () {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
-    final CardModel c1 = CardModel('Star', 'Ricky', []);
+
+    final CardModel c1 = CardModel(
+      description: 'Star',
+      artistName: 'Ricky',
+      images: [],
+      status: WaitingForResponse(),
+      position: 0,
+    );
     final JourneyEntity j1 = JourneyEntity(
       id: 1,
       userId: 0,
@@ -30,7 +38,14 @@ void main() {
       noImages: 0,
     );
 
-    final CardModel c2 = CardModel('Flower', 'Ricky', []);
+    final CardModel c2 = CardModel(
+        description: 'Flower',
+        artistName: 'Ricky',
+        images: [],
+        status: WaitingForResponse(),
+        position: 1
+    );
+
     final JourneyEntity j2 = JourneyEntity(
       id: 1,
       userId: 0,
