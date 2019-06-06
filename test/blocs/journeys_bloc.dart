@@ -17,8 +17,9 @@ void main() {
   group('JourneysBloc', () {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
-    final CardModel c1 = CardModel('Star', 'Ricky');
+    final CardModel c1 = CardModel('Star', 'Ricky', []);
     final JourneyEntity j1 = JourneyEntity(
+      id: 1,
       userId: 0,
       artistId: 0,
       mentalImage: 'Star',
@@ -29,8 +30,9 @@ void main() {
       noImages: 0,
     );
 
-    final CardModel c2 = CardModel('Flower', 'Ricky');
+    final CardModel c2 = CardModel('Flower', 'Ricky', []);
     final JourneyEntity j2 = JourneyEntity(
+      id: 1,
       userId: 0,
       artistId: 0,
       mentalImage: 'Flower',

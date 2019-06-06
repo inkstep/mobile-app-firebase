@@ -54,4 +54,17 @@ class JourneysRepository {
   Future<User> getUser(int userId) {
     return Future.value(User(id: userId, name: 'test.user', email: 'test.email'));
   }
+
+  Future<List<Image>> getImages(int id) async {
+    final List<String> imageData = await webClient.loadImages(id);
+
+    List<Image> images = [];
+
+    for (String data in imageData) {
+      final List<int> byteData = base64Decode(data);
+      images += [Image.memory(byteData)];
+    }
+
+    return Future.value(images);
+  }
 }
