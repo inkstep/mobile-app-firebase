@@ -158,7 +158,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
                     final int size = loadedState.cards.length;
-                    if (index == size) {
+                    if (loadedState.cards.isEmpty) {
                       return AddCard();
                     } else {
                       // TODO(DJRHails): Animate scale
@@ -172,7 +172,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                       return JourneyCard(model: loadedState.cards[index], scale: 1);
                     }
                   },
-                  itemCount: loadedState.cards.length + 1,
+                  itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
                 ),
               ),
             ),
