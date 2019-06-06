@@ -141,10 +141,10 @@ class WebClient {
   Future<List<String>> loadImages(int id) async {
     print('journey_id = $id');
 
-    final http.Response response = await http.get('$url$journeyEndpoint/$imagesEndpoint/$id');
+    final http.Response response = await http.get('$url$journeyEndpoint/$id$imagesEndpoint');
 
     print(
-        '$journeyEndpoint/$imagesEndpoint/$id ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+        '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
