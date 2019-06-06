@@ -5,11 +5,15 @@ class Artist extends Equatable {
   Artist({@required this.name, @required this.email, @required this.studio})
       : super(<dynamic>[name, email, studio]);
 
-  Artist.fromJson(Map<String, dynamic> json)
-      : name = json['name'] ?? '',
-        email = json['email'] ?? '',
-        studio = json['studio'] ?? '';
+  factory Artist.fromJson(Map<String, dynamic> json) {
+    assert(json != null);
 
+    String name = json['name'] ?? '';
+    String email = json['email'] ?? '';
+    String studio = json['studio'] ?? '';
+
+    return Artist(name: name, email: email, studio: studio);
+  }
   final String name;
   final String email;
   final String studio;
