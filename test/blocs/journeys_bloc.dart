@@ -110,6 +110,7 @@ void main() {
                 name: 'Ricky',
                 email: 'someemail',
                 studioID: 1,
+                artistID: 1,
               ),
             ),
       );

@@ -54,7 +54,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                           name: state.artists[index].name,
                           studioName: state.artists[index].studio.name,
                           imagePath: 'assets/ricky.png',
-                          studioID: state.artists[index].studio.id,
+                          artistID: state.artists[index].artistID,
                         );
                       },
                     ));

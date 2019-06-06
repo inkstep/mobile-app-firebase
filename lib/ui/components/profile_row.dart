@@ -9,14 +9,14 @@ class ProfileRow extends StatelessWidget {
     @required this.imagePath,
     @required this.name,
     @required this.studioName,
-    @required this.studioID,
+    @required this.artistID,
     Key key,
   }) : super(key: key);
 
   final String imagePath;
   final String name;
   final String studioName;
-  final int studioID;
+  final int artistID;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class ProfileRow extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                nav.openNewJourneyScreen(context, studioID);
+                nav.openNewJourneyScreen(context, artistID);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
