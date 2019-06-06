@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
@@ -8,6 +9,7 @@ import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'new/availability_selector.dart';
@@ -81,6 +83,94 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return Future.value(false);
   }
 
+  List<Widget> _formQuestions(dynamic weekCallbacks) {
+    return <Widget>[
+      ShortTextInputFormElement(
+        controller: controller,
+        textController: nameController,
+        label: 'What do your friends call you?',
+        hint: 'Natasha',
+        maxLength: 16,
+      ),
+      ImageGrid(
+        images: inspirationImages,
+        updateCallback: (images) {
+          setState(() {
+            inspirationImages = images;
+            formData['noRefImgs'] = images.length.toString();
+          });
+        },
+        submitCallback: FormElementBuilder(
+          builder: (i, d, c) {},
+          controller: controller,
+          onSubmitCallback: (_) {},
+        ).navToNextPage,
+      ),
+      LongTextInputFormElement(
+        controller: controller,
+        textController: descController,
+        label: 'Describe the image in your head of the tattoo you want?',
+        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
+      ),
+      PositionPickerFormElement(
+        controller: controller,
+        formData: formData,
+        textController: posController,
+      ),
+      ShortTextInputFormElement(
+        controller: controller,
+        textController: sizeController,
+        label: 'How big would you like your tattoo to be?(cm)',
+        hint: '7x3',
+      ),
+      AvailabilitySelector(
+        controller: controller,
+        weekCallbacks: weekCallbacks,
+      ),
+      BinaryInput(
+          label: 'Are you willing to leave a deposit?',
+          controller: controller,
+          currentState: deposit,
+          callback: (buttonPressed) {
+            setState(() {
+              if (buttonPressed == 'true') {
+                deposit = buttonState.True;
+                controller.nextPage(
+                    duration: Duration(milliseconds: 500), curve: Curves.ease);
+              } else {
+                deposit = buttonState.False;
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return RoundedAlertDialog(
+                        title: 'Are you sure?',
+                        body: 'Most artists require a deposit in order to secure you an '
+                            'appointment. Don\'t worry, you won\'t have to pay this yet!',
+                        dismissButtonText: 'Ok');
+                  },
+                );
+              }
+            });
+          }),
+      ShortTextInputFormElement(
+        controller: controller,
+        textController: emailController,
+        label: 'What is your email address?',
+        hint: 'example@inkstep.com',
+      ),
+      OverviewForm(
+        formData: formData,
+        nameController: nameController,
+        descController: descController,
+        emailController: emailController,
+        sizeController: sizeController,
+        deposit: deposit,
+        weekCallbacks: weekCallbacks,
+        images: inspirationImages,
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
@@ -119,111 +209,61 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       return sun;
     });
     final WeekCallbacks weekCallbacks =
-        WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+    WeekCallbacks(
+        monday,
+        tuesday,
+        wednesday,
+        thursday,
+        friday,
+        saturday,
+        sunday);
 
     final Form form = Form(
       key: _formKey,
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Theme
+            .of(context)
+            .cardColor,
         appBar: AppBar(
-          title: Hero(
-            tag: 'logo',
-            child: LogoWidget(),
+          leading: IconButton(
+            icon: Icon(Icons.clear),
+            tooltip: 'Exit',
+            onPressed: () {
+              final nav = sl.get<ScreenNavigator>();
+              nav.pop(context);
+            },
           ),
-          elevation: 0.0,
+          elevation: 0,
           backgroundColor: Colors.transparent,
-          iconTheme: Theme.of(context).accentIconTheme,
+          iconTheme: Theme
+              .of(context)
+              .accentIconTheme,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.keyboard_arrow_up),
+                tooltip: 'Previous question',
+                onPressed: () {
+                  if (controller.page != 0) {
+                    controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+                  }
+                }
+            ),
+            IconButton(
+                icon: Icon(Icons.keyboard_arrow_down),
+                tooltip: 'Next question',
+                onPressed: () {
+                  if (controller.page != _formQuestions(weekCallbacks).length - 1) {
+                    controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+                  }
+                }
+            ),
+          ],
         ),
         body: PageView(
           controller: controller,
           scrollDirection: Axis.vertical,
-          children: <Widget>[
-            ShortTextInputFormElement(
-              controller: controller,
-              textController: nameController,
-              label: 'What do your friends call you?',
-              hint: 'Natasha',
-              maxLength: 16,
-            ),
-            ImageGrid(
-              images: inspirationImages,
-              updateCallback: (images) {
-                setState(() {
-                  inspirationImages = images;
-                  formData['noRefImgs'] = images.length.toString();
-                });
-              },
-              submitCallback: FormElementBuilder(
-                builder: (i, d, c) {},
-                controller: controller,
-                onSubmitCallback: (_) {},
-              ).navToNextPage,
-            ),
-            LongTextInputFormElement(
-              controller: controller,
-              textController: descController,
-              label: 'Describe the image in your head of the tattoo you want?',
-              hint: 'A sleeping deer protecting a crown with stars splayed behind it',
-            ),
-            PositionPickerFormElement(
-              controller: controller,
-              formData: formData,
-              textController: posController,
-            ),
-            ShortTextInputFormElement(
-              controller: controller,
-              textController: sizeController,
-              label: 'How big would you like your tattoo to be?(cm)',
-              hint: '7x3',
-            ),
-            AvailabilitySelector(
-              controller: controller,
-              weekCallbacks: weekCallbacks,
-            ),
-            BinaryInput(
-                label: 'Are you willing to leave a deposit?',
-                controller: controller,
-                currentState: deposit,
-                callback: (buttonPressed) {
-                  setState(() {
-                    if (buttonPressed == 'true') {
-                      deposit = buttonState.True;
-                      controller.nextPage(
-                          duration: Duration(milliseconds: 500), curve: Curves.ease);
-                    } else {
-                      deposit = buttonState.False;
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // TODO(Felination): Replace this with useful text
-                          return RoundedAlertDialog(
-                              title: 'Are you sure?',
-                              body: 'Most artists require a deposit in order to secure you an '
-                                  'appointment. Don\'t worry, you won\'t have to pay this yet!',
-                              dismissButtonText: 'Ok');
-                        },
-                      );
-                    }
-                  });
-                }),
-            ShortTextInputFormElement(
-              controller: controller,
-              textController: emailController,
-              label: 'What is your email address?',
-              hint: 'example@inkstep.com',
-            ),
-            OverviewForm(
-              formData: formData,
-              nameController: nameController,
-              descController: descController,
-              emailController: emailController,
-              sizeController: sizeController,
-              deposit: deposit,
-              weekCallbacks: weekCallbacks,
-              images: inspirationImages,
-            )
-          ],
+          children: _formQuestions(weekCallbacks),
         ),
       ),
     );
