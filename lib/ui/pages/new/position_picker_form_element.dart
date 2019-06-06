@@ -4,7 +4,8 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class PositionPickerFormElement extends StatefulWidget {
-  const PositionPickerFormElement({Key key,
+  const PositionPickerFormElement({
+    Key key,
     @required this.controller,
     @required this.formData,
     @required this.textController,
@@ -16,10 +17,10 @@ class PositionPickerFormElement extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _PositionPickerFormElementState(
-      controller,
-      formData,
-      textController,
-  );
+        controller,
+        formData,
+        textController,
+      );
 }
 
 class _PositionPickerFormElementState extends State<StatefulWidget> {
@@ -80,7 +81,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                   : Flexible(
                       flex: 2,
                       child: Text(
-                        'Specifics...',
+                        generalPos == null && formData['position'] == null ? '' : 'Specifics...',
                         style: Theme.of(context).accentTextTheme.title,
                         textAlign: TextAlign.center,
                       ),
