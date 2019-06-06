@@ -33,7 +33,6 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
             break;
           }
         }
-
         artists += [Artist(
           name: artistEntity.name,
           email: artistEntity.email,

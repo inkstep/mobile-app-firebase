@@ -8,8 +8,6 @@ class StudioEntity extends Equatable {
   factory StudioEntity.fromJson(Map<String, dynamic> json) {
     assert(json != null);
 
-    print(json);
-
     final String name = json['name'] ?? '';
     final int id = json['id'] ?? '';
 

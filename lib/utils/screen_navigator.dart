@@ -10,6 +10,10 @@ import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
 
 class ScreenNavigator {
+  void pop(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   void openViewJourneysScreen(BuildContext context) {
     Navigator.push<dynamic>(
       context,
