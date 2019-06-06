@@ -159,13 +159,13 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: PageView.builder(
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index == loadedState.cards.length) {
+                    if (loadedState.cards.isEmpty) {
                       return AddCard();
                     } else {
                       return JourneyCard(model: loadedState.cards[index]);
                     }
                   },
-                  itemCount: loadedState.cards.length + 1,
+                  itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
                 ),
               ),
             ),
