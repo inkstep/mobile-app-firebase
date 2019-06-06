@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/artists_bloc.dart';
 import 'package:inkstep/blocs/artists_event.dart';
 import 'package:inkstep/blocs/artists_state.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/artists_repository.dart';
 import 'package:inkstep/resources/web_client.dart';
 import 'package:inkstep/ui/components/profile_row.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistSelectionScreen extends StatefulWidget {
   ArtistSelectionScreen({
@@ -50,11 +52,17 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                         if (state.artists.isEmpty) {
                           return Container();
                         }
-                        return ProfileRow(
-                          name: state.artists[index].name,
-                          studioName: state.artists[index].studio.name,
-                          imagePath: 'assets/ricky.png',
-                          artistID: state.artists[index].artistID,
+                        return InkWell(
+                          onTap: () {
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.openNewJourneyScreen(context, state.artists[index].artistID);
+                          },
+                          child: ProfileRow(
+                            name: state.artists[index].name,
+                            studioName: state.artists[index].studio.name,
+                            imagePath: 'assets/ricky.png',
+                            artistID: state.artists[index].artistID,
+                          ),
                         );
                       },
                     ));

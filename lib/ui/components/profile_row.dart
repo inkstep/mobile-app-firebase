@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/utils/screen_navigator.dart';
 
 class ProfileRow extends StatelessWidget {
   ProfileRow({
@@ -38,24 +36,18 @@ class ProfileRow extends StatelessWidget {
           ),
           SizedBox(width: 20),
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                nav.openNewJourneyScreen(context, artistID);
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    name,
-                    style: Theme.of(context).accentTextTheme.subtitle,
-                  ),
-                  Text(
-                    studioName,
-                    style: Theme.of(context).accentTextTheme.subhead,
-                  )
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: Theme.of(context).accentTextTheme.subtitle,
+                ),
+                Text(
+                  studioName,
+                  style: Theme.of(context).accentTextTheme.subhead,
+                )
+              ],
             ),
           )
         ],
