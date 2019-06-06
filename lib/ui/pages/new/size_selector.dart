@@ -83,7 +83,7 @@ class SizeSelector extends StatelessWidget {
 
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
-      width: 115.0,
+      width: 124.0,
       child: ShortTextInputFormElement(
         controller: null,
         textController: textController,
