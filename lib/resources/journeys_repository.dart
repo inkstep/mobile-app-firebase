@@ -4,7 +4,7 @@ import 'dart:core';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
@@ -45,8 +45,8 @@ class JourneysRepository {
     return await webClient.saveImage(imageMap);
   }
 
-  Future<Artist> loadArtist(int artistId) async {
-    return Artist.fromJson(await webClient.loadArtist(artistId));
+  Future<ArtistEntity> loadArtist(int artistId) async {
+    return ArtistEntity.fromJson(await webClient.loadArtist(artistId));
   }
 
   Future<User> getUser(int userId) async {

@@ -51,10 +51,11 @@ class ScreenNavigator {
     );
   }
 
-  void openNewJourneyScreen(BuildContext context) {
+  void openNewJourneyScreen(BuildContext context, int artistID) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(), fullscreenDialog: true),
+      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID),
+          fullscreenDialog: true),
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
@@ -49,7 +49,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int userId = -1;
     User user;
     bool firstTime;
-    List<CardModel> oldCards = <CardModel>[];
     if (currentState is JourneysNoUser) {
       final UserEntity user = UserEntity(name: event.result.name, email: event.result.email);
       userId = await journeysRepository.saveUser(user);
@@ -61,7 +60,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     } else if (currentState is JourneysWithUser) {
       final JourneysWithUser journeysWithUser = currentState;
       user = journeysWithUser.user;
-      oldCards = journeysWithUser.cards;
       firstTime = journeysWithUser.firstTime;
     }
 
@@ -87,9 +85,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = user ?? journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      print('Merging in with oldCards: $oldCards');
       yield JourneysWithUser(
-          cards: _mergeCards(cards, oldCards), user: user, firstTime: firstTime ?? true);
+          cards: cards, user: user, firstTime: firstTime ?? true);
       print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true));
       return;
     }
@@ -106,6 +103,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     return JourneyEntity(
       id: id,
       userId: userId,
+      artistId: result.artistID,
       availability: result.availability,
       deposit: result.deposit,
       mentalImage: result.mentalImage,
@@ -142,15 +140,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(
-          cards: _mergeCards(userState.cards, cards),
+          cards: cards,
           user: userState.user,
           firstTime: userState.firstTime ?? true);
     }
   }
 
-  List<CardModel> _mergeCards(List<CardModel> c1, List<CardModel> c2) {
-    return Set<CardModel>.from(c1).union(c2.toSet()).toList();
-  }
 
   Future<List<CardModel>> _getCards(int userId) async {
     print('Loading cards for $userId');
@@ -163,7 +158,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int idx = 0;
     for (JourneyEntity je in list) {
       final List<Image> images = await journeysRepository.getImages(je.id);
-      final Artist artist = await journeysRepository.loadArtist(je.artistId);
+      final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
       cards.add(CardModel(
         description: je.mentalImage,
         artistName: artist.name,

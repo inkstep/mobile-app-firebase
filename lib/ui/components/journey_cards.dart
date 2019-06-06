@@ -74,51 +74,53 @@ class JourneyCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey.shade200,
+                      Chip(
+                        label: Text(model.status.toString()),
+                        //labelStyle: Theme.of(context).textTheme.subhead,
+                        backgroundColor: Theme.of(context).accentColor,
+                        elevation: 4,
+                      ),
+                      Spacer(),
+                      DescribedIconButton(model: model),
+                    ],
+                  ),
+                  Spacer(),
+                  if (model.images.isNotEmpty)
+                    Text(
+                      'Inspiration.',
+                      style: Theme.of(context).accentTextTheme.subtitle,
+                    ),
+                  Row(
+                    children: <Widget>[
+                      for (Image i in model.images)
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(4),
+                            child: i,
                           ),
-                        ),
-                        child: DescribedFeatureOverlay(
-                          featureId: model.aftercareID,
-                          icon: Icons.healing,
-                          color: Theme.of(context).accentColor,
-                          title: 'Aftercare Information',
-                          description:
-                              'Tap the care icon to see your current aftercare information.',
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.healing,
-                              color: Theme.of(context).backgroundColor,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              final ScreenNavigator nav = sl.get();
-                              nav.openAftercareScreen(context);
-                            },
-                          ),
-                        ),
-                      )
+                        )
                     ],
                   ),
                   Spacer(
                     flex: 8,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 4.0),
-                    // TODO(DJRHails): Should be Hero-d
-                    child: Text(
-                      '${model.artistName}',
-                      style: Theme.of(context).accentTextTheme.body1,
-                    ),
+                  Row(
+                    children: <Widget>[
+                      Chip(
+                        avatar: CircleAvatar(
+                          backgroundImage: AssetImage('assets/ricky.png'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        label: Text(
+                          model.artistName,
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    // TODO(DJRHails): Should be Hero-d
-                    child: Text('${model.description}',
-                        style: Theme.of(context).accentTextTheme.title),
+                  Container(height: 4.0),
+                  Text(
+                    '${model.description}',
+                    style: Theme.of(context).accentTextTheme.title,
                   ),
                   Spacer(),
                   JourneyProgressIndicator(
@@ -131,5 +133,44 @@ class JourneyCard extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class DescribedIconButton extends StatelessWidget {
+  const DescribedIconButton({
+    Key key,
+    @required this.model,
+  }) : super(key: key);
+
+  final CardModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.grey.shade200,
+        ),
+      ),
+      child: DescribedFeatureOverlay(
+        featureId: model.aftercareID,
+        icon: Icons.healing,
+        color: Theme.of(context).accentColor,
+        title: 'Aftercare Information',
+        description: 'Tap the care icon to see your current aftercare information.',
+        child: IconButton(
+          icon: Icon(
+            Icons.healing,
+            color: Theme.of(context).backgroundColor,
+            size: 20,
+          ),
+          onPressed: () {
+            final ScreenNavigator nav = sl.get();
+            nav.openAftercareScreen(context);
+          },
+        ),
+      ),
+    );
   }
 }
