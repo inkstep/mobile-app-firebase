@@ -17,7 +17,8 @@ class WebClient {
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     final http.Response response = await http.get('$url$artistEndpoint');
 
-    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+    print(
+        'GET $artistEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     final mappedArtists = <Map<String, dynamic>>[];
     final List<dynamic> jsonArtists = json.decode(response.body);
@@ -28,10 +29,11 @@ class WebClient {
     return mappedArtists;
   }
 
-  Future<List<Map<String, dynamic>>> loadJourneys() async {
-    final http.Response response = await http.get('$url$journeyEndpoint');
+  Future<List<Map<String, dynamic>>> loadJourneys(int userID) async {
+    final http.Response response = await http.get('$url$journeyEndpoint?user=$userID');
 
-    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+    print(
+        'GET $journeyEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
@@ -54,9 +56,8 @@ class WebClient {
       final http.Response response = await http.put('$url$journeyEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
 
-      print(response.body);
-
-      print('Response(${response.statusCode}): ${response.reasonPhrase}');
+      print(
+          'PUT $journeyEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseJson = jsonDecode(response.body);
@@ -78,8 +79,7 @@ class WebClient {
     } catch (e) {
       return Future.value(-1);
     }
-
-    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+    print('$userEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
@@ -101,7 +101,8 @@ class WebClient {
       return Future.value(-1);
     }
 
-    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+    print(
+        '$journeyEndpoint$imageEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
@@ -113,12 +114,12 @@ class WebClient {
   Future<Map<String, dynamic>> loadArtist(int artistId) async {
     final http.Response response = await http.get('$url$artistEndpoint/$artistId');
 
-    print('Response(${response.statusCode}): ${response.reasonPhrase}');
+    print(
+        '$artistEndpoint/$artistId ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
     }
-
     return json.decode(response.body);
   }
 
