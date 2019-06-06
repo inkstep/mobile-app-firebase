@@ -74,7 +74,7 @@ void main() {
               'want?'),
           findsNothing);
       expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'), findsOneWidget);
+      expect(find.text('How big would you like your tattoo to be?'), findsOneWidget);
     });
 
     testWidgets('Availability accessible via scroll', (WidgetTester tester) async {
@@ -91,7 +91,7 @@ void main() {
               'want?'),
           findsNothing);
       expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?'), findsNothing);
       expect(find.text('What days of the week are you normally available?'), findsOneWidget);
     });
 
@@ -109,7 +109,7 @@ void main() {
               'want?'),
           findsNothing);
       expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?'), findsNothing);
       expect(find.text('What days of the week are you normally available?'), findsNothing);
       expect(find.text('Are you willing to leave a deposit?'), findsOneWidget);
     });
@@ -128,7 +128,7 @@ void main() {
               'want?'),
           findsNothing);
       expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?'), findsNothing);
       expect(find.text('What days of the week are you normally available?'), findsNothing);
       expect(find.text('Are you happy to leave a deposit?'), findsNothing);
       expect(find.text('What is your email address?'), findsOneWidget);
@@ -148,7 +148,7 @@ void main() {
               'want?'),
           findsNothing);
       expect(find.text('Where would you like your tattoo? (Arm, leg, etc)'), findsNothing);
-      expect(find.text('How big would you like your tattoo to be?(cm)'), findsNothing);
+      expect(find.text('How big would you like your tattoo to be?'), findsNothing);
       expect(find.text('What days of the week are you normally available?'), findsNothing);
       expect(find.text('Are you happy to leave a deposit?'), findsNothing);
       expect(find.text('What is your email address?'), findsNothing);
