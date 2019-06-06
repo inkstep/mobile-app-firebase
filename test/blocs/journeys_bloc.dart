@@ -75,7 +75,7 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(cards: <CardModel>[], user: testUser),
+            JourneysWithUser(cards: <CardModel>[], user: testUser, firstTime: true),
           ],
         ),
       );
@@ -92,8 +92,8 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(cards: <CardModel>[c1], user: testUser),
-            JourneysWithUser(cards: <CardModel>[c2, c1], user: testUser),
+            JourneysWithUser(cards: <CardModel>[c1], user: testUser, firstTime: true),
+            JourneysWithUser(cards: <CardModel>[c2, c1], user: testUser, firstTime: true),
           ],
         ),
       );
