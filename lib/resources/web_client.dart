@@ -29,8 +29,8 @@ class WebClient {
     return mappedArtists;
   }
 
-  Future<List<Map<String, dynamic>>> loadJourneys() async {
-    final http.Response response = await http.get('$url$journeyEndpoint');
+  Future<List<Map<String, dynamic>>> loadJourneys(int userID) async {
+    final http.Response response = await http.get('$url$journeyEndpoint?user=$userID');
 
     print(
         'GET $journeyEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');

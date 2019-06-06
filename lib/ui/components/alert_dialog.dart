@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedAlertDialog extends StatelessWidget {
-  String title;
-  String body;
-  String dismissButtonText;
+  const RoundedAlertDialog({@required this.title, this.body, this.dismissButtonText});
 
-  RoundedAlertDialog({@required this.title, this.body, this.dismissButtonText});
+  final String title;
+  final String body;
+  final String dismissButtonText;
 
   @override
   Widget build(BuildContext context) {

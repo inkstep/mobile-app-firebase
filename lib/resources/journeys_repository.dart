@@ -19,8 +19,8 @@ class JourneysRepository {
   final WebClient webClient;
 
   // Loads journeys from a Web Client.
-  Future<List<JourneyEntity>> loadJourneys({int userId}) async {
-    final List<Map<String, dynamic>> mapped = await webClient.loadJourneys();
+  Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
+    final List<Map<String, dynamic>> mapped = await webClient.loadJourneys(userId);
     return mapped.map((jsonJourney) => JourneyEntity.fromJson(jsonJourney)).toList();
   }
 
