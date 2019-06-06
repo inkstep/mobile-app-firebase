@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneysScreen extends StatefulWidget {
   const JourneysScreen({Key key, this.onInit}) : super(key: key);
@@ -58,7 +60,22 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
         } else if (state is JourneysWithUser) {
           final JourneysWithUser loadedState = state;
           _controller.forward();
+
+          final FloatingActionButton addJourneyButton = state.cards.isEmpty
+              ? null
+              : FloatingActionButton(
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    final nav = sl.get<ScreenNavigator>();
+                    nav.openArtistSelection(context);
+                  },
+                );
+
           return Scaffold(
+            floatingActionButton: addJourneyButton,
             backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
               title: Text(''),
@@ -90,13 +107,13 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                       child: PageView.builder(
                         controller: _pageController,
                         itemBuilder: (BuildContext context, int index) {
-                          if (index == state.cards.length) {
+                          if (state.cards.isEmpty) {
                             return AddCard();
                           } else {
                             return JourneyCard(model: state.cards[index]);
                           }
                         },
-                        itemCount: state.cards.length + 1,
+                        itemCount: state.cards.isEmpty ? 1 : state.cards.length,
                       ),
                     ),
                   ),

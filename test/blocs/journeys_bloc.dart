@@ -87,7 +87,7 @@ void main() {
       ];
       when(repo.loadJourneys(userId: 0)).thenAnswer((_) => responses.removeAt(0));
 
-      when(repo.getArtist(0)).thenAnswer(
+      when(repo.loadArtist(0)).thenAnswer(
         (_) => Future.value(
               Artist(
                 name: 'Ricky',

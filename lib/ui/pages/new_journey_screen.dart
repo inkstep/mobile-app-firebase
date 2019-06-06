@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/logo.dart';
@@ -31,7 +32,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     'size': '',
     'availability': '',
     'deposit': '',
-    'email': ''
+    'email': '',
+    'noRefImgs': ''
   };
 
   final Key _formKey = GlobalKey<FormState>();
@@ -65,11 +67,20 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   @override
   void initState() {
     super.initState();
-    posController.addListener((){
+    posController.addListener(() {
       setState(() {
         formData['position'] = posController.text;
       });
     });
+  }
+
+  Future<bool> _onWillPop() {
+    if (controller.page == 0) {
+      return Future.value(true);
+    }
+
+    controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+    return Future.value(false);
   }
 
   @override
@@ -111,7 +122,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     });
     final WeekCallbacks weekCallbacks =
         WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
-    return Form(
+
+    final Form form = Form(
       key: _formKey,
       child: Scaffold(
         key: _scaffoldKey,
@@ -141,6 +153,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               updateCallback: (images) {
                 setState(() {
                   inspirationImages = images;
+                  formData['noRefImgs'] = images.length.toString();
                 });
               },
               submitCallback: FormElementBuilder(
@@ -184,17 +197,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Are you sure?',
-                              textAlign: TextAlign.center,
-                            ),
-                            // TODO(Felination): Replace this with useful text
-                            content: Text(
-                              'Placeholder text',
-                              textAlign: TextAlign.center,
-                            ),
-                          );
+                          // TODO(Felination): Replace this with useful text
+                          return RoundedAlertDialog(
+                              title: 'Are you sure?',
+                              body: 'Most artists require a deposit in order to secure you an '
+                                  'appointment. Don\'t worry, you won\'t have to pay this yet!',
+                              dismissButtonText: 'Ok');
                         },
                       );
                     }
@@ -221,6 +229,11 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
           ],
         ),
       ),
+    );
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: form,
     );
   }
 }

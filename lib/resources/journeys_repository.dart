@@ -19,8 +19,8 @@ class JourneysRepository {
   final WebClient webClient;
 
   // Loads journeys from a Web Client.
-  Future<List<JourneyEntity>> loadJourneys({int userId}) async {
-    final List<Map<String, dynamic>> mapped = await webClient.loadJourneys();
+  Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
+    final List<Map<String, dynamic>> mapped = await webClient.loadJourneys(userId);
     return mapped.map((jsonJourney) => JourneyEntity.fromJson(jsonJourney)).toList();
   }
 
@@ -31,27 +31,25 @@ class JourneysRepository {
   }
 
   Future<int> saveUser(UserEntity user) async {
-    final userMap = user.toJson();
-    return await webClient.saveUser(userMap);
+    return await webClient.saveUser(user.toJson());
   }
 
   Future<int> saveImage(int journeyId, Asset img) async {
-    final ByteData byteData = await img.requestThumbnail(100, 100);
+    final ByteData byteData = await img.requestThumbnail(800, 800);
     final List<int> data = byteData.buffer.asUint8List();
 
     final Map imageMap = <String, dynamic>{
-      'journey_id' : journeyId,
-      'image_data' : base64Encode(data),
+      'journey_id': journeyId,
+      'image_data': base64Encode(data),
     };
     return await webClient.saveImage(imageMap);
   }
 
-  Future<Artist> getArtist(int artistId) async {
-    final Map<String, dynamic> mapped = await webClient.loadArtist(artistId);
-    return Artist.fromJson(mapped);
+  Future<Artist> loadArtist(int artistId) async {
+    return Artist.fromJson(await webClient.loadArtist(artistId));
   }
 
-  Future<User> getUser(int userId) {
-    return Future.value(User(id: userId, name: 'test.user', email: 'test.email'));
+  Future<User> getUser(int userId) async {
+    return User.fromJson(await webClient.loadUser(userId));
   }
 }

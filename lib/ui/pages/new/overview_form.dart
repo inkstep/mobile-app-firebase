@@ -8,6 +8,7 @@ import 'package:inkstep/main.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
+import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -41,12 +42,13 @@ class OverviewForm extends StatelessWidget {
     formData['name'] = nameController.text;
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
-    formData['size'] = widthController.text + 'cm by '
-        + heightController.text + 'cm';
+    formData['size'] = widthController.text == '' || heightController.text == ''
+        ? ''
+        : widthController.text + 'cm by ' + heightController.text + 'cm';
 
-     if(formData['position']==null) {
-       formData['position'] =  '';
-     }
+    if (formData['position'] == null) {
+      formData['position'] = '';
+    }
 
     formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
     formData['availability'] = getAvailability(weekCallbacks);
@@ -63,37 +65,72 @@ class OverviewForm extends StatelessWidget {
             )),
         Spacer(flex: 1),
         Expanded(
-          flex: 10,
-          child: Row(
+          flex: 12,
+          child: Column(
             children: <Widget>[
               Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Name ', formData, 'name'),
+                  getData(context, formData, 'name'),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Email ', formData, 'email'),
+                  getData(context, formData, 'email'),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
                     children: <Widget>[
-                      getLabel(context, 'Name', formData, 'name'),
-                      getLabel(context, 'Description', formData, 'mentalImage'),
-                      getLabel(context, 'Position', formData, 'position'),
-                      getSizeLabel(context, formData),
-                      getLabel(context, 'Availability', formData, 'availability'),
-                      getLabel(context, 'Deposit', formData, 'deposit'),
-                      getLabel(context, 'Email', formData, 'email'),
+                      getLabel(context, 'Images ', formData, 'noRefImgs'),
+                      getData(context, formData, 'noRefImgs')
                     ],
                   )),
+              HorizontalDivider(),
               Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      getData(context, formData, 'name'),
-                      getData(context, formData, 'mentalImage'),
-                      getData(context, formData, 'position'),
-                      getSizeData(context, formData),
-                      getData(context, formData, 'availability'),
-                      getData(context, formData, 'deposit'),
-                      getData(context, formData, 'email'),
-                    ],
-                  ))
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Description ', formData, 'mentalImage'),
+                  getData(context, formData, 'mentalImage'),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Position ', formData, 'position'),
+                  getData(context, formData, 'position'),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  getSizeLabel(context, formData),
+                  getSizeData(context, formData),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Availability ', formData, 'availability'),
+                  getData(context, formData, 'availability'),
+                ],
+              )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  getLabel(context, 'Deposit ', formData, 'deposit'),
+                  getData(context, formData, 'deposit'),
+                ],
+              )),
             ],
           ),
         ),
@@ -114,17 +151,16 @@ class OverviewForm extends StatelessWidget {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
                         AddJourney(
-                          result: FormResult(
-                            name: formData['name'],
-                            email: formData['email'],
-                            size: formData['size'],
-                            availability: formData['availability'],
-                            deposit: formData['deposit'],
-                            mentalImage: formData['mentalImage'],
-                            position: formData['position'],
-                            images: images,
-                          )
-                        ),
+                            result: FormResult(
+                          name: formData['name'],
+                          email: formData['email'],
+                          size: formData['size'],
+                          availability: formData['availability'],
+                          deposit: formData['deposit'],
+                          mentalImage: formData['mentalImage'],
+                          position: formData['position'],
+                          images: images,
+                        )),
                       );
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
                       nav.openViewJourneysScreen(context);
@@ -152,6 +188,8 @@ class OverviewForm extends StatelessWidget {
 
     if (formData[param] == '' || formData[param] == '0000000') {
       data = 'MISSING';
+    } else if (param == 'noRefImgs' && formData[param] == '1') {
+      data = 'NEED AT LEAST 2';
     } else {
       data = formData[param];
       if (param == 'availability') {
@@ -160,23 +198,29 @@ class OverviewForm extends StatelessWidget {
     }
 
     return Expanded(
-      flex: 1,
-      child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+      flex: 3,
+      child: Container(
+        alignment: Alignment.center,
+        child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+      )
     );
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
+    final TextStyle style = (formData[param] == '' || formData[param] == '0000000' ||
+        (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).accentTextTheme.subtitle;
 
     return Expanded(
-      flex: 1,
-      child: Text(
-        dataLabel + ': ',
-        style: style,
-      ),
-    );
+        flex: 2,
+        child: Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            dataLabel + ': ',
+            style: style,
+          ),
+        ));
   }
 
   String getAvailability(WeekCallbacks weekCallbacks) {
@@ -220,31 +264,36 @@ class OverviewForm extends StatelessWidget {
   }
 
   Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
-    final TextStyle style = (formData['width'] == '' || formData['height'] == '')
+    final TextStyle style = (formData['size'] == '')
         ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).accentTextTheme.subtitle;
 
     return Expanded(
-      flex: 1,
-      child: Text(
-        'Size : ',
-        style: style,
-      ),
-    );
+        flex: 2,
+        child: Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+              'Size: ',
+            style: style,
+          ),
+        ));
   }
 
   Widget getSizeData(BuildContext context, Map<String, String> formData) {
     String data;
 
-    if (formData['width'] == '' || formData['height'] == '') {
+    if (formData['size'] == '') {
       data = 'MISSING';
     } else {
-      data = formData['width'] + 'cm by ' + formData['height'] + 'cm';
+      data = formData['size'];
     }
 
     return Expanded(
-      flex: 1,
-      child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+        flex: 3,
+        child: Container(
+          alignment: Alignment.center,
+          child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+        )
     );
   }
 }
