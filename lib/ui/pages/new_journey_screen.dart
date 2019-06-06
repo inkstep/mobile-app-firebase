@@ -73,9 +73,11 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   Future<bool> _onWillPop() {
     if (controller.page == 0) {
-      Navigator.of(context).pop();
+      return Future.value(true);
     }
+
     controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+    return Future.value(false);
   }
 
   @override
@@ -118,7 +120,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     final WeekCallbacks weekCallbacks =
         WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
-    Form form = Form(
+    final Form form = Form(
       key: _formKey,
       child: Scaffold(
         key: _scaffoldKey,
