@@ -143,15 +143,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(
-          cards: _mergeCards(userState.cards, cards),
+          cards: cards,
           user: userState.user,
           firstTime: userState.firstTime ?? true);
     }
   }
 
-  List<CardModel> _mergeCards(List<CardModel> c1, List<CardModel> c2) {
-    return Set<CardModel>.from(c1).union(c2.toSet()).toList();
-  }
 
   Future<List<CardModel>> _getCards(int userId) async {
     print('Loading cards for $userId');
