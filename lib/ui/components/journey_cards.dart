@@ -60,7 +60,6 @@ class JourneyCard extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           print('Existing card tapped');
-          print(model.images);
         },
         child: Transform.scale(
           scale: scale,
@@ -75,27 +74,46 @@ class JourneyCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
+                      Chip(
+                        label: Text(model.status.toString()),
+                        //labelStyle: Theme.of(context).textTheme.subhead,
+                        backgroundColor: Theme.of(context).accentColor,
+                        elevation: 4,
+                      ),
+                      Spacer(),
                       DescribedIconButton(model: model),
                     ],
                   ),
                   Spacer(),
+                  if (model.images.isNotEmpty)
+                    Text(
+                      'Inspiration.',
+                      style: Theme.of(context).accentTextTheme.subtitle,
+                    ),
                   Row(
-                    children: <Widget>[for (Image i in model.images) i],
+                    children: <Widget>[
+                      for (Image i in model.images)
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(4),
+                            child: i,
+                          ),
+                        )
+                    ],
                   ),
                   Spacer(
                     flex: 8,
                   ),
                   Row(
                     children: <Widget>[
-                      CircleAvatar(
-                        radius: 15.0,
-                        backgroundImage: AssetImage('assets/ricky.png'),
-                        backgroundColor: Colors.transparent,
-                      ),
-                      Container(width: 5.0),
-                      Text(
-                        '${model.artistName}',
-                        style: Theme.of(context).accentTextTheme.body1,
+                      Chip(
+                        avatar: CircleAvatar(
+                          backgroundImage: AssetImage('assets/ricky.png'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        label: Text(
+                          model.artistName,
+                        ),
                       ),
                     ],
                   ),
@@ -129,7 +147,6 @@ class DescribedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -146,7 +163,7 @@ class DescribedIconButton extends StatelessWidget {
           icon: Icon(
             Icons.healing,
             color: Theme.of(context).backgroundColor,
-            size: 25,
+            size: 20,
           ),
           onPressed: () {
             final ScreenNavigator nav = sl.get();
