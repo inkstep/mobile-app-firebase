@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:inkstep/models/artists_model.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
@@ -65,7 +66,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     // Now send the corresponding journey
-    final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, event.result);
+    final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, -1, event
+        .result);
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<JourneyEntity>[newJourney]);
@@ -73,6 +75,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Failed to save journeys');
       yield JourneyError(prev: currentState);
     } else {
+      newJourney.id = journeyId;
+
       for (Asset img in event.result.images) {
         await journeysRepository.saveImage(journeyId, img);
       }
@@ -98,8 +102,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  JourneyEntity _journeyEntityFromFormResult(int userId, FormResult result) {
+  JourneyEntity _journeyEntityFromFormResult(int userId, int id, FormResult result) {
     return JourneyEntity(
+      id: id,
       userId: userId,
       availability: result.availability,
       deposit: result.deposit,
@@ -157,10 +162,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<CardModel> cards = <CardModel>[];
     int idx = 0;
     for (JourneyEntity je in list) {
+      final List<Image> images = await journeysRepository.getImages(je.id);
       final Artist artist = await journeysRepository.loadArtist(je.artistId);
       cards.add(CardModel(
         description: je.mentalImage,
         artistName: artist.name,
+        images: images,
         status: WaitingForResponse(),
         position: idx,
       ));
