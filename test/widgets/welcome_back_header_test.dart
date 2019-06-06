@@ -10,7 +10,7 @@ void main() {
           home: Scaffold(
               body: WelcomeBackHeader(
             name: 'Jimmy',
-            tasksToComplete: 27,
+            taskStatus: 27,
           )),
         ),
       );
