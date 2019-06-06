@@ -49,7 +49,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int userId = -1;
     User user;
     bool firstTime;
-    List<CardModel> oldCards = <CardModel>[];
     if (currentState is JourneysNoUser) {
       final UserEntity user = UserEntity(name: event.result.name, email: event.result.email);
       userId = await journeysRepository.saveUser(user);
@@ -87,9 +86,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = user ?? journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      print('Merging in with oldCards: $oldCards');
       yield JourneysWithUser(
-          cards: _mergeCards(cards, oldCards), user: user, firstTime: firstTime ?? true);
+          cards: cards, user: user, firstTime: firstTime ?? true);
       print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true));
       return;
     }
