@@ -12,6 +12,7 @@ class WebClient {
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
   static const String imageEndpoint = '/image';
+  static const String imagesEndpoint = '/images';
   static const String artistEndpoint = '/artist';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
@@ -133,5 +134,25 @@ class WebClient {
       throw http.ClientException;
     }
     return json.decode(response.body);
+  }
+
+  Future<List<String>> loadImages(int id) async {
+    print('journey_id = $id');
+
+    final http.Response response = await http.get('$url$journeyEndpoint/$imagesEndpoint/$id');
+
+    print('$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    final List<dynamic> responseData = json.decode(response.body);
+    List<String> imageData = [];
+    for (String data in responseData) {
+      imageData += [data];
+    }
+
+    return imageData;
   }
 }
