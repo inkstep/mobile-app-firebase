@@ -16,7 +16,6 @@ class SizeSelector extends StatelessWidget {
   final PageController controller;
   final TextEditingController widthController;
   final TextEditingController heightController;
-  //final TextInputType keyboardType = TextInputType.number;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +33,7 @@ class SizeSelector extends StatelessWidget {
             ),
             Flexible(child:
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildNumberInputBox(widthController),
                   Text(
@@ -45,7 +45,6 @@ class SizeSelector extends StatelessWidget {
                     'cm',
                     style: Theme.of(context).accentTextTheme.subtitle,
                   ),
-                  Spacer(),
                 ],
               ),
             ),
@@ -83,7 +82,7 @@ class SizeSelector extends StatelessWidget {
 
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
-      width: 124.0,
+      width: 125.0,
       child: ShortTextInputFormElement(
         controller: null,
         textController: textController,
