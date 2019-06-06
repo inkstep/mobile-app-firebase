@@ -83,7 +83,7 @@ class OverviewForm extends StatelessWidget {
               Expanded(
                   child: Row(
                     children: <Widget>[
-                      getLabel(context, 'RefImgs ', formData, 'noRefImgs'),
+                      getLabel(context, 'Images ', formData, 'noRefImgs'),
                       getData(context, formData, 'noRefImgs'),
                     ],
                   )),
@@ -184,6 +184,8 @@ class OverviewForm extends StatelessWidget {
 
     if (formData[param] == '' || formData[param] == '0000000') {
       data = 'MISSING';
+    } else if (param == 'noRefImgs' && formData[param] == '1') {
+      data = 'NEED AT LEAST 2';
     } else {
       data = formData[param];
       if (param == 'availability') {
@@ -201,7 +203,8 @@ class OverviewForm extends StatelessWidget {
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = (formData[param] == '' || formData[param] == '0000000')
+    final TextStyle style = (formData[param] == '' || formData[param] == '0000000' ||
+        (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).accentTextTheme.subtitle;
 
