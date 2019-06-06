@@ -141,7 +141,8 @@ class WebClient {
 
     final http.Response response = await http.get('$url$journeyEndpoint/$imagesEndpoint/$id');
 
-    print('$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+    print(
+        '$journeyEndpoint/$imagesEndpoint/$id ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
