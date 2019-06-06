@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/logo.dart';
@@ -63,7 +64,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   @override
   void initState() {
     super.initState();
-    posController.addListener((){
+    posController.addListener(() {
       setState(() {
         formData['position'] = posController.text;
       });
@@ -183,17 +184,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Are you sure?',
-                              textAlign: TextAlign.center,
-                            ),
-                            // TODO(Felination): Replace this with useful text
-                            content: Text(
-                              'Placeholder text',
-                              textAlign: TextAlign.center,
-                            ),
-                          );
+                          // TODO(Felination): Replace this with useful text
+                          return RoundedAlertDialog(
+                              title: 'Are you sure?',
+                              body: 'Most artists require a deposit in order to secure you an '
+                                    'appointment. Don\'t worry, you won\'t have to pay this yet!',
+                              dismissButtonText: 'Ok');
                         },
                       );
                     }
