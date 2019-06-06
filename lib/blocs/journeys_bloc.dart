@@ -106,6 +106,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     return JourneyEntity(
       id: id,
       userId: userId,
+      artistId: result.artistID,
       availability: result.availability,
       deposit: result.deposit,
       mentalImage: result.mentalImage,

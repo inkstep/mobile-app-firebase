@@ -51,9 +51,11 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                           return Container();
                         }
                         return ProfileRow(
-                            name: state.artists[index].name,
-                            studioName: state.artists[index].studio.name,
-                            imagePath: 'assets/ricky.png');
+                          name: state.artists[index].name,
+                          studioName: state.artists[index].studio.name,
+                          imagePath: 'assets/ricky.png',
+                          studioID: state.artists[index].studio.id,
+                        );
                       },
                     ));
               }

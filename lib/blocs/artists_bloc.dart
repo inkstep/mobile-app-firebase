@@ -30,6 +30,7 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
           email: artistEntity.email,
           studio: Studio(
             name: studioEntity.name,
+            id: 1
           ),
         )];
       }

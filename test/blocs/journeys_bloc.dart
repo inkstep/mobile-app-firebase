@@ -120,6 +120,7 @@ void main() {
       journeysBloc.dispatch(
         AddJourney(
           result: FormResult(
+            artistID: 101,
             position: '',
             availability: '',
             mentalImage: 'Flower',
