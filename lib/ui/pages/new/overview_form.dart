@@ -88,7 +88,7 @@ class OverviewForm extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       getLabel(context, 'Images ', formData, 'noRefImgs'),
-                      getData(context, formData, 'noRefImgs')
+                      getData(context, formData, 'noRefImgs'),
                     ],
                   )),
               HorizontalDivider(),
