@@ -31,7 +31,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     'size': '',
     'availability': '',
     'deposit': '',
-    'email': ''
+    'email': '',
+    'noRefImgs': ''
   };
 
   final Key _formKey = GlobalKey<FormState>();
@@ -69,6 +70,15 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         formData['position'] = posController.text;
       });
     });
+  }
+
+  Future<bool> _onWillPop() {
+    if (controller.page == 0) {
+      return Future.value(true);
+    }
+
+    controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+    return Future.value(false);
   }
 
   @override
@@ -110,7 +120,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     });
     final WeekCallbacks weekCallbacks =
         WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
-    return Form(
+
+    final Form form = Form(
       key: _formKey,
       child: Scaffold(
         key: _scaffoldKey,
@@ -140,6 +151,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               updateCallback: (images) {
                 setState(() {
                   inspirationImages = images;
+                  formData['noRefImgs'] = images.length.toString();
                 });
               },
               submitCallback: FormElementBuilder(
@@ -188,7 +200,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                           return RoundedAlertDialog(
                               title: 'Are you sure?',
                               body: 'Most artists require a deposit in order to secure you an '
-                                    'appointment. Don\'t worry, you won\'t have to pay this yet!',
+                                  'appointment. Don\'t worry, you won\'t have to pay this yet!',
                               dismissButtonText: 'Ok');
                         },
                       );
@@ -214,6 +226,11 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
           ],
         ),
       ),
+    );
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: form,
     );
   }
 }
