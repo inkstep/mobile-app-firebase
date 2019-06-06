@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
@@ -163,7 +163,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int idx = 0;
     for (JourneyEntity je in list) {
       final List<Image> images = await journeysRepository.getImages(je.id);
-      final Artist artist = await journeysRepository.loadArtist(je.artistId);
+      final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
       cards.add(CardModel(
         description: je.mentalImage,
         artistName: artist.name,
