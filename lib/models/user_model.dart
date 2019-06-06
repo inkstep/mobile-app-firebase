@@ -6,9 +6,9 @@ class User extends Equatable {
       : super(<dynamic>[id, name, email]);
 
   User.fromJson(Map<String, dynamic> json)
-      : name = json['user_name'],
-        email = json['user_email'],
-        id = int.parse(json['id']);
+      : name = json['name'],
+        email = json['email'],
+        id = json['id'];
 
   final int id;
   final String name;
