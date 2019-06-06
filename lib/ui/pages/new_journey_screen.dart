@@ -31,7 +31,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     'size': '',
     'availability': '',
     'deposit': '',
-    'email': ''
+    'email': '',
+    'noRefImgs': ''
   };
 
   final Key _formKey = GlobalKey<FormState>();
@@ -150,6 +151,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               updateCallback: (images) {
                 setState(() {
                   inspirationImages = images;
+                  formData['noRefImgs'] = images.length.toString();
                 });
               },
               submitCallback: FormElementBuilder(

@@ -61,7 +61,7 @@ class OverviewForm extends StatelessWidget {
             )),
         Spacer(flex: 1),
         Expanded(
-          flex: 10,
+          flex: 12,
           child: Column(
             children: <Widget>[
               Expanded(
@@ -79,6 +79,14 @@ class OverviewForm extends StatelessWidget {
                   getData(context, formData, 'email'),
                 ],
               )),
+              HorizontalDivider(),
+              Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      getLabel(context, 'RefImgs ', formData, 'noRefImgs'),
+                      getData(context, formData, 'noRefImgs'),
+                    ],
+                  )),
               HorizontalDivider(),
               Expanded(
                   child: Row(
