@@ -10,10 +10,18 @@ import 'package:inkstep/resources/web_client.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 void main() {
-  // Setup BlocSupervisor
+  // Set up error handling
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.context.contains('layout')) {
+      print('RENDERING ERROR:');
+    }
+    print(details.exception);
+  };
+
+  // Set up BlocSupervisor
   BlocSupervisor.delegate = SimpleBlocDelegate();
 
-  // Setup Service Locator
+  // Set up Service Locator
   setup();
 
   runApp(Inkstep());

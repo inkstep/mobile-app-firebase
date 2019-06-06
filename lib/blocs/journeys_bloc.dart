@@ -117,12 +117,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     if (currentState is JourneysNoUser) {
-      print('Loading initial cards with fake user 0');
+      const userId = 0;
+      final User user = await journeysRepository.getUser(userId);
+      print('Loading with fake user 0: $user');
       final cards = await _getCards(0);
       print('Loaded initial cards with fake user 0: $cards');
 
-      yield JourneysWithUser(
-          user: User(id: 0, name: 'test.name', email: 'test.email'), cards: cards);
+      yield JourneysWithUser(user: user, cards: cards);
     } else if (currentState is JourneysWithUser) {
       final JourneysWithUser userState = currentState;
 
@@ -146,8 +147,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Future<List<CardModel>> _getCardsFromJourneys(List<JourneyEntity> list) async {
     final List<CardModel> cards = <CardModel>[];
     for (JourneyEntity je in list) {
-      final Artist artist = await journeysRepository.getArtist(je.artistId);
       final List<Image> images = await journeysRepository.getImages(je.id);
+      final Artist artist = await journeysRepository.loadArtist(je.artistId);
       cards.add(CardModel(je.mentalImage, artist.name, images));
     }
     print('Converted JourneyEntity $list to $cards');
