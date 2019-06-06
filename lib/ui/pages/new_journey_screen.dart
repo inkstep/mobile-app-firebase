@@ -15,11 +15,19 @@ import 'new/availability_selector.dart';
 import 'new/position_picker_form_element.dart';
 
 class NewJourneyScreen extends StatefulWidget {
+  const NewJourneyScreen(this.artistID);
+
+  final int artistID;
+
   @override
-  State<StatefulWidget> createState() => _NewJourneyScreenState();
+  State<StatefulWidget> createState() => _NewJourneyScreenState(artistID);
 }
 
 class _NewJourneyScreenState extends State<NewJourneyScreen> {
+  _NewJourneyScreenState(this.artistID);
+
+  final int artistID;
+
   final PageController controller = PageController(
     initialPage: 0,
   );
@@ -33,7 +41,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     'availability': '',
     'deposit': '',
     'email': '',
-    'noRefImgs': ''
+    'noRefImgs': '',
+    'artistID': ''
   };
 
   final Key _formKey = GlobalKey<FormState>();
@@ -171,6 +180,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    formData['artistID'] = artistID.toString();
     final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
       mon = switched;
     }, () {

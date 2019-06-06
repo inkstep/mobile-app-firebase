@@ -45,14 +45,17 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                 return Container(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
                     child: ListView.builder(
+                      itemCount: state.artists.length,
                       itemBuilder: (BuildContext context, int index) {
                         if (state.artists.isEmpty) {
                           return Container();
                         }
                         return ProfileRow(
-                            name: state.artists[index].name,
-                            studioName: state.artists[index].studio,
-                            imagePath: 'assets/ricky.png');
+                          name: state.artists[index].name,
+                          studioName: state.artists[index].studio.name,
+                          imagePath: 'assets/ricky.png',
+                          artistID: state.artists[index].artistID,
+                        );
                       },
                     ));
               }
