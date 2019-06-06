@@ -147,7 +147,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<CardModel> cards = <CardModel>[];
     for (JourneyEntity je in list) {
       final Artist artist = await journeysRepository.getArtist(je.artistId);
-      List<Image> images = await journeysRepository.getImages(je.id);
+      final List<Image> images = await journeysRepository.getImages(je.id);
       cards.add(CardModel(je.mentalImage, artist.name, images));
     }
     print('Converted JourneyEntity $list to $cards');
