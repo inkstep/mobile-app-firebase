@@ -2,20 +2,24 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class StudioEntity extends Equatable {
-  StudioEntity({@required this.name})
-      : super(<dynamic>[name]);
+  StudioEntity({@required this.id, @required this.name})
+      : super(<dynamic>[id, name]);
 
   factory StudioEntity.fromJson(Map<String, dynamic> json) {
     assert(json != null);
 
-    final String name = json['name'] ?? '';
+    print(json);
 
-    return StudioEntity(name: name);
+    final String name = json['name'] ?? '';
+    final int id = json['id'] ?? '';
+
+    return StudioEntity(id: id, name: name);
   }
 
   final String name;
+  final int id;
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{'name': name};
+    return <String, dynamic>{'id': id, 'name': name};
   }
 }
