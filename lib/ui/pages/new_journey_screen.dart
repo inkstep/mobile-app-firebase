@@ -4,7 +4,6 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
-import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/ui/pages/new/image_grid.dart';
@@ -135,8 +134,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             setState(() {
               if (buttonPressed == 'true') {
                 deposit = buttonState.True;
-                controller.nextPage(
-                    duration: Duration(milliseconds: 500), curve: Curves.ease);
+                controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
               } else {
                 deposit = buttonState.False;
                 showDialog<void>(
@@ -209,22 +207,13 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       return sun;
     });
     final WeekCallbacks weekCallbacks =
-    WeekCallbacks(
-        monday,
-        tuesday,
-        wednesday,
-        thursday,
-        friday,
-        saturday,
-        sunday);
+        WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
     final Form form = Form(
       key: _formKey,
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Theme
-            .of(context)
-            .cardColor,
+        backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.clear),
@@ -236,19 +225,17 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          iconTheme: Theme
-              .of(context)
-              .accentIconTheme,
+          iconTheme: Theme.of(context).accentIconTheme,
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.keyboard_arrow_up),
                 tooltip: 'Previous question',
                 onPressed: () {
                   if (controller.page != 0) {
-                    controller.previousPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+                    controller.previousPage(
+                        duration: Duration(milliseconds: 500), curve: Curves.ease);
                   }
-                }
-            ),
+                }),
             IconButton(
                 icon: Icon(Icons.keyboard_arrow_down),
                 tooltip: 'Next question',
@@ -256,8 +243,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                   if (controller.page != _formQuestions(weekCallbacks).length - 1) {
                     controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
                   }
-                }
-            ),
+                }),
           ],
         ),
         body: PageView(
