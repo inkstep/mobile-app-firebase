@@ -52,4 +52,17 @@ class JourneysRepository {
   Future<User> getUser(int userId) async {
     return User.fromJson(await webClient.loadUser(userId));
   }
+
+  Future<List<Image>> getImages(int id) async {
+    final List<String> imageData = await webClient.loadImages(id);
+
+    List<Image> images = [];
+
+    for (String data in imageData) {
+      final List<int> byteData = base64Decode(data);
+      images += [Image.memory(byteData)];
+    }
+
+    return Future.value(images);
+  }
 }
