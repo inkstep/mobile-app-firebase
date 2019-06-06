@@ -46,7 +46,7 @@ void main() {
       verify(nav.openViewJourneysScreenWithNewDevice(any));
     });
 
-    testWidgets('Can get to new journey page from onboarding', (WidgetTester tester) async {
+    testWidgets('Can get to artist page from onboarding', (WidgetTester tester) async {
       await tester.pumpWidget(app);
 
       final Finder button = find.byType(BoldCallToAction);
@@ -55,7 +55,7 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openNewJourneyScreen(any));
+      verify(nav.openArtistSelection(any));
     });
   });
 }

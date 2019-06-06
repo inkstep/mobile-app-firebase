@@ -10,6 +10,10 @@ import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
 
 class ScreenNavigator {
+  void pop(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   void openViewJourneysScreen(BuildContext context) {
     Navigator.push<dynamic>(
       context,
@@ -47,10 +51,11 @@ class ScreenNavigator {
     );
   }
 
-  void openNewJourneyScreen(BuildContext context) {
+  void openNewJourneyScreen(BuildContext context, int artistID) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(), fullscreenDialog: true),
+      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID),
+          fullscreenDialog: true),
     );
   }
 

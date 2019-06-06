@@ -13,6 +13,7 @@ void main() {
                 name: 'Ricky Williams',
                 studioName: 'South City Market',
                 imagePath: 'assets/ricky.png',
+                artistID: 1,
               )
           ),
         ),
@@ -29,6 +30,7 @@ void main() {
         name: 'Ricky Williams',
         studioName: 'South City Market',
         imagePath: '',
+        artistID: 1,
       );
 
       await tester.pumpWidget(

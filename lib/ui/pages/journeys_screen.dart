@@ -157,7 +157,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: PageView.builder(
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
-                    final int size = loadedState.cards.length;
+//                    final int size = loadedState.cards.length;
                     if (loadedState.cards.isEmpty) {
                       return AddCard();
                     } else {

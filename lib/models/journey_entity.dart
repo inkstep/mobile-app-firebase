@@ -5,7 +5,7 @@ class JourneyEntity extends Equatable {
   JourneyEntity({
     @required this.id,
     @required this.userId,
-    this.artistId = 101,
+    @required this.artistId,
     @required this.mentalImage,
     @required this.size,
     @required this.position,

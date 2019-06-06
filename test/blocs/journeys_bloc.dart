@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
@@ -106,10 +106,11 @@ void main() {
 
       when(repo.loadArtist(0)).thenAnswer(
         (_) => Future.value(
-              Artist(
+              ArtistEntity(
                 name: 'Ricky',
                 email: 'someemail',
-                studio: 'scm',
+                studioID: 1,
+                artistID: 1,
               ),
             ),
       );
@@ -120,6 +121,7 @@ void main() {
       journeysBloc.dispatch(
         AddJourney(
           result: FormResult(
+            artistID: 101,
             position: '',
             availability: '',
             mentalImage: 'Flower',
