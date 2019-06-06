@@ -6,7 +6,8 @@ class AfterCareScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-          label: Text('Turn On Aftercare Notifications'),
+          label: Text('Turn On Aftercare Notifications',
+              style: TextStyle(color: Theme.of(context).primaryColorDark)),
           backgroundColor: Colors.white,
           onPressed: () {
             print('not yet implemented');
