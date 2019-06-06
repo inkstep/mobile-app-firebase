@@ -23,10 +23,15 @@ class JourneyError extends JourneysState {
 }
 
 class JourneysWithUser extends JourneysState {
-  JourneysWithUser({@required this.user, @required this.cards}) : super(<dynamic>[user, cards]);
+  JourneysWithUser({
+    @required this.user,
+    @required this.cards,
+    @required this.firstTime,
+  }) : super(<dynamic>[user, cards]);
 
   final User user;
   final List<CardModel> cards;
+  final bool firstTime;
 
   @override
   String toString() => 'JourneysWithUser { user: $user, cards: ${cards?.length} }';

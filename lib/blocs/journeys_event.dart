@@ -19,3 +19,8 @@ class LoadJourneys extends JourneysEvent {
   @override
   String toString() => 'LoadJourneys';
 }
+
+class ShownFeatureDiscovery extends JourneysEvent {
+  @override
+  String toString() => 'ShownFeatureDiscovery';
+}
