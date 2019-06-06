@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/ui/components/feature_discovery.dart';
+import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class AddCard extends StatelessWidget {
@@ -66,6 +68,38 @@ class JourneyCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
+                      child: DescribedFeatureOverlay(
+                        featureId: model.aftercareID,
+                        icon: Icons.healing,
+                        color: Theme.of(context).accentColor,
+                        title: 'Aftercare Information',
+                        description: 'Tap the care icon to see your current aftercare information.',
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.healing,
+                            color: Theme.of(context).backgroundColor,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            final ScreenNavigator nav = sl.get();
+                            nav.openAftercareScreen(context);
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 Spacer(
                   flex: 8,
                 ),
