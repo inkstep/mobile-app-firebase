@@ -20,7 +20,11 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
   @override
   Stream<ArtistsState> mapEventToState(ArtistsEvent event) async* {
     if (event is LoadArtists && currentState is ArtistsUninitialised) {
+      print('Loading artists');
+
       final List<ArtistEntity> artistEntities = await artistsRepository.loadArtists(event.studioID);
+
+      print('Artists all loaded');
 
       List<Artist> artists = [];
       for (ArtistEntity artistEntity in artistEntities) {
@@ -32,6 +36,7 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
             name: studioEntity.name,
             id: 1
           ),
+          artistID: artistEntity.artistID,
         )];
       }
 

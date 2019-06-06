@@ -122,6 +122,7 @@ class WebClient {
     if (response.statusCode != 200) {
       throw http.ClientException;
     }
+
     return json.decode(response.body);
   }
 

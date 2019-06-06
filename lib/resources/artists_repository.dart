@@ -14,7 +14,9 @@ class ArtistsRepository {
 
   // Loads artists from a Web Client.
   Future<List<ArtistEntity>> loadArtists(int studioID) async {
+    print("1");
     final List<Map<String, dynamic>> mapped = await webClient.loadArtists(studioID);
+    print("2");
     return mapped.map((jsonArtist) => ArtistEntity.fromJson(jsonArtist)).toList();
   }
 

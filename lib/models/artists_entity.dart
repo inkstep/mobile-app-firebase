@@ -9,10 +9,10 @@ class ArtistEntity extends Equatable {
   factory ArtistEntity.fromJson(Map<String, dynamic> json) {
     assert(json != null);
 
-    final int artistID = json['artistID'] ?? '';
+    final int artistID = json['id'] ?? -1;
     final String name = json['name'] ?? '';
     final String email = json['email'] ?? '';
-    final int studioID = json['studioID'] ?? '';
+    final int studioID = json['studioID'] ?? -1;
 
     return ArtistEntity(artistID: artistID, name: name, email: email, studioID: studioID);
   }
