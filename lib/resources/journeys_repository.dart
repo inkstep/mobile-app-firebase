@@ -36,7 +36,7 @@ class JourneysRepository {
   }
 
   Future<int> saveImage(int journeyId, Asset img) async {
-    final ByteData byteData = await img.requestThumbnail(100, 100);
+    final ByteData byteData = await img.requestThumbnail(100, 100)
     final List<int> data = byteData.buffer.asUint8List();
 
     final Map imageMap = <String, dynamic>{
