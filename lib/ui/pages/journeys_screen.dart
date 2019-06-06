@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
 import 'package:inkstep/ui/components/journey_cards.dart';
 import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneysScreen extends StatefulWidget {
   const JourneysScreen({Key key, this.onInit}) : super(key: key);
@@ -68,6 +70,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
                 }
               }
             });
+
             final void Function(ScrollNotification) onNotification = (notification) {
               if (notification is ScrollEndNotification) {
                 final currentPage = _pageController.page.round().toInt();
@@ -118,7 +121,20 @@ class LoadedJourneyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
+        ? null
+        : FloatingActionButton(
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              final nav = sl.get<ScreenNavigator>();
+              nav.openArtistSelection(context);
+            },
+          );
     return Scaffold(
+      floatingActionButton: addJourneyButton,
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(''),
