@@ -78,30 +78,34 @@ class InkstepState extends State<Inkstep> {
   }
 
   TextTheme _getTextWithColor(Color color) => TextTheme(
-        headline: TextStyle(
-          fontSize: 40.0,
-          fontWeight: FontWeight.w400,
-          color: color,
-        ),
-        title: TextStyle(
-          fontSize: 28.0,
-          fontWeight: FontWeight.w500,
-          color: color,
-        ),
-        subhead: TextStyle(
-          fontSize: 20.0,
-          color: color,
-        ),
-        body1: TextStyle(
-          fontSize: 18.0,
-          color: color,
-        ),
-        subtitle: TextStyle(
-          fontSize: 20.0,
-          color: color,
-          fontWeight: FontWeight.w500,
-        ),
-      );
+      headline: TextStyle(
+        fontSize: 40.0,
+        fontWeight: FontWeight.w400,
+        color: color,
+      ),
+      title: TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w500,
+        color: color,
+      ),
+      subhead: TextStyle(
+        fontSize: 20.0,
+        color: color,
+      ),
+      body1: TextStyle(
+        fontSize: 18.0,
+        color: color,
+      ),
+      subtitle: TextStyle(
+        fontSize: 20.0,
+        color: color,
+        fontWeight: FontWeight.w500,
+      ),
+      caption: TextStyle(
+        fontSize: 12.0,
+        color: color,
+        fontWeight: FontWeight.w400,
+      ));
 
   IconThemeData _getIconWithColor(Color color) => IconThemeData(
         color: color,
