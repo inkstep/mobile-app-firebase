@@ -66,12 +66,22 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 32.0);
     final ScreenNavigator nav = sl.get<ScreenNavigator>();
+    final boldButtonKey = UniqueKey();
     final bottom = Container(
       child: Column(
         children: <Widget>[
           BoldCallToAction(
+            key: boldButtonKey,
             onTap: () {
-              nav.openArtistSelection(context);
+              const bottomOffset = 60.0;
+              const horizontalOffset = 52.0;
+              final topOffset = MediaQuery.of(context).size.height - 64;
+              print(topOffset);
+
+              final rect = RelativeRect.fromLTRB(
+                  horizontalOffset, topOffset, horizontalOffset, bottomOffset);
+
+              nav.expandArtistSelection(context, rect);
             },
             label: "Let's get started!",
             textColor: Theme.of(context).primaryColor,
