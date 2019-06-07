@@ -71,7 +71,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           BoldCallToAction(
             onTap: () {
-              nav.openArtistSelection(context);
+              nav.openArtistSelectionReplace(context);
             },
             label: "Let's get started!",
             textColor: Theme.of(context).primaryColor,
