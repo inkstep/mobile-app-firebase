@@ -2,11 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
-import 'package:inkstep/resources/web_client.dart';
+import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 void main() {
@@ -42,9 +43,24 @@ class Inkstep extends StatefulWidget {
 }
 
 class InkstepState extends State<Inkstep> {
-  final JourneysBloc _journeyBloc = JourneysBloc(
-    journeysRepository: JourneysRepository(webClient: WebClient()),
-  );
+  http.Client client;
+  JourneysBloc _journeyBloc;
+
+  @override
+  void initState() {
+    client = http.Client();
+    _journeyBloc = JourneysBloc(
+      journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    client.close();
+    _journeyBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +134,4 @@ class InkstepState extends State<Inkstep> {
   IconThemeData _getIconWithColor(Color color) => IconThemeData(
         color: color,
       );
-
-  @override
-  void dispose() {
-    _journeyBloc.dispose();
-    super.dispose();
-  }
 }

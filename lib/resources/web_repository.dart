@@ -1,10 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
-class WebClient {
-  const WebClient([this.delay = const Duration(milliseconds: 300)]);
+class WebRepository {
+  const WebRepository({
+    @required this.client,
+    this.delay = const Duration(milliseconds: 300),
+  });
 
+  final http.Client client;
   final Duration delay;
 
   static const String url = 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
@@ -17,7 +22,7 @@ class WebClient {
   static const String studiosEndpoint = '/studio';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
-    final http.Response response = await http.get('$url$artistEndpoint');
+    final http.Response response = await client.get('$url$artistEndpoint');
 
     print(
         'GET $artistEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
@@ -32,10 +37,10 @@ class WebClient {
   }
 
   Future<List<Map<String, dynamic>>> loadJourneys(int userID) async {
-    final http.Response response = await http.get('$url$journeyEndpoint?user=$userID');
+    final http.Response response = await client.get('$url$journeyEndpoint?user=$userID');
 
     print(
-        'GET $journeyEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+        'GET $journeyEndpoint?user=$userID ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
@@ -55,7 +60,7 @@ class WebClient {
       final String jsonStr = jsonEncode(journeyMap);
       print('Saving Journey: $jsonStr');
 
-      final http.Response response = await http.put('$url$journeyEndpoint',
+      final http.Response response = await client.put('$url$journeyEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
 
       print(
@@ -97,7 +102,7 @@ class WebClient {
     http.Response response;
 
     try {
-      response = await http.put('$url$journeyEndpoint$imageEndpoint',
+      response = await client.put('$url$journeyEndpoint$imageEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
       return Future.value(-1);
@@ -114,7 +119,7 @@ class WebClient {
   }
 
   Future<Map<String, dynamic>> loadArtist(int artistId) async {
-    final http.Response response = await http.get('$url$artistEndpoint/$artistId');
+    final http.Response response = await client.get('$url$artistEndpoint/$artistId');
 
     print(
         '$artistEndpoint/$artistId ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
@@ -127,7 +132,7 @@ class WebClient {
   }
 
   Future<Map<String, dynamic>> loadUser(int userId) async {
-    final http.Response response = await http.get('$url$userEndpoint/$userId');
+    final http.Response response = await client.get('$url$userEndpoint/$userId');
 
     print('GET $userEndpoint/$userId ${response.reasonPhrase} (${response.statusCode}):');
     print('${response.body}');
@@ -141,7 +146,7 @@ class WebClient {
   Future<List<String>> loadImages(int id) async {
     print('journey_id = $id');
 
-    final http.Response response = await http.get('$url$journeyEndpoint/$id$imagesEndpoint');
+    final http.Response response = await client.get('$url$journeyEndpoint/$id$imagesEndpoint');
 
     print(
         '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
@@ -160,7 +165,7 @@ class WebClient {
   }
 
   Future<Map<String, dynamic>> loadStudio(int studioID) async {
-    final http.Response response = await http.get('$url$studiosEndpoint/$studioID');
+    final http.Response response = await client.get('$url$studiosEndpoint/$studioID');
 
     print('GET $studiosEndpoint/$studioID ${response.reasonPhrase} (${response.statusCode}):');
     print('${response.body}');
@@ -173,7 +178,7 @@ class WebClient {
   }
 
   Future<List<Map<String, dynamic>>> loadStudios() async {
-    final http.Response response = await http.get('$url$studiosEndpoint');
+    final http.Response response = await client.get('$url$studiosEndpoint');
 
     print(
         'GET $studiosEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
