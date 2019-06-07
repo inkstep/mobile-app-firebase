@@ -20,7 +20,8 @@ class OverviewForm extends StatelessWidget {
     @required this.nameController,
     @required this.descController,
     @required this.emailController,
-    @required this.sizeController,
+    @required this.widthController,
+    @required this.heightController,
     @required this.weekCallbacks,
     @required this.deposit,
     @required this.images,
@@ -30,9 +31,10 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController descController;
   final TextEditingController emailController;
-  final TextEditingController sizeController;
-  final buttonState deposit;
+  final TextEditingController widthController;
+  final TextEditingController heightController;
   final WeekCallbacks weekCallbacks;
+  final buttonState deposit;
   final List<Asset> images;
 
   @override
@@ -40,7 +42,9 @@ class OverviewForm extends StatelessWidget {
     formData['name'] = nameController.text;
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
-    formData['size'] = sizeController.text;
+    formData['size'] = widthController.text == '' || heightController.text == ''
+        ? ''
+        : widthController.text + 'cm by ' + heightController.text + 'cm';
 
     if (formData['position'] == null) {
       formData['position'] = '';
@@ -107,8 +111,8 @@ class OverviewForm extends StatelessWidget {
               Expanded(
                   child: Row(
                 children: <Widget>[
-                  getLabel(context, 'Size ', formData, 'size'),
-                  getData(context, formData, 'size'),
+                  getSizeLabel(context, formData),
+                  getSizeData(context, formData),
                 ],
               )),
               HorizontalDivider(),
@@ -258,5 +262,39 @@ class OverviewForm extends StatelessWidget {
       availabilityString += '0';
     }
     return availabilityString;
+  }
+
+  Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
+    final TextStyle style = (formData['size'] == '')
+        ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
+        : Theme.of(context).accentTextTheme.subtitle;
+
+    return Expanded(
+        flex: 2,
+        child: Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+              'Size: ',
+            style: style,
+          ),
+        ));
+  }
+
+  Widget getSizeData(BuildContext context, Map<String, String> formData) {
+    String data;
+
+    if (formData['size'] == '') {
+      data = 'MISSING';
+    } else {
+      data = formData['size'];
+    }
+
+    return Expanded(
+        flex: 3,
+        child: Container(
+          alignment: Alignment.center,
+          child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+        )
+    );
   }
 }

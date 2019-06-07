@@ -13,6 +13,7 @@ class ShortTextInput extends StatelessWidget {
     @required this.controller,
     this.focus,
     @required this.callback,
+    this.keyboardType,
   }) : super(key: key);
 
   final int maxLength;
@@ -20,6 +21,7 @@ class ShortTextInput extends StatelessWidget {
   final String label;
   final FocusNode focus;
   final TextEditingController controller;
+  final TextInputType keyboardType;
   final SubmitCallback callback;
 
   @override
@@ -30,6 +32,7 @@ class ShortTextInput extends StatelessWidget {
     );
     return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
       autofocus: true,
       maxLength: maxLength,
       style: theme.accentTextTheme.headline,
