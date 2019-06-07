@@ -168,6 +168,22 @@ class WebClient {
     if (response.statusCode != 200) {
       throw http.ClientException;
     }
+
     return json.decode(response.body);
+  }
+
+  Future<List<Map<String, dynamic>>> loadStudios() async {
+    final http.Response response = await http.get('$url$studiosEndpoint');
+
+    print(
+        'GET $studiosEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+    final mappedStudios = <Map<String, dynamic>>[];
+    final List<dynamic> jsonStudios = json.decode(response.body);
+    for (dynamic j in jsonStudios) {
+      final Map<String, dynamic> mappedArtist = j;
+      mappedStudios.add(mappedArtist);
+    }
+    return mappedStudios;
   }
 }

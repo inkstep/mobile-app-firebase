@@ -22,4 +22,9 @@ class ArtistsRepository {
     final Map<String, dynamic> jsonStudio = await webClient.loadStudio(studioID);
     return StudioEntity.fromJson(jsonStudio);
   }
+
+  Future<List<StudioEntity>> loadStudios() async {
+    final List<Map<String, dynamic>> mapped = await webClient.loadStudios();
+    return mapped.map((jsonStudio) => StudioEntity.fromJson(jsonStudio)).toList();
+  }
 }
