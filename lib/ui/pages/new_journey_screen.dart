@@ -34,6 +34,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   final int artistID;
 
   PageController controller;
+  int startPage;
 
   Map<String, String> formData = {
     'name': '',
@@ -87,7 +88,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   }
 
   Future<bool> _onWillPop() {
-    if (controller.page == 0) {
+    if (controller.page == startPage) {
       return Future.value(true);
     }
 
@@ -231,12 +232,14 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             bloc: journeyBloc,
             builder: (BuildContext context, JourneysState state) {
               if (state is JourneysNoUser) {
-                controller = PageController(initialPage: 0);
+                startPage = 0;
               } else if (state is JourneysWithUser) {
-                controller = PageController(initialPage: 1);
+                startPage = 1;
                 formData['name'] = state.user.name;
                 nameController.text = state.user.name;
               }
+
+              controller = PageController(initialPage: startPage);
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -258,7 +261,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_up),
                         tooltip: 'Previous question',
                         onPressed: () {
-                          if (controller.page != 0) {
+                          if (controller.page != startPage) {
                             controller.previousPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
                           }
