@@ -16,22 +16,26 @@ import 'new/availability_selector.dart';
 import 'new/position_picker_form_element.dart';
 
 class NewJourneyScreen extends StatefulWidget {
-  const NewJourneyScreen(this.artistID);
+  const NewJourneyScreen(this.artistID, this.userID);
 
   final int artistID;
+  final int userID;
 
   @override
-  State<StatefulWidget> createState() => _NewJourneyScreenState(artistID);
+  State<StatefulWidget> createState() => _NewJourneyScreenState(artistID, userID);
 }
 
 class _NewJourneyScreenState extends State<NewJourneyScreen> {
-  _NewJourneyScreenState(this.artistID);
+  _NewJourneyScreenState(this.artistID, this.userID) {
+    controller = PageController(
+      initialPage: userID == -1 ? 0 : 1,
+    );
+  }
 
   final int artistID;
+  final int userID;
 
-  final PageController controller = PageController(
-    initialPage: 0,
-  );
+  PageController controller;
 
   Map<String, String> formData = {
     'name': '',
