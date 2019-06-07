@@ -31,15 +31,15 @@ class AvailabilitySelector extends StatelessWidget {
                   child: Wrap(
                     alignment: WrapAlignment.start,
                     spacing: 16.0,
-                    runSpacing: 1.0,
+                    runSpacing: 15.0,
                     children: <Widget>[
-                      _chooseDayChip('Monday', weekCallbacks.monday),
-                      _chooseDayChip('Tuesday', weekCallbacks.tuesday),
-                      _chooseDayChip('Wednesday', weekCallbacks.wednesday),
-                      _chooseDayChip('Thursday', weekCallbacks.thursday),
-                      _chooseDayChip('Friday', weekCallbacks.friday),
-                      _chooseDayChip('Saturday', weekCallbacks.saturday),
-                      _chooseDayChip('Sunday', weekCallbacks.sunday),
+                      _chooseDayChip('Monday', weekCallbacks.monday, context),
+                      _chooseDayChip('Tuesday', weekCallbacks.tuesday, context),
+                      _chooseDayChip('Wednesday', weekCallbacks.wednesday, context),
+                      _chooseDayChip('Thursday', weekCallbacks.thursday, context),
+                      _chooseDayChip('Friday', weekCallbacks.friday, context),
+                      _chooseDayChip('Saturday', weekCallbacks.saturday, context),
+                      _chooseDayChip('Sunday', weekCallbacks.sunday, context),
                     ],
                   ),
                 ),
@@ -62,11 +62,21 @@ class AvailabilitySelector extends StatelessWidget {
         });
   }
 
-  Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback) {
-    return FilterChip(
-      label: Text(day),
-      onSelected: dayCallback.onSwitched,
-      selected: dayCallback.currentValue(),
+  Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback, BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Text(
+          day,
+          textScaleFactor: 1.5,
+          style: Theme.of(context).accentTextTheme.subtitle,
+        ),
+        Spacer(),
+        FilterChip(
+          label: Text('   '),
+          onSelected: dayCallback.onSwitched,
+          selected: dayCallback.currentValue(),
+        ),
+      ],
     );
   }
 }

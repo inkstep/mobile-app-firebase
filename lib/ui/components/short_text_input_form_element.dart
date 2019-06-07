@@ -11,10 +11,12 @@ class ShortTextInputFormElement extends StatelessWidget {
     // ignore: avoid_init_to_null
     this.maxLength = null,
     Key key,
+    this.keyboardType,
   }) : super(key: key);
 
   final PageController controller;
   final TextEditingController textController;
+  final TextInputType keyboardType;
 
   final void Function(String) callback = (_) {};
 
@@ -29,6 +31,7 @@ class ShortTextInputFormElement extends StatelessWidget {
         return
           ShortTextInput(
             controller: textController,
+            keyboardType: keyboardType,
             maxLength: maxLength,
             hint: hint,
             label: label,
