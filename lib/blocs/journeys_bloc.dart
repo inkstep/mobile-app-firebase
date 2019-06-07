@@ -94,7 +94,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> _mapShownFeatureDiscoveryState(ShownFeatureDiscovery event) async* {
     if (currentState is JourneysWithUser) {
       final JourneysWithUser jwu = currentState;
-      yield JourneysWithUser(user: jwu.user, cards: jwu.cards, firstTime: true);
+      yield JourneysWithUser(user: jwu.user, cards: jwu.cards, firstTime: false);
     }
   }
 
