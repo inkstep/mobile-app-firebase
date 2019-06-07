@@ -96,6 +96,7 @@ class _PositionPickerFormElementState extends State<StatefulWidget> {
                           label: 'Specific Area',
                           hint: '...',
                           maxLength: 20,
+                          capitalisation: TextCapitalization.sentences,
                           callback: onSubmitCallback,
                         )
                       : DropdownMenu(

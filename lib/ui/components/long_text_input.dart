@@ -23,6 +23,7 @@ class LongTextInput extends StatelessWidget {
       controller: controller,
       autofocus: true,
       keyboardType: TextInputType.multiline,
+      textCapitalization: TextCapitalization.sentences,
       maxLines: 5,
       style: Theme.of(context).accentTextTheme.body1,
       cursorColor: Theme.of(context).backgroundColor,

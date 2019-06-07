@@ -12,11 +12,13 @@ class ShortTextInputFormElement extends StatelessWidget {
     this.maxLength = null,
     Key key,
     this.keyboardType,
+    this.capitalisation = TextCapitalization.words,
   }) : super(key: key);
 
   final PageController controller;
   final TextEditingController textController;
   final TextInputType keyboardType;
+  final TextCapitalization capitalisation;
 
   final void Function(String) callback = (_) {};
 
@@ -33,6 +35,7 @@ class ShortTextInputFormElement extends StatelessWidget {
             controller: textController,
             keyboardType: keyboardType,
             maxLength: maxLength,
+            capitalisation: capitalisation,
             hint: hint,
             label: label,
             focus: focus,

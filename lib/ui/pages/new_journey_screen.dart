@@ -167,6 +167,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         controller: controller,
         textController: emailController,
         keyboardType: TextInputType.emailAddress,
+        capitalisation: TextCapitalization.none,
         label: 'What is your email address?',
         hint: 'example@inkstep.com',
       ),
