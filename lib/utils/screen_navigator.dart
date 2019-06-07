@@ -8,6 +8,7 @@ import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
+import 'package:inkstep/ui/routes/scale_page_route.dart';
 
 class ScreenNavigator {
   void pop(BuildContext context) {
@@ -51,6 +52,16 @@ class ScreenNavigator {
     );
   }
 
+  void expandArtistSelection(BuildContext context, RelativeRect rect) {
+    Navigator.push<dynamic>(
+      context,
+      ScaleRoute(
+        rect: rect,
+        child: ArtistSelectionScreen(),
+      ),
+    );
+  }
+
   void openStudioSelection(BuildContext context) {
     Navigator.push<dynamic>(
       context,
@@ -61,8 +72,8 @@ class ScreenNavigator {
   void openNewJourneyScreen(BuildContext context, int artistID) {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID),
-          fullscreenDialog: true),
+      MaterialPageRoute<dynamic>(
+          builder: (context) => NewJourneyScreen(artistID), fullscreenDialog: true),
     );
   }
 

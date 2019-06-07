@@ -121,6 +121,11 @@ class LoadedJourneyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color accentColor = Theme.of(context).accentColor;
+    if (_pageController.hasClients) {
+      accentColor = loadedState.cards[_pageController.page.toInt()].palette.vibrantColor?.color;
+    }
+
     final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
         ? null
         : FloatingActionButton(
@@ -128,6 +133,7 @@ class LoadedJourneyScreen extends StatelessWidget {
               Icons.add,
               color: Colors.white,
             ),
+            backgroundColor: accentColor,
             onPressed: () {
               final nav = sl.get<ScreenNavigator>();
               nav.openArtistSelection(context);

@@ -59,6 +59,7 @@ class JourneyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color accentColor = model.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
     return GestureDetector(
         onTap: () {
           print('Existing card tapped');
@@ -79,7 +80,7 @@ class JourneyCard extends StatelessWidget {
                       Chip(
                         label: Text(model.status.toString()),
                         //labelStyle: Theme.of(context).textTheme.subhead,
-                        backgroundColor: Theme.of(context).accentColor,
+                        backgroundColor: accentColor,
                         elevation: 4,
                       ),
                       Spacer(),
@@ -122,11 +123,13 @@ class JourneyCard extends StatelessWidget {
                   Container(height: 4.0),
                   Text(
                     '${model.description}',
-                    style: Theme.of(context).accentTextTheme.title,
+                    style: Theme.of(context).accentTextTheme.title.copyWith(
+                          color: accentColor,
+                        ),
                   ),
                   Spacer(),
                   JourneyProgressIndicator(
-                    color: Colors.deepPurple,
+                    color: accentColor,
                     progress: model.status.progress,
                     style: Theme.of(context).accentTextTheme.caption,
                   ),

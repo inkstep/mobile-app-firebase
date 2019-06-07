@@ -10,6 +10,7 @@ import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 import 'journeys_event.dart';
 import 'journeys_state.dart';
@@ -155,12 +156,24 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     for (JourneyEntity je in list) {
       final List<Image> images = await journeysRepository.getImages(je.id);
       final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
+
+      final List<PaletteColor> palettes = <PaletteColor>[];
+      for (ImageProvider img in images.map((img) => img.image)) {
+        final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+          img,
+          maximumColorCount: 15,
+        );
+        palettes.addAll(palette.paletteColors);
+      }
+      final palette = PaletteGenerator.fromColors(palettes);
+
       cards.add(CardModel(
         description: je.mentalImage,
         artistName: artist.name,
         images: images,
         status: WaitingForResponse(),
         position: idx,
+        palette: palette,
       ));
       idx++;
     }
