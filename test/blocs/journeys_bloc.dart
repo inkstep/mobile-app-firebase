@@ -25,6 +25,7 @@ void main() {
       images: [],
       status: WaitingForResponse(),
       position: 0,
+      palette: null,
     );
     final JourneyEntity j1 = JourneyEntity(
       id: 1,
@@ -39,11 +40,12 @@ void main() {
     );
 
     final CardModel c2 = CardModel(
-        description: 'Flower',
-        artistName: 'Ricky',
-        images: [],
-        status: WaitingForResponse(),
-        position: 1
+      description: 'Flower',
+      artistName: 'Ricky',
+      images: [],
+      status: WaitingForResponse(),
+      position: 1,
+      palette: null,
     );
 
     final JourneyEntity j2 = JourneyEntity(
