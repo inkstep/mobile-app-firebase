@@ -130,7 +130,7 @@ class LoadedJourneyScreen extends StatelessWidget {
             ),
             onPressed: () {
               final nav = sl.get<ScreenNavigator>();
-              nav.openArtistSelection(context, loadedState.user.id);
+              nav.openArtistSelection(context);
             },
           );
     return Scaffold(

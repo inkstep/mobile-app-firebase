@@ -12,23 +12,17 @@ import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistSelectionScreen extends StatefulWidget {
   ArtistSelectionScreen({
-    @required this.userID,
     Key key,
   }) : super(key: key);
 
-  final int userID;
-
   @override
-  State<StatefulWidget> createState() => ArtistSelectionScreenState(userID);
+  State<StatefulWidget> createState() => ArtistSelectionScreenState();
 }
 
 class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
-  ArtistSelectionScreenState(this.userID);
 
   final ArtistsBloc _artistsBloc =
       ArtistsBloc(artistsRepository: ArtistsRepository(webClient: WebClient()));
-
-  final int userID;
 
   @override
   void initState() {
@@ -62,8 +56,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                         return InkWell(
                           onTap: () {
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                            nav.openNewJourneyScreen(context, state.artists[index].artistID,
-                                userID);
+                            nav.openNewJourneyScreen(context, state.artists[index].artistID);
                           },
                           child: ProfileRow(
                             name: state.artists[index].name,

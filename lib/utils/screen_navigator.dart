@@ -37,10 +37,10 @@ class ScreenNavigator {
     );
   }
 
-  void openArtistSelection(BuildContext context, int userID) {
+  void openArtistSelection(BuildContext context) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => ArtistSelectionScreen(userID: userID,)),
+      MaterialPageRoute<dynamic>(builder: (context) => ArtistSelectionScreen()),
     );
   }
 
@@ -51,10 +51,10 @@ class ScreenNavigator {
     );
   }
 
-  void openNewJourneyScreen(BuildContext context, int artistID, int userID) {
+  void openNewJourneyScreen(BuildContext context, int artistID) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID, userID),
+      MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID),
           fullscreenDialog: true),
     );
   }

@@ -55,7 +55,7 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openArtistSelection(any, -1));
+      verify(nav.openArtistSelection(any));
     });
   });
 }

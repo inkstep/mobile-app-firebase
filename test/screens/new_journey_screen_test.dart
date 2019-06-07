@@ -10,7 +10,7 @@ void main() {
     final Offset scroll = Offset(0.0, -600.0);
 
     setUp(() {
-      screen = MaterialApp(home: NewJourneyScreen(101, -1));
+      screen = MaterialApp(home: NewJourneyScreen(101));
     });
 
     testWidgets('Journey should start with requesting a name if not already provided',
