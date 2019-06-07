@@ -3,14 +3,14 @@ import 'dart:core';
 
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/studio_entity.dart';
-import 'package:inkstep/resources/web_client.dart';
+import 'package:inkstep/resources/web_repository.dart';
 import 'package:meta/meta.dart';
 
 // TODO(DJRHails): provide local file storage as well
 class ArtistsRepository {
   const ArtistsRepository({@required this.webClient});
 
-  final WebClient webClient;
+  final WebRepository webClient;
 
   // Loads artists from a Web Client.
   Future<List<ArtistEntity>> loadArtists(int studioID) async {

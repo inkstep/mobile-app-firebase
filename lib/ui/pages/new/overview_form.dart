@@ -50,7 +50,7 @@ class OverviewForm extends StatelessWidget {
       formData['position'] = '';
     }
 
-    formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
+    formData['deposit'] = deposit == buttonState.True ? '1' : '0';
     formData['availability'] = getAvailability(weekCallbacks);
 
     return Container(
