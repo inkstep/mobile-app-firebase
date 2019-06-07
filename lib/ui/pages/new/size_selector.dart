@@ -60,9 +60,7 @@ class SizeSelector extends StatelessWidget {
             Spacer(),
             RaisedButton(
               onPressed: () {
-                SystemChannels.textInput.invokeMethod<String>('TextInput.hide');
-                print('buffer print');
-                controller.animateToPage(8,
+                controller.nextPage(
                     duration: Duration(milliseconds: 500),
                     curve: Curves.ease);
               },
