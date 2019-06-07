@@ -148,9 +148,7 @@ class LoadedJourneyScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             WelcomeBackHeader(
-              // TODO(DJRHails): Use a user bloc
-              name: loadedState.cards.isEmpty ? '' : loadedState.user.name,
-              tasksToComplete: 0,
+              name: loadedState.user?.name,
             ),
             Expanded(
               flex: 1,
@@ -159,13 +157,22 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: PageView.builder(
                   controller: _pageController,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index == loadedState.cards.length) {
+//                    final int size = loadedState.cards.length;
+                    if (loadedState.cards.isEmpty) {
                       return AddCard();
                     } else {
-                      return JourneyCard(model: loadedState.cards[index]);
+                      // TODO(DJRHails): Animate scale
+//                      final double pagePos =
+//                          _pageController.offset / _pageController.position.viewportDimension;
+//                      final double difference = (index - pagePos).abs();
+//                      final percentageOffset = (size - difference) / size;
+//                      final scale = (percentageOffset * 1.1).clamp(0.0, 1.0);
+//                      print(percentageOffset);
+
+                      return JourneyCard(model: loadedState.cards[index], scale: 1);
                     }
                   },
-                  itemCount: loadedState.cards.length + 1,
+                  itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
                 ),
               ),
             ),

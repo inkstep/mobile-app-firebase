@@ -12,7 +12,9 @@ class WebClient {
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
   static const String imageEndpoint = '/image';
+  static const String imagesEndpoint = '/images';
   static const String artistEndpoint = '/artist';
+  static const String studiosEndpoint = '/studio';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     final http.Response response = await http.get('$url$artistEndpoint');
@@ -120,6 +122,7 @@ class WebClient {
     if (response.statusCode != 200) {
       throw http.ClientException;
     }
+
     return json.decode(response.body);
   }
 
@@ -133,5 +136,54 @@ class WebClient {
       throw http.ClientException;
     }
     return json.decode(response.body);
+  }
+
+  Future<List<String>> loadImages(int id) async {
+    print('journey_id = $id');
+
+    final http.Response response = await http.get('$url$journeyEndpoint/$id$imagesEndpoint');
+
+    print(
+        '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    final List<dynamic> responseData = json.decode(response.body);
+    List<String> imageData = [];
+    for (String data in responseData) {
+      imageData += [data];
+    }
+
+    return imageData;
+  }
+
+  Future<Map<String, dynamic>> loadStudio(int studioID) async {
+    final http.Response response = await http.get('$url$studiosEndpoint/$studioID');
+
+    print('GET $studiosEndpoint/$studioID ${response.reasonPhrase} (${response.statusCode}):');
+    print('${response.body}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    return json.decode(response.body);
+  }
+
+  Future<List<Map<String, dynamic>>> loadStudios() async {
+    final http.Response response = await http.get('$url$studiosEndpoint');
+
+    print(
+        'GET $studiosEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+    final mappedStudios = <Map<String, dynamic>>[];
+    final List<dynamic> jsonStudios = json.decode(response.body);
+    for (dynamic j in jsonStudios) {
+      final Map<String, dynamic> mappedArtist = j;
+      mappedStudios.add(mappedArtist);
+    }
+    return mappedStudios;
   }
 }

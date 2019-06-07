@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:flutter/widgets.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
@@ -48,7 +49,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int userId = -1;
     User user;
     bool firstTime;
-    List<CardModel> oldCards = <CardModel>[];
     if (currentState is JourneysNoUser) {
       final UserEntity user = UserEntity(name: event.result.name, email: event.result.email);
       userId = await journeysRepository.saveUser(user);
@@ -60,12 +60,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     } else if (currentState is JourneysWithUser) {
       final JourneysWithUser journeysWithUser = currentState;
       user = journeysWithUser.user;
-      oldCards = journeysWithUser.cards;
       firstTime = journeysWithUser.firstTime;
     }
 
     // Now send the corresponding journey
-    final JourneyEntity newJourney = _journeyEntityFromFormResult(user?.id ?? userId, event.result);
+    final JourneyEntity newJourney =
+        _journeyEntityFromFormResult(user?.id ?? userId, -1, event.result);
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<JourneyEntity>[newJourney]);
@@ -73,6 +73,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Failed to save journeys');
       yield JourneyError(prev: currentState);
     } else {
+      newJourney.id = journeyId;
+
       for (Asset img in event.result.images) {
         await journeysRepository.saveImage(journeyId, img);
       }
@@ -80,12 +82,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Successfully saved journey');
       final List<CardModel> cards = await _getCards(user?.id ?? userId);
       print('Successfully loaded cards in for ${user?.id ?? userId}: $cards');
-      user = user ?? journeysRepository.getUser(userId);
+      user = user ?? await journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      print('Merging in with oldCards: $oldCards');
-      yield JourneysWithUser(
-          cards: _mergeCards(cards, oldCards), user: user, firstTime: firstTime ?? true);
+      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true);
       print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true));
       return;
     }
@@ -98,9 +98,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  JourneyEntity _journeyEntityFromFormResult(int userId, FormResult result) {
+  JourneyEntity _journeyEntityFromFormResult(int userId, int id, FormResult result) {
     return JourneyEntity(
+      id: id,
       userId: userId,
+      artistId: result.artistID,
       availability: result.availability,
       deposit: result.deposit,
       mentalImage: result.mentalImage,
@@ -137,14 +139,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(
-          cards: _mergeCards(userState.cards, cards),
-          user: userState.user,
-          firstTime: userState.firstTime ?? true);
+          cards: cards, user: userState.user, firstTime: userState.firstTime ?? true);
     }
-  }
-
-  List<CardModel> _mergeCards(List<CardModel> c1, List<CardModel> c2) {
-    return Set<CardModel>.from(c1).union(c2.toSet()).toList();
   }
 
   Future<List<CardModel>> _getCards(int userId) async {
@@ -157,10 +153,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<CardModel> cards = <CardModel>[];
     int idx = 0;
     for (JourneyEntity je in list) {
-      final Artist artist = await journeysRepository.loadArtist(je.artistId);
+      final List<Image> images = await journeysRepository.getImages(je.id);
+      final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
       cards.add(CardModel(
         description: je.mentalImage,
         artistName: artist.name,
+        images: images,
         status: WaitingForResponse(),
         position: idx,
       ));

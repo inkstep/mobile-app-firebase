@@ -17,68 +17,56 @@ class AvailabilitySelector extends StatelessWidget {
         onSubmitCallback: (_) {},
         builder: (context, focus, onSubmitCallback) {
           return Container(
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'What days of the week are you normally available?',
-                    style: Theme.of(context).accentTextTheme.title,
-                    textAlign: TextAlign.center,
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          SizedBox(height: 20),
-                          _selectableDayRow(context, weekCallbacks.monday, 'Monday'),
-                          _selectableDayRow(context, weekCallbacks.tuesday, 'Tuesday'),
-                          _selectableDayRow(context, weekCallbacks.wednesday, 'Wednesday'),
-                          _selectableDayRow(context, weekCallbacks.thursday, 'Thursday'),
-                          _selectableDayRow(context, weekCallbacks.friday, 'Friday'),
-                          _selectableDayRow(context, weekCallbacks.saturday, 'Saturday'),
-                          _selectableDayRow(context, weekCallbacks.sunday, 'Sunday'),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      controller.nextPage(
-                          duration: Duration(milliseconds: duration), curve: Curves.ease);
-                    },
-                    elevation: 15.0,
-                    padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    child: Text(
-                      'Next!',
-                      style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
-                    ),
-                  ),
-                ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'What days of the week are you normally available?',
+                style: Theme.of(context).accentTextTheme.title,
+                textAlign: TextAlign.center,
               ),
-            )
-          ]));
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    spacing: 16.0,
+                    runSpacing: 1.0,
+                    children: <Widget>[
+                      _chooseDayChip('Monday', weekCallbacks.monday),
+                      _chooseDayChip('Tuesday', weekCallbacks.tuesday),
+                      _chooseDayChip('Wednesday', weekCallbacks.wednesday),
+                      _chooseDayChip('Thursday', weekCallbacks.thursday),
+                      _chooseDayChip('Friday', weekCallbacks.friday),
+                      _chooseDayChip('Saturday', weekCallbacks.saturday),
+                      _chooseDayChip('Sunday', weekCallbacks.sunday),
+                    ],
+                  ),
+                ),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  controller.nextPage(
+                      duration: Duration(milliseconds: duration), curve: Curves.ease);
+                },
+                elevation: 15.0,
+                padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                child: Text(
+                  'Next!',
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+                ),
+              ),
+            ],
+          ));
         });
   }
 
-  Widget _selectableDayRow(BuildContext context, SingleDayCallbacks dayCallbacks, String day) {
-    final bool initial = dayCallbacks.currentValue();
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Text(day, style: Theme.of(context).accentTextTheme.title),
-        ),
-        Switch(
-          value: initial,
-          onChanged: dayCallbacks.onSwitched,
-          inactiveTrackColor: Theme.of(context).primaryColor,
-        ),
-      ],
+  Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback) {
+    return FilterChip(
+      label: Text(day),
+      onSelected: dayCallback.onSwitched,
+      selected: dayCallback.currentValue(),
     );
   }
 }

@@ -86,11 +86,11 @@ class OverviewForm extends StatelessWidget {
               HorizontalDivider(),
               Expanded(
                   child: Row(
-                    children: <Widget>[
-                      getLabel(context, 'Images ', formData, 'noRefImgs'),
-                      getData(context, formData, 'noRefImgs'),
-                    ],
-                  )),
+                children: <Widget>[
+                  getLabel(context, 'Images ', formData, 'noRefImgs'),
+                  getData(context, formData, 'noRefImgs'),
+                ],
+              )),
               HorizontalDivider(),
               Expanded(
                   child: Row(
@@ -160,6 +160,7 @@ class OverviewForm extends StatelessWidget {
                           mentalImage: formData['mentalImage'],
                           position: formData['position'],
                           images: images,
+                          artistID: int.parse(formData['artistID']),
                         )),
                       );
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -198,17 +199,17 @@ class OverviewForm extends StatelessWidget {
     }
 
     return Expanded(
-      flex: 3,
-      child: Container(
-        alignment: Alignment.center,
-        child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
-      )
-    );
+        flex: 3,
+        child: Container(
+          alignment: Alignment.center,
+          child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+        ));
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = (formData[param] == '' || formData[param] == '0000000' ||
-        (param == 'noRefImgs' && formData[param] == '1'))
+    final TextStyle style = (formData[param] == '' ||
+            formData[param] == '0000000' ||
+            (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).accentTextTheme.subtitle;
 

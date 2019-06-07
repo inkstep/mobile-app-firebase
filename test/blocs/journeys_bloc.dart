@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
-import 'package:inkstep/models/artists_model.dart';
+import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
@@ -18,13 +18,16 @@ void main() {
   group('JourneysBloc', () {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
+
     final CardModel c1 = CardModel(
       description: 'Star',
       artistName: 'Ricky',
+      images: [],
       status: WaitingForResponse(),
       position: 0,
     );
     final JourneyEntity j1 = JourneyEntity(
+      id: 1,
       userId: 0,
       artistId: 0,
       mentalImage: 'Star',
@@ -36,8 +39,15 @@ void main() {
     );
 
     final CardModel c2 = CardModel(
-        description: 'Flower', artistName: 'Ricky', status: WaitingForResponse(), position: 1);
+        description: 'Flower',
+        artistName: 'Ricky',
+        images: [],
+        status: WaitingForResponse(),
+        position: 1
+    );
+
     final JourneyEntity j2 = JourneyEntity(
+      id: 1,
       userId: 0,
       artistId: 0,
       mentalImage: 'Flower',
@@ -96,10 +106,11 @@ void main() {
 
       when(repo.loadArtist(0)).thenAnswer(
         (_) => Future.value(
-              Artist(
+              ArtistEntity(
                 name: 'Ricky',
                 email: 'someemail',
-                studio: 'scm',
+                studioID: 1,
+                artistID: 1,
               ),
             ),
       );
@@ -110,6 +121,7 @@ void main() {
       journeysBloc.dispatch(
         AddJourney(
           result: FormResult(
+            artistID: 101,
             position: '',
             availability: '',
             mentalImage: 'Flower',
