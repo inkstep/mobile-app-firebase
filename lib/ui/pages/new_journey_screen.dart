@@ -163,6 +163,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       ShortTextInputFormElement(
         controller: controller,
         textController: emailController,
+        keyboardType: TextInputType.emailAddress,
         label: 'What is your email address?',
         hint: 'example@inkstep.com',
       ),
