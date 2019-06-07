@@ -167,6 +167,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       ShortTextInputFormElement(
         controller: controller,
         textController: emailController,
+        keyboardType: TextInputType.emailAddress,
         label: 'What is your email address?',
         hint: 'example@inkstep.com',
       ),
@@ -188,37 +189,51 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   Widget build(BuildContext context) {
     formData['artistID'] = artistID.toString();
     final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
-      mon = switched;
+      setState(() {
+        mon = switched;
+      });
     }, () {
       return mon;
     });
     final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {
-      tues = switched;
+      setState(() {
+        tues = switched;
+      });
     }, () {
       return tues;
     });
     final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {
-      wed = switched;
+      setState(() {
+        wed = switched;
+      });
     }, () {
       return wed;
     });
     final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {
-      thurs = switched;
+      setState(() {
+        thurs = switched;
+      });
     }, () {
       return thurs;
     });
     final SingleDayCallbacks friday = SingleDayCallbacks((switched) {
-      fri = switched;
+      setState(() {
+        fri = switched;
+      });
     }, () {
       return fri;
     });
     final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {
-      sat = switched;
+      setState(() {
+        sat = switched;
+      });
     }, () {
       return sat;
     });
     final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {
-      sun = switched;
+      setState(() {
+        sun = switched;
+      });
     }, () {
       return sun;
     });

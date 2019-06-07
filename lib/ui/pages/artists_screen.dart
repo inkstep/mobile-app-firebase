@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/artists_bloc.dart';
 import 'package:inkstep/blocs/artists_event.dart';
 import 'package:inkstep/blocs/artists_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/artists_repository.dart';
-import 'package:inkstep/resources/web_client.dart';
+import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/ui/components/profile_row.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -25,15 +26,28 @@ class ArtistSelectionScreen extends StatefulWidget {
 class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
   ArtistSelectionScreenState(this.userID);
 
-  final ArtistsBloc _artistsBloc =
-      ArtistsBloc(artistsRepository: ArtistsRepository(webClient: WebClient()));
+  http.Client _client;
+  ArtistsBloc _artistsBloc;
 
   final int userID;
 
   @override
   void initState() {
+    _client = http.Client();
+    _artistsBloc = ArtistsBloc(
+      artistsRepository: ArtistsRepository(
+        webClient: WebRepository(client: _client),
+      ),
+    );
     _artistsBloc.dispatch(LoadArtists(0));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _client.close();
+    _artistsBloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,11 +92,5 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
             },
           ),
         ));
-  }
-
-  @override
-  void dispose() {
-    _artistsBloc.dispose();
-    super.dispose();
   }
 }

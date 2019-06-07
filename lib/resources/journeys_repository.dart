@@ -8,7 +8,7 @@ import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
-import 'package:inkstep/resources/web_client.dart';
+import 'package:inkstep/resources/web_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -16,7 +16,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 class JourneysRepository {
   const JourneysRepository({@required this.webClient});
 
-  final WebClient webClient;
+  final WebRepository webClient;
 
   // Loads journeys from a Web Client.
   Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {

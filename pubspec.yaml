@@ -30,6 +30,7 @@ dependencies:
   get_it:
   equatable:
   http:
+  palette_generator:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
