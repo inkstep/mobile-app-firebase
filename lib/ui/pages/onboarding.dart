@@ -64,7 +64,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       ),
     );
 
-    const EdgeInsets buttonPadding = EdgeInsets.only(top: 32.0);
+    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
     final ScreenNavigator nav = sl.get<ScreenNavigator>();
     final boldButtonKey = UniqueKey();
     final bottom = Container(

@@ -15,12 +15,15 @@ class TextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Text(
-        label,
-        style: TextStyle(
-          color: baseColors['light'],
-          fontSize: 15.0,
-          fontFamily: 'Signika',
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: baseColors['light'],
+            fontSize: 15.0,
+            fontFamily: 'Signika',
+          ),
         ),
       ),
     );
