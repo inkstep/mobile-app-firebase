@@ -21,6 +21,7 @@ class ArtistSelectionScreen extends StatefulWidget {
 }
 
 class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
+
   http.Client _client;
   ArtistsBloc _artistsBloc;
 

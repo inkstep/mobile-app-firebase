@@ -7,7 +7,9 @@ import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class AddCard extends StatelessWidget {
-  const AddCard({Key key}) : super(key: key);
+  const AddCard({@required this.userID, Key key}) : super(key: key);
+
+  final int userID;
 
   @override
   Widget build(BuildContext context) {

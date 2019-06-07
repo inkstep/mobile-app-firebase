@@ -159,7 +159,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
 //                    final int size = loadedState.cards.length;
                     if (loadedState.cards.isEmpty) {
-                      return AddCard();
+                      return AddCard(userID: loadedState.user.id);
                     } else {
                       // TODO(DJRHails): Animate scale
 //                      final double pagePos =

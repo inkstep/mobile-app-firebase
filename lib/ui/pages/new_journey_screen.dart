@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
+import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
@@ -29,9 +33,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   final int artistID;
 
-  final PageController controller = PageController(
-    initialPage: 0,
-  );
+  PageController controller;
+  int startPage;
 
   Map<String, String> formData = {
     'name': '',
@@ -85,7 +88,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   }
 
   Future<bool> _onWillPop() {
-    if (controller.page == 0) {
+    if (controller.page == startPage) {
       return Future.value(true);
     }
 
@@ -236,50 +239,66 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     final WeekCallbacks weekCallbacks =
         WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
+    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+
     final Form form = Form(
-      key: _formKey,
-      child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Theme.of(context).cardColor,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.clear),
-            tooltip: 'Exit',
-            onPressed: () {
-              final nav = sl.get<ScreenNavigator>();
-              nav.pop(context);
-            },
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: Theme.of(context).accentIconTheme,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.keyboard_arrow_up),
-                tooltip: 'Previous question',
-                onPressed: () {
-                  if (controller.page != 0) {
-                    controller.previousPage(
-                        duration: Duration(milliseconds: 500), curve: Curves.ease);
-                  }
-                }),
-            IconButton(
-                icon: Icon(Icons.keyboard_arrow_down),
-                tooltip: 'Next question',
-                onPressed: () {
-                  if (controller.page != _formQuestions(weekCallbacks).length - 1) {
-                    controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
-                  }
-                }),
-          ],
-        ),
-        body: PageView(
-          controller: controller,
-          scrollDirection: Axis.vertical,
-          children: _formQuestions(weekCallbacks),
-        ),
-      ),
-    );
+        key: _formKey,
+        child: BlocBuilder<JourneysEvent, JourneysState>(
+            bloc: journeyBloc,
+            builder: (BuildContext context, JourneysState state) {
+              if (state is JourneysNoUser) {
+                startPage = 0;
+              } else if (state is JourneysWithUser) {
+                startPage = 1;
+                formData['name'] = state.user.name;
+                nameController.text = state.user.name;
+              }
+
+              controller = PageController(initialPage: startPage);
+
+              return Scaffold(
+                key: _scaffoldKey,
+                backgroundColor: Theme.of(context).cardColor,
+                appBar: AppBar(
+                  leading: IconButton(
+                    icon: Icon(Icons.clear),
+                    tooltip: 'Exit',
+                    onPressed: () {
+                      final nav = sl.get<ScreenNavigator>();
+                      nav.pop(context);
+                    },
+                  ),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  iconTheme: Theme.of(context).accentIconTheme,
+                  actions: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.keyboard_arrow_up),
+                        tooltip: 'Previous question',
+                        onPressed: () {
+                          if (controller.page != startPage) {
+                            controller.previousPage(
+                                duration: Duration(milliseconds: 500), curve: Curves.ease);
+                          }
+                        }),
+                    IconButton(
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        tooltip: 'Next question',
+                        onPressed: () {
+                          if (controller.page != _formQuestions(weekCallbacks).length - 1) {
+                            controller.nextPage(
+                                duration: Duration(milliseconds: 500), curve: Curves.ease);
+                          }
+                        }),
+                  ],
+                ),
+                body: PageView(
+                  controller: controller,
+                  scrollDirection: Axis.vertical,
+                  children: _formQuestions(weekCallbacks),
+                ),
+              );
+            }));
 
     return WillPopScope(
       onWillPop: _onWillPop,

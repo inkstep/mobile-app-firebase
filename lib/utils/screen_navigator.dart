@@ -15,7 +15,7 @@ class ScreenNavigator {
   }
 
   void openViewJourneysScreen(BuildContext context) {
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       MaterialPageRoute<dynamic>(
           builder: (context) => JourneysScreen(
@@ -25,7 +25,7 @@ class ScreenNavigator {
   }
 
   void openViewJourneysScreenWithNewDevice(BuildContext context) {
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       MaterialPageRoute<dynamic>(
           builder: (context) => JourneysScreen(
@@ -34,6 +34,13 @@ class ScreenNavigator {
                   journeyBloc.dispatch(LoadJourneys());
                 },
               )),
+    );
+  }
+
+  void openArtistSelectionReplace(BuildContext context) {
+    Navigator.pushReplacement<dynamic, dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => ArtistSelectionScreen()),
     );
   }
 
@@ -52,7 +59,7 @@ class ScreenNavigator {
   }
 
   void openNewJourneyScreen(BuildContext context, int artistID) {
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       MaterialPageRoute<dynamic>(builder: (context) => NewJourneyScreen(artistID),
           fullscreenDialog: true),
