@@ -21,9 +21,7 @@ dependencies:
     sdk: flutter
 
 #  firebase_messaging:
-  image_picker:
   multi_image_picker:
-  shared_preferences:
   auto_size_text:
   bloc:
   flutter_bloc:
