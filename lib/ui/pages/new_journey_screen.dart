@@ -33,8 +33,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   final int artistID;
 
-  PageController controller;
-  int startPage;
+  PageController controller = PageController(initialPage: 0);
 
   Map<String, String> formData = {
     'name': '',
@@ -88,7 +87,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   }
 
   Future<bool> _onWillPop() {
-    if (controller.page == startPage) {
+    if (controller.page == 0) {
       return Future.value(true);
     }
 
@@ -96,8 +95,9 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return Future.value(false);
   }
 
-  List<Widget> _formQuestions(dynamic weekCallbacks) {
-    return <Widget>[
+  List<Widget> _formQuestions(dynamic weekCallbacks, bool newUser) {
+
+    final List<Widget> widgets = <Widget>[
       ShortTextInputFormElement(
         controller: controller,
         textController: nameController,
@@ -183,6 +183,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         images: inspirationImages,
       )
     ];
+
+    if (!newUser) {
+      widgets.removeAt(0);
+    }
+
+    return widgets;
   }
 
   @override
@@ -247,15 +253,17 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         child: BlocBuilder<JourneysEvent, JourneysState>(
             bloc: journeyBloc,
             builder: (BuildContext context, JourneysState state) {
+              bool newUser = false;
+
               if (state is JourneysNoUser) {
-                startPage = 0;
+                newUser = true;
               } else if (state is JourneysWithUser) {
-                startPage = 1;
                 formData['name'] = state.user.name;
                 nameController.text = state.user.name;
               }
 
-              controller = PageController(initialPage: startPage);
+              final List<Widget> formWidgets = _formQuestions(weekCallbacks,
+                  newUser);
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -277,7 +285,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_up),
                         tooltip: 'Previous question',
                         onPressed: () {
-                          if (controller.page != startPage) {
+                          if (controller.page != 0) {
                             controller.previousPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
                           }
@@ -286,7 +294,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_down),
                         tooltip: 'Next question',
                         onPressed: () {
-                          if (controller.page != _formQuestions(weekCallbacks).length - 1) {
+                          if (controller.page != formWidgets.length - 1) {
                             controller.nextPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
                           }
@@ -296,7 +304,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                 body: PageView(
                   controller: controller,
                   scrollDirection: Axis.vertical,
-                  children: _formQuestions(weekCallbacks),
+                  children: formWidgets,
                 ),
               );
             }));
