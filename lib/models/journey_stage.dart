@@ -22,7 +22,7 @@ abstract class JourneyStage extends Equatable {
   }
 
   int get progress;
-  bool notify = false;
+  bool get userActionRequired;
 }
 
 class WaitingForQuote extends JourneyStage {
@@ -30,7 +30,10 @@ class WaitingForQuote extends JourneyStage {
   int get progress => 20;
 
   @override
-  String toString() => 'Waiting For Response';
+  String toString() => 'Awaiting artist\'s response';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class QuoteReceived extends JourneyStage {
@@ -42,7 +45,10 @@ class QuoteReceived extends JourneyStage {
   int get progress => 30;
 
   @override
-  String toString() => "You've been sent a quote!";
+  String toString() => "You've been sent a price!";
+
+  @override
+  bool get userActionRequired => true;
 }
 
 class WaitingForAppointmentOffer extends JourneyStage {
@@ -50,7 +56,10 @@ class WaitingForAppointmentOffer extends JourneyStage {
   int get progress => 35;
 
   @override
-  String toString() => 'Waiting for Response';
+  String toString() => 'Awaiting Appointment Slot';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class AppointmentOfferReceived extends JourneyStage {
@@ -62,6 +71,9 @@ class AppointmentOfferReceived extends JourneyStage {
 
   @override
   String toString() => "You've been offered an appointment!";
+
+  @override
+  bool get userActionRequired => true;
 }
 
 class BookedIn extends JourneyStage {
@@ -70,6 +82,9 @@ class BookedIn extends JourneyStage {
 
   @override
   String toString() => 'Booked In';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class InvalidStage extends JourneyStage {
@@ -78,4 +93,7 @@ class InvalidStage extends JourneyStage {
 
   @override
   String toString() => 'Invalid';
+
+  @override
+  bool get userActionRequired => false;
 }

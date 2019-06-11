@@ -129,7 +129,8 @@ class LoadedJourneyCard extends AnimatedWidget {
                 child: Chip(
                   label: Text(card.stage.toString()),
                   backgroundColor: accentColor,
-                  elevation: card.stage.notify ? _elevationTween.evaluate(progression) : 0.0,
+                  elevation:
+                      card.stage.userActionRequired ? _elevationTween.evaluate(progression) : 0.0,
                 ),
               ),
               Spacer(),
