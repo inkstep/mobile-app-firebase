@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:inkstep/models/journey_entity.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);

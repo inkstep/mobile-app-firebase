@@ -37,7 +37,7 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      status: WaitingForQuote()
+      stage: WaitingForQuote()
     );
 
     final Future<CardModel> c2 = Future.value(CardModel(
@@ -59,7 +59,7 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      status: WaitingForQuote()
+      stage: WaitingForQuote()
     );
 
     final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
