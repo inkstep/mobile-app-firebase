@@ -121,7 +121,7 @@ class LoadedJourneyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color accentColor = Theme.of(context).accentColor;
+    final Color accentColor = Theme.of(context).accentColor;
     // TODO(DJRHails): Add this back in
     //  if (_pageController.hasClients) {
     //    accentColor = loadedState.cards[_pageController.page.toInt()].palette.vibrantColor?.color;
@@ -154,18 +154,16 @@ class LoadedJourneyScreen extends StatelessWidget {
         opacity: _animation,
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Spacer(flex: 4),
+              WelcomeBackHeader(
+                name: loadedState.user?.name,
+              ),
               Spacer(flex: 2),
               Expanded(
-                flex: 10,
-                child: WelcomeBackHeader(
-                  name: loadedState.user?.name,
-                ),
-              ),
-              Spacer(),
-              Expanded(
-                flex: 70,
+                flex: 60,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: onNotification,
                   child: PageView.builder(
@@ -190,6 +188,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Spacer(flex: 4),
             ],
           ),
         ),
