@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
-// ignore: must_be_immutable
 class BinaryInput extends StatelessWidget {
   BinaryInput({
     @required this.controller,
@@ -38,8 +37,12 @@ class BinaryInput extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildButton(context, true, () {submitCallback('true');}, currentState!=buttonState.True),
-                  _buildButton(context, false, () {submitCallback('false');}, currentState!=buttonState.False),
+                  _buildButton(context, true, () {
+                    submitCallback('true');
+                  }, currentState != buttonState.True),
+                  _buildButton(context, false, () {
+                    submitCallback('false');
+                  }, currentState != buttonState.False),
                 ],
               ),
               flex: 20,
@@ -61,9 +64,7 @@ class BinaryInput extends StatelessWidget {
       child: Text(left ? 'Yes' : 'No'),
       onPressed: enabled ? response : null,
       disabledColor: Theme.of(context).primaryColorDark,
-      color: left
-          ? Theme.of(context).accentColor
-          : Theme.of(context).backgroundColor,
+      color: left ? Theme.of(context).accentColor : Theme.of(context).backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: left
             ? BorderRadius.horizontal(
