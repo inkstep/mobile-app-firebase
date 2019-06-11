@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
-import 'package:inkstep/models/journey_status.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:meta/meta.dart';
@@ -21,7 +21,7 @@ class FakeJourneysRepository {
     availability: '',
     deposit: '',
     noImages: 0,
-    stage: WaitingForResponse(),
+    stage: WaitingForQuote(),
   );
 
   final JourneyEntity j2 = JourneyEntity(
@@ -34,7 +34,7 @@ class FakeJourneysRepository {
       availability: '',
       deposit: '',
       noImages: 0,
-      stage: WaitingForResponse());
+      stage: WaitingForQuote());
 
   final User u1 = User(id: 0, name: 'test.name', email: 'test.email');
   final ArtistEntity a1 = ArtistEntity(

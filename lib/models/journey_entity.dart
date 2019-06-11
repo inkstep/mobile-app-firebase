@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inkstep/models/journey_status.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:meta/meta.dart';
 
 class JourneyEntity extends Equatable {
@@ -38,7 +38,7 @@ class JourneyEntity extends Equatable {
       availability: json['availability'],
       deposit: json['deposit'],
       noImages: int.parse(json['noRefImages']),
-      stage: JourneyStatus.forCode(json['stage']),
+      stage: JourneyStage.fromJson(json)
     );
   }
 
@@ -51,7 +51,7 @@ class JourneyEntity extends Equatable {
   final String availability;
   final String deposit;
   final int noImages;
-  final JourneyStatus stage;
+  final JourneyStage stage;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

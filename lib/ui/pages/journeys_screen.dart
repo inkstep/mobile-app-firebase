@@ -5,9 +5,10 @@ import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
-import 'package:inkstep/ui/pages/journeys/journey_cards.dart';
 import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+
+import 'journeys/journey_cards.dart';
 
 class JourneysScreen extends StatefulWidget {
   const JourneysScreen({Key key, this.onInit}) : super(key: key);

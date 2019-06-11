@@ -6,7 +6,7 @@ import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
-import 'package:inkstep/models/journey_status.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:mockito/mockito.dart';
@@ -23,7 +23,7 @@ void main() {
       description: 'Star',
       artistName: 'Ricky',
       images: [],
-      stage: WaitingForResponse(),
+      stage: WaitingForQuote(),
       position: 0,
       palette: null,
     ));
@@ -37,14 +37,14 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      stage: WaitingForResponse()
+      stage: WaitingForQuote()
     );
 
     final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
       artistName: 'Ricky',
       images: [],
-      stage: WaitingForResponse(),
+      stage: WaitingForQuote(),
       position: 1,
       palette: null,
     ));
@@ -59,7 +59,7 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      stage: WaitingForResponse()
+      stage: WaitingForQuote()
     );
 
     final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
