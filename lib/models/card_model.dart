@@ -5,6 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class CardModel extends Equatable {
+
+
   CardModel({
     @required this.description,
     @required this.artistName,
@@ -12,6 +14,7 @@ class CardModel extends Equatable {
     @required this.stage,
     @required this.position,
     @required this.palette,
+    @required this.journeyId,
   }) : super(<dynamic>[description, artistName, images, stage, position]);
 
   JourneyStage stage;
@@ -19,6 +22,7 @@ class CardModel extends Equatable {
   String artistName;
   List<Image> images;
   int position;
+  int journeyId;
   PaletteGenerator palette;
 
   String get aftercareID => 'aftercare_button_$position';

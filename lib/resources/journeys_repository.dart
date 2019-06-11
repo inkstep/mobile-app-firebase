@@ -5,7 +5,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/artists_entity.dart';
+import 'package:inkstep/models/empty_journey_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/web_repository.dart';
@@ -25,7 +27,7 @@ class JourneysRepository {
   }
 
   // Persists journeys to the web
-  Future<int> saveJourneys(List<JourneyEntity> journeys) async {
+  Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async {
     final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
     return await webClient.saveJourneys(journeysMap);
   }
@@ -64,5 +66,9 @@ class JourneysRepository {
     }
 
     return Future.value(images);
+  }
+
+  void updateStage(JourneyStage updateStage) {
+   // TODO (Felination): Something useful here
   }
 }
