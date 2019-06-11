@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
@@ -8,13 +11,21 @@ abstract class JourneyStage extends Equatable {
       case 0:
         return WaitingForQuote();
       case 1:
-        return QuoteReceived(json['quote']);
+        return QuoteReceived(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 2:
         return WaitingForAppointmentOffer();
       case 3:
         return AppointmentOfferReceived(json['offeredAppointment']);
       case 4:
         return BookedIn();
+      case 5:
+        return ImmediateAftercare();
+      case 6:
+        return WeekOfAftercare();
+      case 7:
+        return MonthOfAftercare();
+      case 8:
+        return Healed();
       default:
         return InvalidStage();
     }
@@ -33,10 +44,9 @@ class WaitingForQuote extends JourneyStage {
 }
 
 class QuoteReceived extends JourneyStage {
-
   QuoteReceived(this.quote);
 
-  final int quote;
+  final TextRange quote;
 
   @override
   int get progress => 30;
@@ -54,7 +64,6 @@ class WaitingForAppointmentOffer extends JourneyStage {
 }
 
 class AppointmentOfferReceived extends JourneyStage {
-
   AppointmentOfferReceived(this.appointmentDate);
   final DateTime appointmentDate;
 
@@ -71,6 +80,38 @@ class BookedIn extends JourneyStage {
 
   @override
   String toString() => 'Booked In';
+}
+
+class ImmediateAftercare extends JourneyStage {
+  @override
+  int get progress => 65;
+
+  @override
+  String toString() => 'Tattoo Healing';
+}
+
+class WeekOfAftercare extends JourneyStage {
+  @override
+  int get progress => 70;
+
+  @override
+  String toString() => 'Tattoo Healing';
+}
+
+class MonthOfAftercare extends JourneyStage {
+  @override
+  int get progress => 80;
+
+  @override
+  String toString() => 'Tattoo Healing';
+}
+
+class Healed extends JourneyStage {
+  @override
+  int get progress => 95;
+
+  @override
+  String toString() => 'Send {ARTISTNAME} a picture?';
 }
 
 class InvalidStage extends JourneyStage {

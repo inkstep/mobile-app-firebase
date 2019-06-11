@@ -22,6 +22,4 @@ class CardModel extends Equatable {
   PaletteGenerator palette;
 
   String get aftercareID => 'aftercare_button_$position';
-
-  TextRange get quote => TextRange(start: 400, end: 500);
 }
