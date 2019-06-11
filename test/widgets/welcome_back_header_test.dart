@@ -10,6 +10,7 @@ void main() {
           home: Scaffold(
               body: LargeTwoPartHeader(
             name: 'Jimmy',
+            largeText: 'Welcome Back',
             taskStatus: 27,
           )),
         ),

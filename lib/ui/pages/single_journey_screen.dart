@@ -22,10 +22,6 @@ class SingleJourneyScreen extends StatelessWidget {
     );
   }
 
-  Widget _backgroundColour() {
-    return Container(color: Colors.white);
-  }
-
   Widget _topLayerButtons(BuildContext context) {
     return SafeArea(
       child: Padding(
@@ -61,7 +57,7 @@ class SingleJourneyScreen extends StatelessWidget {
                 child: Container(
                   width: 80,
                   height: 5,
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.grey[800],
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.all(Radius.circular(8.0)),

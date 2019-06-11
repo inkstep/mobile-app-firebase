@@ -69,6 +69,6 @@ class JourneysRepository {
   }
 
   void updateStage(JourneyStage updateStage) {
-   // TODO (Felination): Something useful here
+   // TODO(Felination): Something useful here
   }
 }

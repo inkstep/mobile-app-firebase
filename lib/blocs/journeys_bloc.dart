@@ -5,7 +5,6 @@ import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
-import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
@@ -66,8 +65,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     // Now send the corresponding journey
-    final EmptyJourneyEntity newJourney =
-        _emptyJourneyEntityFromFormResult(userId, event.result);
+    final EmptyJourneyEntity newJourney = _emptyJourneyEntityFromFormResult(userId, event.result);
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<EmptyJourneyEntity>[newJourney]);
@@ -98,23 +96,21 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
+  /*Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
     assert (currentState is JourneysWithUser);
     await journeysRepository.updateStage(WaitingForAppointmentOffer());
-
-  }
+  }*/
 
   EmptyJourneyEntity _emptyJourneyEntityFromFormResult(int userId, FormResult result) {
     return EmptyJourneyEntity(
-      userId: userId,
-      artistId: result.artistID,
-      availability: result.availability,
-      deposit: result.deposit,
-      mentalImage: result.mentalImage,
-      position: result.position,
-      size: result.size,
-      noImages: result.images.length
-    );
+        userId: userId,
+        artistId: result.artistID,
+        availability: result.availability,
+        deposit: result.deposit,
+        mentalImage: result.mentalImage,
+        position: result.position,
+        size: result.size,
+        noImages: result.images.length);
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
