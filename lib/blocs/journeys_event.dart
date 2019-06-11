@@ -24,3 +24,12 @@ class ShownFeatureDiscovery extends JourneysEvent {
   @override
   String toString() => 'ShownFeatureDiscovery';
 }
+
+class QuoteAccepted extends JourneysEvent {
+  QuoteAccepted(this.journeyId);
+
+  final int journeyId;
+
+  @override
+  String toString() => 'QuoteAccepted';
+}

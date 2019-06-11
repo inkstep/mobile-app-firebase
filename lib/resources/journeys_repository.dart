@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/web_repository.dart';
@@ -65,5 +66,9 @@ class JourneysRepository {
     }
 
     return Future.value(images);
+  }
+
+  void updateStage(JourneyStage updateStage) {
+   // TODO (Felination): Something useful here
   }
 }
