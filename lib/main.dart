@@ -77,6 +77,7 @@ class InkstepState extends State<Inkstep> {
           accentColor: Colors.deepPurple,
           primaryColor: baseColors['dark'],
           backgroundColor: baseColors['dark'],
+          dialogBackgroundColor: baseColors['dark'],
           cardColor: baseColors['light'],
           cardTheme: CardTheme(
             color: baseColors['light'],
@@ -104,26 +105,27 @@ class InkstepState extends State<Inkstep> {
   TextTheme _getTextWithColor(Color color) => TextTheme(
       headline: TextStyle(
         fontSize: 40.0,
-        fontWeight: FontWeight.w400,
-        color: color,
-      ),
-      title: TextStyle(
-        fontSize: 28.0,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: color,
       ),
       subhead: TextStyle(
-        fontSize: 20.0,
+        fontSize: 28.0,
         color: color,
+        fontWeight: FontWeight.w300,
       ),
-      body1: TextStyle(
-        fontSize: 18.0,
+      title: TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w300,
         color: color,
       ),
       subtitle: TextStyle(
         fontSize: 20.0,
         color: color,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
+      ),
+      body1: TextStyle(
+        fontSize: 18.0,
+        color: color,
       ),
       caption: TextStyle(
         fontSize: 12.0,
