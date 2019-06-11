@@ -64,80 +64,115 @@ class JourneyCard extends StatelessWidget {
         onTap: () {
           print('Existing card tapped');
         },
-        child: Transform.scale(
-          scale: scale,
-          child: Card(
-            margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Chip(
-                        label: Text(model.status.toString()),
-                        //labelStyle: Theme.of(context).textTheme.subhead,
-                        backgroundColor: accentColor,
-                        elevation: 4,
-                      ),
-                      Spacer(),
-                      DescribedIconButton(model: model),
-                    ],
-                  ),
-                  Spacer(),
-                  if (model.images.isNotEmpty)
-                    Text(
-                      'Inspiration.',
-                      style: Theme.of(context).accentTextTheme.subtitle,
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Chip(
+                      label: Text(model.status.toString()),
+                      //labelStyle: Theme.of(context).textTheme.subhead,
+                      backgroundColor: accentColor,
+                      elevation: 4,
                     ),
-                  Row(
-                    children: <Widget>[
-                      for (Image i in model.images)
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: i,
-                          ),
-                        )
-                    ],
-                  ),
-                  Spacer(
-                    flex: 8,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Chip(
-                        avatar: CircleAvatar(
-                          backgroundImage: AssetImage('assets/ricky.png'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        label: Text(
-                          model.artistName,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(height: 4.0),
-                  Text(
-                    '${model.description}',
-                    style: Theme.of(context).accentTextTheme.title.copyWith(
-                          color: accentColor,
-                        ),
-                  ),
-                  Spacer(),
-                  JourneyProgressIndicator(
-                    color: accentColor,
-                    progress: model.status.progress,
-                    style: Theme.of(context).accentTextTheme.caption,
-                  ),
-                ],
+                    Spacer(),
+                    DescribedIconButton(model: model),
+                  ],
+                ),
               ),
-            ),
+              ImageSnippet(
+                images: model.images,
+                axis: Axis.horizontal,
+              ),
+              Spacer(
+                flex: 8,
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+                child: Chip(
+                  avatar: CircleAvatar(
+                    backgroundImage: AssetImage('assets/ricky.png'),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  label: Text(
+                    model.artistName,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+                child: Text(
+                  '${model.description}',
+                  style: Theme.of(context).accentTextTheme.title.copyWith(
+                        color: accentColor,
+                      ),
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 32.0, bottom: 16.0),
+                child: JourneyProgressIndicator(
+                  color: accentColor,
+                  progress: model.status.progress,
+                  style: Theme.of(context).accentTextTheme.caption,
+                ),
+              ),
+            ],
           ),
         ));
+  }
+}
+
+class ImageSnippet extends StatelessWidget {
+  const ImageSnippet({
+    Key key,
+    @required this.images,
+    @required this.axis,
+  }) : super(key: key);
+
+  final List<Image> images;
+  final Axis axis;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Image> imageSection = images.sublist(0, 2);
+    final bool withOverlay = images.length > 3;
+    final BoxDecoration overlay = withOverlay
+        ? BoxDecoration(color: Theme.of(context).backgroundColor.withOpacity(0.3))
+        : null;
+
+    final List<Widget> children = <Widget>[
+      for (Image img in imageSection)
+        Expanded(
+          child: img,
+        ),
+      if (images.length > 2)
+        Expanded(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Container(
+                child: images[2],
+                foregroundDecoration: overlay,
+              ),
+              if (withOverlay)
+                Center(
+                  child: Text('+${images.length - 3}'),
+                ),
+            ],
+          ),
+        )
+    ];
+
+    return axis == Axis.horizontal ? Row(children: children) : Column(children: children);
   }
 }
 
