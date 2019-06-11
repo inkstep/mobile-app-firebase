@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -103,6 +101,9 @@ class ImmediateAftercare extends JourneyStage {
 
   @override
   String toString() => 'Tattoo Healing';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class WeekOfAftercare extends JourneyStage {
@@ -111,6 +112,9 @@ class WeekOfAftercare extends JourneyStage {
 
   @override
   String toString() => 'Tattoo Healing';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class MonthOfAftercare extends JourneyStage {
@@ -119,6 +123,9 @@ class MonthOfAftercare extends JourneyStage {
 
   @override
   String toString() => 'Tattoo Healing';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class Healed extends JourneyStage {
@@ -127,6 +134,9 @@ class Healed extends JourneyStage {
 
   @override
   String toString() => 'Send {ARTISTNAME} a picture?';
+
+  @override
+  bool get userActionRequired => true;
 }
 
 class InvalidStage extends JourneyStage {
