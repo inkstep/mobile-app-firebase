@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:inkstep/models/journey_stage.dart';
 import 'package:meta/meta.dart';
 
 class EmptyJourneyEntity extends Equatable {
