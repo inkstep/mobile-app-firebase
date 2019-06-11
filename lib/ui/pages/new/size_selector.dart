@@ -60,6 +60,7 @@ class SizeSelector extends StatelessWidget {
             Spacer(),
             RaisedButton(
               onPressed: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
                 controller.nextPage(
                     duration: Duration(milliseconds: 500),
                     curve: Curves.ease);

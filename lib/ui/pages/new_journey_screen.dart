@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -277,6 +279,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_up),
                         tooltip: 'Previous question',
                         onPressed: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
                           if (controller.page != 0) {
                             controller.previousPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -286,6 +289,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_down),
                         tooltip: 'Next question',
                         onPressed: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
                           if (controller.page != formWidgets.length - 1) {
                             controller.nextPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
