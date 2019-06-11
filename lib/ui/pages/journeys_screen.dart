@@ -5,7 +5,7 @@ import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
-import 'package:inkstep/ui/components/journey_cards.dart';
+import 'package:inkstep/ui/pages/journeys/journey_cards.dart';
 import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -171,22 +171,9 @@ class LoadedJourneyScreen extends StatelessWidget {
                   child: PageView.builder(
                     controller: _pageController,
                     itemBuilder: (BuildContext context, int index) {
-//                    final int size = loadedState.cards.length;
-                      if (loadedState.cards.isEmpty) {
-                        return AddCard(userID: loadedState.user.id);
-                      } else {
-                        // TODO(DJRHails): Animate scale
-//                      final double pagePos =
-//                          _pageController.offset / _pageController.position.viewportDimension;
-//                      final double difference = (index - pagePos).abs();
-//                      final percentageOffset = (size - difference) / size;
-//                      final scale = (percentageOffset * 1.1).clamp(0.0, 1.0);
-//                      print(percentageOffset);
-
-                        return JourneyCard(model: loadedState.cards[index], scale: 1);
-                      }
+                      return JourneyCard(model: loadedState.cards[index], scale: 1);
                     },
-                    itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
+                    itemCount: loadedState.cards.length,
                   ),
                 ),
               ),
