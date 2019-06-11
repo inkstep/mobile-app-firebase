@@ -5,7 +5,7 @@ import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
-import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
+import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'journeys/journey_cards.dart';
@@ -159,8 +159,12 @@ class LoadedJourneyScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Spacer(flex: 4),
-              WelcomeBackHeader(
-                name: loadedState.user?.name,
+              Padding(
+                padding: const EdgeInsets.only(left: 56.0),
+                child: LargeTwoPartHeader(
+                  largeText: 'Welcome back',
+                  name: loadedState.user?.name,
+                ),
               ),
               Spacer(flex: 2),
               Expanded(
