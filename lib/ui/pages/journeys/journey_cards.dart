@@ -121,9 +121,9 @@ class LoadedJourneyCard extends AnimatedWidget {
                   );
                 },
                 child: Chip(
-                  label: Text(card.status.toString()),
+                  label: Text(card.stage.toString()),
                   backgroundColor: accentColor,
-                  elevation: card.status.notify ? _elevationTween.evaluate(progression) : 0.0,
+                  elevation: card.stage.notify ? _elevationTween.evaluate(progression) : 0.0,
                 ),
               ),
               Spacer(),
@@ -172,7 +172,7 @@ class LoadedJourneyCard extends AnimatedWidget {
           padding: const EdgeInsets.only(left: 16.0, right: 32.0, bottom: 16.0),
           child: JourneyProgressIndicator(
             color: accentColor,
-            progress: card.status.progress,
+            progress: card.stage.progress,
             style: Theme.of(context).accentTextTheme.caption,
           ),
         ),

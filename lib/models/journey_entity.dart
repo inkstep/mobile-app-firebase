@@ -13,7 +13,7 @@ class JourneyEntity extends Equatable {
     @required this.availability,
     @required this.deposit,
     @required this.noImages,
-    @required this.status,
+    @required this.stage,
   }) : super(<dynamic>[
           id,
           userId,
@@ -24,7 +24,7 @@ class JourneyEntity extends Equatable {
           availability,
           deposit,
           noImages,
-          status
+          stage
         ]);
 
   factory JourneyEntity.fromJson(Map<String, dynamic> json) {
@@ -38,7 +38,7 @@ class JourneyEntity extends Equatable {
       availability: json['availability'],
       deposit: json['deposit'],
       noImages: int.parse(json['noRefImages']),
-      status: JourneyStatus.forCode(int.parse(json['status'])),
+      stage: JourneyStatus.forCode(json['stage']),
     );
   }
 
@@ -51,7 +51,7 @@ class JourneyEntity extends Equatable {
   final String availability;
   final String deposit;
   final int noImages;
-  final JourneyStatus status;
+  final JourneyStatus stage;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

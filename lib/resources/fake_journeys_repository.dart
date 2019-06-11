@@ -21,7 +21,7 @@ class FakeJourneysRepository {
     availability: '',
     deposit: '',
     noImages: 0,
-    status: WaitingForResponse(),
+    stage: WaitingForResponse(),
   );
 
   final JourneyEntity j2 = JourneyEntity(
@@ -34,7 +34,7 @@ class FakeJourneysRepository {
       availability: '',
       deposit: '',
       noImages: 0,
-      status: WaitingForResponse());
+      stage: WaitingForResponse());
 
   final User u1 = User(id: 0, name: 'test.name', email: 'test.email');
   final ArtistEntity a1 = ArtistEntity(
