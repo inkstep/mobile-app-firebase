@@ -110,6 +110,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       position: result.position,
       size: result.size,
       noImages: result.images.length,
+      status: WaitingForResponse()
     );
   }
 
