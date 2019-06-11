@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
@@ -8,7 +9,7 @@ abstract class JourneyStage extends Equatable {
       case 0:
         return WaitingForQuote();
       case 1:
-        return QuoteReceived(json['quote']);
+        return QuoteReceived(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 2:
         return WaitingForAppointmentOffer();
       case 3:
@@ -33,10 +34,9 @@ class WaitingForQuote extends JourneyStage {
 }
 
 class QuoteReceived extends JourneyStage {
-
   QuoteReceived(this.quote);
 
-  final int quote;
+  final TextRange quote;
 
   @override
   int get progress => 30;
@@ -54,7 +54,6 @@ class WaitingForAppointmentOffer extends JourneyStage {
 }
 
 class AppointmentOfferReceived extends JourneyStage {
-
   AppointmentOfferReceived(this.appointmentDate);
   final DateTime appointmentDate;
 

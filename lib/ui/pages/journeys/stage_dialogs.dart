@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 
 class QuoteDialog extends StatelessWidget {
   const QuoteDialog({
     Key key,
-    @required this.card,
+    @required this.artistName,
+    @required this.stage,
     @required this.onAcceptance,
     @required this.onDenial,
   }) : super(key: key);
 
-  final CardModel card;
+  final QuoteReceived stage;
+  final String artistName;
   final VoidCallback onAcceptance;
   final VoidCallback onDenial;
 
@@ -21,14 +23,14 @@ class QuoteDialog extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(
-            'Hey! ${card.artistName.split(' ').first} wants to do your tattoo! They think this is a fair estimate.',
+            'Hey! ${artistName.split(' ').first} wants to do your tattoo! They think this is a fair estimate.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '£${card.quote.start}-£${card.quote.end}.',
+              '£${stage.quote.start}-£${stage.quote.end}.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline,
             ),
