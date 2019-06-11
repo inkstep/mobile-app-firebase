@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/empty_journey_entity.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -65,17 +66,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     // Now send the corresponding journey
-    final JourneyEntity newJourney =
-        _journeyEntityFromFormResult(user?.id ?? userId, -1, event.result);
+    final EmptyJourneyEntity newJourney =
+        _emptyJourneyEntityFromFormResult(userId, event.result);
 
     print('About to save the journey: $newJourney');
-    final int journeyId = await journeysRepository.saveJourneys(<JourneyEntity>[newJourney]);
+    final int journeyId = await journeysRepository.saveJourneys(<EmptyJourneyEntity>[newJourney]);
     if (journeyId == -1) {
       print('Failed to save journeys');
       yield JourneyError(prev: currentState);
     } else {
-      newJourney.id = journeyId;
-
       for (Asset img in event.result.images) {
         await journeysRepository.saveImage(journeyId, img);
       }
@@ -99,9 +98,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  JourneyEntity _journeyEntityFromFormResult(int userId, int id, FormResult result) {
-    return JourneyEntity(
-      id: id,
+  EmptyJourneyEntity _emptyJourneyEntityFromFormResult(int userId, FormResult result) {
+    return EmptyJourneyEntity(
       userId: userId,
       artistId: result.artistID,
       availability: result.availability,
@@ -109,8 +107,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       mentalImage: result.mentalImage,
       position: result.position,
       size: result.size,
-      noImages: result.images.length,
-      stage: WaitingForQuote()
+      noImages: result.images.length
     );
   }
 
