@@ -5,10 +5,11 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
-import 'package:inkstep/ui/pages/journeys/status_dialogs.dart';
+import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneyCard extends StatefulWidget {
@@ -105,20 +106,25 @@ class LoadedJourneyCard extends AnimatedWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return QuoteDialog(
-                        card: card,
-                        onAcceptance: () {
-                          print('acceptance');
-                        },
-                        onDenial: () {
-                          print('denial');
-                        },
-                      );
-                    },
-                  );
+                  if (card.stage is QuoteReceived) {
+                    showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return QuoteDialog(
+                          stage: card.stage,
+                          artistName: card.artistName,
+                          onAcceptance: () {
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(DialogResponse());
+                            print('acceptance');
+                          },
+                          onDenial: () {
+                            print('denial');
+                          },
+                        );
+                      },
+                    );
+                  }
                 },
                 child: Chip(
                   label: Text(card.stage.toString()),
