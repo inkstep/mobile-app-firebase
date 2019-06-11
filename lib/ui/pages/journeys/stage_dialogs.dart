@@ -30,7 +30,9 @@ class QuoteDialog extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '£${stage.quote.start}-£${stage.quote.end}.',
+              (stage.quote.start != stage.quote.end)
+                  ? '£${stage.quote.start}-£${stage.quote.end}.'
+                  : '£${stage.quote.start}.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline,
             ),
@@ -42,28 +44,44 @@ class QuoteDialog extends StatelessWidget {
           ),
         ],
       ),
-      dismiss: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SentimentButton(
-            onTap: onAcceptance,
-            icon: Icons.sentiment_satisfied,
-            accentColor: Colors.green,
+      dismiss: SentimentRow(onAcceptance: onAcceptance, onDenial: onDenial),
+    );
+  }
+}
+
+class SentimentRow extends StatelessWidget {
+  const SentimentRow({
+    Key key,
+    @required this.onAcceptance,
+    @required this.onDenial,
+  }) : super(key: key);
+
+  final VoidCallback onAcceptance;
+  final VoidCallback onDenial;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SentimentButton(
+          onTap: onAcceptance,
+          icon: Icons.sentiment_satisfied,
+          accentColor: Colors.green,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'OR',
+            style: Theme.of(context).textTheme.caption,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'OR',
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ),
-          SentimentButton(
-            onTap: onDenial,
-            icon: Icons.sentiment_dissatisfied,
-            accentColor: Colors.red,
-          ),
-        ],
-      ),
+        ),
+        SentimentButton(
+          onTap: onDenial,
+          icon: Icons.sentiment_dissatisfied,
+          accentColor: Colors.red,
+        ),
+      ],
     );
   }
 }
