@@ -2,42 +2,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedAlertDialog extends StatelessWidget {
-  const RoundedAlertDialog({@required this.title, this.body, this.dismissButtonText});
+  const RoundedAlertDialog({
+    this.title,
+    @required this.child,
+    this.dismiss,
+  });
 
   final String title;
-  final String body;
-  final String dismissButtonText;
+  final Widget child;
+  final Widget dismiss;
 
   @override
   Widget build(BuildContext context) {
     // If text is given, add button
-    Widget dismissButton;
-    if (dismissButtonText != null) {
-      dismissButton = RaisedButton(
-        elevation: 15.0,
-        padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0)),
-        child: Text(dismissButtonText, style: TextStyle(
-            fontSize: 20.0, fontFamily: 'Signika'),
-        ), onPressed: () => Navigator.pop(context),
-      );
-    } else {
-      dismissButton = Container();
-    }
+    final Widget defaultDismiss = RaisedButton(
+      elevation: 15.0,
+      padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      child: Text(
+        'Ok',
+        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+      ),
+      onPressed: () => Navigator.pop(context),
+    );
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(18.0))),
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-      ),
+      title: title != null
+          ? Text(
+              title,
+              textAlign: TextAlign.center,
+            )
+          : null,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          body == null ? Container() : Text(body, textAlign: TextAlign.center),
-          dismissButton is Container ? Container() : SizedBox(height: 20),
-          dismissButton,
+          if (child != null) child,
+          if (dismiss != null) SizedBox(height: 20),
+          dismiss ?? defaultDismiss,
         ],
       ),
     );
