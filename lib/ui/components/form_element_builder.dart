@@ -28,7 +28,7 @@ class FormElementBuilder extends StatelessWidget {
   final FocusNode focus = FocusNode();
   final ElementBuilder builder;
 
-  final EdgeInsets kPadding = const EdgeInsets.all(30);
+  final EdgeInsets kPadding = const EdgeInsets.all(20);
 
   VoidCallback get navToNextPage => () {
         controller.nextPage(duration: Duration(milliseconds: duration), curve: Curves.ease);

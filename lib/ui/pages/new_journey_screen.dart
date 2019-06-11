@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
-import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
@@ -14,7 +13,6 @@ import 'package:inkstep/ui/components/long_text_input_form_element.dart';
 import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/ui/pages/new/image_grid.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
-import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:inkstep/ui/pages/new/size_selector.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -98,7 +96,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   }
 
   List<Widget> _formQuestions(dynamic weekCallbacks, bool newUser) {
-
     final List<Widget> widgets = <Widget>[
       ShortTextInputFormElement(
         controller: controller,
@@ -264,8 +261,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                 nameController.text = state.user.name;
               }
 
-              final List<Widget> formWidgets = _formQuestions(weekCallbacks,
-                  newUser);
+              final List<Widget> formWidgets = _formQuestions(weekCallbacks, newUser);
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -279,7 +275,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_up),
                         tooltip: 'Previous question',
                         onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
+                          FocusScope.of(context).requestFocus(FocusNode());
                           if (controller.page != 0) {
                             controller.previousPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
@@ -289,7 +285,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                         icon: Icon(Icons.keyboard_arrow_down),
                         tooltip: 'Next question',
                         onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
+                          FocusScope.of(context).requestFocus(FocusNode());
                           if (controller.page != formWidgets.length - 1) {
                             controller.nextPage(
                                 duration: Duration(milliseconds: 500), curve: Curves.ease);
