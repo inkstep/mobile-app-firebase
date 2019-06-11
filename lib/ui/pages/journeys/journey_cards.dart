@@ -114,7 +114,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                           stage: card.stage,
                           artistName: card.artistName,
                           onAcceptance: () {
-                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            //final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                             //journeyBloc.dispatch(DialogResponse());
                             print('acceptance');
                           },
