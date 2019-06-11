@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class WelcomeBackHeader extends StatelessWidget {
-  const WelcomeBackHeader({
+class LargeTwoPartHeader extends StatelessWidget {
+  const LargeTwoPartHeader({
     Key key,
+    @required this.largeText,
     @required this.name,
     this.taskStatus,
   }) : super(key: key);
 
+  final String largeText;
   final String name;
   final int taskStatus;
 
@@ -19,7 +21,7 @@ class WelcomeBackHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Welcome back',
+            largeText,
             style: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(0.7)),
           ),
           if (name != null)
