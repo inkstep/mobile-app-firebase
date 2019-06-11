@@ -38,7 +38,7 @@ class JourneyEntity extends Equatable {
       availability: json['availability'],
       deposit: json['deposit'],
       noImages: int.parse(json['noRefImages']),
-      status: JourneyStatusFactory.journeyStatus(forCode: int.parse(json['status'])),
+      status: JourneyStatus.forCode(int.parse(json['status'])),
     );
   }
 
