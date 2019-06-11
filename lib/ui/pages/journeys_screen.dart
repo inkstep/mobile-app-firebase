@@ -122,10 +122,10 @@ class LoadedJourneyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color accentColor = Theme.of(context).accentColor;
-    if (_pageController.hasClients) {
-      accentColor = loadedState.cards[_pageController.page.toInt()].palette.vibrantColor?.color;
-    }
-
+    // TODO(DJRHails): Add this back in
+    //  if (_pageController.hasClients) {
+    //    accentColor = loadedState.cards[_pageController.page.toInt()].palette.vibrantColor?.color;
+    //  }
     final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
         ? null
         : FloatingActionButton(
@@ -142,32 +142,40 @@ class LoadedJourneyScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: addJourneyButton,
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text(''),
-        centerTitle: true,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: Navigator.of(context).canPop()
+          ? AppBar(
+              title: Text(''),
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+            )
+          : null,
       body: FadeTransition(
         opacity: _animation,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            WelcomeBackHeader(
-              name: loadedState.user?.name,
-            ),
-            Expanded(
-              flex: 1,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: onNotification,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemBuilder: (BuildContext context, int index) {
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Spacer(flex: 2),
+              Expanded(
+                flex: 10,
+                child: WelcomeBackHeader(
+                  name: loadedState.user?.name,
+                ),
+              ),
+              Spacer(),
+              Expanded(
+                flex: 70,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: onNotification,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemBuilder: (BuildContext context, int index) {
 //                    final int size = loadedState.cards.length;
-                    if (loadedState.cards.isEmpty) {
-                      return AddCard(userID: loadedState.user.id);
-                    } else {
-                      // TODO(DJRHails): Animate scale
+                      if (loadedState.cards.isEmpty) {
+                        return AddCard(userID: loadedState.user.id);
+                      } else {
+                        // TODO(DJRHails): Animate scale
 //                      final double pagePos =
 //                          _pageController.offset / _pageController.position.viewportDimension;
 //                      final double difference = (index - pagePos).abs();
@@ -175,17 +183,15 @@ class LoadedJourneyScreen extends StatelessWidget {
 //                      final scale = (percentageOffset * 1.1).clamp(0.0, 1.0);
 //                      print(percentageOffset);
 
-                      return JourneyCard(model: loadedState.cards[index], scale: 1);
-                    }
-                  },
-                  itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
+                        return JourneyCard(model: loadedState.cards[index], scale: 1);
+                      }
+                    },
+                    itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 32.0),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

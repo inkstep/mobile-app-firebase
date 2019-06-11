@@ -29,7 +29,6 @@ class WelcomeBackHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline,
               ),
             ),
-          Container(height: 16.0),
           if (taskStatus != null)
             Text(
               'You have ' + taskStatus.toString() + ' journey tasks to complete',
