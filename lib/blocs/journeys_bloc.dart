@@ -179,7 +179,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       description: je.mentalImage,
       artistName: artist.name,
       images: images,
-      status: WaitingForQuote(),
+      stage: je.stage,
       position: idx,
       palette: palette,
     );

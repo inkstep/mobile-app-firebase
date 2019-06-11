@@ -23,7 +23,7 @@ void main() {
       description: 'Star',
       artistName: 'Ricky',
       images: [],
-      status: WaitingForQuote(),
+      stage: WaitingForQuote(),
       position: 0,
       palette: null,
     ));
@@ -44,7 +44,7 @@ void main() {
       description: 'Flower',
       artistName: 'Ricky',
       images: [],
-      status: WaitingForQuote(),
+      stage: WaitingForQuote(),
       position: 1,
       palette: null,
     ));

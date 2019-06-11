@@ -25,10 +25,13 @@ class QuoteDialog extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle,
           ),
-          Text(
-            '£${card.quote.start}-£${card.quote.end}.',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '£${card.quote.start}-£${card.quote.end}.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline,
+            ),
           ),
           Text(
             'You happy with this?',
@@ -40,20 +43,10 @@ class QuoteDialog extends StatelessWidget {
       dismiss: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          GestureDetector(
+          SentimentButton(
             onTap: onAcceptance,
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Icon(
-                Icons.sentiment_satisfied,
-                size: 40.0,
-                color: Theme.of(context).backgroundColor,
-              ),
-            ),
+            icon: Icons.sentiment_satisfied,
+            accentColor: Colors.green,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -62,22 +55,45 @@ class QuoteDialog extends StatelessWidget {
               style: Theme.of(context).textTheme.caption,
             ),
           ),
-          GestureDetector(
+          SentimentButton(
             onTap: onDenial,
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Icon(
-                Icons.sentiment_dissatisfied,
-                size: 40.0,
-                color: Theme.of(context).backgroundColor,
-              ),
-            ),
+            icon: Icons.sentiment_dissatisfied,
+            accentColor: Colors.red,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SentimentButton extends StatelessWidget {
+  const SentimentButton({
+    Key key,
+    @required this.onTap,
+    @required this.icon,
+    @required this.accentColor,
+  }) : super(key: key);
+
+  final VoidCallback onTap;
+  final IconData icon;
+  final Color accentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      splashColor: accentColor,
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Icon(
+          icon,
+          size: 40.0,
+          color: Theme.of(context).backgroundColor,
+        ),
       ),
     );
   }
