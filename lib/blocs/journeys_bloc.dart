@@ -4,7 +4,7 @@ import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
-import 'package:inkstep/models/journey_status.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
@@ -110,7 +110,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       position: result.position,
       size: result.size,
       noImages: result.images.length,
-      status: WaitingForResponse()
+      stage: WaitingForQuote()
     );
   }
 
@@ -179,7 +179,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       description: je.mentalImage,
       artistName: artist.name,
       images: images,
-      status: WaitingForResponse(),
+      status: WaitingForQuote(),
       position: idx,
       palette: palette,
     );
