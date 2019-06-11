@@ -8,7 +8,7 @@ import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
-import 'package:inkstep/ui/pages/journeys/quote_dialog.dart';
+import 'package:inkstep/ui/pages/journeys/status_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneyCard extends StatefulWidget {
