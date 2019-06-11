@@ -19,14 +19,14 @@ void main() {
     JourneysBloc journeysBloc;
     MockJourneysRepository repo;
 
-    final CardModel c1 = CardModel(
+    final Future<CardModel> c1 = Future.value(CardModel(
       description: 'Star',
       artistName: 'Ricky',
       images: [],
       status: WaitingForResponse(),
       position: 0,
       palette: null,
-    );
+    ));
     final JourneyEntity j1 = JourneyEntity(
       id: 1,
       userId: 0,
@@ -39,14 +39,14 @@ void main() {
       noImages: 0,
     );
 
-    final CardModel c2 = CardModel(
+    final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
       artistName: 'Ricky',
       images: [],
       status: WaitingForResponse(),
       position: 1,
       palette: null,
-    );
+    ));
 
     final JourneyEntity j2 = JourneyEntity(
       id: 1,
@@ -77,7 +77,7 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(cards: <CardModel>[], user: testUser, firstTime: true),
+            JourneysWithUser(cards: <Future<CardModel>>[], user: testUser, firstTime: true),
           ],
         ),
       );
@@ -94,8 +94,8 @@ void main() {
         emitsInOrder(
           <JourneysState>[
             JourneysNoUser(),
-            JourneysWithUser(cards: <CardModel>[c1], user: testUser, firstTime: true),
-            JourneysWithUser(cards: <CardModel>[c2, c1], user: testUser, firstTime: true),
+            JourneysWithUser(cards: <Future<CardModel>>[c1], user: testUser, firstTime: true),
+            JourneysWithUser(cards: <Future<CardModel>>[c2, c1], user: testUser, firstTime: true),
           ],
         ),
       );

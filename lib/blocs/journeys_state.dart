@@ -30,7 +30,7 @@ class JourneysWithUser extends JourneysState {
   }) : super(<dynamic>[user, cards]);
 
   final User user;
-  final List<CardModel> cards;
+  final List<Future<CardModel>> cards;
   final bool firstTime;
 
   @override

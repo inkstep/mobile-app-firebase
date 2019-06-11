@@ -81,7 +81,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       }
 
       print('Successfully saved journey');
-      final List<CardModel> cards = await _getCards(user?.id ?? userId);
+      final List<Future<CardModel>> cards = await _getCards(user?.id ?? userId);
       print('Successfully loaded cards in for ${user?.id ?? userId}: $cards');
       user = user ?? await journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
@@ -144,40 +144,43 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Future<List<CardModel>> _getCards(int userId) async {
+  Future<List<Future<CardModel>>> _getCards(int userId) async {
     print('Loading cards for $userId');
     final List<JourneyEntity> journeys = await journeysRepository.loadJourneys(userId: userId);
     return _getCardsFromJourneys(journeys);
   }
 
-  Future<List<CardModel>> _getCardsFromJourneys(List<JourneyEntity> list) async {
-    final List<CardModel> cards = <CardModel>[];
-    int idx = 0;
-    for (JourneyEntity je in list) {
-      final List<Image> images = await journeysRepository.getImages(je.id);
-      final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
+  List<Future<CardModel>> _getCardsFromJourneys(List<JourneyEntity> list) {
+    final List<Future<CardModel>> cards = <Future<CardModel>>[];
 
-      final List<PaletteColor> palettes = <PaletteColor>[];
-      for (ImageProvider img in images.map((img) => img.image)) {
-        final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
-          img,
-          maximumColorCount: 15,
-        );
-        palettes.addAll(palette.paletteColors);
-      }
-      final palette = PaletteGenerator.fromColors(palettes);
-
-      cards.add(CardModel(
-        description: je.mentalImage,
-        artistName: artist.name,
-        images: images,
-        status: WaitingForResponse(),
-        position: idx,
-        palette: palette,
-      ));
-      idx++;
+    for (int idx = 0; idx < list.length; idx++) {
+      cards.add(_getCardFromJourney(list[idx], idx));
     }
     print('Converted JourneyEntity $list to $cards');
     return cards;
+  }
+
+  Future<CardModel> _getCardFromJourney(JourneyEntity je, int idx) async {
+    final List<Image> images = await journeysRepository.getImages(je.id);
+    final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
+
+    final List<PaletteColor> palettes = <PaletteColor>[];
+    for (ImageProvider img in images.map((img) => img.image)) {
+      final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+        img,
+        maximumColorCount: 15,
+      );
+      palettes.addAll(palette.paletteColors);
+    }
+    final palette = PaletteGenerator.fromColors(palettes);
+
+    return CardModel(
+      description: je.mentalImage,
+      artistName: artist.name,
+      images: images,
+      status: WaitingForResponse(),
+      position: idx,
+      palette: palette,
+    );
   }
 }

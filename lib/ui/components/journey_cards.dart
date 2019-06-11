@@ -54,20 +54,21 @@ class AddCard extends StatelessWidget {
 class JourneyCard extends StatelessWidget {
   const JourneyCard({Key key, @required this.model, this.scale}) : super(key: key);
 
-  final CardModel model;
+  final Future<CardModel> model;
   final double scale;
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = model.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
-    return GestureDetector(
-        onTap: () {
-          print('Existing card tapped');
-        },
-        child: Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          margin: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
+    return FutureBuilder<CardModel>(
+      future: model,
+      builder: (BuildContext context, AsyncSnapshot<CardModel> snapshot) {
+        Widget innerBody;
+        if (snapshot.hasData && snapshot.data != null) {
+          final card = snapshot.data;
+          final Color accentColor =
+              card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
+
+          innerBody = Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -77,18 +78,18 @@ class JourneyCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Chip(
-                      label: Text(model.status.toString()),
+                      label: Text(card.status.toString()),
                       //labelStyle: Theme.of(context).textTheme.subhead,
                       backgroundColor: accentColor,
                       elevation: 4,
                     ),
                     Spacer(),
-                    DescribedIconButton(model: model),
+                    DescribedIconButton(model: card),
                   ],
                 ),
               ),
               ImageSnippet(
-                images: model.images,
+                images: card.images,
                 axis: Axis.horizontal,
               ),
               Spacer(
@@ -103,14 +104,14 @@ class JourneyCard extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                   ),
                   label: Text(
-                    model.artistName,
+                    card.artistName,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
                 child: Text(
-                  '${model.description}',
+                  '${card.description}',
                   style: Theme.of(context).accentTextTheme.title.copyWith(
                         color: accentColor,
                       ),
@@ -121,13 +122,32 @@ class JourneyCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, right: 32.0, bottom: 16.0),
                 child: JourneyProgressIndicator(
                   color: accentColor,
-                  progress: model.status.progress,
+                  progress: card.status.progress,
                   style: Theme.of(context).accentTextTheme.caption,
                 ),
               ),
             ],
-          ),
-        ));
+          );
+        } else {
+          innerBody = Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 1.0,
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
+            ),
+          );
+        }
+
+        return GestureDetector(
+            onTap: () {
+              print('Existing card tapped');
+            },
+            child: Card(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              child: innerBody,
+            ));
+      },
+    );
   }
 }
 
@@ -143,10 +163,10 @@ class ImageSnippet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Image> imageSection = images.sublist(0, 2);
+    final List<Image> imageSection = images.sublist(0, 2.clamp(0, images.length));
     final bool withOverlay = images.length > 3;
     final BoxDecoration overlay = withOverlay
-        ? BoxDecoration(color: Theme.of(context).backgroundColor.withOpacity(0.3))
+        ? BoxDecoration(color: Theme.of(context).backgroundColor.withOpacity(0.5))
         : null;
 
     final List<Widget> children = <Widget>[
@@ -165,7 +185,10 @@ class ImageSnippet extends StatelessWidget {
               ),
               if (withOverlay)
                 Center(
-                  child: Text('+${images.length - 3}'),
+                  child: Text(
+                    '+${images.length - 2}',
+                    textScaleFactor: 1.3,
+                  ),
                 ),
             ],
           ),
