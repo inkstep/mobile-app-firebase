@@ -269,14 +269,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                 key: _scaffoldKey,
                 backgroundColor: Theme.of(context).cardColor,
                 appBar: AppBar(
-                  leading: IconButton(
-                    icon: Icon(Icons.clear),
-                    tooltip: 'Exit',
-                    onPressed: () {
-                      final nav = sl.get<ScreenNavigator>();
-                      nav.pop(context);
-                    },
-                  ),
                   elevation: 0,
                   backgroundColor: Colors.transparent,
                   iconTheme: Theme.of(context).accentIconTheme,
