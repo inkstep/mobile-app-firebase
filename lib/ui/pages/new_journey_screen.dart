@@ -153,10 +153,14 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
                   context: context,
                   builder: (BuildContext context) {
                     return RoundedAlertDialog(
-                        title: 'Are you sure?',
-                        body: 'Most artists require a deposit in order to secure you an '
-                            'appointment. Don\'t worry, you won\'t have to pay this yet!',
-                        dismissButtonText: 'Ok');
+                      title: 'Are you sure?',
+                      child: Text(
+                        'Most artists require a deposit in order to secure you an '
+                        'appointment. Don\'t worry, you won\'t have to pay this yet!',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.subtitle,
+                      ),
+                    );
                   },
                 );
               }
