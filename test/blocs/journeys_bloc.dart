@@ -23,7 +23,7 @@ void main() {
       description: 'Star',
       artistName: 'Ricky',
       images: [],
-      status: WaitingForResponse(),
+      stage: WaitingForResponse(),
       position: 0,
       palette: null,
     ));
@@ -37,14 +37,14 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      status: WaitingForResponse()
+      stage: WaitingForResponse()
     );
 
     final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
       artistName: 'Ricky',
       images: [],
-      status: WaitingForResponse(),
+      stage: WaitingForResponse(),
       position: 1,
       palette: null,
     ));
@@ -59,7 +59,7 @@ void main() {
       availability: '',
       deposit: '',
       noImages: 0,
-      status: WaitingForResponse()
+      stage: WaitingForResponse()
     );
 
     final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
