@@ -107,30 +107,42 @@ class LoadedJourneyCard extends AnimatedWidget {
               GestureDetector(
                 onTap: () {
                   if (card.stage is QuoteReceived) {
-                    showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return QuoteDialog(
-                          stage: card.stage,
-                          artistName: card.artistName,
-                          onAcceptance: () {
-                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                            journeyBloc.dispatch(QuoteAccepted(card.journeyId));
-                            print('acceptance');
-                            ScreenNavigator nav = sl.get<ScreenNavigator>();
-                            nav.pop(context);
-                          },
-                          onDenial: () {
-                            print('denial');
-                          },
-                        );
-                      },
-                    );
+                    showGeneralDialog<void>(
+                        barrierColor: Colors.black.withOpacity(0.4),
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: QuoteDialog(
+                                stage: card.stage,
+                                artistName: card.artistName,
+                                onAcceptance: () {
+                                  final JourneysBloc journeyBloc =
+                                      BlocProvider.of<JourneysBloc>(context);
+                                  journeyBloc.dispatch(QuoteAccepted(card.journeyId));
+                                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                                  nav.pop(context);
+                                },
+                                onDenial: () {
+                                  print('denial');
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 200),
+                        barrierDismissible: true,
+                        barrierLabel: 'Foo',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) {});
                   }
                 },
                 child: Chip(
                   label: Text(card.stage.toString()),
                   backgroundColor: accentColor,
+                  shadowColor: accentColor,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   elevation:
                       card.stage.userActionRequired ? _elevationTween.evaluate(progression) : 0.0,
                 ),
