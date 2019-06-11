@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 abstract class JourneyStatus extends Equatable {
   JourneyStatus([List<dynamic> props = const <dynamic>[]]) : super(props);
   int get progress;
+  bool notify = false;
 }
 
 class WaitingForResponse extends JourneyStatus {
