@@ -110,7 +110,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       position: result.position,
       size: result.size,
       noImages: result.images.length,
-      status: WaitingForResponse()
+      stage: WaitingForResponse()
     );
   }
 
@@ -179,7 +179,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       description: je.mentalImage,
       artistName: artist.name,
       images: images,
-      status: WaitingForResponse(),
+      stage: je.stage,
       position: idx,
       palette: palette,
     );

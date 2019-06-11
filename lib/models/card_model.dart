@@ -9,12 +9,12 @@ class CardModel extends Equatable {
     @required this.description,
     @required this.artistName,
     @required this.images,
-    @required this.status,
+    @required this.stage,
     @required this.position,
     @required this.palette,
-  }) : super(<dynamic>[description, artistName, images, status, position]);
+  }) : super(<dynamic>[description, artistName, images, stage, position]);
 
-  JourneyStatus status;
+  JourneyStatus stage;
   String description;
   String artistName;
   List<Image> images;
