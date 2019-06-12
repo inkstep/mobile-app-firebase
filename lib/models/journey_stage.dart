@@ -31,6 +31,7 @@ abstract class JourneyStage extends Equatable {
 
   int get progress;
   bool get userActionRequired;
+  int get numberRepresentation;
 }
 
 class WaitingForQuote extends JourneyStage {
@@ -42,6 +43,9 @@ class WaitingForQuote extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 0;
 }
 
 class QuoteReceived extends JourneyStage {
@@ -57,6 +61,9 @@ class QuoteReceived extends JourneyStage {
 
   @override
   bool get userActionRequired => true;
+
+  @override
+  int get numberRepresentation => 1;
 }
 
 class WaitingForAppointmentOffer extends JourneyStage {
@@ -68,6 +75,9 @@ class WaitingForAppointmentOffer extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 2;
 }
 
 class AppointmentOfferReceived extends JourneyStage {
@@ -82,6 +92,9 @@ class AppointmentOfferReceived extends JourneyStage {
 
   @override
   bool get userActionRequired => true;
+
+  @override
+  int get numberRepresentation => 3;
 }
 
 class BookedIn extends JourneyStage {
@@ -93,6 +106,9 @@ class BookedIn extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 4;
 }
 
 class ImmediateAftercare extends JourneyStage {
@@ -104,6 +120,9 @@ class ImmediateAftercare extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 5;
 }
 
 class WeekOfAftercare extends JourneyStage {
@@ -115,6 +134,9 @@ class WeekOfAftercare extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 6;
 }
 
 class MonthOfAftercare extends JourneyStage {
@@ -126,6 +148,9 @@ class MonthOfAftercare extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 7;
 }
 
 class Healed extends JourneyStage {
@@ -137,6 +162,9 @@ class Healed extends JourneyStage {
 
   @override
   bool get userActionRequired => true;
+
+  @override
+  int get numberRepresentation => 8;
 }
 
 class InvalidStage extends JourneyStage {
@@ -148,4 +176,7 @@ class InvalidStage extends JourneyStage {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => -1;
 }

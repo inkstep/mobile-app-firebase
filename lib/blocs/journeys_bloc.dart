@@ -5,6 +5,7 @@ import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
@@ -33,6 +34,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapLoadJourneysState(event);
     } else if (event is ShownFeatureDiscovery) {
       yield* _mapShownFeatureDiscoveryState(event);
+    } else if (event is QuoteAccepted) {
+      yield* _mapQuoteAcceptedState(event);
     }
   }
 
@@ -96,10 +99,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  /*Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
+  Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
     assert (currentState is JourneysWithUser);
-    await journeysRepository.updateStage(WaitingForAppointmentOffer());
-  }*/
+    await journeysRepository.updateStage(WaitingForAppointmentOffer(), event.journeyId);
+  }
 
   EmptyJourneyEntity _emptyJourneyEntityFromFormResult(int userId, FormResult result) {
     return EmptyJourneyEntity(
