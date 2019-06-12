@@ -49,6 +49,51 @@ class QuoteDialog extends StatelessWidget {
   }
 }
 
+class DateDialog extends StatelessWidget {
+  const DateDialog({
+    Key key,
+    @required this.artistName,
+    @required this.stage,
+    @required this.onAcceptance,
+    @required this.onDenial,
+  }) : super(key: key);
+
+  final AppointmentOfferReceived stage;
+  final String artistName;
+  final VoidCallback onAcceptance;
+  final VoidCallback onDenial;
+
+  @override
+  Widget build(BuildContext context) {
+    return RoundedAlertDialog(
+      title: null,
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Hey! ${artistName.split(' ').first} is excited to do your appointment:',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              stage.appointmentDate.day.toString(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ),
+          Text(
+            'You happy with this?',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+        ],
+      ),
+      dismiss: SentimentRow(onAcceptance: onAcceptance, onDenial: onDenial),
+    );
+  }
+}
+
 class SentimentRow extends StatelessWidget {
   const SentimentRow({
     Key key,

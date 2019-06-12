@@ -13,6 +13,7 @@ class WebRepository {
   final Duration delay;
 
   static const String url = 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
+  //static const String url = 'http://localhost:4567';
 
   static const String userEndpoint = '/user';
   static const String journeyEndpoint = '/journey';
