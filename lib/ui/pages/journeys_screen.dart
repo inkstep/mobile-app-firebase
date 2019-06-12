@@ -168,6 +168,14 @@ class LoadedJourneyScreen extends StatelessWidget {
                   name: loadedState.user?.name,
                 ),
               ),
+              Spacer(flex: 1),
+              HorizontalDivider(
+                thickness: 4.0,
+                percentage: 30,
+                alignment: MainAxisAlignment.start,
+                padding: const EdgeInsets.only(left: 56.0),
+                color: Colors.white54,
+              ),
               Spacer(flex: 2),
               Expanded(
                 flex: 60,
