@@ -10,12 +10,12 @@ class AfterCareScreen extends StatelessWidget {
     final List<AdviceDialog> advice = <AdviceDialog>[
       AdviceDialog(
         timeString: '2 hours',
-        timeOffset: DateTime(0, 0, 0, 2),
+        timeOffset: DateTime(0, 0, 0, 2, 0, 0, 0, 0),
         advice: const <String>['Leave in plastic wrap', 'Only remove after 2 hours'],
       ),
       AdviceDialog(
         timeString: 'week',
-        timeOffset: DateTime(0, 0, 7),
+        timeOffset: DateTime(0, 0, 7, 0, 0, 0, 0, 0),
         advice: const <String>[
           'Do not itch skin',
           'Moisturise tattoo area 3 times a day',
@@ -24,7 +24,7 @@ class AfterCareScreen extends StatelessWidget {
       ),
       AdviceDialog(
         timeString: 'month',
-        timeOffset: DateTime(0, 1),
+        timeOffset: DateTime(0, 1, 0, 0, 0, 0, 0, 0),
         advice: const <String>[
           'Do not itch skin',
           'Moisturise tattoo area once a day',
@@ -34,22 +34,35 @@ class AfterCareScreen extends StatelessWidget {
 
     final DateTime curTime = DateTime.now();
 
+    final List<AdviceDialog> filteredAdvice = [];
+
     for (AdviceDialog adviceDialog in advice) {
-      final Duration timeTo = bookedTime.difference(curTime);
+      final Duration timeTo = curTime.difference(bookedTime);
 
-      final Duration adviceDuration = adviceDialog.timeOffset.difference(DateTime(0));
+      print('Curtime: ' + curTime.toString());
+      print('BookedTime: ' + bookedTime.toString());
 
-      if (timeTo.compareTo(adviceDuration) < -1) {
-        advice.remove(adviceDialog);
+      print('timeOffset: ' + adviceDialog.timeOffset.toString());
+
+      print('Timeto: ' + timeTo.toString());
+
+      final Duration adviceDuration = adviceDialog.timeOffset.difference(
+          DateTime(0, 0, 0, 0, 0, 0, 0, 0)
+      );
+
+      print('AdviceDuration: ' + adviceDuration.toString());
+
+      if (timeTo.compareTo(adviceDuration) < 0) {
+        filteredAdvice.add(adviceDialog);
       }
     }
 
-    return advice;
+    return filteredAdvice;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> advice = adviceWidgets();
+    final List<AdviceDialog> advice = adviceWidgets();
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -67,16 +80,7 @@ class AfterCareScreen extends StatelessWidget {
         textScaleFactor: 1.5,
       )),
       body: ListView(
-        children: advice +
-          [Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-            child: Text(
-              'Do not exfoliate your tattoo until it has fully healed.',
-              textScaleFactor: 1.2,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+        children: advice
       ),
     );
   }
