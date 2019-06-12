@@ -106,36 +106,40 @@ class LoadedJourneyCard extends AnimatedWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
+                  Widget dialog;
                   if (card.stage is QuoteReceived) {
+                    dialog = QuoteDialog(
+                      stage: card.stage,
+                      artistName: card.artistName,
+                      onAcceptance: () {
+                        final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                        journeyBloc.dispatch(QuoteAccepted(card.journeyId));
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.pop(context);
+                      },
+                      onDenial: () {
+                        print('denial');
+                      },
+                    );
+                  }
+                  if (dialog != null) {
                     showGeneralDialog<void>(
-                        barrierColor: Colors.black.withOpacity(0.4),
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: QuoteDialog(
-                                stage: card.stage,
-                                artistName: card.artistName,
-                                onAcceptance: () {
-                                  final JourneysBloc journeyBloc =
-                                      BlocProvider.of<JourneysBloc>(context);
-                                  journeyBloc.dispatch(QuoteAccepted(card.journeyId));
-                                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                                  nav.pop(context);
-                                },
-                                onDenial: () {
-                                  print('denial');
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 200),
-                        barrierDismissible: true,
-                        barrierLabel: 'Foo',
-                        context: context,
-                        pageBuilder: (context, animation1, animation2) {});
+                      barrierColor: Colors.black.withOpacity(0.4),
+                      transitionBuilder: (context, a1, a2, widget) {
+                        return Transform.translate(
+                          offset: Offset.fromDirection(0, a1.value),
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: dialog,
+                          ),
+                        );
+                      },
+                      transitionDuration: Duration(milliseconds: 500),
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      context: context,
+                      pageBuilder: (context, animation1, animation2) {},
+                    );
                   }
                 },
                 child: Chip(
