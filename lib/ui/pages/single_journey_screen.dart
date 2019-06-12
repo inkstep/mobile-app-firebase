@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
@@ -7,10 +8,7 @@ import 'package:inkstep/utils/screen_navigator.dart';
 
 class DropdownFloatingActionButtons extends StatefulWidget {
   const DropdownFloatingActionButtons(
-      {this.onPressed,
-      this.tooltip,
-      this.icon,
-      @required this.bookedDate});
+      {this.onPressed, this.tooltip, this.icon, @required this.bookedDate});
 
   final Function() onPressed;
   final String tooltip;
@@ -180,22 +178,38 @@ class SingleJourneyScreen extends StatelessWidget {
     );
   }
 
-  Widget _content() {
+  Widget _content(BuildContext context) {
     final String artistFirstName = card.artistName.split(' ')[0];
+    final double fullHeight = MediaQuery.of(context).size.height;
     return ListView(
       children: <Widget>[
-        SizedBox(height: 200),
-        Padding(
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              // Where the linear gradient begins and ends
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              // Add one stop for each color. Stops should increase from 0 to 1
+              stops: const [0.1, 0.5],
+              colors: const [Colors.black54, Colors.transparent],
+            ),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: LargeTwoPartHeader(
-              largeText: 'Your Journey with', name: artistFirstName),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: fullHeight * 0.65),
+              LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
-        SizedBox(height: 20),
         Container(
           height: 800,
           child: Card(
-            margin: EdgeInsets.only(),
-            color: Colors.black,
+            margin: EdgeInsets.zero,
+            color: Theme.of(context).cardColor,
             child: Column(
               children: <Widget>[
                 Container(
@@ -204,15 +218,50 @@ class SingleJourneyScreen extends StatelessWidget {
                     width: 80,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: Colors.grey[800],
+                      color: Colors.black26,
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     ),
                   ),
                 ),
-                Text(card.description),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 30.0),
+                  child: Text(
+                    card.description,
+                    style: Theme.of(context).accentTextTheme.subhead,
+                  ),
+                ),
+                Expanded(
+                  child: StaggeredGridView.countBuilder(
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    crossAxisCount: 4,
+                    itemCount: card.images.length,
+                    itemBuilder: (BuildContext context, int index) => Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(image: card.images[index].image)),
+                          child: Center(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Text('${index + 1}'),
+                            ),
+                          ),
+                        ),
+                    staggeredTileBuilder: (int index) =>
+                        StaggeredTile.count(2, index.isEven ? 2 : 1),
+                    mainAxisSpacing: 4.0,
+                    crossAxisSpacing: 4.0,
+                  ),
+//                  GridView.count(
+//                    scrollDirection: Axis.vertical,
+//                    crossAxisCount: 3,
+//                    children: List.generate(card.images.length, (index) {
+//                      return card.images[index];
+//                    }),
+//                  ),
+                ),
+//                GridView.builder(gridDelegate: null, itemBuilder: null)
                 Text(card.stage.toString()),
-                Text(card.position.toString()),
               ],
             ),
           ),
@@ -225,7 +274,11 @@ class SingleJourneyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[_backgroundImage(context), _content(), _topLayerButtons(context)],
+        children: <Widget>[
+          _backgroundImage(context),
+          _content(context),
+          _topLayerButtons(context),
+        ],
       ),
     );
   }
