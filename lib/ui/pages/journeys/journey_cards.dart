@@ -118,7 +118,24 @@ class LoadedJourneyCard extends AnimatedWidget {
                         nav.pop(context);
                       },
                       onDenial: () {
-                        print('denial');
+                        print('Quote denial');
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.pop(context);
+                      },
+                    );
+                  } else if (card.stage is AppointmentOfferReceived) {
+                    dialog = DateDialog(
+                      stage: card.stage,
+                      artistName: card.artistName,
+                      onAcceptance: () {
+                        print('Date acceptance');
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.pop(context);
+                      },
+                      onDenial: () {
+                        print('Date denial');
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.pop(context);
                       },
                     );
                   }
