@@ -179,8 +179,7 @@ class SingleJourneyScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LargeTwoPartHeader(
               largeText: 'Your Journey with',
-              name: artistFirstName,
-              dropShadow: dropShadows),
+              name: artistFirstName),
         ),
         SizedBox(height: 20),
         Container(
