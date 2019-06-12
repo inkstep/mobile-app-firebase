@@ -60,7 +60,6 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
                 animation: loopedAnimation,
               )
             : Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
                 margin: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Center(
                   child: CircularProgressIndicator(
@@ -90,7 +89,6 @@ class LoadedJourneyCard extends AnimatedWidget {
     final Animation<double> progression = listenable;
     final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
     return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: () {
