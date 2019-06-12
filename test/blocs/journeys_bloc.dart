@@ -37,7 +37,6 @@ void main() {
       size: '',
       position: '',
       availability: '',
-      deposit: '',
       noImages: 0,
       stage: WaitingForQuote(),
     );
@@ -61,7 +60,6 @@ void main() {
       size: '',
       position: '',
       availability: '',
-      deposit: '',
       noImages: 0,
       stage: WaitingForQuote(),
     );
@@ -135,7 +133,6 @@ void main() {
             mentalImage: 'Flower',
             name: testUser.name,
             size: '',
-            deposit: '',
             email: testUser.email,
             images: <Asset>[],
           ),

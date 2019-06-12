@@ -11,7 +11,6 @@ class JourneyInfo extends Equatable {
     @required this.size,
     @required this.position,
     @required this.availability,
-    @required this.deposit,
     @required this.images,
   }) : super(<dynamic>[
           userName,
@@ -21,7 +20,6 @@ class JourneyInfo extends Equatable {
           size,
           position,
           availability,
-          deposit,
           images
         ]);
 
@@ -32,6 +30,5 @@ class JourneyInfo extends Equatable {
   final String size;
   final String position;
   final String availability;
-  final String deposit;
   final List<Asset> images;
 }

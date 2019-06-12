@@ -9,7 +9,6 @@ class EmptyJourneyEntity extends Equatable {
     @required this.size,
     @required this.position,
     @required this.availability,
-    @required this.deposit,
     @required this.noImages,
   }) : super(<dynamic>[
           userId,
@@ -18,7 +17,6 @@ class EmptyJourneyEntity extends Equatable {
           size,
           position,
           availability,
-          deposit,
           noImages,
         ]);
 
@@ -30,7 +28,6 @@ class EmptyJourneyEntity extends Equatable {
       size: json['size'],
       position: json['position'],
       availability: json['availability'],
-      deposit: json['deposit'],
       noImages: int.parse(json['noRefImages'])
     );
   }
@@ -41,7 +38,6 @@ class EmptyJourneyEntity extends Equatable {
   final String size;
   final String position;
   final String availability;
-  final String deposit;
   final int noImages;
 
   Map<String, dynamic> toJson() {
@@ -52,7 +48,6 @@ class EmptyJourneyEntity extends Equatable {
       'size': size,
       'position': position,
       'availability': availability,
-      'deposit': deposit,
       'noRefImages': noImages,
     };
   }

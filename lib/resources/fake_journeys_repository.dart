@@ -21,7 +21,6 @@ class FakeJourneysRepository extends JourneysRepository {
     size: '',
     position: '',
     availability: '',
-    deposit: '',
     noImages: 0,
     stage: WaitingForQuote(),
   );
@@ -34,7 +33,6 @@ class FakeJourneysRepository extends JourneysRepository {
     size: '',
     position: '',
     availability: '',
-    deposit: '',
     noImages: 0,
     stage: WaitingForQuote(),
   );

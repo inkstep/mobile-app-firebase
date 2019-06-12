@@ -156,7 +156,6 @@ class OverviewForm extends StatelessWidget {
                           email: formData['email'],
                           size: formData['size'],
                           availability: formData['availability'],
-                          deposit: formData['deposit'],
                           mentalImage: formData['mentalImage'],
                           position: formData['position'],
                           images: images,

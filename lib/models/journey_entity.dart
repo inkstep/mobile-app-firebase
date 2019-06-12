@@ -11,7 +11,6 @@ class JourneyEntity extends Equatable {
     @required this.size,
     @required this.position,
     @required this.availability,
-    @required this.deposit,
     @required this.noImages,
     @required this.stage,
   }) : super(<dynamic>[
@@ -22,7 +21,6 @@ class JourneyEntity extends Equatable {
           size,
           position,
           availability,
-          deposit,
           noImages,
           stage,
         ]);
@@ -36,7 +34,6 @@ class JourneyEntity extends Equatable {
       size: json['size'],
       position: json['position'],
       availability: json['availability'],
-      deposit: json['deposit'],
       noImages: int.parse(json['noRefImages']),
       stage: JourneyStage.fromJson(json),
     );
@@ -49,7 +46,6 @@ class JourneyEntity extends Equatable {
   final String size;
   final String position;
   final String availability;
-  final String deposit;
   final int noImages;
   final JourneyStage stage;
 
@@ -62,7 +58,6 @@ class JourneyEntity extends Equatable {
       'size': size,
       'position': position,
       'availability': availability,
-      'deposit': deposit,
       'noRefImages': noImages,
     };
   }

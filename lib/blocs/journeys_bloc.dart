@@ -114,7 +114,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         userId: userId,
         artistId: result.artistID,
         availability: result.availability,
-        deposit: result.deposit,
         mentalImage: result.mentalImage,
         position: result.position,
         size: result.size,

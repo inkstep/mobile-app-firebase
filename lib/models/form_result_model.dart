@@ -11,7 +11,6 @@ class FormResult extends Equatable {
     @required this.position,
     @required this.email,
     @required this.availability,
-    @required this.deposit,
     @required this.images,
   }) : super(<dynamic>[
           name,
@@ -20,7 +19,6 @@ class FormResult extends Equatable {
           position,
           email,
           availability,
-          deposit,
           images
         ]);
 
@@ -31,6 +29,5 @@ class FormResult extends Equatable {
   final String position;
   final String email;
   final String availability;
-  final String deposit;
   final List<Asset> images;
 }
