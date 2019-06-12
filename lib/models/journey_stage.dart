@@ -56,8 +56,9 @@ class QuoteReceived extends JourneyStage {
   @override
   int get progress => 30;
 
+  // TODO(DJRHails): They => ArtistName
   @override
-  String toString() => "You've been sent a price!";
+  String toString() => "They'll do it!";
 
   @override
   bool get userActionRequired => true;
@@ -88,7 +89,7 @@ class AppointmentOfferReceived extends JourneyStage {
   int get progress => 40;
 
   @override
-  String toString() => "You've been offered an appointment!";
+  String toString() => 'Appointment offered!';
 
   @override
   bool get userActionRequired => true;
