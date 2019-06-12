@@ -13,16 +13,12 @@ abstract class JourneyStage extends Equatable {
       case 2:
         return WaitingForAppointmentOffer();
       case 3:
-        return AppointmentOfferReceived(json['offeredAppointment']);
+        return AppointmentOfferReceived(DateTime.parse(json['bookingDate']));
       case 4:
-        return BookedIn(DateTime.parse(json['bookedDate']));
+        return BookedIn(DateTime.parse(json['bookingDate']));
       case 5:
-        return ImmediateAftercare();
+        return Aftercare(DateTime.parse(json['bookingDate']));
       case 6:
-        return WeekOfAftercare();
-      case 7:
-        return MonthOfAftercare();
-      case 8:
         return Healed();
       default:
         return InvalidStage();
@@ -56,8 +52,9 @@ class QuoteReceived extends JourneyStage {
   @override
   int get progress => 30;
 
+  // TODO(DJRHails): They => ArtistName
   @override
-  String toString() => "You've been sent a price!";
+  String toString() => "They'll do it!";
 
   @override
   bool get userActionRequired => true;
@@ -88,7 +85,7 @@ class AppointmentOfferReceived extends JourneyStage {
   int get progress => 40;
 
   @override
-  String toString() => "You've been offered an appointment!";
+  String toString() => 'Appointment offered!';
 
   @override
   bool get userActionRequired => true;
@@ -114,9 +111,12 @@ class BookedIn extends JourneyStage {
   int get numberRepresentation => 4;
 }
 
-class ImmediateAftercare extends JourneyStage {
+class Aftercare extends JourneyStage {
+  Aftercare(this.appointmentDate);
+  final DateTime appointmentDate;
+
   @override
-  int get progress => 65;
+  int get progress => 60 + (DateTime.now().difference(appointmentDate).inDays * 30 ~/ 93);
 
   @override
   String toString() => 'Tattoo Healing';

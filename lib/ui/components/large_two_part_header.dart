@@ -6,14 +6,12 @@ class LargeTwoPartHeader extends StatelessWidget {
     Key key,
     @required this.largeText,
     @required this.name,
-    this.taskStatus,
-    this.dropShadow
+    this.taskStatus
   }) : super(key: key);
 
   final String largeText;
   final String name;
   final int taskStatus;
-  final List<Shadow> dropShadow;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +24,7 @@ class LargeTwoPartHeader extends StatelessWidget {
               .of(context)
               .textTheme
               .title
-              .copyWith(color: Colors.white.withOpacity(0.7))
-              .copyWith(shadows: dropShadow),
+              .copyWith(color: Colors.white.withOpacity(0.7)),
         ),
         if (name != null)
           Container(
@@ -36,8 +33,7 @@ class LargeTwoPartHeader extends StatelessWidget {
               style: Theme
                   .of(context)
                   .textTheme
-                  .headline
-                  .copyWith(shadows: dropShadow),
+                  .headline,
             ),
           ),
         if (taskStatus != null)
@@ -48,8 +44,7 @@ class LargeTwoPartHeader extends StatelessWidget {
                   .of(context)
                   .textTheme
                   .body1
-                  .copyWith(color: Colors.white.withOpacity(0.7))
-                  .copyWith(shadows: dropShadow)
+                  .copyWith(color: Colors.white.withOpacity(0.7)),
           ),
         if (taskStatus != null)
           Container(
