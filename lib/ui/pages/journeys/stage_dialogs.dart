@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
+import 'package:intl/intl.dart';
 
 class QuoteDialog extends StatelessWidget {
   const QuoteDialog({
@@ -74,12 +75,42 @@ class DateDialog extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              stage.appointmentDate.day.toString(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline,
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text(
+                      DateFormat.E().format(stage.appointmentDate),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.subhead,
+                    ),
+                    Text(
+                      DateFormat.d().format(stage.appointmentDate),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline,
+                    ),
+                    Text(
+                      DateFormat.LLLL().format(stage.appointmentDate),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.subhead,
+                    ),
+                  ],
+                ),
+                VerticalDivider(
+                  color: Theme.of(context).cardColor,
+                  width: 20,
+                  indent: 3.0,
+                ),
+                Expanded(
+                  child: Text(
+                    DateFormat.jm().format(stage.appointmentDate),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
+              ],
             ),
           ),
           Text(

@@ -25,11 +25,36 @@ class ShownFeatureDiscovery extends JourneysEvent {
   String toString() => 'ShownFeatureDiscovery';
 }
 
-class QuoteAccepted extends JourneysEvent {
-  QuoteAccepted(this.journeyId);
+class DialogJourneyEvent extends JourneysEvent {
+  DialogJourneyEvent(this.journeyId);
 
   final int journeyId;
+}
+
+class QuoteAccepted extends DialogJourneyEvent {
+  QuoteAccepted(int journeyId) : super(journeyId);
 
   @override
   String toString() => 'QuoteAccepted';
+}
+
+class QuoteDenied extends DialogJourneyEvent {
+  QuoteDenied(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'QuoteDenied';
+}
+
+class DateAccepted extends DialogJourneyEvent {
+  DateAccepted(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'DateAccepted';
+}
+
+class DateDenied extends DialogJourneyEvent {
+  DateDenied(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'DateDenied';
 }
