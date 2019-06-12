@@ -121,9 +121,17 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 }
 
 class SingleJourneyScreen extends StatelessWidget {
-  const SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
+  SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
 
   final CardModel card;
+
+  final List<Shadow> dropShadows = <Shadow>[
+    Shadow(
+      offset: Offset(1, 1),
+      blurRadius: 6.0,
+      color: Colors.black,
+    ),
+  ];
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -169,30 +177,36 @@ class SingleJourneyScreen extends StatelessWidget {
         SizedBox(height: 200),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+          child: LargeTwoPartHeader(
+              largeText: 'Your Journey with',
+              name: artistFirstName,
+              dropShadow: dropShadows),
         ),
         SizedBox(height: 20),
-        Card(
-          margin: EdgeInsets.only(),
-          color: Colors.black,
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 30),
-                child: Container(
-                  width: 80,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[800],
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        Container(
+          height: 800,
+          child: Card(
+            margin: EdgeInsets.only(),
+            color: Colors.black,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child: Container(
+                    width: 80,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    ),
                   ),
                 ),
-              ),
-              Text(card.description),
-              Text(card.stage.toString()),
-              Text(card.position.toString()),
-            ],
+                Text(card.description),
+                Text(card.stage.toString()),
+                Text(card.position.toString()),
+              ],
+            ),
           ),
         ),
       ],
