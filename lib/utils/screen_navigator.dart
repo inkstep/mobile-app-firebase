@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
+import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/pages/aftercare_screen.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
+import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
 
@@ -81,6 +83,14 @@ class ScreenNavigator {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(builder: (context) => AfterCareScreen(), fullscreenDialog: true),
+    );
+  }
+
+  void openFullscreenJourney(BuildContext context, CardModel card) {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+          builder: (context) => SingleJourneyScreen(card: card), fullscreenDialog: true),
     );
   }
 }

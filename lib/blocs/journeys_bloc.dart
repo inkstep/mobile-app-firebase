@@ -34,6 +34,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapLoadJourneysState(event);
     } else if (event is ShownFeatureDiscovery) {
       yield* _mapShownFeatureDiscoveryState(event);
+    } else if (event is QuoteAccepted) {
+      yield* _mapQuoteAcceptedState(event);
     }
   }
 
@@ -66,8 +68,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     // Now send the corresponding journey
-    final EmptyJourneyEntity newJourney =
-        _emptyJourneyEntityFromFormResult(userId, event.result);
+    final EmptyJourneyEntity newJourney = _emptyJourneyEntityFromFormResult(userId, event.result);
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<EmptyJourneyEntity>[newJourney]);
@@ -100,21 +101,19 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
   Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
     assert (currentState is JourneysWithUser);
-    await journeysRepository.updateStage(WaitingForAppointmentOffer());
-
+    await journeysRepository.updateStage(WaitingForAppointmentOffer(), event.journeyId);
   }
 
   EmptyJourneyEntity _emptyJourneyEntityFromFormResult(int userId, FormResult result) {
     return EmptyJourneyEntity(
-      userId: userId,
-      artistId: result.artistID,
-      availability: result.availability,
-      deposit: result.deposit,
-      mentalImage: result.mentalImage,
-      position: result.position,
-      size: result.size,
-      noImages: result.images.length
-    );
+        userId: userId,
+        artistId: result.artistID,
+        availability: result.availability,
+        deposit: result.deposit,
+        mentalImage: result.mentalImage,
+        position: result.position,
+        size: result.size,
+        noImages: result.images.length);
   }
 
   Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {

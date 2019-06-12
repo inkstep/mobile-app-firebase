@@ -192,4 +192,21 @@ class WebRepository {
     }
     return mappedStudios;
   }
+
+  Future<int> updateRow(Map<String,dynamic> journeyMap, int journeyId) async {
+    final String jsonStr = jsonEncode(journeyMap);
+
+    final http.Response response = await client.patch('$url$journeyEndpoint/$journeyId',
+        body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+    print(
+        'PATCH $journeyEndpoint/$journeyId ${response.reasonPhrase} '
+            '(${response.statusCode}): ${response.body}'
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Future.value(int.parse(responseJson['journey_id']));
+    }
+    return Future.value(-1);
+  }
 }

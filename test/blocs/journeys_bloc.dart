@@ -26,19 +26,19 @@ void main() {
       stage: WaitingForQuote(),
       position: 0,
       palette: null,
+      journeyId: null,
     ));
     final JourneyEntity j1 = JourneyEntity(
-      id: 1,
-      userId: 0,
-      artistId: 0,
-      mentalImage: 'Star',
-      size: '',
-      position: '',
-      availability: '',
-      deposit: '',
-      noImages: 0,
-      stage: WaitingForQuote()
-    );
+        id: 1,
+        userId: 0,
+        artistId: 0,
+        mentalImage: 'Star',
+        size: '',
+        position: '',
+        availability: '',
+        deposit: '',
+        noImages: 0,
+        stage: WaitingForQuote());
 
     final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
@@ -47,20 +47,20 @@ void main() {
       stage: WaitingForQuote(),
       position: 1,
       palette: null,
+      journeyId: null,
     ));
 
     final JourneyEntity j2 = JourneyEntity(
-      id: 1,
-      userId: 0,
-      artistId: 0,
-      mentalImage: 'Flower',
-      size: '',
-      position: '',
-      availability: '',
-      deposit: '',
-      noImages: 0,
-      stage: WaitingForQuote()
-    );
+        id: 1,
+        userId: 0,
+        artistId: 0,
+        mentalImage: 'Flower',
+        size: '',
+        position: '',
+        availability: '',
+        deposit: '',
+        noImages: 0,
+        stage: WaitingForQuote());
 
     final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
 

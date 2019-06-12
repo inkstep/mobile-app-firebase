@@ -54,27 +54,21 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
     return FutureBuilder<CardModel>(
       future: widget.model,
       builder: (BuildContext context, AsyncSnapshot<CardModel> snapshot) {
-        return GestureDetector(
-          onTap: () {
-            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-            journeyBloc.dispatch(LoadJourneys());
-          },
-          child: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            margin: EdgeInsets.symmetric(horizontal: 8.0),
-            child: (snapshot.hasData && snapshot.data != null)
-                ? LoadedJourneyCard(
-                    card: snapshot.data,
-                    animation: loopedAnimation,
-                  )
-                : Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1.0,
-                      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
-                    ),
+        return (snapshot.hasData && snapshot.data != null)
+            ? LoadedJourneyCard(
+                card: snapshot.data,
+                animation: loopedAnimation,
+              )
+            : Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                margin: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
                   ),
-          ),
-        );
+                ),
+              );
       },
     );
   }
@@ -95,130 +89,143 @@ class LoadedJourneyCard extends AnimatedWidget {
   Widget build(BuildContext context) {
     final Animation<double> progression = listenable;
     final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Widget dialog;
-                  if (card.stage is QuoteReceived) {
-                    dialog = QuoteDialog(
-                      stage: card.stage,
-                      artistName: card.artistName,
-                      onAcceptance: () {
-                        final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                        journeyBloc.dispatch(QuoteAccepted(card.journeyId));
-                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.pop(context);
-                      },
-                      onDenial: () {
-                        print('Quote denial');
-                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.pop(context);
-                      },
-                    );
-                  } else if (card.stage is AppointmentOfferReceived) {
-                    dialog = DateDialog(
-                      stage: card.stage,
-                      artistName: card.artistName,
-                      onAcceptance: () {
-                        print('Date acceptance');
-                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.pop(context);
-                      },
-                      onDenial: () {
-                        print('Date denial');
-                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.pop(context);
-                      },
-                    );
-                  }
-                  if (dialog != null) {
-                    showGeneralDialog<void>(
-                      barrierColor: Colors.black.withOpacity(0.4),
-                      transitionBuilder: (context, a1, a2, widget) {
-                        return Transform.translate(
-                          offset: Offset.fromDirection(0, a1.value),
-                          child: Opacity(
-                            opacity: a1.value,
-                            child: dialog,
-                          ),
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      child: InkWell(
+        onTap: () {
+          final ScreenNavigator nav = sl.get<ScreenNavigator>();
+          nav.openFullscreenJourney(context, card);
+        },
+        splashColor: Colors.grey[50],
+        highlightColor: Colors.grey[100],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Widget dialog;
+                      if (card.stage is QuoteReceived) {
+                        dialog = QuoteDialog(
+                          stage: card.stage,
+                          artistName: card.artistName,
+                          onAcceptance: () {
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(QuoteAccepted(card.journeyId));
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
+                          onDenial: () {
+                            print('Quote denial');
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
                         );
-                      },
-                      transitionDuration: Duration(milliseconds: 500),
-                      barrierDismissible: true,
-                      barrierLabel: '',
-                      context: context,
-                      pageBuilder: (context, animation1, animation2) {},
-                    );
-                  }
-                },
-                child: Chip(
-                  label: Text(card.stage.toString()),
-                  backgroundColor: accentColor,
-                  shadowColor: accentColor,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  elevation:
-                      card.stage.userActionRequired ? _elevationTween.evaluate(progression) : 0.0,
+                      } else if (card.stage is AppointmentOfferReceived) {
+                        dialog = DateDialog(
+                          stage: card.stage,
+                          artistName: card.artistName,
+                          onAcceptance: () {
+                            print('Date acceptance');
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
+                          onDenial: () {
+                            print('Date denial');
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
+                        );
+                      }
+                      if (dialog != null) {
+                        showGeneralDialog<void>(
+                          barrierColor: Colors.black.withOpacity(0.4),
+                          transitionBuilder: (context, a1, a2, widget) {
+                            return Transform.scale(
+                              scale: a1.value,
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: dialog,
+                              ),
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 500),
+                          barrierDismissible: true,
+                          barrierLabel: '',
+                          context: context,
+                          pageBuilder: (context, animation1, animation2) {},
+                        );
+                      }
+                    },
+                    child: Chip(
+                      label: Text(card.stage.toString()),
+                      backgroundColor: accentColor,
+                      shadowColor: accentColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      elevation: card.stage.userActionRequired
+                          ? _elevationTween.evaluate(progression)
+                          : 0.0,
+                    ),
+                  ),
+                  Spacer(),
+                  DescribedIconButton(
+                    icon: Icons.healing,
+                    featureId: card.aftercareID,
+                    onPressed: () {
+                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                      nav.openAftercareScreen(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ImageSnippet(
+              images: card.images,
+              axis: Axis.horizontal,
+            ),
+            Spacer(
+              flex: 8,
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+              child: Chip(
+                avatar: CircleAvatar(
+                  backgroundImage: AssetImage('assets/ricky.png'),
+                  backgroundColor: Colors.transparent,
+                ),
+                label: Text(
+                  card.artistName,
                 ),
               ),
-              Spacer(),
-              DescribedIconButton(
-                icon: Icons.healing,
-                featureId: card.aftercareID,
-                onPressed: () {
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openAftercareScreen(context);
-                },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+              child: Text(
+                '${card.description}',
+                style: Theme.of(context).accentTextTheme.title.copyWith(
+                      color: accentColor,
+                    ),
               ),
-            ],
-          ),
-        ),
-        ImageSnippet(
-          images: card.images,
-          axis: Axis.horizontal,
-        ),
-        Spacer(
-          flex: 8,
-        ),
-        Divider(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-          child: Chip(
-            avatar: CircleAvatar(
-              backgroundImage: AssetImage('assets/ricky.png'),
-              backgroundColor: Colors.transparent,
             ),
-            label: Text(
-              card.artistName,
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 32.0, bottom: 16.0),
+              child: JourneyProgressIndicator(
+                color: accentColor,
+                progress: card.stage.progress,
+                style: Theme.of(context).accentTextTheme.caption,
+              ),
             ),
-          ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-          child: Text(
-            '${card.description}',
-            style: Theme.of(context).accentTextTheme.title.copyWith(
-                  color: accentColor,
-                ),
-          ),
-        ),
-        Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 32.0, bottom: 16.0),
-          child: JourneyProgressIndicator(
-            color: accentColor,
-            progress: card.stage.progress,
-            style: Theme.of(context).accentTextTheme.caption,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

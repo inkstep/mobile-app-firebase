@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/pages/onboarding/welcome_back_header.dart';
+import 'package:inkstep/ui/components/large_two_part_header.dart';
 
 void main() {
   group('Welcome back header', () {
@@ -8,8 +8,9 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-              body: WelcomeBackHeader(
+              body: LargeTwoPartHeader(
             name: 'Jimmy',
+            largeText: 'Welcome Back',
             taskStatus: 27,
           )),
         ),
