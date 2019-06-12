@@ -153,7 +153,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                               ),
                             );
                           },
-                          transitionDuration: Duration(milliseconds: 500),
+                          transitionDuration: Duration(milliseconds: 300),
                           barrierDismissible: true,
                           barrierLabel: '',
                           context: context,
