@@ -5,6 +5,121 @@ import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+class DropdownFloatingActionButtons extends StatefulWidget {
+  final Function() onPressed;
+  final String tooltip;
+  final IconData icon;
+
+  DropdownFloatingActionButtons({this.onPressed, this.tooltip, this.icon});
+
+  @override
+  _DropdownFloatingActionButtonsState createState() => _DropdownFloatingActionButtonsState();
+}
+
+class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionButtons>
+    with SingleTickerProviderStateMixin {
+  bool isOpened = false;
+  AnimationController _animationController;
+  Animation<Color> _buttonColor;
+  Animation<double> _animateIcon;
+  Animation<double> _translateButton;
+
+  final Curve _curve = Curves.easeOut;
+
+  @override
+  initState() {
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+      ..addListener(() {
+        setState(() {});
+      });
+    _animateIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _buttonColor = ColorTween(
+      begin: Colors.white,
+      end: Colors.white,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Interval(
+        0.0,
+        1.0,
+        curve: Curves.linear,
+      ),
+    ));
+    _translateButton = Tween<double>(
+      begin: 0,
+      end: 24,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Interval(
+        0.0,
+        0.75,
+        curve: _curve,
+      ),
+    ));
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void animate() {
+    isOpened ? _animationController.reverse() : _animationController.forward();
+    isOpened = !isOpened;
+  }
+
+  Widget image() {
+    return Container(
+      child: FloatingActionButton(
+        mini: true,
+        backgroundColor: Colors.white,
+        heroTag: 'aftercareBtn',
+        onPressed: () {
+          print('opening aftercare');
+          final ScreenNavigator nav = sl.get<ScreenNavigator>();
+          nav.openAftercareScreen(context);
+        },
+        tooltip: 'Image',
+        child: Icon(Icons.healing),
+      ),
+    );
+  }
+
+  Widget toggle() {
+    return Container(
+      child: FloatingActionButton(
+        mini: true,
+        heroTag: 'toggleBtn',
+        backgroundColor: _buttonColor.value,
+        onPressed: animate,
+        tooltip: 'Toggle',
+        child: AnimatedIcon(
+          icon: AnimatedIcons.menu_close,
+          progress: _animateIcon,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value * 2.0,
+            0.0,
+          ),
+          child: image(),
+        ),
+        toggle(),
+      ],
+    );
+  }
+}
+
 class SingleJourneyScreen extends StatelessWidget {
   const SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
 
@@ -26,12 +141,22 @@ class SingleJourneyScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: FloatingActionButton(
-          child: Icon(Icons.clear),
-          onPressed: () {
-            final ScreenNavigator nav = sl.get<ScreenNavigator>();
-            nav.pop(context);
-          },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            FloatingActionButton(
+              heroTag: 'dismissBtn',
+              mini: true,
+              backgroundColor: Colors.white,
+              child: Icon(Icons.arrow_downward),
+              onPressed: () {
+                final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                nav.pop(context);
+              },
+            ),
+            Spacer(),
+            DropdownFloatingActionButtons(),
+          ],
         ),
       ),
     );
