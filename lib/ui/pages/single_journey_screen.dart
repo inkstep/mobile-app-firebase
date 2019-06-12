@@ -6,11 +6,11 @@ import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class DropdownFloatingActionButtons extends StatefulWidget {
+  const DropdownFloatingActionButtons({this.onPressed, this.tooltip, this.icon});
+
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
-
-  DropdownFloatingActionButtons({this.onPressed, this.tooltip, this.icon});
 
   @override
   _DropdownFloatingActionButtonsState createState() => _DropdownFloatingActionButtonsState();
@@ -27,7 +27,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   final Curve _curve = Curves.easeOut;
 
   @override
-  initState() {
+  void initState() {
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
         setState(() {});
@@ -59,7 +59,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   }
 
   @override
-  dispose() {
+  void dispose() {
     _animationController.dispose();
     super.dispose();
   }
