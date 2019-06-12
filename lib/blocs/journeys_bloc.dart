@@ -26,16 +26,14 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
-    if (event is AddJourney) {
-      if (event.result != null) {
-        yield* _mapAddJourneysState(event);
-      }
+    if (event is AddJourney && event.result != null) {
+      yield* _mapAddJourneysState(event);
     } else if (event is LoadJourneys) {
       yield* _mapLoadJourneysState(event);
     } else if (event is ShownFeatureDiscovery) {
       yield* _mapShownFeatureDiscoveryState(event);
-    } else if (event is QuoteAccepted) {
-      yield* _mapQuoteAcceptedState(event);
+    } else if (event is DialogJourneyEvent) {
+      yield* _mapDialogState(event);
     }
   }
 
@@ -100,9 +98,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Stream<JourneysState> _mapQuoteAcceptedState(QuoteAccepted event) async* {
-    assert (currentState is JourneysWithUser);
-    await journeysRepository.updateStage(WaitingForAppointmentOffer(), event.journeyId);
+  Stream<JourneysState> _mapDialogState(DialogJourneyEvent event) async* {
+    assert(currentState is JourneysWithUser);
+    if (event is QuoteAccepted) {
+      await journeysRepository.updateStage(WaitingForAppointmentOffer(), event.journeyId);
+    } else if (event is QuoteDenied || event is DateDenied) {
+      // TODO(DJRHails): Should have deny state / warning
+    } else if (event is DateAccepted) {
+      await journeysRepository.updateStage(BookedIn(), event.journeyId);
+    }
   }
 
   EmptyJourneyEntity _emptyJourneyEntityFromFormResult(int userId, FormResult result) {

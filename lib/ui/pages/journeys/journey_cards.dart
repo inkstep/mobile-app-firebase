@@ -120,7 +120,8 @@ class LoadedJourneyCard extends AnimatedWidget {
                             nav.pop(context);
                           },
                           onDenial: () {
-                            print('Quote denial');
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(QuoteDenied(card.journeyId));
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },
@@ -130,12 +131,14 @@ class LoadedJourneyCard extends AnimatedWidget {
                           stage: card.stage,
                           artistName: card.artistName,
                           onAcceptance: () {
-                            print('Date acceptance');
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(DateAccepted(card.journeyId));
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },
                           onDenial: () {
-                            print('Date denial');
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(DateDenied(card.journeyId));
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },
