@@ -95,8 +95,8 @@ class AppointmentOfferReceived extends JourneyStage {
 }
 
 class BookedIn extends JourneyStage {
-  BookedIn(this.appointmentDate);
-  final DateTime appointmentDate;
+  BookedIn(this.bookedDate);
+  final DateTime bookedDate;
 
   @override
   int get progress => 60;

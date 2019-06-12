@@ -15,7 +15,8 @@ class CardModel extends Equatable {
     @required this.position,
     @required this.palette,
     @required this.journeyId,
-  }) : super(<dynamic>[description, artistName, images, stage, position]);
+    @required this.bookedDate,
+  }) : super(<dynamic>[description, artistName, images, stage, position, bookedDate]);
 
   JourneyStage stage;
   String description;
@@ -24,6 +25,7 @@ class CardModel extends Equatable {
   int position;
   int journeyId;
   PaletteGenerator palette;
+  DateTime bookedDate;
 
   String get aftercareID => 'aftercare_button_$position';
 }

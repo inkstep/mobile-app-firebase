@@ -6,18 +6,27 @@ import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class DropdownFloatingActionButtons extends StatefulWidget {
-  const DropdownFloatingActionButtons({this.onPressed, this.tooltip, this.icon});
+  const DropdownFloatingActionButtons(
+      {this.onPressed,
+      this.tooltip,
+      this.icon,
+      @required this.bookedDate});
 
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
 
+  final DateTime bookedDate;
+
   @override
-  _DropdownFloatingActionButtonsState createState() => _DropdownFloatingActionButtonsState();
+  _DropdownFloatingActionButtonsState createState() =>
+      _DropdownFloatingActionButtonsState(bookedDate);
 }
 
 class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionButtons>
     with SingleTickerProviderStateMixin {
+  _DropdownFloatingActionButtonsState(this.bookedDate);
+
   bool isOpened = false;
   AnimationController _animationController;
   Animation<Color> _buttonColor;
@@ -25,6 +34,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   Animation<double> _translateButton;
 
   final Curve _curve = Curves.easeOut;
+  final DateTime bookedDate;
 
   @override
   void initState() {
@@ -78,7 +88,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         onPressed: () {
           print('opening aftercare');
           final ScreenNavigator nav = sl.get<ScreenNavigator>();
-          nav.openAftercareScreen(context);
+          nav.openAftercareScreen(context, bookedDate);
         },
         tooltip: 'Image',
         child: Icon(Icons.healing),
@@ -163,7 +173,7 @@ class SingleJourneyScreen extends StatelessWidget {
               },
             ),
             Spacer(),
-            DropdownFloatingActionButtons(),
+            DropdownFloatingActionButtons(bookedDate: card.bookedDate),
           ],
         ),
       ),
@@ -178,8 +188,7 @@ class SingleJourneyScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LargeTwoPartHeader(
-              largeText: 'Your Journey with',
-              name: artistFirstName),
+              largeText: 'Your Journey with', name: artistFirstName),
         ),
         SizedBox(height: 20),
         Container(

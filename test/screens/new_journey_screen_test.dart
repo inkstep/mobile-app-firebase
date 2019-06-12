@@ -95,7 +95,7 @@ void main() {
 //      expect(find.text('What days of the week are you normally available?'), findsOneWidget);
 //    });
 //
-//    testWidgets('Deposite accessible via scroll', (WidgetTester tester) async {
+//    testWidgets('Deposit accessible via scroll', (WidgetTester tester) async {
 //      await tester.pumpWidget(screen);
 //      for (int i = 0; i < 6; i++) {
 //        await tester.drag(find.byType(PageView), scroll);
