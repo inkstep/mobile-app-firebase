@@ -13,10 +13,9 @@ import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneyCard extends StatefulWidget {
-  const JourneyCard({Key key, @required this.model, this.scale}) : super(key: key);
+  const JourneyCard({Key key, @required this.model}) : super(key: key);
 
   final Future<CardModel> model;
-  final double scale;
 
   @override
   _JourneyCardState createState() => _JourneyCardState();
