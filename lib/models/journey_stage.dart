@@ -116,7 +116,8 @@ class Aftercare extends JourneyStage {
   final DateTime appointmentDate;
 
   @override
-  int get progress => 60 + (DateTime.now().difference(appointmentDate).inDays * 30 ~/ 93);
+  int get progress =>
+      60 + (DateTime.now().difference(appointmentDate).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
   String toString() => 'Tattoo Healing';
@@ -128,46 +129,18 @@ class Aftercare extends JourneyStage {
   int get numberRepresentation => 5;
 }
 
-class WeekOfAftercare extends JourneyStage {
-  @override
-  int get progress => 70;
-
-  @override
-  String toString() => 'Tattoo Healing';
-
-  @override
-  bool get userActionRequired => false;
-
-  @override
-  int get numberRepresentation => 6;
-}
-
-class MonthOfAftercare extends JourneyStage {
-  @override
-  int get progress => 80;
-
-  @override
-  String toString() => 'Tattoo Healing';
-
-  @override
-  bool get userActionRequired => false;
-
-  @override
-  int get numberRepresentation => 7;
-}
-
 class Healed extends JourneyStage {
   @override
   int get progress => 95;
 
   @override
-  String toString() => 'Send {ARTISTNAME} a picture?';
+  String toString() => 'Send artist a picture?';
 
   @override
   bool get userActionRequired => true;
 
   @override
-  int get numberRepresentation => 8;
+  int get numberRepresentation => 6;
 }
 
 class InvalidStage extends JourneyStage {
