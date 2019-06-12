@@ -27,18 +27,20 @@ void main() {
       position: 0,
       palette: null,
       journeyId: null,
+      bookedDate: DateTime.parse('2019-06-18 10:00:00'),
     ));
     final JourneyEntity j1 = JourneyEntity(
-        id: 1,
-        userId: 0,
-        artistId: 0,
-        mentalImage: 'Star',
-        size: '',
-        position: '',
-        availability: '',
-        deposit: '',
-        noImages: 0,
-        stage: WaitingForQuote());
+      id: 1,
+      userId: 0,
+      artistId: 0,
+      mentalImage: 'Star',
+      size: '',
+      position: '',
+      availability: '',
+      deposit: '',
+      noImages: 0,
+      stage: WaitingForQuote(),
+    );
 
     final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
@@ -48,19 +50,21 @@ void main() {
       position: 1,
       palette: null,
       journeyId: null,
+      bookedDate: DateTime.parse('2019-06-18 10:00:00'),
     ));
 
     final JourneyEntity j2 = JourneyEntity(
-        id: 1,
-        userId: 0,
-        artistId: 0,
-        mentalImage: 'Flower',
-        size: '',
-        position: '',
-        availability: '',
-        deposit: '',
-        noImages: 0,
-        stage: WaitingForQuote());
+      id: 1,
+      userId: 0,
+      artistId: 0,
+      mentalImage: 'Flower',
+      size: '',
+      position: '',
+      availability: '',
+      deposit: '',
+      noImages: 0,
+      stage: WaitingForQuote(),
+    );
 
     final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
 

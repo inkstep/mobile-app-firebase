@@ -15,7 +15,7 @@ abstract class JourneyStage extends Equatable {
       case 3:
         return AppointmentOfferReceived(json['offeredAppointment']);
       case 4:
-        return BookedIn();
+        return BookedIn(DateTime.parse(json['bookedDate']));
       case 5:
         return ImmediateAftercare();
       case 6:
@@ -98,6 +98,9 @@ class AppointmentOfferReceived extends JourneyStage {
 }
 
 class BookedIn extends JourneyStage {
+  BookedIn(this.bookedDate);
+  final DateTime bookedDate;
+
   @override
   int get progress => 60;
 

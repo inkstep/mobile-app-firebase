@@ -27,16 +27,17 @@ class FakeJourneysRepository extends JourneysRepository {
   );
 
   final JourneyEntity j2 = JourneyEntity(
-      id: 1,
-      userId: 0,
-      artistId: 0,
-      mentalImage: 'Flower',
-      size: '',
-      position: '',
-      availability: '',
-      deposit: '',
-      noImages: 0,
-      stage: WaitingForQuote());
+    id: 1,
+    userId: 0,
+    artistId: 0,
+    mentalImage: 'Flower',
+    size: '',
+    position: '',
+    availability: '',
+    deposit: '',
+    noImages: 0,
+    stage: WaitingForQuote(),
+  );
 
   final User u1 = User(id: 0, name: 'test.name', email: 'test.email');
   final ArtistEntity a1 = ArtistEntity(
@@ -47,38 +48,45 @@ class FakeJourneysRepository extends JourneysRepository {
   );
 
   // Loads journeys from a Web Client.
-  @override Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
+  @override
+  Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
     return Future.value(
       <JourneyEntity>[j1, j2],
     );
   }
 
   // Persists journeys to the web
-  @override Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async {
+  @override
+  Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async {
     return Future.value(-1);
   }
 
-  @override Future<int> saveUser(UserEntity user) async {
+  @override
+  Future<int> saveUser(UserEntity user) async {
     return Future.value(-1);
   }
 
-  @override Future<int> saveImage(int journeyId, Asset img) async {
+  @override
+  Future<int> saveImage(int journeyId, Asset img) async {
     return Future.value(-1);
   }
 
-  @override Future<ArtistEntity> loadArtist(int artistId) async {
+  @override
+  Future<ArtistEntity> loadArtist(int artistId) async {
     return Future.value(
       a1,
     );
   }
 
-  @override Future<User> getUser(int userId) async {
+  @override
+  Future<User> getUser(int userId) async {
     return Future.value(
       u1,
     );
   }
 
-  @override Future<List<Image>> getImages(int id) async {
+  @override
+  Future<List<Image>> getImages(int id) async {
     return Future.value(<Image>[]);
   }
 }

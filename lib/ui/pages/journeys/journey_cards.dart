@@ -174,12 +174,13 @@ class LoadedJourneyCard extends AnimatedWidget {
                     ),
                   ),
                   Spacer(),
+                  card.bookedDate == null ? Spacer() :
                   DescribedIconButton(
                     icon: Icons.healing,
                     featureId: card.aftercareID,
                     onPressed: () {
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openAftercareScreen(context);
+                      nav.openAftercareScreen(context, card.bookedDate);
                     },
                   ),
                 ],

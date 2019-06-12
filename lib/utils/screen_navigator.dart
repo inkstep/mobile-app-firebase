@@ -79,10 +79,12 @@ class ScreenNavigator {
     );
   }
 
-  void openAftercareScreen(BuildContext context) {
+  void openAftercareScreen(BuildContext context, DateTime bookedTime) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => AfterCareScreen(), fullscreenDialog: true),
+      MaterialPageRoute<dynamic>(builder: (context) => AfterCareScreen(
+        bookedTime: bookedTime,
+      ), fullscreenDialog: true),
     );
   }
 

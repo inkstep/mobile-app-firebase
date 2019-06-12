@@ -24,7 +24,7 @@ class JourneyEntity extends Equatable {
           availability,
           deposit,
           noImages,
-          stage
+          stage,
         ]);
 
   factory JourneyEntity.fromJson(Map<String, dynamic> json) {
@@ -38,7 +38,7 @@ class JourneyEntity extends Equatable {
       availability: json['availability'],
       deposit: json['deposit'],
       noImages: int.parse(json['noRefImages']),
-      stage: JourneyStage.fromJson(json)
+      stage: JourneyStage.fromJson(json),
     );
   }
 

@@ -151,6 +151,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Future<List<Future<CardModel>>> _getCards(int userId) async {
     print('Loading cards for $userId');
     final List<JourneyEntity> journeys = await journeysRepository.loadJourneys(userId: userId);
+    print('Done that...');
     return _getCardsFromJourneys(journeys);
   }
 
@@ -178,6 +179,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
     final palette = PaletteGenerator.fromColors(palettes);
 
+    DateTime bookedDate;
+
+    if (je.stage is BookedIn) {
+      final BookedIn stage = je.stage;
+      bookedDate = stage.bookedDate;
+    }
+
     return CardModel(
       description: je.mentalImage,
       artistName: artist.name,
@@ -186,6 +194,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       position: idx,
       palette: palette,
       journeyId: je.id,
+      bookedDate: bookedDate,
     );
   }
 }
