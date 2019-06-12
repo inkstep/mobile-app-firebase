@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
+import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -24,7 +26,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
 
   AnimationController _controller;
   Animation<double> _animation;
-  PageController _pageController;
+  SwiperController _swiperController;
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
       duration: Duration(milliseconds: 300),
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-    _pageController = PageController(initialPage: 0, viewportFraction: 0.8);
+    _swiperController = SwiperController();
     super.initState();
   }
 
@@ -74,7 +76,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
 
             final void Function(ScrollNotification) onNotification = (notification) {
               if (notification is ScrollEndNotification) {
-                final currentPage = _pageController.page.round().toInt();
+                final currentPage = _swiperController.index;
                 if (_currentPageIndex != currentPage) {
                   setState(() => _currentPageIndex = currentPage);
                 }
@@ -84,7 +86,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
               animation: _animation,
               loadedState: loadedState,
               onNotification: onNotification,
-              pageController: _pageController,
+              swiperController: _swiperController,
             );
           } else {
             print(state);
@@ -110,15 +112,15 @@ class LoadedJourneyScreen extends StatelessWidget {
     @required Animation<double> animation,
     @required this.loadedState,
     @required this.onNotification,
-    @required PageController pageController,
+    @required SwiperController swiperController,
   })  : _animation = animation,
-        _pageController = pageController,
+        _pageController = swiperController,
         super(key: key);
 
   final Animation<double> _animation;
   final JourneysWithUser loadedState;
   final void Function(ScrollNotification) onNotification;
-  final PageController _pageController;
+  final SwiperController _pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -171,12 +173,15 @@ class LoadedJourneyScreen extends StatelessWidget {
                 flex: 60,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: onNotification,
-                  child: PageView.builder(
-                    controller: _pageController,
+                  child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
-                      return JourneyCard(model: loadedState.cards[index], scale: 1);
+                      return JourneyCard(model: loadedState.cards[index]);
                     },
+                    loop: false,
+                    controller: _pageController,
                     itemCount: loadedState.cards.length,
+                    viewportFraction: 0.8,
+                    scale: 0.9,
                   ),
                 ),
               ),
