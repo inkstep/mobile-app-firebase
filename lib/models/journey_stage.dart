@@ -13,7 +13,7 @@ abstract class JourneyStage extends Equatable {
       case 2:
         return WaitingForAppointmentOffer();
       case 3:
-        return AppointmentOfferReceived(json['offeredAppointment']);
+        return AppointmentOfferReceived(DateTime.parse(json['bookingDate']));
       case 4:
         return BookedIn();
       case 5:
