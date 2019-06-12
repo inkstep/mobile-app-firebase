@@ -105,7 +105,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     } else if (event is QuoteDenied || event is DateDenied) {
       // TODO(DJRHails): Should have deny state / warning
     } else if (event is DateAccepted) {
-      await journeysRepository.updateStage(BookedIn(), event.journeyId);
+      await journeysRepository.updateStage(BookedIn(null), event.journeyId);
     }
   }
 
