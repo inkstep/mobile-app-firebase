@@ -72,14 +72,14 @@ class ImageGrid extends StatelessWidget {
                       _buildImageThumbnail(context, 3, thumbSize)
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      _buildImageThumbnail(context, 4, thumbSize),
-                      _buildImageThumbnail(context, 5, thumbSize)
-                    ],
-                  ),
+//                  Row(
+//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                    crossAxisAlignment: CrossAxisAlignment.center,
+//                    children: <Widget>[
+//                      _buildImageThumbnail(context, 4, thumbSize),
+//                      _buildImageThumbnail(context, 5, thumbSize)
+//                    ],
+//                  ),
                 ],
               );
             },
@@ -141,6 +141,6 @@ class ImageGrid extends StatelessWidget {
   Future<void> _updateAssets() async {
     // TODO(DJRHails): Proper error handling to enduser
     inspirationImages =
-        await MultiImagePicker.pickImages(maxImages: 6, selectedAssets: inspirationImages);
+        await MultiImagePicker.pickImages(maxImages: 4, selectedAssets: inspirationImages);
   }
 }
