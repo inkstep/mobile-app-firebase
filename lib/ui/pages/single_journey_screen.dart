@@ -27,7 +27,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   bool isOpened = false;
   AnimationController _animationController;
-  Animation<Color> _buttonColor;
+  Animation<Color> _disappearingBtnColour;
   Animation<double> _animateIcon;
   Animation<double> _translateButton;
 
@@ -40,9 +40,11 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       ..addListener(() {
         setState(() {});
       });
+
     _animateIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(
-      begin: Colors.white,
+
+    _disappearingBtnColour = ColorTween(
+      begin: Colors.transparent,
       end: Colors.white,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -52,6 +54,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         curve: Curves.linear,
       ),
     ));
+
     _translateButton = Tween<double>(
       begin: 0,
       end: 24,
@@ -63,6 +66,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         curve: _curve,
       ),
     ));
+
     super.initState();
   }
 
@@ -78,41 +82,37 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   }
 
   Widget image() {
-    return Container(
-      child: FloatingActionButton(
-        mini: true,
-        backgroundColor: Colors.white,
-        heroTag: 'aftercareBtn',
-        onPressed: () {
-          print('opening aftercare');
-          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-          nav.openAftercareScreen(context, bookedDate);
-        },
-        tooltip: 'Image',
-        child: Icon(Icons.healing),
-      ),
+    return FloatingActionButton(
+      mini: true,
+      backgroundColor: _disappearingBtnColour.value,
+      heroTag: 'aftercareBtn',
+      onPressed: () {
+        print('opening aftercare');
+//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//        nav.openAftercareScreen(context, bookedDate);
+      },
+      tooltip: 'Image',
+      child: Icon(Icons.healing),
     );
   }
 
   Widget toggle() {
-    return Container(
-      child: FloatingActionButton(
-        mini: true,
-        heroTag: 'toggleBtn',
-        backgroundColor: _buttonColor.value,
-        onPressed: animate,
-        tooltip: 'Toggle',
-        child: AnimatedIcon(
-          icon: AnimatedIcons.menu_close,
-          progress: _animateIcon,
-        ),
+    return FloatingActionButton(
+      mini: true,
+      heroTag: 'toggleBtn',
+      backgroundColor: Colors.white,
+      onPressed: animate,
+      tooltip: 'Toggle',
+      child: AnimatedIcon(
+        icon: AnimatedIcons.menu_close,
+        progress: _animateIcon,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: <Widget>[
         Transform(
           transform: Matrix4.translationValues(
@@ -122,7 +122,16 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
           ),
           child: image(),
         ),
-        toggle(),
+
+        // This toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            -48,
+            0.0,
+          ),
+          child: toggle(),
+        ),
       ],
     );
   }
