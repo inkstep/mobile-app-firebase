@@ -7,6 +7,8 @@ import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+import 'journeys/stage_dialogs.dart';
+
 class DropdownFloatingActionButtons extends StatefulWidget {
   const DropdownFloatingActionButtons(
       {this.onPressed, this.tooltip, this.icon, @required this.bookedDate});
@@ -121,7 +123,37 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'deleteBtn',
       onPressed: () {
-        print('opening delete');
+        showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return DeleteJourneyDialog(
+              onAcceptance: () {},
+              artistName: 'Ricky',
+              onDenial: () {},
+            );
+          },
+        );
+
+        /* showCupertinoModalPopup<dynamic>(
+            builder: (BuildContext context) {
+              return CupertinoActionSheet(
+                title: Text('Are you sure?'),
+                message: Text('explain shit here'),
+                actions: <Widget>[
+                  CupertinoActionSheetAction(
+                    onPressed: () {},
+                    child: Text('End Journey'),
+                    isDestructiveAction: true,
+                  ),
+                ],
+                cancelButton: CupertinoActionSheetAction(
+                  onPressed: () {},
+                  child: Text('Cancel'),
+                  isDestructiveAction: false,
+                ),
+              );
+            },
+            context: context);*/
       },
       tooltip: 'Delete',
       child: Icon(Icons.delete),
