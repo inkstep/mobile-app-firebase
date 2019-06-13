@@ -29,6 +29,12 @@ class LoadJourneys extends JourneysEvent {
   String toString() => 'LoadJourneys';
 }
 
+class LoadJourney extends JourneysEvent {
+  LoadJourney(this.journeyId);
+
+  final int journeyId;
+}
+
 class ShownFeatureDiscovery extends JourneysEvent {
   @override
   String toString() => 'ShownFeatureDiscovery';

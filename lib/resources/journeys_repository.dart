@@ -27,6 +27,11 @@ class JourneysRepository {
     return mapped.map((jsonJourney) => JourneyEntity.fromJson(jsonJourney)).toList();
   }
 
+  Future<JourneyEntity> loadJourney({@required int id}) async {
+    final Map<String, dynamic> jsonJourney = await webClient.loadJourney(id);
+    return JourneyEntity.fromJson(jsonJourney);
+  }
+
   // Persists journeys to the web
   Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async {
     final journeysMap = journeys.map<Map<String, dynamic>>((j) => j.toJson()).toList();
@@ -77,10 +82,8 @@ class JourneysRepository {
   }
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
-   // TODO(Felination): Something useful here
-    final Map<String,int> journeyMap = {
-      'Stage': updateStage.numberRepresentation
-    };
+    // TODO(Felination): Something useful here
+    final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
     return await webClient.updateRow(journeyMap, journeyId);
   }
 

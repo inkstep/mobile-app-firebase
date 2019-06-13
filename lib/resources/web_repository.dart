@@ -56,6 +56,19 @@ class WebRepository {
     return mappedJourneys;
   }
 
+  Future<Map<String, dynamic>> loadJourney(int id) async {
+    final http.Response response = await client.get('$url$journeyEndpoint/$id');
+
+    print('GET $journeyEndpoint/$id '
+        '${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+    if (response.statusCode != 200) {
+      throw http.ClientException;
+    }
+
+    return json.decode(response.body);
+  }
+
   Future<int> saveJourneys(List<Map<String, dynamic>> journeys) async {
     for (Map<String, dynamic> journeyMap in journeys) {
       final String jsonStr = jsonEncode(journeyMap);
@@ -193,16 +206,14 @@ class WebRepository {
     return mappedStudios;
   }
 
-  Future<int> updateRow(Map<String,dynamic> journeyMap, int journeyId) async {
+  Future<int> updateRow(Map<String, dynamic> journeyMap, int journeyId) async {
     final String jsonStr = jsonEncode(journeyMap);
 
     final http.Response response = await client.patch('$url$journeyEndpoint/$journeyId',
         body: jsonStr, headers: {'Content-Type': 'application/json'});
 
-    print(
-        'PATCH $journeyEndpoint/$journeyId ${response.reasonPhrase} '
-            '(${response.statusCode}): ${response.body}'
-    );
+    print('PATCH $journeyEndpoint/$journeyId ${response.reasonPhrase} '
+        '(${response.statusCode}): ${response.body}');
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
       return Future.value(int.parse(responseJson['journey_id']));
