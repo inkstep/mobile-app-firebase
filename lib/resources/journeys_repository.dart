@@ -44,7 +44,8 @@ class JourneysRepository {
       'journey_id': journeyId,
       'image_data': base64Encode(data),
     };
-    return await webClient.saveImage(imageMap);
+
+    while (await webClient.saveImage(imageMap) == -1) {}
   }
 
   Future<ArtistEntity> loadArtist(int artistId) async {

@@ -3,11 +3,86 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
-import 'journeys/stage_dialogs.dart';
+class DeleteJourneyDialog extends StatelessWidget {
+  const DeleteJourneyDialog({
+    Key key,
+    @required this.card,
+    @required this.onAcceptance,
+    @required this.onDenial,
+  }) : super(key: key);
+
+  final CardModel card;
+  final VoidCallback onAcceptance;
+  final VoidCallback onDenial;
+
+  @override
+  Widget build(BuildContext context) {
+    String header;
+    String body;
+    String confirmButtonText;
+    switch (card.stage.runtimeType) {
+      case WaitingForQuote:
+      case QuoteReceived:
+      case WaitingForAppointmentOffer:
+      case AppointmentOfferReceived:
+        header = 'Are you sure you want to end your journey?';
+        body = '${card.artistName.split(' ').first} will be notified that you do not want to proceed.';
+        confirmButtonText = 'End Journey';
+        break;
+      case BookedIn:
+        header = 'Are you sure you want to cancel your booking?';
+        body = '${card.artistName.split(' ').first} will be notified and you will not get your deposit back.';
+        confirmButtonText = 'Cancel Booking';
+        break;
+      case Aftercare:
+        header = 'Are you sure you want to remove this journey?';
+        body = 'You won\'t get to see personalised aftercare advice, or send a photo to your artist if you proceed.';
+        confirmButtonText = 'Remove Journey';
+        break;
+      case Healed:
+        header = 'Are you sure you want to remove this journey?';
+        body = 'Please consider sending your artist a healed photo first!';
+        confirmButtonText = 'Remove Journey';
+        break;
+      case Finished:
+        header = 'Are you sure you want to remove this journey?';
+        body = 'It doesn\'t look like you\'ve got anything left to do.';
+        confirmButtonText = 'Remove Journey';
+        break;
+      default: throw Exception('Journey stage not supported');
+    }
+
+    return RoundedAlertDialog(
+        title: header,
+        child: Text(
+          body,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        dismiss: Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: RaisedButton(
+            color: Colors.white,
+            onPressed: () {
+              print('Confirm');
+            },
+            elevation: 15.0,
+            padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            child: Text(
+              confirmButtonText,
+              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika').copyWith(color: Colors.red),
+            ),
+          ),
+        ));
+  }
+}
 
 class DropdownFloatingActionButtons extends StatefulWidget {
   const DropdownFloatingActionButtons({@required this.card});
@@ -118,7 +193,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
           context: context,
           builder: (BuildContext context) {
             return DeleteJourneyDialog(
-              artistName: widget.card.artistName,
+              card: widget.card,
               onAcceptance: () {},
               onDenial: () {},
             );
