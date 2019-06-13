@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_analytics:
   firebase_messaging: ^5.0.0
   flutter_swiper: ^1.1.6 # Latest
   multi_image_picker: ^4.3.0 # Latest
