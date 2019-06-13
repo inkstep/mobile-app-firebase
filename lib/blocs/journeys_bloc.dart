@@ -115,11 +115,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> _mapDialogState(DialogJourneyEvent event) async* {
     assert(currentState is JourneysWithUser);
     if (event is QuoteAccepted) {
-      await journeysRepository.updateStage(AppointmentOfferReceived(null), event.journeyId);
+      await journeysRepository.updateStage(AppointmentOfferReceived(null, null), event.journeyId);
     } else if (event is QuoteDenied || event is DateDenied) {
       // TODO(DJRHails): Should have deny state / warning
     } else if (event is DateAccepted) {
-      await journeysRepository.updateStage(BookedIn(null), event.journeyId);
+      await journeysRepository.updateStage(BookedIn(null, null), event.journeyId);
     }
   }
 
@@ -218,6 +218,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
     final palette = PaletteGenerator.fromColors(palettes);
 
+    TextRange quote;
+
+    if (je.stage is JourneyStageWithQuote) {
+      final JourneyStageWithQuote stage = je.stage;
+      quote = stage.quote;
+    }
+
     DateTime bookedDate;
 
     if (je.stage is BookedIn) {
@@ -231,6 +238,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       bodyLocation: je.position,
       size: je.size,
       images: images,
+      quote: quote,
       stage: je.stage,
       index: idx,
       palette: palette,
