@@ -101,7 +101,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   Stream<JourneysState> _mapDialogState(DialogJourneyEvent event) async* {
     assert(currentState is JourneysWithUser);
     if (event is QuoteAccepted) {
-      await journeysRepository.updateStage(WaitingForAppointmentOffer(), event.journeyId);
+      await journeysRepository.updateStage(AppointmentOfferReceived(null), event.journeyId);
     } else if (event is QuoteDenied || event is DateDenied) {
       // TODO(DJRHails): Should have deny state / warning
     } else if (event is DateAccepted) {
