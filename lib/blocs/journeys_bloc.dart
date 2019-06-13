@@ -192,9 +192,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     return CardModel(
       description: je.mentalImage,
       artistName: artist.name,
+      bodyLocation: je.position,
+      size: je.size,
       images: images,
       stage: je.stage,
-      position: idx,
+      index: idx,
       palette: palette,
       journeyId: je.id,
       bookedDate: bookedDate,

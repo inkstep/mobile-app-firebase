@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class HorizontalDivider extends StatelessWidget {
   const HorizontalDivider({
     Key key,
-    this.thickness,
-    this.percentage,
+    this.thickness = 1,
+    this.percentage = 70,
     this.alignment,
     this.padding,
     this.color,
@@ -20,10 +20,9 @@ class HorizontalDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MainAxisAlignment actualAlignment = alignment ?? MainAxisAlignment.center;
-    final int actualPercentage = percentage ?? 70;
     final int spacerFlex = actualAlignment == MainAxisAlignment.center
-        ? (100 - actualPercentage) ~/ 2
-        : (100 - actualPercentage);
+        ? (100 - percentage) ~/ 2
+        : (100 - percentage);
 
     return Expanded(
         child: Row(
@@ -31,7 +30,7 @@ class HorizontalDivider extends StatelessWidget {
         if (actualAlignment == MainAxisAlignment.end || actualAlignment == MainAxisAlignment.center)
           Spacer(flex: spacerFlex),
         Expanded(
-          flex: actualPercentage,
+          flex: percentage,
           child: Center(
             child: Container(
               height: 0.0,
@@ -40,7 +39,7 @@ class HorizontalDivider extends StatelessWidget {
                 border: Border(
                   bottom: BorderSide(
                     color: color ?? Theme.of(context).dividerColor,
-                    width: thickness ?? 1,
+                    width: thickness,
                   ),
                 ),
               ),
