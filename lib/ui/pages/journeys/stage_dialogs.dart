@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
-import 'package:inkstep/ui/components/text_button.dart';
 
 class QuoteDialog extends StatelessWidget {
   const QuoteDialog({
@@ -107,25 +106,25 @@ class DeleteJourneyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedAlertDialog(
-      title: null,
-      child: Column(
-        children: <Widget>[
-          Text(
-            'Are you sure you want to end your journey with ${artistName.split(' ').first}?',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Journey stage specific information here',
+        title: null,
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Are you sure you want to end your journey with ${artistName.split(' ').first}?',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle,
             ),
-          ),
-        ],
-      ),
-      dismiss:
-        Column(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Journey stage specific information here',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.subtitle,
+              ),
+            ),
+          ],
+        ),
+        dismiss: Column(
           children: <Widget>[
             RaisedButton(
               color: Colors.white,
@@ -140,7 +139,6 @@ class DeleteJourneyDialog extends StatelessWidget {
                 style: TextStyle(fontSize: 20.0, fontFamily: 'Signika').copyWith(color: Colors.red),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: RaisedButton(
@@ -153,13 +151,13 @@ class DeleteJourneyDialog extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   'Cancel',
-                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika').copyWith(color: Colors.black),
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika')
+                      .copyWith(color: Colors.black),
                 ),
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
 
