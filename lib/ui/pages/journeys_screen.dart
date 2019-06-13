@@ -114,20 +114,20 @@ class LoadedJourneyScreen extends StatelessWidget {
     @required this.onNotification,
     @required SwiperController swiperController,
   })  : _animation = animation,
-        _pageController = swiperController,
+        _swiperController = swiperController,
         super(key: key);
 
   final Animation<double> _animation;
   final JourneysWithUser loadedState;
   final void Function(ScrollNotification) onNotification;
-  final SwiperController _pageController;
+  final SwiperController _swiperController;
 
   @override
   Widget build(BuildContext context) {
     final Color accentColor = Theme.of(context).accentColor;
     // TODO(DJRHails): Add this back in
-    //  if (_pageController.hasClients) {
-    //    accentColor = loadedState.cards[_pageController.page.toInt()].palette.vibrantColor?.color;
+    //  if (_swiperController.hasClients) {
+    //    accentColor = loadedState.cards[_swiperController.page.toInt()].palette.vibrantColor?.color;
     //  }
     final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
         ? null
@@ -188,7 +188,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                       return JourneyCard(model: loadedState.cards[index]);
                     },
                     loop: false,
-                    controller: _pageController,
+                    controller: _swiperController,
                     itemCount: loadedState.cards.length,
                     viewportFraction: 0.8,
                     scale: 0.9,
