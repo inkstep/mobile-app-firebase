@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -27,12 +28,16 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   bool isOpened = false;
   AnimationController _animationController;
-  Animation<Color> _buttonColor;
+  Animation<Color> _disappearingBtnColour;
   Animation<double> _animateIcon;
   Animation<double> _translateButton;
 
   final Curve _curve = Curves.easeOut;
   final DateTime bookedDate;
+
+  static const double _fabMiniHeight = 40;
+  static const int _fabSeparation = 8;
+  static const int _numFabs = 3;
 
   @override
   void initState() {
@@ -40,9 +45,11 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       ..addListener(() {
         setState(() {});
       });
+
     _animateIcon = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _buttonColor = ColorTween(
-      begin: Colors.white,
+
+    _disappearingBtnColour = ColorTween(
+      begin: Colors.transparent,
       end: Colors.white,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -52,9 +59,10 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         curve: Curves.linear,
       ),
     ));
+
     _translateButton = Tween<double>(
       begin: 0,
-      end: 24,
+      end: _fabMiniHeight + _fabSeparation,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -63,6 +71,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         curve: _curve,
       ),
     ));
+
     super.initState();
   }
 
@@ -77,52 +86,76 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     isOpened = !isOpened;
   }
 
-  Widget image() {
-    return Container(
-      child: FloatingActionButton(
-        mini: true,
-        backgroundColor: Colors.white,
-        heroTag: 'aftercareBtn',
-        onPressed: () {
-          print('opening aftercare');
-          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-          nav.openAftercareScreen(context, bookedDate);
-        },
-        tooltip: 'Image',
-        child: Icon(Icons.healing),
+  FloatingActionButton _toggle() {
+    return FloatingActionButton(
+      mini: true,
+      heroTag: 'toggleBtn',
+      backgroundColor: Colors.white,
+      onPressed: animate,
+      tooltip: 'Toggle',
+      child: AnimatedIcon(
+        icon: AnimatedIcons.menu_close,
+        progress: _animateIcon,
       ),
     );
   }
 
-  Widget toggle() {
-    return Container(
-      child: FloatingActionButton(
-        mini: true,
-        heroTag: 'toggleBtn',
-        backgroundColor: _buttonColor.value,
-        onPressed: animate,
-        tooltip: 'Toggle',
-        child: AnimatedIcon(
-          icon: AnimatedIcons.menu_close,
-          progress: _animateIcon,
-        ),
-      ),
+  FloatingActionButton _aftercare() {
+    return FloatingActionButton(
+      mini: true,
+      backgroundColor: _disappearingBtnColour.value,
+      heroTag: 'aftercareBtn',
+      onPressed: () {
+        print('opening aftercare');
+//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//        nav.openAftercareScreen(context, bookedDate);
+      },
+      tooltip: 'Aftercare',
+      child: Icon(Icons.healing),
     );
+  }
+
+  FloatingActionButton _delete() {
+    return FloatingActionButton(
+      mini: true,
+      backgroundColor: _disappearingBtnColour.value,
+      heroTag: 'deleteBtn',
+      onPressed: () {
+        print('opening delete');
+      },
+      tooltip: 'Delete',
+      child: Icon(Icons.delete),
+    );
+  }
+
+  Widget animatedDropDownFab({@required int index, @required FloatingActionButton fab}) {
+    return Transform(
+        transform: Matrix4.translationValues(
+          0.0,
+          (_translateButton.value * (index + 1)) - (index * (_fabMiniHeight + _fabSeparation)),
+          0.0,
+        ),
+        child: fab);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        // The fabs to appear dropped down under the toggle when pressed
+        animatedDropDownFab(index: 0, fab: _aftercare()),
+        animatedDropDownFab(index: 1, fab: _delete()),
+
+        // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 2.0,
+            -(_numFabs - 1) * (_fabSeparation + _fabMiniHeight) * 1.0,
             0.0,
           ),
-          child: image(),
+          child: _toggle(),
         ),
-        toggle(),
       ],
     );
   }
@@ -133,19 +166,30 @@ class SingleJourneyScreen extends StatelessWidget {
 
   final CardModel card;
 
-  final List<Shadow> dropShadows = <Shadow>[
-    Shadow(
-      offset: Offset(1, 1),
-      blurRadius: 6.0,
-      color: Colors.black,
-    ),
-  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _backgroundImage(context),
+          _content(context),
+          _topLayerButtons(context),
+        ],
+      ),
+    );
+  }
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final List<String> backgroundPaths = [
+      'assets/bg2.jpg',
+      'assets/bg3.jpg',
+      'assets/bg4.jpg',
+      'assets/bg5.jpg',
+    ];
     return Center(
       child: Image.asset(
-        'assets/bg2.jpg',
+        (backgroundPaths..shuffle()).first,
         width: size.width,
         height: size.height,
         fit: BoxFit.fitHeight,
@@ -181,29 +225,54 @@ class SingleJourneyScreen extends StatelessWidget {
   Widget _content(BuildContext context) {
     final String artistFirstName = card.artistName.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
+    final double fullWidth = MediaQuery.of(context).size.width;
+    final bool hasDate = card.bookedDate != null;
     return ListView(
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              // Where the linear gradient begins and ends
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              // Add one stop for each color. Stops should increase from 0 to 1
-              stops: const [0.1, 0.5],
-              colors: const [Colors.black54, Colors.transparent],
+        Stack(
+          alignment: Alignment.bottomLeft,
+          children: <Widget>[
+            if (hasDate)
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Opacity(
+                    opacity: 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DateBlock(
+                        date: card.bookedDate,
+                        onlyDate: true,
+                        scale: 1.75,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            Container(
+              width: fullWidth,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  // Where the linear gradient begins and ends
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  // Add one stop for each color. Stops should increase from 0 to 1
+                  stops: const [0.1, 0.5],
+                  colors: const [Colors.black54, Colors.transparent],
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: fullHeight * 0.65),
+                  LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: fullHeight * 0.65),
-              LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
-              SizedBox(height: 20),
-            ],
-          ),
+          ],
         ),
         Container(
           height: 800,
@@ -231,55 +300,87 @@ class SingleJourneyScreen extends StatelessWidget {
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
-                Expanded(
-                  child: StaggeredGridView.countBuilder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    crossAxisCount: 4,
-                    itemCount: card.images.length,
-                    itemBuilder: (BuildContext context, int index) => Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(image: card.images[index].image)),
-                          child: Center(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Text('${index + 1}'),
+                Text(
+                  'Inspiration.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: StaggeredGridView.countBuilder(
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      crossAxisCount: 4,
+                      itemCount: card.images.length,
+                      itemBuilder: (BuildContext context, int index) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: card.images[index].image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Container(
+                              transform: Matrix4.translationValues(10, 10, 10),
+                              alignment: Alignment.bottomRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Text('${index + 1}'),
+                              ),
                             ),
                           ),
-                        ),
-                    staggeredTileBuilder: (int index) =>
-                        StaggeredTile.count(2, index.isEven ? 2 : 1),
-                    mainAxisSpacing: 4.0,
-                    crossAxisSpacing: 4.0,
+                      staggeredTileBuilder: (int index) =>
+                          StaggeredTile.count(2, index.isEven ? 2 : 1),
+                      mainAxisSpacing: 16.0,
+                      crossAxisSpacing: 16.0,
+                    ),
                   ),
-//                  GridView.count(
-//                    scrollDirection: Axis.vertical,
-//                    crossAxisCount: 3,
-//                    children: List.generate(card.images.length, (index) {
-//                      return card.images[index];
-//                    }),
-//                  ),
                 ),
-//                GridView.builder(gridDelegate: null, itemBuilder: null)
-                Text(card.stage.toString()),
+                Text(
+                  'Placement.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Icon(
+                  Icons.airline_seat_recline_extra,
+                  size: 40.0,
+                  color: Theme.of(context).accentIconTheme.color,
+                ),
+                Text(
+                  'Size.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+//                SizeSelector(
+//                  controller: null,
+//                  heightController: TextEditingController(text: '32'),
+//                  widthController: TextEditingController(text: '29'),
+//                ),
+                Text(
+                  'Avaliability.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  'Price.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _backgroundImage(context),
-          _content(context),
-          _topLayerButtons(context),
-        ],
-      ),
     );
   }
 }

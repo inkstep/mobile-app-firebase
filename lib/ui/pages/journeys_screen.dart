@@ -142,6 +142,8 @@ class LoadedJourneyScreen extends StatelessWidget {
               nav.openArtistSelection(context);
             },
           );
+
+    final double paddingSize = MediaQuery.of(context).size.width * (1 - 0.8) / 2;
     return Scaffold(
       floatingActionButton: addJourneyButton,
       backgroundColor: Theme.of(context).backgroundColor,
@@ -162,7 +164,7 @@ class LoadedJourneyScreen extends StatelessWidget {
             children: <Widget>[
               Spacer(flex: 4),
               Padding(
-                padding: const EdgeInsets.only(left: 56.0),
+                padding: EdgeInsets.only(left: paddingSize),
                 child: LargeTwoPartHeader(
                   largeText: 'Welcome back',
                   name: loadedState.user?.name,
@@ -173,7 +175,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                 thickness: 4.0,
                 percentage: 30,
                 alignment: MainAxisAlignment.start,
-                padding: const EdgeInsets.only(left: 56.0),
+                padding: EdgeInsets.only(left: paddingSize),
                 color: Colors.white54,
               ),
               Spacer(flex: 2),
