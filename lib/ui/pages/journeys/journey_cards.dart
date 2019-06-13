@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../care_screen.dart';
 
@@ -151,6 +154,26 @@ class LoadedJourneyCard extends AnimatedWidget {
                           onDenial: () {
                             final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                             journeyBloc.dispatch(DateDenied(card.journeyId));
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
+                        );
+                      } else if (card.stage is Healed) {
+                        dialog = PictureDialog(
+                          onAcceptance: () async {
+                            final File image = await ImagePicker.pickImage(source: ImageSource
+                                .camera,
+                              maxHeight: 800,
+                              maxWidth: 800
+                            );
+                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                            journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId,
+                                card.journeyId));
+                            card.stage = Finished();
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.pop(context);
+                          },
+                          onDenial: () {
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },

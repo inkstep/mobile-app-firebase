@@ -220,4 +220,28 @@ class WebRepository {
     }
     return Future.value(-1);
   }
+
+  Future<bool> sendArtistPhoto(Map<String, dynamic> photoMap) async {
+    final String jsonStr = jsonEncode(photoMap);
+    print('Saving Image: $jsonStr');
+
+    http.Response response;
+
+    try {
+      response = await client.put('$url$artistEndpoint$imageEndpoint',
+          body: jsonStr, headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    print(
+        '$artistEndpoint$imageEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response
+            .body}');
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

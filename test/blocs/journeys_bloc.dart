@@ -21,7 +21,9 @@ void main() {
 
     final Future<CardModel> c1 = Future.value(CardModel(
       description: 'Star',
+      artistId: 1,
       artistName: 'Ricky',
+      userId: 0,
       bodyLocation: 'Butt hole',
       size: '15 cm by 5cm',
       quote: null,
@@ -46,7 +48,9 @@ void main() {
 
     final Future<CardModel> c2 = Future.value(CardModel(
       description: 'Flower',
+      artistId: 1,
       artistName: 'Ricky',
+      userId: 0,
       bodyLocation: 'Butt hole',
       size: '15 cm by 5cm',
       quote: null,

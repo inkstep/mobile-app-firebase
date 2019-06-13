@@ -59,6 +59,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapDialogToState(event);
     } else if (event is LoadUser) {
       yield* _mapLoadUserToState(event);
+    } else if (event is SendPhoto) {
+      yield* _mapSendPhoto(event);
     }
   }
 
@@ -197,7 +199,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneysWithUser userState = currentState;
 
       final prefs = await SharedPreferences.getInstance();
-      bool firstTime = prefs.getBool('firstTime');
+      final bool firstTime = prefs.getBool('firstTime');
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
@@ -215,7 +217,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     final prefs = await SharedPreferences.getInstance();
-    bool firstTime = prefs.getBool('firstTime');
+    final bool firstTime = prefs.getBool('firstTime');
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
       final User user = await journeysRepository.getUser(userId);
@@ -286,7 +288,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     return CardModel(
       description: je.mentalImage,
+      artistId: artist.artistID,
       artistName: artist.name,
+      userId: je.userId,
       bodyLocation: je.position,
       size: je.size,
       images: images,
@@ -297,6 +301,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       journeyId: je.id,
       bookedDate: bookedDate,
     );
+  }
+
+  Stream<JourneysState> _mapSendPhoto(SendPhoto event) async* {
+    await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
+    await journeysRepository.updateStage(Finished(), event.journeyId);
   }
 
   void _handleDataMessage(Map<String, dynamic> message) {
