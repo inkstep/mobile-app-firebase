@@ -15,7 +15,6 @@ import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 import '../care_screen.dart';
 
 class JourneyCard extends StatefulWidget {
@@ -170,6 +169,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                             final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                             journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId,
                                 card.journeyId));
+                            card.stage = Finished();
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },
