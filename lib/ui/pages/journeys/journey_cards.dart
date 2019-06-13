@@ -88,7 +88,7 @@ class LoadedJourneyCard extends AnimatedWidget {
     final Animation<double> progression = listenable;
     final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: EdgeInsets.zero,
       child: InkWell(
         onTap: () {
           final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -174,15 +174,16 @@ class LoadedJourneyCard extends AnimatedWidget {
                     ),
                   ),
                   Spacer(),
-                  card.bookedDate == null ? Spacer() :
-                  DescribedIconButton(
-                    icon: Icons.healing,
-                    featureId: card.aftercareID,
-                    onPressed: () {
-                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openAftercareScreen(context, card.bookedDate);
-                    },
-                  ),
+                  card.bookedDate == null
+                      ? Spacer()
+                      : DescribedIconButton(
+                          icon: Icons.healing,
+                          featureId: card.aftercareID,
+                          onPressed: () {
+                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                            nav.openAftercareScreen(context, card.bookedDate);
+                          },
+                        ),
                 ],
               ),
             ),
