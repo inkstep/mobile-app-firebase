@@ -242,6 +242,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (je.stage is BookedIn) {
       final BookedIn stage = je.stage;
       bookedDate = stage.bookedDate;
+    } else if (je.stage is Aftercare) {
+      final Aftercare stage = je.stage;
+      bookedDate = stage.appointmentDate;
     }
 
     return CardModel(
