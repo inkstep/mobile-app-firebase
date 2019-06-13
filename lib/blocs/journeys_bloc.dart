@@ -198,6 +198,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       palette: palette,
       journeyId: je.id,
       bookedDate: bookedDate,
+      availability: je.availability,
+      placement: je.position,
+      size: je.size,
     );
   }
 }
