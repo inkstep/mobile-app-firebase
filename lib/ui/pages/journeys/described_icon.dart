@@ -26,8 +26,8 @@ class DescribedIconButton extends StatelessWidget {
         featureId: featureId,
         icon: icon,
         color: Theme.of(context).accentColor,
-        title: 'Aftercare Information',
-        description: 'Tap the care icon to see your current aftercare information.',
+        title: 'Care Information',
+        description: 'Tap the care icon to see your current tattoo care information.',
         child: IconButton(
           icon: Icon(
             icon,

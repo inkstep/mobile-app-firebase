@@ -68,7 +68,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
             _animation.addStatusListener((status) {
               if (status == AnimationStatus.completed) {
                 if (loadedState.firstTime == true) {
-                  FeatureDiscovery.discoverFeatures(context, ['aftercare_button_0']);
+                  FeatureDiscovery.discoverFeatures(context, ['care_button_0']);
                   journeyBloc.dispatch(ShownFeatureDiscovery());
                 }
               }

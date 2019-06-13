@@ -202,7 +202,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                           featureId: card.aftercareID,
                           onPressed: () {
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                            nav.openAftercareScreen(context, card.bookedDate);
+                            nav.openCareScreen(context, card.bookedDate);
                           },
                         )
                       : Spacer(),

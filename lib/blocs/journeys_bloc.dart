@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
-import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
@@ -21,8 +20,22 @@ import 'journeys_state.dart';
 class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   JourneysBloc({
     @required this.journeysRepository,
-  });
+  }) : firebase = FirebaseMessaging() {
+    print('configuring firebase');
+    firebase.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('onMessage: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('onLaunch: $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('onResume: $message');
+      },
+    );
+  }
 
+  final FirebaseMessaging firebase;
   final JourneysRepository journeysRepository;
 
   @override
@@ -58,8 +71,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     User user;
     bool firstTime;
     if (currentState is JourneysNoUser) {
-      final FirebaseMessaging fm = sl.get<FirebaseMessaging>();
-      final String pushToken = await fm.getToken();
+      final String pushToken = await firebase.getToken();
 
       final UserEntity user = UserEntity(
         name: event.result.name,

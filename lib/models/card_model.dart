@@ -41,5 +41,5 @@ class CardModel extends Equatable {
   PaletteGenerator palette;
   DateTime bookedDate;
 
-  String get aftercareID => 'aftercare_button_$index';
+  String get aftercareID => 'care_button_$index';
 }
