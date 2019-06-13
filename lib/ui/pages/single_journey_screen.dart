@@ -237,37 +237,83 @@ class SingleJourneyScreen extends StatelessWidget {
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
-                Expanded(
-                  child: StaggeredGridView.countBuilder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    crossAxisCount: 4,
-                    itemCount: card.images.length,
-                    itemBuilder: (BuildContext context, int index) => Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(image: card.images[index].image)),
-                          child: Center(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Text('${index + 1}'),
+                Text(
+                  'Inspiration.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: StaggeredGridView.countBuilder(
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      crossAxisCount: 4,
+                      itemCount: card.images.length,
+                      itemBuilder: (BuildContext context, int index) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: card.images[index].image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            margin: EdgeInsets.all(4.0),
+                            child: Container(
+                              transform: Matrix4.translationValues(10, 10, 10),
+                              alignment: Alignment.bottomRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Text('${index + 1}'),
+                              ),
                             ),
                           ),
-                        ),
-                    staggeredTileBuilder: (int index) =>
-                        StaggeredTile.count(2, index.isEven ? 2 : 1),
-                    mainAxisSpacing: 4.0,
-                    crossAxisSpacing: 4.0,
+                      staggeredTileBuilder: (int index) =>
+                          StaggeredTile.count(2, index.isEven ? 2 : 1),
+                      mainAxisSpacing: 4.0,
+                      crossAxisSpacing: 4.0,
+                    ),
                   ),
-//                  GridView.count(
-//                    scrollDirection: Axis.vertical,
-//                    crossAxisCount: 3,
-//                    children: List.generate(card.images.length, (index) {
-//                      return card.images[index];
-//                    }),
-//                  ),
                 ),
-//                GridView.builder(gridDelegate: null, itemBuilder: null)
-                Text(card.stage.toString()),
+                Text(
+                  'Placement.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Icon(
+                  Icons.airline_seat_recline_extra,
+                  size: 40.0,
+                  color: Theme.of(context).accentIconTheme.color,
+                ),
+                Text(
+                  'Size.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+//                SizeSelector(
+//                  controller: null,
+//                  heightController: TextEditingController(text: '32'),
+//                  widthController: TextEditingController(text: '29'),
+//                ),
+                Text(
+                  'Avaliability.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  'Price.',
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           ),
