@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
-import 'package:intl/intl.dart';
+import 'package:inkstep/ui/components/date_block.dart';
 
 class QuoteDialog extends StatelessWidget {
   const QuoteDialog({
@@ -77,41 +77,7 @@ class DateDialog extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      DateFormat.E().format(stage.appointmentDate),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.subhead,
-                    ),
-                    Text(
-                      DateFormat.d().format(stage.appointmentDate),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline,
-                    ),
-                    Text(
-                      DateFormat.LLLL().format(stage.appointmentDate),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.subhead,
-                    ),
-                  ],
-                ),
-                VerticalDivider(
-                  color: Theme.of(context).cardColor,
-                  width: 20,
-                  indent: 3.0,
-                ),
-                Expanded(
-                  child: Text(
-                    DateFormat.jm().format(stage.appointmentDate),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.subhead,
-                  ),
-                ),
-              ],
-            ),
+            child: DateBlock(date: stage.appointmentDate),
           ),
           Text(
             'You happy with this?',
