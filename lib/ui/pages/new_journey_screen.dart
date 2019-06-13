@@ -115,7 +115,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         submitCallback: FormElementBuilder(
           builder: (i, d, c) {},
           controller: controller,
-          onSubmitCallback: (_) {},
+          onSubmitCallback: (_) {setState(() {});},
         ).navToNextPage,
       ),
       LongTextInputFormElement(
