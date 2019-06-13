@@ -57,6 +57,7 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
             ? LoadedJourneyCard(
                 card: snapshot.data,
                 animation: loopedAnimation,
+                animationController: loopController,
               )
             : Card(
                 margin: EdgeInsets.symmetric(horizontal: 8.0),
@@ -77,16 +78,20 @@ class LoadedJourneyCard extends AnimatedWidget {
     Key key,
     @required this.card,
     @required Animation<double> animation,
+    @required this.animationController,
   }) : super(key: key, listenable: animation);
 
   final CardModel card;
-
-  static final _elevationTween = Tween<double>(begin: 0, end: 20);
+  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> progression = listenable;
     final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
+
+    final bool showCare = card.stage is BookedIn || card.stage is Aftercare;
+
+    final _elevationTween = Tween<double>(begin: card.stage.userActionRequired ? 0.95 : 1, end: 1);
+
     return Card(
       margin: EdgeInsets.zero,
       child: InkWell(
@@ -163,18 +168,27 @@ class LoadedJourneyCard extends AnimatedWidget {
                         );
                       }
                     },
-                    child: Chip(
-                      label: Text(card.stage.toString()),
-                      backgroundColor: accentColor,
-                      shadowColor: accentColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      elevation: card.stage.userActionRequired
-                          ? _elevationTween.evaluate(progression)
-                          : 0.0,
+                    child: ScaleTransition(
+                      scale: _elevationTween.animate(
+                        CurvedAnimation(
+                          parent: animationController,
+                          curve: Interval(
+                            0,
+                            1,
+                            curve: Curves.decelerate,
+                          ),
+                        ),
+                      ),
+                      child: Chip(
+                        avatar: card.stage.userActionRequired ? Icon(Icons.error) : null,
+                        label: Text(card.stage.toString()),
+                        backgroundColor: accentColor,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
                     ),
                   ),
                   Spacer(),
-                  (card.stage is BookedIn || card.stage is Aftercare)
+                      showCare
                       ? DescribedIconButton(
                           icon: Icons.healing,
                           featureId: card.aftercareID,
