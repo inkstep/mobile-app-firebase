@@ -143,9 +143,15 @@ class SingleJourneyScreen extends StatelessWidget {
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final List<String> backgroundPaths = [
+      'assets/bg2.jpg',
+      'assets/bg3.jpg',
+      'assets/bg4.jpg',
+      'assets/bg5.jpg',
+    ];
     return Center(
       child: Image.asset(
-        'assets/bg2.jpg',
+        (backgroundPaths..shuffle()).first,
         width: size.width,
         height: size.height,
         fit: BoxFit.fitHeight,
