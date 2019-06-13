@@ -26,8 +26,6 @@ void main() {
   // Set up Service Locator
   setup();
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
   runApp(Inkstep());
 }
 
@@ -48,7 +46,6 @@ class Inkstep extends StatefulWidget {
 class InkstepState extends State<Inkstep> {
   http.Client client;
   JourneysBloc _journeyBloc;
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   void initState() {
@@ -58,7 +55,9 @@ class InkstepState extends State<Inkstep> {
       journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
     );
 
-    _firebaseMessaging.configure(
+    final FirebaseMessaging fm = sl.get<FirebaseMessaging>();
+
+    fm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('onMessage: $message');
       },
@@ -69,17 +68,13 @@ class InkstepState extends State<Inkstep> {
         print('onResume: $message');
       },
     );
+
     // iOS Specific
 //    _firebaseMessaging.requestNotificationPermissions(
 //        const IosNotificationSettings(sound: true, badge: true, alert: true));
 //    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
 //      print("Settings registered: $settings");
 //    });
-
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      print('Push Messaging token: $token');
-    });
   }
 
   @override
