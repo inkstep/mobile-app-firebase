@@ -197,16 +197,16 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     );
   }
 
-  FloatingActionButton _aftercare() {
+  FloatingActionButton _care() {
     return FloatingActionButton(
       mini: true,
       backgroundColor: _disappearingBtnColour.value,
-      heroTag: 'aftercareBtn',
+      heroTag: 'careBtn',
       onPressed: () {
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-        nav.openAftercareScreen(context, widget.card.bookedDate);
+        nav.openCareScreen(context, widget.card.bookedDate);
       },
-      tooltip: 'Aftercare',
+      tooltip: 'Care',
       child: Icon(Icons.healing),
     );
   }
@@ -250,7 +250,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // The fabs to appear dropped down under the toggle when pressed
-          animatedDropDownFab(index: 0, fab: _aftercare()),
+          animatedDropDownFab(index: 0, fab: _care()),
           animatedDropDownFab(index: 1, fab: _delete()),
 
           // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
