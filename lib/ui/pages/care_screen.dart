@@ -6,7 +6,11 @@ class CareScreen extends StatelessWidget {
 
   final DateTime bookedTime;
 
-  Widget adviceWidget() {
+  static bool hasAdvice(DateTime bookedTime) {
+    return adviceWidget(bookedTime) != null;
+  }
+
+  static Widget adviceWidget(DateTime bookedTime) {
     final List<AdviceSnippet> advice = <AdviceSnippet>[
       AdviceSnippet(
         timeString: 'For the day before',
@@ -72,7 +76,7 @@ class CareScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AdviceSnippet advice = adviceWidget();
+    final AdviceSnippet advice = adviceWidget(bookedTime);
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
