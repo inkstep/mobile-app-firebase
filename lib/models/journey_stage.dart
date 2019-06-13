@@ -143,6 +143,20 @@ class Healed extends JourneyStage {
   int get numberRepresentation => 6;
 }
 
+class Finished extends JourneyStage {
+  @override
+  int get progress => 100;
+
+  @override
+  String toString() => 'Journey Complete';
+
+  @override
+  bool get userActionRequired => false;
+
+  @override
+  int get numberRepresentation => 7;
+}
+
 class InvalidStage extends JourneyStage {
   @override
   int get progress => 0;
