@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
@@ -56,7 +58,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     User user;
     bool firstTime;
     if (currentState is JourneysNoUser) {
-      final UserEntity user = UserEntity(name: event.result.name, email: event.result.email);
+      final FirebaseMessaging fm = sl.get<FirebaseMessaging>();
+      final String pushToken = await fm.getToken();
+
+      final UserEntity user = UserEntity(
+        name: event.result.name,
+        email: event.result.email,
+        token: pushToken,
+      );
+
       userId = await journeysRepository.saveUser(user);
       print('userID=$userId');
       if (userId == -1) {

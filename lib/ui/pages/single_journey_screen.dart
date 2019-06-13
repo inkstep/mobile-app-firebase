@@ -354,10 +354,9 @@ class SingleJourneyScreen extends StatelessWidget {
                       .subtitle
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
-                Icon(
-                  Icons.airline_seat_recline_extra,
-                  size: 40.0,
-                  color: Theme.of(context).accentIconTheme.color,
+                Text(
+                  card.bodyLocation ?? 'N/A',
+                  style: Theme.of(context).accentTextTheme.body1,
                 ),
                 Text(
                   'Size.',
@@ -366,17 +365,9 @@ class SingleJourneyScreen extends StatelessWidget {
                       .subtitle
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
-//                SizeSelector(
-//                  controller: null,
-//                  heightController: TextEditingController(text: '32'),
-//                  widthController: TextEditingController(text: '29'),
-//                ),
                 Text(
-                  'Avaliability.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
+                  card.size ?? 'N/A',
+                  style: Theme.of(context).accentTextTheme.body1,
                 ),
                 Text(
                   'Price.',
@@ -384,6 +375,10 @@ class SingleJourneyScreen extends StatelessWidget {
                       .accentTextTheme
                       .subtitle
                       .copyWith(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  '£XXX',
+                  style: Theme.of(context).accentTextTheme.body1,
                 ),
               ],
             ),

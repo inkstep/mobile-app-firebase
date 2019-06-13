@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,11 +49,32 @@ class InkstepState extends State<Inkstep> {
 
   @override
   void initState() {
+    super.initState();
     client = http.Client();
     _journeyBloc = JourneysBloc(
       journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
     );
-    super.initState();
+
+    final FirebaseMessaging fm = sl.get<FirebaseMessaging>();
+
+    fm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('onMessage: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('onLaunch: $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('onResume: $message');
+      },
+    );
+
+    // iOS Specific
+//    _firebaseMessaging.requestNotificationPermissions(
+//        const IosNotificationSettings(sound: true, badge: true, alert: true));
+//    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
+//      print("Settings registered: $settings");
+//    });
   }
 
   @override
