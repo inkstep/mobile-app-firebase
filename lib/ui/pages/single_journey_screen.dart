@@ -355,7 +355,7 @@ class SingleJourneyScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  card.placement ?? 'N/A',
+                  card.bodyLocation ?? 'N/A',
                   style: Theme.of(context).accentTextTheme.body1,
                 ),
                 Text(
@@ -367,17 +367,6 @@ class SingleJourneyScreen extends StatelessWidget {
                 ),
                 Text(
                   card.size ?? 'N/A',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                Text(
-                  'Avaliability.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  card.availability ?? 'N/A',
                   style: Theme.of(context).accentTextTheme.body1,
                 ),
                 Text(

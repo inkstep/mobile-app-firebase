@@ -7,20 +7,25 @@ import 'package:palette_generator/palette_generator.dart';
 class CardModel extends Equatable {
   CardModel({
     @required this.description,
-    @required this.placement,
     @required this.size,
-    @required this.availability,
     @required this.artistName,
     @required this.bodyLocation,
-    @required this.size,
     @required this.images,
     @required this.stage,
     @required this.index,
     @required this.palette,
     @required this.journeyId,
     @required this.bookedDate,
-  }) : super(<dynamic>[description, artistName, bodyLocation, size, images, stage,
-    index, bookedDate]);
+  }) : super(<dynamic>[
+          description,
+          artistName,
+          bodyLocation,
+          size,
+          images,
+          stage,
+          index,
+          bookedDate
+        ]);
 
   JourneyStage stage;
   String description;
@@ -32,10 +37,6 @@ class CardModel extends Equatable {
   int journeyId;
   PaletteGenerator palette;
   DateTime bookedDate;
-
-  String placement;
-  String size;
-  String availability;
 
   String get aftercareID => 'aftercare_button_$index';
 }
