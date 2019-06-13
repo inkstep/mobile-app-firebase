@@ -45,7 +45,13 @@ class JourneysRepository {
       'image_data': base64Encode(data),
     };
 
-    while (await webClient.saveImage(imageMap) == -1) {}
+    int sendLimit = 10;
+    int imageId = -1;
+    while ((imageId = await webClient.saveImage(imageMap)) == -1 && sendLimit > 0) {
+      sendLimit--;
+    }
+
+    return imageId;
   }
 
   Future<ArtistEntity> loadArtist(int artistId) async {
