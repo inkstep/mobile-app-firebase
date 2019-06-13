@@ -47,24 +47,17 @@ class CareScreen extends StatelessWidget {
     for (AdviceSnippet adviceDialog in advice) {
       DateTime adviceDate;
 
-      print(adviceDialog.timeOffset);
-
       if (adviceDialog.preCare) {
         adviceDate = bookedTime.subtract(adviceDialog.timeOffset);
       } else {
         adviceDate = bookedTime.add(adviceDialog.timeOffset);
       }
 
-      print(bookedTime);
-      print(adviceDate);
-
       if (curTime.isBefore(bookedTime)) {
-        print('Precare');
         if (curTime.isAfter(adviceDate)) {
           return adviceDialog;
         }
       } else {
-        print('Aftercare');
         if (curTime.isBefore(adviceDate)) {
           return adviceDialog;
         }
