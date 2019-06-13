@@ -199,7 +199,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneysWithUser userState = currentState;
 
       final prefs = await SharedPreferences.getInstance();
-      bool firstTime = prefs.getBool('firstTime');
+      final bool firstTime = prefs.getBool('firstTime');
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
@@ -217,7 +217,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     final prefs = await SharedPreferences.getInstance();
-    bool firstTime = prefs.getBool('firstTime');
+    final bool firstTime = prefs.getBool('firstTime');
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
       final User user = await journeysRepository.getUser(userId);
@@ -305,6 +305,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
   Stream<JourneysState> _mapSendPhoto(SendPhoto event) async* {
     await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
+    await journeysRepository.updateStage(Finished(), event.journeyId);
   }
 
   void _handleDataMessage(Map<String, dynamic> message) {

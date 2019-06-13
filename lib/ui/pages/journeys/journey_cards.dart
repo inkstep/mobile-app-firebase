@@ -168,7 +168,8 @@ class LoadedJourneyCard extends AnimatedWidget {
                               maxWidth: 800
                             );
                             final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                            journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId));
+                            journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId,
+                                card.journeyId));
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },

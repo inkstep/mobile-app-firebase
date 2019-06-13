@@ -75,11 +75,12 @@ class DateDenied extends DialogJourneyEvent {
 }
 
 class SendPhoto extends JourneysEvent {
-  SendPhoto(this.imageData, this.userId, this.artistId);
+  SendPhoto(this.imageData, this.userId, this.artistId, this.journeyId);
 
   final File imageData;
   final int userId;
   final int artistId;
+  final int journeyId;
 
   @override
   String toString() => 'SendPhoto';
