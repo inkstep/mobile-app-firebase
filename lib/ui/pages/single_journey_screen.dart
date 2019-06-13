@@ -143,13 +143,18 @@ class SingleJourneyScreen extends StatelessWidget {
 
   final CardModel card;
 
-  final List<Shadow> dropShadows = <Shadow>[
-    Shadow(
-      offset: Offset(1, 1),
-      blurRadius: 6.0,
-      color: Colors.black,
-    ),
-  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _backgroundImage(context),
+          _content(context),
+          _topLayerButtons(context),
+        ],
+      ),
+    );
+  }
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -197,29 +202,54 @@ class SingleJourneyScreen extends StatelessWidget {
   Widget _content(BuildContext context) {
     final String artistFirstName = card.artistName.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
+    final double fullWidth = MediaQuery.of(context).size.width;
+    final bool hasDate = card.bookedDate != null;
     return ListView(
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              // Where the linear gradient begins and ends
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              // Add one stop for each color. Stops should increase from 0 to 1
-              stops: const [0.1, 0.5],
-              colors: const [Colors.black54, Colors.transparent],
+        Stack(
+          alignment: Alignment.bottomLeft,
+          children: <Widget>[
+            if (hasDate)
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Opacity(
+                    opacity: 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DateBlock(
+                        date: card.bookedDate,
+                        onlyDate: true,
+                        scale: 1.75,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            Container(
+              width: fullWidth,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  // Where the linear gradient begins and ends
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  // Add one stop for each color. Stops should increase from 0 to 1
+                  stops: const [0.1, 0.5],
+                  colors: const [Colors.black54, Colors.transparent],
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: fullHeight * 0.65),
+                  LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: fullHeight * 0.65),
-              LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
-              SizedBox(height: 20),
-            ],
-          ),
+          ],
         ),
         Container(
           height: 800,
@@ -269,7 +299,6 @@ class SingleJourneyScreen extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            margin: EdgeInsets.all(4.0),
                             child: Container(
                               transform: Matrix4.translationValues(10, 10, 10),
                               alignment: Alignment.bottomRight,
@@ -281,8 +310,8 @@ class SingleJourneyScreen extends StatelessWidget {
                           ),
                       staggeredTileBuilder: (int index) =>
                           StaggeredTile.count(2, index.isEven ? 2 : 1),
-                      mainAxisSpacing: 4.0,
-                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 16.0,
+                      crossAxisSpacing: 16.0,
                     ),
                   ),
                 ),
@@ -329,19 +358,6 @@ class SingleJourneyScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _backgroundImage(context),
-          _content(context),
-          _topLayerButtons(context),
-        ],
-      ),
     );
   }
 }
