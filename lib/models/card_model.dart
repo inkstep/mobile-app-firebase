@@ -11,6 +11,7 @@ class CardModel extends Equatable {
     @required this.artistName,
     @required this.bodyLocation,
     @required this.images,
+    @required this.quote,
     @required this.stage,
     @required this.index,
     @required this.palette,
@@ -21,6 +22,7 @@ class CardModel extends Equatable {
           artistName,
           bodyLocation,
           size,
+          quote,
           images,
           stage,
           index,
@@ -33,6 +35,7 @@ class CardModel extends Equatable {
   String bodyLocation;
   String size;
   List<Image> images;
+  TextRange quote;
   int index;
   int journeyId;
   PaletteGenerator palette;

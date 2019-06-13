@@ -11,11 +11,14 @@ abstract class JourneyStage extends Equatable {
       case 1:
         return QuoteReceived(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 2:
-        return WaitingForAppointmentOffer();
+        return WaitingForAppointmentOffer(
+            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 3:
-        return AppointmentOfferReceived(DateTime.parse(json['bookingDate']));
+        return AppointmentOfferReceived(DateTime.parse(json['bookingDate']),
+            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 4:
-        return BookedIn(DateTime.parse(json['bookingDate']));
+        return BookedIn(DateTime.parse(json['bookingDate']),
+            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 5:
         return Aftercare(DateTime.parse(json['bookingDate']));
       case 6:
@@ -28,6 +31,12 @@ abstract class JourneyStage extends Equatable {
   int get progress;
   bool get userActionRequired;
   int get numberRepresentation;
+}
+
+abstract class JourneyStageWithQuote extends JourneyStage{
+  JourneyStageWithQuote(this.quote);
+
+  final TextRange quote;
 }
 
 class WaitingForQuote extends JourneyStage {
@@ -44,10 +53,9 @@ class WaitingForQuote extends JourneyStage {
   int get numberRepresentation => 0;
 }
 
-class QuoteReceived extends JourneyStage {
-  QuoteReceived(this.quote);
+class QuoteReceived extends JourneyStageWithQuote {
+  QuoteReceived(TextRange quote) : super(quote);
 
-  final TextRange quote;
 
   @override
   int get progress => 30;
@@ -63,7 +71,9 @@ class QuoteReceived extends JourneyStage {
   int get numberRepresentation => 1;
 }
 
-class WaitingForAppointmentOffer extends JourneyStage {
+class WaitingForAppointmentOffer extends JourneyStageWithQuote {
+  WaitingForAppointmentOffer(TextRange quote) : super(quote);
+
   @override
   int get progress => 35;
 
@@ -77,8 +87,8 @@ class WaitingForAppointmentOffer extends JourneyStage {
   int get numberRepresentation => 2;
 }
 
-class AppointmentOfferReceived extends JourneyStage {
-  AppointmentOfferReceived(this.appointmentDate);
+class AppointmentOfferReceived extends JourneyStageWithQuote {
+  AppointmentOfferReceived(this.appointmentDate, TextRange quote) : super(quote);
   final DateTime appointmentDate;
 
   @override
@@ -94,8 +104,8 @@ class AppointmentOfferReceived extends JourneyStage {
   int get numberRepresentation => 3;
 }
 
-class BookedIn extends JourneyStage {
-  BookedIn(this.bookedDate);
+class BookedIn extends JourneyStageWithQuote {
+  BookedIn(this.bookedDate, TextRange quote) : super(quote);
   final DateTime bookedDate;
 
   @override

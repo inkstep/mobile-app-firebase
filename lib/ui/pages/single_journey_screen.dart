@@ -235,6 +235,7 @@ class SingleJourneyScreen extends StatelessWidget {
     final String artistFirstName = card.artistName.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
+    final bool hasQuote = card.quote != null;
     final bool hasDate = card.bookedDate != null;
     return ListView(
       children: <Widget>[
@@ -369,17 +370,22 @@ class SingleJourneyScreen extends StatelessWidget {
                   card.size ?? 'N/A',
                   style: Theme.of(context).accentTextTheme.body1,
                 ),
-                Text(
-                  'Price.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  '£XXX',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
+                if (hasQuote)
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        'Price.',
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .subtitle
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '£${card.quote.start}-£${card.quote.end}',
+                        style: Theme.of(context).accentTextTheme.body1,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

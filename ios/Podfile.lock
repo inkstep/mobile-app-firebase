@@ -4,6 +4,8 @@ PODS:
     - BSGridCollectionViewLayout (= 1.2.3)
     - BSImageView (= 1.0.3)
   - BSImageView (1.0.3)
+  - Firebase/Analytics (6.1.0):
+    - Firebase/Core
   - Firebase/Core (6.1.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.0.1)
@@ -12,6 +14,10 @@ PODS:
   - Firebase/Messaging (6.1.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 4.0.1)
+  - firebase_analytics (0.0.1):
+    - Firebase/Analytics (~> 6.0)
+    - Firebase/Core
+    - Flutter
   - firebase_messaging (0.0.1):
     - Firebase/Core
     - Firebase/Messaging
@@ -78,6 +84,7 @@ PODS:
   - Protobuf (3.8.0)
 
 DEPENDENCIES:
+  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
@@ -99,6 +106,8 @@ SPEC REPOS:
     - Protobuf
 
 EXTERNAL SOURCES:
+  firebase_analytics:
+    :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
@@ -111,6 +120,7 @@ SPEC CHECKSUMS:
   BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
+  firebase_analytics: e5181dde3c26c83748ab07aca073139a572ede7e
   firebase_messaging: b25b2fa94e685146bcf9d706ed87b4e95cd2a17d
   FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
