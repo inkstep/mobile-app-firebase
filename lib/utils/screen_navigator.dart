@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/models/card_model.dart';
-import 'package:inkstep/ui/pages/aftercare_screen.dart';
+import 'package:inkstep/ui/pages/care_screen.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
@@ -82,7 +82,7 @@ class ScreenNavigator {
   void openAftercareScreen(BuildContext context, DateTime bookedTime) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => AfterCareScreen(
+      MaterialPageRoute<dynamic>(builder: (context) => CareScreen(
         bookedTime: bookedTime,
       ), fullscreenDialog: true),
     );

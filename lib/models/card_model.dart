@@ -11,19 +11,24 @@ class CardModel extends Equatable {
     @required this.size,
     @required this.availability,
     @required this.artistName,
+    @required this.bodyLocation,
+    @required this.size,
     @required this.images,
     @required this.stage,
-    @required this.position,
+    @required this.index,
     @required this.palette,
     @required this.journeyId,
     @required this.bookedDate,
-  }) : super(<dynamic>[description, artistName, images, stage, position, bookedDate]);
+  }) : super(<dynamic>[description, artistName, bodyLocation, size, images, stage,
+    index, bookedDate]);
 
   JourneyStage stage;
   String description;
   String artistName;
+  String bodyLocation;
+  String size;
   List<Image> images;
-  int position;
+  int index;
   int journeyId;
   PaletteGenerator palette;
   DateTime bookedDate;
@@ -32,5 +37,5 @@ class CardModel extends Equatable {
   String size;
   String availability;
 
-  String get aftercareID => 'aftercare_button_$position';
+  String get aftercareID => 'aftercare_button_$index';
 }

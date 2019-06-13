@@ -7,40 +7,34 @@ import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+import 'journeys/stage_dialogs.dart';
+
 class DropdownFloatingActionButtons extends StatefulWidget {
-  const DropdownFloatingActionButtons(
-      {this.onPressed, this.tooltip, this.icon, @required this.bookedDate});
+  const DropdownFloatingActionButtons({@required this.card});
 
-  final Function() onPressed;
-  final String tooltip;
-  final IconData icon;
-
-  final DateTime bookedDate;
+  final CardModel card;
 
   @override
-  _DropdownFloatingActionButtonsState createState() =>
-      _DropdownFloatingActionButtonsState(bookedDate);
+  _DropdownFloatingActionButtonsState createState() => _DropdownFloatingActionButtonsState();
 }
 
 class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionButtons>
     with SingleTickerProviderStateMixin {
-  _DropdownFloatingActionButtonsState(this.bookedDate);
-
-  bool isOpened = false;
   AnimationController _animationController;
   Animation<Color> _disappearingBtnColour;
   Animation<double> _animateIcon;
   Animation<double> _translateButton;
+  bool isOpened = false;
+  int _numFabs;
 
   final Curve _curve = Curves.easeOut;
-  final DateTime bookedDate;
-
-  static const double _fabMiniHeight = 40;
-  static const int _fabSeparation = 8;
-  static const int _numFabs = 3;
+  final double _fabMiniHeight = 40;
+  final int _fabSeparation = 8;
 
   @override
   void initState() {
+    _numFabs = widget.card.bookedDate == null ? 2 : 3;
+
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
         setState(() {});
@@ -106,9 +100,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'aftercareBtn',
       onPressed: () {
-        print('opening aftercare');
-//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//        nav.openAftercareScreen(context, bookedDate);
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.openAftercareScreen(context, widget.card.bookedDate);
       },
       tooltip: 'Aftercare',
       child: Icon(Icons.healing),
@@ -121,7 +114,16 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'deleteBtn',
       onPressed: () {
-        print('opening delete');
+        showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return DeleteJourneyDialog(
+              artistName: widget.card.artistName,
+              onAcceptance: () {},
+              onDenial: () {},
+            );
+          },
+        );
       },
       tooltip: 'Delete',
       child: Icon(Icons.delete),
@@ -140,24 +142,44 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        // The fabs to appear dropped down under the toggle when pressed
-        animatedDropDownFab(index: 0, fab: _aftercare()),
-        animatedDropDownFab(index: 1, fab: _delete()),
+    if (_numFabs == 3) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          // The fabs to appear dropped down under the toggle when pressed
+          animatedDropDownFab(index: 0, fab: _aftercare()),
+          animatedDropDownFab(index: 1, fab: _delete()),
 
-        // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            -(_numFabs - 1) * (_fabSeparation + _fabMiniHeight) * 1.0,
-            0.0,
+          // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
+          Transform(
+            transform: Matrix4.translationValues(
+              0.0,
+              -(_numFabs - 1) * (_fabSeparation + _fabMiniHeight) * 1.0,
+              0.0,
+            ),
+            child: _toggle(),
           ),
-          child: _toggle(),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          // The fabs to appear dropped down under the toggle when pressed
+          animatedDropDownFab(index: 0, fab: _delete()),
+
+          // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
+          Transform(
+            transform: Matrix4.translationValues(
+              0.0,
+              -(_numFabs - 1) * (_fabSeparation + _fabMiniHeight) * 1.0,
+              0.0,
+            ),
+            child: _toggle(),
+          ),
+        ],
+      );
+    }
   }
 }
 
@@ -165,19 +187,6 @@ class SingleJourneyScreen extends StatelessWidget {
   SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
 
   final CardModel card;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _backgroundImage(context),
-          _content(context),
-          _topLayerButtons(context),
-        ],
-      ),
-    );
-  }
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -215,7 +224,7 @@ class SingleJourneyScreen extends StatelessWidget {
               },
             ),
             Spacer(),
-            DropdownFloatingActionButtons(bookedDate: card.bookedDate),
+            DropdownFloatingActionButtons(card: card),
           ],
         ),
       ),
@@ -387,6 +396,19 @@ class SingleJourneyScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _backgroundImage(context),
+          _content(context),
+          _topLayerButtons(context),
+        ],
+      ),
     );
   }
 }
