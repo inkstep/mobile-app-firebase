@@ -7,6 +7,7 @@ import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
+import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
@@ -27,14 +28,23 @@ class ScreenNavigator {
     );
   }
 
-  void openViewJourneysScreenWithNewDevice(BuildContext context) {
+  void openLoginScreen(BuildContext context) {
+    Navigator.pushReplacement<dynamic, dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+          builder: (context) => LoginScreen(
+          )),
+    );
+  }
+
+  void openViewJourneysScreenWithNewDevice(BuildContext context, int userId) {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
       MaterialPageRoute<dynamic>(
           builder: (context) => JourneysScreen(
                 onInit: () {
                   final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                  journeyBloc.dispatch(LoadJourneys());
+                  journeyBloc.dispatch(LoadUser(userId));
                 },
               )),
     );

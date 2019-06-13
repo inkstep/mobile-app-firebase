@@ -15,6 +15,13 @@ class AddJourney extends JourneysEvent {
   String toString() => 'AddJourney { formResult: $result }';
 }
 
+class LoadUser extends JourneysEvent {
+  LoadUser(this.userId);
+  final int userId;
+  @override
+  String toString() => 'LoadUser';
+}
+
 class LoadJourneys extends JourneysEvent {
   @override
   String toString() => 'LoadJourneys';

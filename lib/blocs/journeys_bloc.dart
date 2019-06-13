@@ -17,7 +17,9 @@ import 'journeys_event.dart';
 import 'journeys_state.dart';
 
 class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
-  JourneysBloc({@required this.journeysRepository});
+  JourneysBloc({
+    @required this.journeysRepository,
+  });
 
   final JourneysRepository journeysRepository;
 
@@ -34,6 +36,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapShownFeatureDiscoveryState(event);
     } else if (event is DialogJourneyEvent) {
       yield* _mapDialogState(event);
+    } else if (event is LoadUser) {
+      yield* _mapLoadUserState(event);
     }
   }
 
@@ -128,19 +132,20 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield errorState.prev;
     }
 
-    if (currentState is JourneysNoUser) {
-      const userId = 0;
-      final User user = await journeysRepository.getUser(userId);
-      print('Loading with fake user 0: $user');
-      final cards = await _getCards(0);
-      print('Loaded initial cards with fake user 0: $cards');
-
-      yield JourneysWithUser(
-        user: user,
-        cards: cards,
-        firstTime: true,
-      );
-    } else if (currentState is JourneysWithUser) {
+//    if (currentState is JourneysNoUser) {
+//      const userId = 0;
+//      final User user = await journeysRepository.getUser(userId);
+//      print('Loading with fake user 0: $user');
+//      final cards = await _getCards(0);
+//      print('Loaded initial cards with fake user 0: $cards');
+//
+//      yield JourneysWithUser(
+//        user: user,
+//        cards: cards,
+//        firstTime: true,
+//      );
+//    } else
+    if (currentState is JourneysWithUser) {
       final JourneysWithUser userState = currentState;
 
       final cards = await _getCards(userState.user.id);
@@ -148,6 +153,27 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
       yield JourneysWithUser(
           cards: cards, user: userState.user, firstTime: userState.firstTime ?? true);
+    }
+  }
+
+  Stream<JourneysState> _mapLoadUserState(LoadUser event) async* {
+    final JourneysState journeysState = currentState;
+
+    if (journeysState is JourneyError) {
+      final JourneyError errorState = journeysState;
+      yield errorState.prev;
+    }
+
+    if (currentState is JourneysNoUser) {
+      final userId = event.userId;
+      final User user = await journeysRepository.getUser(userId);
+      final cards = await _getCards(userId);
+
+      yield JourneysWithUser(
+        user: user,
+        cards: cards,
+        firstTime: true,
+      );
     }
   }
 

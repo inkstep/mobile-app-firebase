@@ -43,7 +43,7 @@ void main() {
       await tester.tap(button);
       await tester.pump();
 
-      verify(nav.openViewJourneysScreenWithNewDevice(any));
+      verify(nav.openLoginScreen(any));
     });
 
     testWidgets('Can get to artist page from onboarding', (WidgetTester tester) async {
