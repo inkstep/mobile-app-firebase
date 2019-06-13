@@ -70,7 +70,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     // Setup User if not already done
     int userId = -1;
     User user;
-    bool firstTime=true;
+    bool firstTime = true;
     print('doing a firstTime thing');
     if (currentState is JourneysNoUser) {
       final String pushToken = await firebase.getToken();
@@ -92,7 +92,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = journeysWithUser.user;
       userId = user.id;
       final prefs = await SharedPreferences.getInstance();
-      firstTime = prefs.getBool('firstTime');//journeysWithUser.firstTime;
+      firstTime = prefs.getBool('firstTime');
+      prefs.setInt('userId', userId);
       print('firstTime is set to: $firstTime');
     }
 
@@ -164,7 +165,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneysWithUser userState = currentState;
 
       final prefs = await SharedPreferences.getInstance();
-      bool firstTime = prefs.getBool('firstTime');
+      final bool firstTime = prefs.getBool('firstTime');
+      prefs.setInt('userId', userState.user.id);
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
@@ -182,9 +184,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
 
     final prefs = await SharedPreferences.getInstance();
-    bool firstTime = prefs.getBool('firstTime');
+    final bool firstTime = prefs.getBool('firstTime');
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
+      prefs.setInt('userId', userId);
       final User user = await journeysRepository.getUser(userId);
       final cards = await _getCards(userId);
 

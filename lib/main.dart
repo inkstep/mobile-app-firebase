@@ -8,7 +8,10 @@ import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:inkstep/resources/web_repository.dart';
+import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'blocs/journeys_event.dart';
 
 void main() {
   // Set up error handling
@@ -45,6 +48,8 @@ class Inkstep extends StatefulWidget {
 class InkstepState extends State<Inkstep> {
   http.Client client;
   JourneysBloc _journeyBloc;
+  int localUserId = -1;
+  void Function(int) updateUserId;
 
   @override
   void initState() {
@@ -60,6 +65,7 @@ class InkstepState extends State<Inkstep> {
 //    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
 //      print("Settings registered: $settings");
 //    });
+    updateUserId = (userId) {localUserId = userId;};
   }
 
   @override
@@ -103,7 +109,7 @@ class InkstepState extends State<Inkstep> {
           cursorColor: baseColors['dark'],
           toggleableActiveColor: baseColors['dark'],
         ),
-        home: Onboarding(),
+        home:  _setInitialState(updateUserId: updateUserId, localUserId: localUserId),
       ),
       bloc: _journeyBloc,
     );
@@ -143,4 +149,50 @@ class InkstepState extends State<Inkstep> {
   IconThemeData _getIconWithColor(Color color) => IconThemeData(
         color: color,
       );
+}
+
+class _setInitialState extends StatelessWidget {
+  const _setInitialState({
+    Key key,
+    @required this.updateUserId,
+    @required this.localUserId,
+  }) : super(key: key);
+
+  final void Function(int) updateUserId;
+  final int localUserId;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: localUserExists(updateUserId),
+      builder: (buildContext, snapshot) {
+        if(snapshot.hasData) {
+          if(snapshot.data){
+            // Return your login here
+            return Onboarding();
+          }
+          // Return your home here
+          return JourneysScreen(onInit: () {
+              final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+              journeyBloc.dispatch(LoadUser(localUserId));
+            }
+          );
+        } else {
+          // Return loading screen while reading preferences
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+}
+
+Future<bool> localUserExists(void Function(int) updateUserId) async {
+  final prefs = await SharedPreferences.getInstance();
+  int userId = prefs.getInt('userId');
+  final bool toReturn = userId == null;
+  if (!toReturn) {
+    updateUserId(userId);
+  }
+  print(userId);
+  return toReturn;
 }
