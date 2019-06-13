@@ -26,8 +26,6 @@ void main() {
   // Set up Service Locator
   setup();
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
   runApp(Inkstep());
 }
 
