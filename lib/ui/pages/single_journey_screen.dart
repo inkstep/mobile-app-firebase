@@ -34,6 +34,10 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   final Curve _curve = Curves.easeOut;
   final DateTime bookedDate;
 
+  static const double _fabMiniHeight = 40;
+  static const int _fabSeparation = 8;
+  static const int _numFabs = 3;
+
   @override
   void initState() {
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
@@ -57,7 +61,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
     _translateButton = Tween<double>(
       begin: 0,
-      end: 24,
+      end: _fabMiniHeight + _fabSeparation,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -81,22 +85,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     isOpened = !isOpened;
   }
 
-  Widget image() {
-    return FloatingActionButton(
-      mini: true,
-      backgroundColor: _disappearingBtnColour.value,
-      heroTag: 'aftercareBtn',
-      onPressed: () {
-        print('opening aftercare');
-//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//        nav.openAftercareScreen(context, bookedDate);
-      },
-      tooltip: 'Image',
-      child: Icon(Icons.healing),
-    );
-  }
-
-  Widget toggle() {
+  FloatingActionButton _toggle() {
     return FloatingActionButton(
       mini: true,
       heroTag: 'toggleBtn',
@@ -110,27 +99,61 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     );
   }
 
+  FloatingActionButton _aftercare() {
+    return FloatingActionButton(
+      mini: true,
+      backgroundColor: _disappearingBtnColour.value,
+      heroTag: 'aftercareBtn',
+      onPressed: () {
+        print('opening aftercare');
+//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//        nav.openAftercareScreen(context, bookedDate);
+      },
+      tooltip: 'Aftercare',
+      child: Icon(Icons.healing),
+    );
+  }
+
+  FloatingActionButton _delete() {
+    return FloatingActionButton(
+      mini: true,
+      backgroundColor: _disappearingBtnColour.value,
+      heroTag: 'deleteBtn',
+      onPressed: () {
+        print('opening delete');
+      },
+      tooltip: 'Delete',
+      child: Icon(Icons.delete),
+    );
+  }
+
+  Widget animatedDropDownFab({@required int index, @required FloatingActionButton fab}) {
+    return Transform(
+        transform: Matrix4.translationValues(
+          0.0,
+          (_translateButton.value * (index + 1)) - (index * (_fabMiniHeight + _fabSeparation)),
+          0.0,
+        ),
+        child: fab);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            _translateButton.value * 2.0,
-            0.0,
-          ),
-          child: image(),
-        ),
+        // The fabs to appear dropped down under the toggle when pressed
+        animatedDropDownFab(index: 0, fab: _aftercare()),
+        animatedDropDownFab(index: 1, fab: _delete()),
 
-        // This toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
+        // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            -48,
+            -(_numFabs - 1) * (_fabSeparation + _fabMiniHeight) * 1.0,
             0.0,
           ),
-          child: toggle(),
+          child: _toggle(),
         ),
       ],
     );
