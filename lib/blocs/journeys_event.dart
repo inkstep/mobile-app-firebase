@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:meta/meta.dart';
@@ -64,4 +66,15 @@ class DateDenied extends DialogJourneyEvent {
 
   @override
   String toString() => 'DateDenied';
+}
+
+class SendPhoto extends JourneysEvent {
+  SendPhoto(this.imageData, this.userId, this.artistId);
+
+  final File imageData;
+  final int userId;
+  final int artistId;
+
+  @override
+  String toString() => 'SendPhoto';
 }

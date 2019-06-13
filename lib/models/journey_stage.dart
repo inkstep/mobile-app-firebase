@@ -144,7 +144,7 @@ class Healed extends JourneyStage {
   int get progress => 95;
 
   @override
-  String toString() => 'Send artist a picture?';
+  String toString() => 'Your fully healed!!!';
 
   @override
   bool get userActionRequired => true;

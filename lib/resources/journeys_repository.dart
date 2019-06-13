@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -81,5 +82,26 @@ class JourneysRepository {
       'Stage': updateStage.numberRepresentation
     };
     return await webClient.updateRow(journeyMap, journeyId);
+  }
+
+  Future<bool> sendArtistPhoto(File imageData, int userId, int artistId) async {
+    final List<int> bytes = imageData.readAsBytesSync();
+    final String encodedImage = base64Encode(bytes);
+
+    final Map<String, dynamic> photoMap = <String, dynamic>{
+      'image_data': encodedImage,
+      'artist_id': artistId,
+      'user_id': userId
+    };
+
+    print(artistId);
+    print(userId);
+
+    int sendLimit = 10;
+    while (!await webClient.sendArtistPhoto(photoMap) && sendLimit > 0) {
+      sendLimit--;
+    }
+
+    return true;
   }
 }

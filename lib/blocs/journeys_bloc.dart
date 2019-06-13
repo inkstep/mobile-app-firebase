@@ -54,6 +54,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapDialogState(event);
     } else if (event is LoadUser) {
       yield* _mapLoadUserState(event);
+    } else if (event is SendPhoto) {
+      yield* _mapSendPhoto(event);
     }
   }
 
@@ -246,7 +248,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     return CardModel(
       description: je.mentalImage,
+      artistId: artist.artistID,
       artistName: artist.name,
+      userId: je.userId,
       bodyLocation: je.position,
       size: je.size,
       images: images,
@@ -257,5 +261,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       journeyId: je.id,
       bookedDate: bookedDate,
     );
+  }
+
+  Stream<JourneysState> _mapSendPhoto(SendPhoto event) async* {
+    await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
   }
 }

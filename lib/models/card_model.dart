@@ -8,7 +8,9 @@ class CardModel extends Equatable {
   CardModel({
     @required this.description,
     @required this.size,
+    @required this.artistId,
     @required this.artistName,
+    @required this.userId,
     @required this.bodyLocation,
     @required this.images,
     @required this.quote,
@@ -19,7 +21,9 @@ class CardModel extends Equatable {
     @required this.bookedDate,
   }) : super(<dynamic>[
           description,
+          artistId,
           artistName,
+          userId,
           bodyLocation,
           size,
           quote,
@@ -31,7 +35,9 @@ class CardModel extends Equatable {
 
   JourneyStage stage;
   String description;
+  int artistId;
   String artistName;
+  int userId;
   String bodyLocation;
   String size;
   List<Image> images;

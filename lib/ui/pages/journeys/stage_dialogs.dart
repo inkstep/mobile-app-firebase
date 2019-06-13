@@ -91,6 +91,48 @@ class DateDialog extends StatelessWidget {
   }
 }
 
+class PictureDialog extends StatelessWidget {
+  const PictureDialog({Key key, @required this.onAcceptance, @required this.onDenial}) : super(key:
+key);
+
+  final VoidCallback onAcceptance;
+  final VoidCallback onDenial;
+
+  @override
+  Widget build(BuildContext context) {
+    return RoundedAlertDialog(
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Hey! Congratulations! You tattoo is nice an healed!!!',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+          ),
+          Text(
+            'You know, you should send a sweet pic of your healed tattoo to your tattoo artist!',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle,
+          ),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+          ),
+          Icon(
+            Icons.camera_enhance
+          ),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+          ),
+        ],
+      ),
+      dismiss: SentimentRow(onAcceptance: onAcceptance, onDenial: onDenial),
+    );
+  }
+
+}
+
 class SentimentRow extends StatelessWidget {
   const SentimentRow({
     Key key,
