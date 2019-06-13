@@ -13,6 +13,7 @@ import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'journeys_event.dart';
 import 'journeys_state.dart';
@@ -102,7 +103,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     // Setup User if not already done
     int userId = -1;
     User user;
-    bool firstTime;
+    bool firstTime=true;
+    print('doing a firstTime thing');
     if (currentState is JourneysNoUser) {
       final String pushToken = await firebase.getToken();
 
@@ -111,7 +113,6 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         email: event.result.email,
         token: pushToken,
       );
-
       userId = await journeysRepository.saveUser(user);
       print('userID=$userId');
       if (userId == -1) {
@@ -119,10 +120,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         return;
       }
     } else if (currentState is JourneysWithUser) {
+      print('Entered firstTime setting');
       final JourneysWithUser journeysWithUser = currentState;
       user = journeysWithUser.user;
       userId = user.id;
-      firstTime = journeysWithUser.firstTime;
+      final prefs = await SharedPreferences.getInstance();
+      firstTime = prefs.getBool('firstTime');//journeysWithUser.firstTime;
+      print('firstTime is set to: $firstTime');
     }
 
     // Now send the corresponding journey
@@ -144,14 +148,17 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = user ?? await journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true);
-      print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime ?? true));
+      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime);//?? true);
+      print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime)); //?? true));
       return;
     }
   }
 
   Stream<JourneysState> _mapShownFeatureDiscoveryToState(ShownFeatureDiscovery event) async* {
     if (currentState is JourneysWithUser) {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('firstTime', false);
+      print('firstTime set to false');
       final JourneysWithUser jwu = currentState;
       yield JourneysWithUser(user: jwu.user, cards: jwu.cards, firstTime: false);
     }
@@ -181,33 +188,21 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
   Stream<JourneysState> _mapLoadJourneysToState(LoadJourneys event) async* {
     final JourneysState journeysState = currentState;
-
     if (journeysState is JourneyError) {
       final JourneyError errorState = journeysState;
       yield errorState.prev;
     }
 
-//    if (currentState is JourneysNoUser) {
-//      const userId = 0;
-//      final User user = await journeysRepository.getUser(userId);
-//      print('Loading with fake user 0: $user');
-//      final cards = await _getCards(0);
-//      print('Loaded initial cards with fake user 0: $cards');
-//
-//      yield JourneysWithUser(
-//        user: user,
-//        cards: cards,
-//        firstTime: true,
-//      );
-//    } else
     if (currentState is JourneysWithUser) {
       final JourneysWithUser userState = currentState;
 
+      final prefs = await SharedPreferences.getInstance();
+      bool firstTime = prefs.getBool('firstTime');
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(
-          cards: cards, user: userState.user, firstTime: userState.firstTime ?? true);
+          cards: cards, user: userState.user, firstTime: firstTime ?? true);
     }
   }
 
@@ -219,6 +214,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield errorState.prev;
     }
 
+    final prefs = await SharedPreferences.getInstance();
+    bool firstTime = prefs.getBool('firstTime');
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
       final User user = await journeysRepository.getUser(userId);
@@ -227,7 +224,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield JourneysWithUser(
         user: user,
         cards: cards,
-        firstTime: true,
+        firstTime: firstTime,
       );
     }
   }

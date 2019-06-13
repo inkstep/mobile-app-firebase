@@ -8,8 +8,8 @@ class Bullet extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 20.0,
-      width: 20.0,
+      height: 10.0,
+      width: 10.0,
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardColor,
         shape: BoxShape.circle,

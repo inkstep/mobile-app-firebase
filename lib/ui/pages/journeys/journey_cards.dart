@@ -12,6 +12,8 @@ import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+import '../care_screen.dart';
+
 class JourneyCard extends StatefulWidget {
   const JourneyCard({Key key, @required this.model}) : super(key: key);
 
@@ -88,7 +90,13 @@ class LoadedJourneyCard extends AnimatedWidget {
   Widget build(BuildContext context) {
     final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
 
-    final bool showCare = card.stage is BookedIn || card.stage is Aftercare;
+    bool showCare = false;
+
+    if (card.stage is BookedIn || card.stage is Aftercare) {
+      if (CareScreen.hasAdvice(card.bookedDate)) {
+        showCare = true;
+      }
+    }
 
     final _elevationTween = Tween<double>(begin: card.stage.userActionRequired ? 0.95 : 1, end: 1);
 
@@ -194,7 +202,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                           featureId: card.aftercareID,
                           onPressed: () {
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                            nav.openAftercareScreen(context, card.bookedDate);
+                            nav.openCareScreen(context, card.bookedDate);
                           },
                         )
                       : Spacer(),

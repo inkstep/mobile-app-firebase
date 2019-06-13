@@ -6,7 +6,11 @@ class CareScreen extends StatelessWidget {
 
   final DateTime bookedTime;
 
-  Widget adviceWidget() {
+  static bool hasAdvice(DateTime bookedTime) {
+    return adviceWidget(bookedTime) != null;
+  }
+
+  static Widget adviceWidget(DateTime bookedTime) {
     final List<AdviceSnippet> advice = <AdviceSnippet>[
       AdviceSnippet(
         timeString: 'For the day before',
@@ -43,24 +47,17 @@ class CareScreen extends StatelessWidget {
     for (AdviceSnippet adviceDialog in advice) {
       DateTime adviceDate;
 
-      print(adviceDialog.timeOffset);
-
       if (adviceDialog.preCare) {
         adviceDate = bookedTime.subtract(adviceDialog.timeOffset);
       } else {
         adviceDate = bookedTime.add(adviceDialog.timeOffset);
       }
 
-      print(bookedTime);
-      print(adviceDate);
-
       if (curTime.isBefore(bookedTime)) {
-        print('Precare');
         if (curTime.isAfter(adviceDate)) {
           return adviceDialog;
         }
       } else {
-        print('Aftercare');
         if (curTime.isBefore(adviceDate)) {
           return adviceDialog;
         }
@@ -72,7 +69,7 @@ class CareScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AdviceSnippet advice = adviceWidget();
+    final AdviceSnippet advice = adviceWidget(bookedTime);
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

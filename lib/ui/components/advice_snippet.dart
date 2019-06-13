@@ -23,7 +23,7 @@ class AdviceSnippet extends StatelessWidget {
     final Widget careText = Expanded(
       child: Text(
         preCare ? 'Precare' : 'Aftercare',
-        textScaleFactor: 2,
+        textScaleFactor: 3,
       ),
     );
 
@@ -55,6 +55,7 @@ class AdviceSnippet extends StatelessWidget {
       final Text text = Text(
         adviceString,
         textAlign: TextAlign.left,
+        textScaleFactor: 1.5,
       );
 
       final Widget expandedWidget = Expanded(
@@ -72,12 +73,6 @@ class AdviceSnippet extends StatelessWidget {
           ));
 
       processedAdvice.add(expandedWidget);
-
-      final Widget divWidget = HorizontalDivider(
-        thickness: 2,
-      );
-
-      processedAdvice.add(divWidget);
     }
 
     final Widget spacerWidget = Spacer(flex: 2);

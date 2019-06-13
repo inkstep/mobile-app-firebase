@@ -92,14 +92,21 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     );
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          top,
-          bottom,
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/inksplot.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            top,
+            bottom,
+          ],
+        ),
       ),
-      backgroundColor: baseColors['dark'],
     );
   }
 }

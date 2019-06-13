@@ -88,7 +88,7 @@ class ScreenNavigator {
     );
   }
 
-  void openAftercareScreen(BuildContext context, DateTime bookedTime) {
+  void openCareScreen(BuildContext context, DateTime bookedTime) {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(

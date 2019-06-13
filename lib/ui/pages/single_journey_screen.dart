@@ -21,6 +21,16 @@ class DeleteJourneyDialog extends StatelessWidget {
   final VoidCallback onAcceptance;
   final VoidCallback onDenial;
 
+  // Tell artist they don't want to proceed
+  void _cancelJourney() {
+    print('Cancelling journey');
+  }
+
+  // Release appointment automatically
+  void _cancelBooking() {
+    print('Email artist. Release appointment');
+  }
+
   @override
   Widget build(BuildContext context) {
     String header;
@@ -32,17 +42,20 @@ class DeleteJourneyDialog extends StatelessWidget {
       case WaitingForAppointmentOffer:
       case AppointmentOfferReceived:
         header = 'Are you sure you want to end your journey?';
-        body = '${card.artistName.split(' ').first} will be notified that you do not want to proceed.';
+        body = '${card.artistName.split(' ').first} will be '
+               'notified that you do not want to proceed.';
         confirmButtonText = 'End Journey';
         break;
       case BookedIn:
         header = 'Are you sure you want to cancel your booking?';
-        body = '${card.artistName.split(' ').first} will be notified and you will not get your deposit back.';
+        body = '${card.artistName.split(' ').first} will be notified and '
+               'you will not get your deposit back.';
         confirmButtonText = 'Cancel Booking';
         break;
       case Aftercare:
         header = 'Are you sure you want to remove this journey?';
-        body = 'You won\'t get to see personalised aftercare advice, or send a photo to your artist if you proceed.';
+        body = 'You won\'t get to see personalised aftercare advice'
+               'or be able to send a photo to your artist if you proceed.';
         confirmButtonText = 'Remove Journey';
         break;
       case Healed:
@@ -55,7 +68,8 @@ class DeleteJourneyDialog extends StatelessWidget {
         body = 'It doesn\'t look like you\'ve got anything left to do.';
         confirmButtonText = 'Remove Journey';
         break;
-      default: throw Exception('Journey stage not supported');
+      default:
+        throw Exception('Journey stage not supported');
     }
 
     return RoundedAlertDialog(
@@ -70,7 +84,21 @@ class DeleteJourneyDialog extends StatelessWidget {
           child: RaisedButton(
             color: Colors.white,
             onPressed: () {
-              print('Confirm');
+              switch (card.stage.runtimeType) {
+                case WaitingForQuote:
+                case QuoteReceived:
+                case WaitingForAppointmentOffer:
+                case AppointmentOfferReceived:
+                  _cancelJourney();
+                  break;
+                case BookedIn:
+                  _cancelBooking();
+                  break;
+                default:
+                  // Do nothing
+                  break;
+              }
+              // Remove card from list of journeys/update backend here?
             },
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
@@ -169,16 +197,16 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     );
   }
 
-  FloatingActionButton _aftercare() {
+  FloatingActionButton _care() {
     return FloatingActionButton(
       mini: true,
       backgroundColor: _disappearingBtnColour.value,
-      heroTag: 'aftercareBtn',
+      heroTag: 'careBtn',
       onPressed: () {
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-        nav.openAftercareScreen(context, widget.card.bookedDate);
+        nav.openCareScreen(context, widget.card.bookedDate);
       },
-      tooltip: 'Aftercare',
+      tooltip: 'Care',
       child: Icon(Icons.healing),
     );
   }
@@ -222,7 +250,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // The fabs to appear dropped down under the toggle when pressed
-          animatedDropDownFab(index: 0, fab: _aftercare()),
+          animatedDropDownFab(index: 0, fab: _care()),
           animatedDropDownFab(index: 1, fab: _delete()),
 
           // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
