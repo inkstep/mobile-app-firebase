@@ -15,11 +15,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   double position;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final List<Widget> swiperItemsList = [
       _buildOnboardingSlice(
