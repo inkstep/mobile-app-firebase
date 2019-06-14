@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
@@ -10,6 +11,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -54,6 +56,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapDialogState(event);
     } else if (event is LoadUser) {
       yield* _mapLoadUserState(event);
+    } else if (event is LogOut) {
+      yield* _mapLogOutState(event);
     }
   }
 
@@ -260,5 +264,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       journeyId: je.id,
       bookedDate: bookedDate,
     );
+  }
+
+   Stream<JourneysState> _mapLogOutState(LogOut event) async* {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userId', null);
+    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+    nav.openOnboardingPage(event.context);
+    yield JourneysNoUser();
   }
 }

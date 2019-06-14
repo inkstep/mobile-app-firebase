@@ -65,7 +65,10 @@ class InkstepState extends State<Inkstep> {
 //    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
 //      print("Settings registered: $settings");
 //    });
-    updateUserId = (userId) {localUserId = userId;};
+    updateUserId = (userId) {
+      localUserId = userId;
+      print('Local UserID is: $localUserId');
+    };
   }
 
   @override
@@ -109,7 +112,7 @@ class InkstepState extends State<Inkstep> {
           cursorColor: baseColors['dark'],
           toggleableActiveColor: baseColors['dark'],
         ),
-        home:  _setInitialState(updateUserId: updateUserId, localUserId: localUserId),
+        home:  SetInitialPage(updateUserId: updateUserId, localUserId: localUserId),
       ),
       bloc: _journeyBloc,
     );
@@ -151,8 +154,8 @@ class InkstepState extends State<Inkstep> {
       );
 }
 
-class _setInitialState extends StatelessWidget {
-  const _setInitialState({
+class SetInitialPage extends StatelessWidget {
+  const SetInitialPage({
     Key key,
     @required this.updateUserId,
     @required this.localUserId,
@@ -173,8 +176,11 @@ class _setInitialState extends StatelessWidget {
           }
           // Return your home here
           return JourneysScreen(onInit: () {
-              final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-              journeyBloc.dispatch(LoadUser(localUserId));
+              if (localUserId != -1) {
+                final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(
+                    context);
+                journeyBloc.dispatch(LoadUser(localUserId));
+              }
             }
           );
         } else {
@@ -188,7 +194,7 @@ class _setInitialState extends StatelessWidget {
 
 Future<bool> localUserExists(void Function(int) updateUserId) async {
   final prefs = await SharedPreferences.getInstance();
-  int userId = prefs.getInt('userId');
+  final int userId = prefs.getInt('userId');
   final bool toReturn = userId == null;
   if (!toReturn) {
     updateUserId(userId);

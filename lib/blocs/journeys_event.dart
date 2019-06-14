@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:inkstep/models/form_result_model.dart';
 import 'package:meta/meta.dart';
 
@@ -64,4 +65,9 @@ class DateDenied extends DialogJourneyEvent {
 
   @override
   String toString() => 'DateDenied';
+}
+
+class LogOut extends JourneysEvent {
+  LogOut(this.context);
+  final BuildContext context;
 }
