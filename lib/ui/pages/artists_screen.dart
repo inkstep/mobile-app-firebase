@@ -50,7 +50,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).cardColor,
           appBar: AppBar(
-            title: Text('Select an Artist'),
+            title: Text('Who was your artist?'),
           ),
           body: BlocBuilder(
             bloc: _artistsBloc,
