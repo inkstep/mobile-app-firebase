@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,11 @@ class JourneysRepository {
   Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
     final List<Map<String, dynamic>> mapped = await webClient.loadJourneys(userId);
     return mapped.map((jsonJourney) => JourneyEntity.fromJson(jsonJourney)).toList();
+  }
+
+  Future<JourneyEntity> loadJourney({@required int id}) async {
+    final Map<String, dynamic> jsonJourney = await webClient.loadJourney(id);
+    return JourneyEntity.fromJson(jsonJourney);
   }
 
   // Persists journeys to the web
@@ -76,10 +82,29 @@ class JourneysRepository {
   }
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
-   // TODO(Felination): Something useful here
-    final Map<String,int> journeyMap = {
-      'Stage': updateStage.numberRepresentation
-    };
+    // TODO(Felination): Something useful here
+    final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
     return await webClient.updateRow(journeyMap, journeyId);
+  }
+
+  Future<bool> sendArtistPhoto(File imageData, int userId, int artistId) async {
+    final List<int> bytes = imageData.readAsBytesSync();
+    final String encodedImage = base64Encode(bytes);
+
+    final Map<String, dynamic> photoMap = <String, dynamic>{
+      'image_data': encodedImage,
+      'artist_id': artistId,
+      'user_id': userId
+    };
+
+    print(artistId);
+    print(userId);
+
+    int sendLimit = 10;
+    while (!await webClient.sendArtistPhoto(photoMap) && sendLimit > 0) {
+      sendLimit--;
+    }
+
+    return true;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/form_result_model.dart';
@@ -26,6 +28,12 @@ class LoadUser extends JourneysEvent {
 class LoadJourneys extends JourneysEvent {
   @override
   String toString() => 'LoadJourneys';
+}
+
+class LoadJourney extends JourneysEvent {
+  LoadJourney(this.journeyId);
+
+  final int journeyId;
 }
 
 class ShownFeatureDiscovery extends JourneysEvent {
@@ -70,4 +78,16 @@ class DateDenied extends DialogJourneyEvent {
 class LogOut extends JourneysEvent {
   LogOut(this.context);
   final BuildContext context;
+}
+
+class SendPhoto extends JourneysEvent {
+  SendPhoto(this.imageData, this.userId, this.artistId, this.journeyId);
+
+  final File imageData;
+  final int userId;
+  final int artistId;
+  final int journeyId;
+
+  @override
+  String toString() => 'SendPhoto';
 }

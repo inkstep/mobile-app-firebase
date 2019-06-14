@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class ProfileRow extends StatelessWidget {
@@ -18,20 +16,14 @@ class ProfileRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssetImage profileImage;
-    final File profileFile = File(imagePath);
-    if (profileFile.existsSync()) {
-      profileImage = AssetImage(imagePath);
-    } else {
-      profileImage = AssetImage('assets/ricky.png');
-    }
+    final Image profileImage = Image.asset(imagePath ?? 'assets/ricky.png');
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
       child: Row(
         children: <Widget>[
           CircleAvatar(
             radius: 25.0,
-            backgroundImage: profileImage,
+            backgroundImage: profileImage.image,
             backgroundColor: Colors.transparent,
           ),
           SizedBox(width: 20),
@@ -41,11 +33,14 @@ class ProfileRow extends StatelessWidget {
               children: <Widget>[
                 Text(
                   name,
-                  style: Theme.of(context).accentTextTheme.subtitle,
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .subtitle
+                      .copyWith(fontWeight: FontWeight.w600),
                 ),
                 Text(
                   studioName,
-                  style: Theme.of(context).accentTextTheme.subhead,
+                  style: Theme.of(context).accentTextTheme.body1,
                 )
               ],
             ),

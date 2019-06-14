@@ -28,12 +28,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     firebase.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('onMessage: $message');
+        _handleDataMessage(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print('onLaunch: $message');
+        _handleDataMessage(message);
       },
       onResume: (Map<String, dynamic> message) async {
         print('onResume: $message');
+        _handleDataMessage(message);
       },
     );
   }
@@ -47,21 +50,53 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   @override
   Stream<JourneysState> mapEventToState(JourneysEvent event) async* {
     if (event is AddJourney && event.result != null) {
-      yield* _mapAddJourneysState(event);
+      yield* _mapAddJourneysToState(event);
     } else if (event is LoadJourneys) {
-      yield* _mapLoadJourneysState(event);
+      yield* _mapLoadJourneysToState(event);
+    } else if (event is LoadJourney) {
+      yield* _mapLoadJourneyToState(event);
     } else if (event is ShownFeatureDiscovery) {
-      yield* _mapShownFeatureDiscoveryState(event);
+      yield* _mapShownFeatureDiscoveryToState(event);
     } else if (event is DialogJourneyEvent) {
-      yield* _mapDialogState(event);
+      yield* _mapDialogToState(event);
     } else if (event is LoadUser) {
-      yield* _mapLoadUserState(event);
+      yield* _mapLoadUserToState(event);
+    } else if (event is SendPhoto) {
+      yield* _mapSendPhoto(event);
     } else if (event is LogOut) {
       yield* _mapLogOutState(event);
     }
   }
 
-  Stream<JourneysState> _mapAddJourneysState(AddJourney event) async* {
+  Stream<JourneysState> _mapLoadJourneyToState(LoadJourney event) async* {
+    if (currentState is JourneysWithUser) {
+      final JourneysWithUser userState = currentState;
+
+      final List<CardModel> loadedCards = await Future.wait<CardModel>(userState.cards);
+
+      final CardModel correctCard = loadedCards.firstWhere(
+        (card) => card.journeyId == event.journeyId,
+      );
+
+      final card = await _getCard(event.journeyId, correctCard.index);
+
+      print('Reloaded ${card.index}th card for user ${userState.user.id}: $card');
+
+      final reloadedCards = loadedCards
+          .map((c) => c.journeyId == event.journeyId ? Future.value(card) : Future.value(c))
+          .toList();
+
+      yield JourneysWithUser(
+        cards: reloadedCards,
+        user: userState.user,
+        firstTime: userState.firstTime ?? true,
+      );
+    } else {
+      print('Trying to call Load Journey ${event.journeyId} when not authenticated with a user.');
+    }
+  }
+
+  Stream<JourneysState> _mapAddJourneysToState(AddJourney event) async* {
     if (currentState is JourneyError) {
       print('Adding when in Error state');
       final JourneyError errorState = currentState;
@@ -126,7 +161,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Stream<JourneysState> _mapShownFeatureDiscoveryState(ShownFeatureDiscovery event) async* {
+  Stream<JourneysState> _mapShownFeatureDiscoveryToState(ShownFeatureDiscovery event) async* {
     if (currentState is JourneysWithUser) {
       final prefs = await SharedPreferences.getInstance();
       prefs.setBool('firstTime', false);
@@ -136,7 +171,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Stream<JourneysState> _mapDialogState(DialogJourneyEvent event) async* {
+  Stream<JourneysState> _mapDialogToState(DialogJourneyEvent event) async* {
     assert(currentState is JourneysWithUser);
     if (event is QuoteAccepted) {
       await journeysRepository.updateStage(AppointmentOfferReceived(null, null), event.journeyId);
@@ -158,7 +193,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         noImages: result.images.length);
   }
 
-  Stream<JourneysState> _mapLoadJourneysState(LoadJourneys event) async* {
+  Stream<JourneysState> _mapLoadJourneysToState(LoadJourneys event) async* {
     final JourneysState journeysState = currentState;
     if (journeysState is JourneyError) {
       final JourneyError errorState = journeysState;
@@ -179,7 +214,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     }
   }
 
-  Stream<JourneysState> _mapLoadUserState(LoadUser event) async* {
+  Stream<JourneysState> _mapLoadUserToState(LoadUser event) async* {
     final JourneysState journeysState = currentState;
 
     if (journeysState is JourneyError) {
@@ -208,6 +243,13 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<JourneyEntity> journeys = await journeysRepository.loadJourneys(userId: userId);
     print('Done that...');
     return _getCardsFromJourneys(journeys);
+  }
+
+  Future<CardModel> _getCard(int journeyId, int index) async {
+    print('Updating card with $journeyId');
+    final JourneyEntity journey = await journeysRepository.loadJourney(id: journeyId);
+    print('Done that...');
+    return _getCardFromJourney(journey, index);
   }
 
   List<Future<CardModel>> _getCardsFromJourneys(List<JourneyEntity> list) {
@@ -253,7 +295,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     return CardModel(
       description: je.mentalImage,
+      artistId: artist.artistID,
       artistName: artist.name,
+      userId: je.userId,
       bodyLocation: je.position,
       size: je.size,
       images: images,
@@ -266,11 +310,22 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     );
   }
 
-   Stream<JourneysState> _mapLogOutState(LogOut event) async* {
+  Stream<JourneysState> _mapLogOutState(LogOut event) async* {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('userId', null);
     final ScreenNavigator nav = sl.get<ScreenNavigator>();
     nav.openOnboardingPage(event.context);
     yield JourneysNoUser();
+  }
+
+  Stream<JourneysState> _mapSendPhoto(SendPhoto event) async* {
+    await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
+    await journeysRepository.updateStage(Finished(), event.journeyId);
+  }
+
+  void _handleDataMessage(Map<String, dynamic> message) {
+    if (message['data']['journey'] != null) {
+      dispatch(LoadJourney(int.parse(message['data']['journey'])));
+    }
   }
 }

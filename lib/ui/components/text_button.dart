@@ -6,10 +6,12 @@ class TextButton extends StatelessWidget {
     @required this.onTap,
     @required this.label,
     Key key,
+    this.color,
   }) : super(key: key);
 
   final GestureTapCallback onTap;
   final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class TextButton extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: baseColors['light'],
+            color: color ?? baseColors['light'],
             fontSize: 15.0,
             fontFamily: 'Signika',
           ),

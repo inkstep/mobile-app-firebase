@@ -21,7 +21,6 @@ class ArtistSelectionScreen extends StatefulWidget {
 }
 
 class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
-
   http.Client _client;
   ArtistsBloc _artistsBloc;
 
@@ -57,7 +56,12 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
             bloc: _artistsBloc,
             builder: (BuildContext context, ArtistsState state) {
               if (state is ArtistsUninitialised) {
-                return Container();
+                return Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
+                  ),
+                );
               } else if (state is ArtistsLoaded) {
                 return Container(
                     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
@@ -75,7 +79,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                           child: ProfileRow(
                             name: state.artists[index].name,
                             studioName: state.artists[index].studio.name,
-                            imagePath: 'assets/ricky.png',
+                            imagePath: null,
                             artistID: state.artists[index].artistID,
                           ),
                         );
