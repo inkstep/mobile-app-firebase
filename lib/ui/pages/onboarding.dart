@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/logo.dart';
+import 'package:inkstep/ui/components/notifying_page_view.dart';
 import 'package:inkstep/ui/components/text_button.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -11,12 +12,22 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
+  final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
+  final Tween inkRatio = Tween<double>(begin: 0.9, end: 2.0);
   final PageController _controller = PageController();
   double position;
 
   @override
+  void dispose() {
+    _controller?.dispose();
+    _notifier?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final List<Widget> swiperItemsList = [
+    final List<Widget> pages = [
+      FirstPage(controller: _controller),
       _buildOnboardingSlice(
           context,
           Icons.offline_bolt,
@@ -44,14 +55,17 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomPaint(
-        painter: InkSplash(Theme.of(context).backgroundColor, 0.9),
-        child: PageView.builder(
-          controller: _controller,
-          itemBuilder: (BuildContext context, index) {
-            return index == 0 ? FirstPage(controller: _controller) : swiperItemsList[index - 1];
-          },
-        ),
+      body: AnimatedBuilder(
+        animation: _notifier,
+        builder: (context, _) => CustomPaint(
+              painter: InkSplash(
+                  Theme.of(context).backgroundColor, inkRatio.lerp(_notifier.value / pages.length)),
+              child: NotifyingPageView(
+                notifier: _notifier,
+                pageController: _controller,
+                pages: pages,
+              ),
+            ),
       ),
     );
   }
@@ -162,7 +176,7 @@ class FirstPage extends StatelessWidget {
                 key: boldButtonKey,
                 onTap: () {
                   controller.nextPage(
-                      duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
+                      duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
 //                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
 //                    nav.openArtistSelectionReplace(context);
                 },
