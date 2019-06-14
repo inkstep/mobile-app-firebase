@@ -11,87 +11,184 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
-  _OnboardingState();
+  final PageController _controller = PageController();
+  double position;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    const EdgeInsets topPadding = EdgeInsets.only(top: 120.0);
-
-    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
-    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-    final boldButtonKey = UniqueKey();
-    final bottom = Container(
-      child: Column(
-        children: <Widget>[
-          BoldCallToAction(
-            key: boldButtonKey,
-            onTap: () {
-              nav.openArtistSelectionReplace(context);
-            },
-            label: "Let's get started!",
-            textColor: Theme.of(context).primaryColor,
-            color: Theme.of(context).cardColor,
-          ),
-          Padding(padding: buttonPadding),
-          TextButton(
-            onTap: () {
-              nav.openLoginScreen(context);
-            },
-            label: "I'VE BEEN HERE BEFORE",
-            color: Theme.of(context).backgroundColor,
-          ),
-          Padding(padding: buttonPadding),
-        ],
-      ),
-    );
+    final List<Widget> swiperItemsList = [
+      _buildOnboardingSlice(
+          context,
+          Icons.offline_bolt,
+          'Quicker Responses',
+          'You get responses quicker because artists get information they need immediately.',
+          'Sounds great!'),
+      _buildOnboardingSlice(context, Icons.memory, 'Feel Smarter',
+          'You get guided as to what artists want you to say.', 'Wow'),
+      _buildOnboardingSlice(context, Icons.calendar_today, 'Fill Cancellations',
+          'Help artists out, and get seen quicker with cancellation responses', "That's cool"),
+      _buildOnboardingSlice(
+          context,
+          Icons.healing,
+          'Care Made Easy',
+          'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
+          'Awesome!'),
+      _buildOnboardingSlice(
+          context,
+          Icons.favorite,
+          "Be the Artist's Favourite",
+          "Make your artist happy! They'll be delighted to have a client like you.",
+          "Enough! Let's get to it.",
+          last: true),
+    ];
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomPaint(
         painter: InkSplash(Theme.of(context).backgroundColor, 0.9),
-        child: Container(
+        child: PageView.builder(
+          controller: _controller,
+          itemBuilder: (BuildContext context, index) {
+            return index == 0 ? FirstPage(controller: _controller) : swiperItemsList[index - 1];
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOnboardingSlice(
+      BuildContext context, IconData icon, String header, String body, String buttonText,
+      {bool last}) {
+    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
+    return Column(
+      children: [
+        Spacer(flex: 4),
+        Icon(
+          icon,
+          size: 120,
+        ),
+        Spacer(),
+        Text(
+          header,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          child: Text(
+            body,
+            style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Spacer(
+          flex: 8,
+        ),
+        Container(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Spacer(flex: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Logo(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'inkstep.',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ],
+              BoldCallToAction(
+                onTap: () {
+                  if (last == null) {
+                    _controller.nextPage(
+                        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                  } else if (last) {
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openArtistSelectionReplace(context);
+                  }
+                },
+                label: buttonText,
+                textColor: Theme.of(context).primaryColor,
+                color: Theme.of(context).cardColor,
               ),
-              Spacer(),
-              Text(
-                'Tattoos done right',
-                style: Theme.of(context).textTheme.headline,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-                child: Text(
-                  "We're here to make you feel like a tattoo pro.",
-                  style: Theme.of(context).textTheme.title,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Spacer(
-                flex: 8,
-              ),
-              bottom,
+              Padding(padding: buttonPadding),
+              Padding(padding: buttonPadding),
+              Padding(padding: buttonPadding),
             ],
           ),
         ),
-      ),
+      ],
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key key, @required this.controller}) : super(key: key);
+
+  final PageController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
+    final boldButtonKey = UniqueKey();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Spacer(flex: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Logo(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'inkstep.',
+                style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+        ),
+        Spacer(),
+        Text(
+          'Tattoos done right',
+          style: Theme.of(context).textTheme.headline,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          child: Text(
+            "We're here to make you feel like a tattoo pro.",
+            style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Spacer(
+          flex: 8,
+        ),
+        Container(
+          child: Column(
+            children: <Widget>[
+              BoldCallToAction(
+                key: boldButtonKey,
+                onTap: () {
+                  controller.nextPage(
+                      duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
+//                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//                    nav.openArtistSelectionReplace(context);
+                },
+                label: "Let's get started!",
+                textColor: Theme.of(context).primaryColor,
+                color: Theme.of(context).cardColor,
+              ),
+              Padding(padding: buttonPadding),
+              TextButton(
+                onTap: () {
+                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                  nav.openLoginScreen(context);
+                },
+                label: "I'VE BEEN HERE BEFORE",
+                color: Theme.of(context).backgroundColor,
+              ),
+              Padding(padding: buttonPadding),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
