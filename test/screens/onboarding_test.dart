@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/text_button.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -34,7 +33,7 @@ void main() {
 //      expect(find.text('Hi there,'), findsOneWidget);
 //    });
 
-    testWidgets('Can get to journey page from onboarding', (WidgetTester tester) async {
+    testWidgets('Can get to login page from onboarding', (WidgetTester tester) async {
       await tester.pumpWidget(app);
 
       final Finder button = find.byType(TextButton);
@@ -46,16 +45,16 @@ void main() {
       verify(nav.openLoginScreen(any));
     });
 
-    testWidgets('Can get to artist page from onboarding', (WidgetTester tester) async {
-      await tester.pumpWidget(app);
-
-      final Finder button = find.byType(BoldCallToAction);
-      expect(button, findsOneWidget);
-
-      await tester.tap(button);
-      await tester.pump();
-
-      verify(nav.openArtistSelectionReplace(any));
-    });
+//    testWidgets('Can get to artist page from onboarding', (WidgetTester tester) async {
+//      await tester.pumpWidget(app);
+//
+//      final Finder button = find.byType(BoldCallToAction);
+//      expect(button, findsOneWidget);
+//
+//      await tester.tap(button);
+//      await tester.pump();
+//
+//      verify(nav.openArtistSelectionReplace(any));
+//    });
   });
 }

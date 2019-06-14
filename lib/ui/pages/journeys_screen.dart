@@ -165,10 +165,17 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 4),
               Padding(
                 padding: EdgeInsets.only(left: paddingSize),
-                child: LargeTwoPartHeader(
-                  largeText: 'Welcome back',
-                  name: loadedState.user?.name,
+                child: GestureDetector(
+                  child: LargeTwoPartHeader(
+                    largeText: 'Welcome back',
+                    name: loadedState.user?.name,
+                  ),
+                  onLongPress: () {
+                    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                    journeyBloc.dispatch(LogOut(context));
+                  },
                 ),
+
               ),
               Spacer(flex: 1),
               HorizontalDivider(

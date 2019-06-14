@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/empty_journey_entity.dart';
@@ -10,6 +11,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -63,6 +65,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapSendPhotoToState(event);
     } else if (event is RemoveJourney) {
       yield* _mapRemoveJourneyToState(event);
+    } else if (event is LogOut) {
+      yield* _mapLogOutState(event);
     }
   }
 
@@ -129,7 +133,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = journeysWithUser.user;
       userId = user.id;
       final prefs = await SharedPreferences.getInstance();
-      firstTime = prefs.getBool('firstTime'); //journeysWithUser.firstTime;
+      firstTime = prefs.getBool('firstTime');
+      prefs.setInt('userId', userId);
       print('firstTime is set to: $firstTime');
     }
 
@@ -202,6 +207,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
       final prefs = await SharedPreferences.getInstance();
       final bool firstTime = prefs.getBool('firstTime');
+      prefs.setInt('userId', userState.user.id);
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
@@ -221,6 +227,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final bool firstTime = prefs.getBool('firstTime');
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
+      prefs.setInt('userId', userId);
       final User user = await journeysRepository.getUser(userId);
       final cards = await _getCards(userId);
 
@@ -302,6 +309,14 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       journeyId: je.id,
       bookedDate: bookedDate,
     );
+  }
+
+  Stream<JourneysState> _mapLogOutState(LogOut event) async* {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userId', null);
+    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+    nav.openOnboardingPage(event.context);
+    yield JourneysNoUser();
   }
 
   Stream<JourneysState> _mapSendPhotoToState(SendPhoto event) async* {

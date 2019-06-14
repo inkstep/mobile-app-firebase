@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProfileRow extends StatelessWidget {
   ProfileRow({
-    @required this.imagePath,
+    this.imagePath,
     @required this.name,
     @required this.studioName,
     @required this.artistID,
