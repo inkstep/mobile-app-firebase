@@ -58,8 +58,8 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       body: AnimatedBuilder(
         animation: _notifier,
         builder: (context, _) => CustomPaint(
-              painter: InkSplash(
-                  Theme.of(context).backgroundColor, inkRatio.lerp(_notifier.value / pages.length)),
+              painter: InkSplash(Theme.of(context).backgroundColor,
+                  inkRatio.transform(_notifier.value / pages.length)),
               child: NotifyingPageView(
                 notifier: _notifier,
                 pageController: _controller,
