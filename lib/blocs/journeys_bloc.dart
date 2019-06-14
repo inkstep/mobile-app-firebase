@@ -330,11 +330,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final JourneysWithUser userState = currentState;
       final List<CardModel> loadedCards = await Future.wait<CardModel>(userState.cards);
 
-      loadedCards.removeWhere(
+      // Create mutable copy to remove from
+      final List<CardModel> mutableLoadedCards = List.from(loadedCards);
+      mutableLoadedCards.removeWhere(
         (card) => card.journeyId == event.journeyId,
       );
-
-      final reloadedCards = loadedCards
+      final reloadedCards = mutableLoadedCards
           .map((c) => Future.value(c))
           .toList();
 
