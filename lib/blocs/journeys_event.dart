@@ -100,5 +100,5 @@ class RemoveJourney extends JourneysEvent {
   final int journeyId;
 
   @override
-  toString() => 'RemoveJourney';
+  String toString() => 'RemoveJourney';
 }

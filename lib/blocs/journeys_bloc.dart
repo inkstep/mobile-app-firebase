@@ -325,7 +325,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapRemoveJourneyToState(RemoveJourney event) async* {
-    await journeysRepository.removeJourney(event.journeyId);
+    journeysRepository.removeJourney(event.journeyId);
     if (currentState is JourneysWithUser) {
       final JourneysWithUser userState = currentState;
       final List<CardModel> loadedCards = await Future.wait<CardModel>(userState.cards);

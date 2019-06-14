@@ -11,7 +11,6 @@ import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
-import 'package:path/path.dart';
 
 class DeleteJourneyDialog extends StatelessWidget {
   const DeleteJourneyDialog({
@@ -25,7 +24,8 @@ class DeleteJourneyDialog extends StatelessWidget {
   void _cancelJourney(BuildContext context) {
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
     journeyBloc.dispatch(RemoveJourney(card.journeyId));
-    Navigator.pop(context); Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   // Release appointment automatically

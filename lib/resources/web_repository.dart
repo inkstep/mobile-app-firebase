@@ -88,7 +88,7 @@ class WebRepository {
     return Future.value(-1);
   }
 
-  void removeJourney(int journeyID) async {
+  Future<bool> removeJourney(int journeyID) async {
     final http.Response response = await client.delete('$url$journeyEndpoint/$journeyID');
     print('GET $journeyEndpoint/$journeyID '
         '${response.reasonPhrase} (${response.statusCode}): ${response.body}');
@@ -96,6 +96,7 @@ class WebRepository {
     if (response.statusCode != 200) {
       throw http.ClientException;
     }
+    return true;
   }
 
   Future<int> saveUser(Map<String, dynamic> userMap) async {
