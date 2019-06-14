@@ -4,13 +4,18 @@ import 'package:meta/meta.dart';
 import 'studio_model.dart';
 
 class Artist extends Equatable {
-  Artist({@required this.artistID, @required this.name, @required this.email, @required this
-      .studio})
-      : super(<dynamic>[artistID, name, email, studio]);
+  Artist({
+    @required this.artistID,
+    @required this.name,
+    @required this.email,
+    @required this.studio,
+    @required this.profileUrl,
+  }) : super(<dynamic>[artistID]);
 
   final String name;
   final String email;
   final Studio studio;
+  String profileUrl;
   final int artistID;
 
   Map<String, dynamic> toJson() {
