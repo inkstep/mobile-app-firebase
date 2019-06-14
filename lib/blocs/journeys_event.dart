@@ -19,7 +19,9 @@ class AddJourney extends JourneysEvent {
 
 class LoadUser extends JourneysEvent {
   LoadUser(this.userId);
+
   final int userId;
+
   @override
   String toString() => 'LoadUser';
 }
@@ -84,4 +86,13 @@ class SendPhoto extends JourneysEvent {
 
   @override
   String toString() => 'SendPhoto';
+}
+
+class RemoveJourney extends JourneysEvent {
+  RemoveJourney(this.journeyId);
+
+  final int journeyId;
+
+  @override
+  toString() => 'RemoveJourney';
 }

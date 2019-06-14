@@ -78,7 +78,7 @@ class WaitingForAppointmentOffer extends JourneyStageWithQuote {
   int get progress => 35;
 
   @override
-  String toString() => 'Awaiting Appointment Slot';
+  String toString() => 'Awaiting appointment slot';
 
   @override
   bool get userActionRequired => false;
@@ -130,7 +130,7 @@ class Aftercare extends JourneyStage {
       60 + (DateTime.now().difference(appointmentDate).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
-  String toString() => 'Tattoo Healing';
+  String toString() => 'Tattoo healing';
 
   @override
   bool get userActionRequired => false;
@@ -144,7 +144,7 @@ class Healed extends JourneyStage {
   int get progress => 95;
 
   @override
-  String toString() => 'Your fully healed!!!';
+  String toString() => 'You\'re fully healed!';
 
   @override
   bool get userActionRequired => true;

@@ -38,6 +38,10 @@ class JourneysRepository {
     return await webClient.saveJourneys(journeysMap);
   }
 
+  void removeJourney(int journeyId) async {
+    await webClient.removeJourney(journeyId);
+  }
+
   Future<int> saveUser(UserEntity user) async {
     return await webClient.saveUser(user.toJson());
   }

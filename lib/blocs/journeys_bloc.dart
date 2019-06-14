@@ -60,7 +60,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     } else if (event is LoadUser) {
       yield* _mapLoadUserToState(event);
     } else if (event is SendPhoto) {
-      yield* _mapSendPhoto(event);
+      yield* _mapSendPhotoToState(event);
+    } else if (event is RemoveJourney) {
+      yield* _mapRemoveJourneyToState(event);
     }
   }
 
@@ -105,7 +107,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     // Setup User if not already done
     int userId = -1;
     User user;
-    bool firstTime=true;
+    bool firstTime = true;
     print('doing a firstTime thing');
     if (currentState is JourneysNoUser) {
       final String pushToken = await firebase.getToken();
@@ -127,7 +129,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = journeysWithUser.user;
       userId = user.id;
       final prefs = await SharedPreferences.getInstance();
-      firstTime = prefs.getBool('firstTime');//journeysWithUser.firstTime;
+      firstTime = prefs.getBool('firstTime'); //journeysWithUser.firstTime;
       print('firstTime is set to: $firstTime');
     }
 
@@ -150,7 +152,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       user = user ?? await journeysRepository.getUser(userId);
       print('Successfully loaded user $user');
 
-      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime);//?? true);
+      yield JourneysWithUser(cards: cards, user: user, firstTime: firstTime); //?? true);
       print(JourneysWithUser(cards: cards, user: user, firstTime: firstTime)); //?? true));
       return;
     }
@@ -203,8 +205,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final cards = await _getCards(userState.user.id);
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
-      yield JourneysWithUser(
-          cards: cards, user: userState.user, firstTime: firstTime ?? true);
+      yield JourneysWithUser(cards: cards, user: userState.user, firstTime: firstTime ?? true);
     }
   }
 
@@ -303,9 +304,33 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     );
   }
 
-  Stream<JourneysState> _mapSendPhoto(SendPhoto event) async* {
+  Stream<JourneysState> _mapSendPhotoToState(SendPhoto event) async* {
     await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
     await journeysRepository.updateStage(Finished(), event.journeyId);
+  }
+
+  Stream<JourneysState> _mapRemoveJourneyToState(RemoveJourney event) async* {
+    await journeysRepository.removeJourney(event.journeyId);
+    if (currentState is JourneysWithUser) {
+      final JourneysWithUser userState = currentState;
+      final List<CardModel> loadedCards = await Future.wait<CardModel>(userState.cards);
+
+      loadedCards.removeWhere(
+        (card) => card.journeyId == event.journeyId,
+      );
+
+      final reloadedCards = loadedCards
+          .map((c) => Future.value(c))
+          .toList();
+
+      yield JourneysWithUser(
+        cards: reloadedCards,
+        user: userState.user,
+        firstTime: userState.firstTime ?? true,
+      );
+    } else {
+      yield currentState;
+    }
   }
 
   void _handleDataMessage(Map<String, dynamic> message) {

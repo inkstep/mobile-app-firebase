@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -8,28 +11,30 @@ import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:path/path.dart';
 
 class DeleteJourneyDialog extends StatelessWidget {
   const DeleteJourneyDialog({
     Key key,
     @required this.card,
-    @required this.onAcceptance,
-    @required this.onDenial,
   }) : super(key: key);
 
   final CardModel card;
-  final VoidCallback onAcceptance;
-  final VoidCallback onDenial;
 
   // Tell artist they don't want to proceed
-  void _cancelJourney() {
-    print('Cancelling journey');
+  void _cancelJourney(BuildContext context) {
+    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+    journeyBloc.dispatch(RemoveJourney(card.journeyId));
+    Navigator.pop(context); Navigator.pop(context);
   }
 
   // Release appointment automatically
   void _cancelBooking() {
     print('Email artist. Release appointment');
   }
+
+  // Remove from local storage after backend updated
+  void _removeJourneyLocally() {}
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,7 @@ class DeleteJourneyDialog extends StatelessWidget {
                 case QuoteReceived:
                 case WaitingForAppointmentOffer:
                 case AppointmentOfferReceived:
-                  _cancelJourney();
+                  _cancelJourney(context);
                   break;
                 case BookedIn:
                   _cancelBooking();
@@ -99,6 +104,7 @@ class DeleteJourneyDialog extends StatelessWidget {
                   break;
               }
               // Remove card from list of journeys/update backend here?
+              _removeJourneyLocally();
             },
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
@@ -197,7 +203,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     );
   }
 
-  FloatingActionButton _care() {
+  FloatingActionButton _care(BuildContext context) {
     return FloatingActionButton(
       mini: true,
       backgroundColor: _disappearingBtnColour.value,
@@ -211,7 +217,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
     );
   }
 
-  FloatingActionButton _delete() {
+  FloatingActionButton _delete(BuildContext context) {
     return FloatingActionButton(
       mini: true,
       backgroundColor: _disappearingBtnColour.value,
@@ -222,8 +228,6 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
           builder: (BuildContext context) {
             return DeleteJourneyDialog(
               card: widget.card,
-              onAcceptance: () {},
-              onDenial: () {},
             );
           },
         );
@@ -250,8 +254,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // The fabs to appear dropped down under the toggle when pressed
-          animatedDropDownFab(index: 0, fab: _care()),
-          animatedDropDownFab(index: 1, fab: _delete()),
+          animatedDropDownFab(index: 0, fab: _care(context)),
+          animatedDropDownFab(index: 1, fab: _delete(context)),
 
           // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
           Transform(
@@ -269,7 +273,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // The fabs to appear dropped down under the toggle when pressed
-          animatedDropDownFab(index: 0, fab: _delete()),
+          animatedDropDownFab(index: 0, fab: _delete(context)),
 
           // The toggle fab needs to be at the bottom of the column to hide other fabs when collapsed
           Transform(
