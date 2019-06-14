@@ -11,6 +11,7 @@ import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'blocs/journeys_event.dart';
 
 void main() {
@@ -34,10 +35,12 @@ void main() {
 var hintStyle = TextStyle(color: baseColors['gray']);
 
 const baseColors = ColorSwatch<String>(0xFF0A0D18, {
-  'dark': Color(0xFF313639),
-  'gray': Color(0xFF6b7080),
+  'dark': Color(0xFF202431),
+  'gray': Color(0xFF4E586E),
   'light': Color(0xFFFFFFFF),
-  'error': Color(0xFFFF0000)
+  'error': Color(0xFFFF0000),
+  'accent1': Color(0xFFF54B64),
+  'accent2': Color(0xFFF78361),
 });
 
 class Inkstep extends StatefulWidget {
@@ -90,7 +93,7 @@ class InkstepState extends State<Inkstep> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark,
-          accentColor: Colors.deepPurple,
+          accentColor: baseColors['accent1'],
           primaryColor: baseColors['dark'],
           backgroundColor: baseColors['dark'],
           dialogBackgroundColor: baseColors['dark'],
@@ -112,7 +115,7 @@ class InkstepState extends State<Inkstep> {
           cursorColor: baseColors['dark'],
           toggleableActiveColor: baseColors['dark'],
         ),
-        home:  SetInitialPage(updateUserId: updateUserId, localUserId: localUserId),
+        home: SetInitialPage(updateUserId: updateUserId, localUserId: localUserId),
       ),
       bloc: _journeyBloc,
     );
@@ -169,20 +172,18 @@ class SetInitialPage extends StatelessWidget {
     return FutureBuilder<bool>(
       future: localUserExists(updateUserId),
       builder: (buildContext, snapshot) {
-        if(snapshot.hasData) {
-          if(snapshot.data){
+        if (snapshot.hasData) {
+          if (snapshot.data) {
             // Return your login here
             return Onboarding();
           }
           // Return your home here
           return JourneysScreen(onInit: () {
-              if (localUserId != -1) {
-                final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(
-                    context);
-                journeyBloc.dispatch(LoadUser(localUserId));
-              }
+            if (localUserId != -1) {
+              final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+              journeyBloc.dispatch(LoadUser(localUserId));
             }
-          );
+          });
         } else {
           // Return loading screen while reading preferences
           return Center(child: CircularProgressIndicator());
