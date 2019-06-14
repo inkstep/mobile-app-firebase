@@ -15,8 +15,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    const EdgeInsets topPadding = EdgeInsets.only(top: 120.0);
-
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
     final ScreenNavigator nav = sl.get<ScreenNavigator>();
     final boldButtonKey = UniqueKey();
