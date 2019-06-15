@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
-import 'package:inkstep/ui/components/short_text_input_form_element.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -79,13 +79,14 @@ class LoginScreen extends StatelessWidget {
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
       width: 130.0,
-      child: ShortTextInputFormElement(
-        controller: null,
-        textController: textController,
+      child: ShortTextInput(
+        controller: textController,
         keyboardType: TextInputType.number,
         label: '',
         hint: '',
         maxLength: 3,
+        capitalisation: TextCapitalization.words,
+        callback: (_) {},
       ),
     );
   }

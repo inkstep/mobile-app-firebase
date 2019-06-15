@@ -109,6 +109,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Card(
+                                            color: Colors.black,
                                             clipBehavior: Clip.antiAliasWithSaveLayer,
                                             child: FadeInImage.assetNetwork(
                                               placeholder: 'assets/ricky.png',
