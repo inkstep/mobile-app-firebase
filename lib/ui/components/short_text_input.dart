@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,26 +33,30 @@ class ShortTextInput extends StatelessWidget {
     final underline = UnderlineInputBorder(
       borderSide: BorderSide(color: theme.backgroundColor),
     );
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      textCapitalization: capitalisation,
-      autofocus: true,
-      maxLength: maxLength,
-      style: theme.accentTextTheme.headline,
-      cursorColor: theme.backgroundColor,
-      decoration: InputDecoration(
-        hintText: hint,
-        labelText: label,
-        focusedBorder: underline,
-        enabledBorder: underline,
-        labelStyle: theme.accentTextTheme.title,
-        hintStyle: hintStyle,
-        helperStyle: hintStyle,
-      ),
-      focusNode: focus,
-      textInputAction: TextInputAction.next,
-      onFieldSubmitted: callback,
+    return Column(
+      children: <Widget>[
+        AutoSizeText(label, style: Theme.of(context).accentTextTheme.title),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          textCapitalization: capitalisation,
+          autofocus: true,
+          maxLength: maxLength,
+          style: theme.accentTextTheme.headline,
+          cursorColor: theme.backgroundColor,
+          decoration: InputDecoration(
+            hintText: hint,
+            focusedBorder: underline,
+            enabledBorder: underline,
+            labelStyle: theme.accentTextTheme.title,
+            hintStyle: hintStyle,
+            helperStyle: hintStyle,
+          ),
+          focusNode: focus,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: callback,
+        ),
+      ],
     );
   }
 }
