@@ -31,15 +31,23 @@ class ShortTextInputFormElement extends StatelessWidget {
     return FormElementBuilder(
       builder: (context, focus, submitCallback) {
         return
-          ShortTextInput(
-            controller: textController,
-            keyboardType: keyboardType,
-            maxLength: maxLength,
-            capitalisation: capitalisation,
-            hint: hint,
-            label: label,
-            focus: focus,
-            callback: submitCallback,
+          Column(
+            children: <Widget>[
+              Spacer(),
+              Flexible(
+                child: ShortTextInput(
+                  controller: textController,
+                  keyboardType: keyboardType,
+                  maxLength: maxLength,
+                  capitalisation: capitalisation,
+                  hint: hint,
+                  label: label,
+                  focus: focus,
+                  callback: submitCallback,
+                ),
+              ),
+              Spacer(flex: 2),
+            ],
           );
       },
       onSubmitCallback: callback,

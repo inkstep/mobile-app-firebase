@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
-import 'package:inkstep/ui/components/short_text_input_form_element.dart';
+import 'package:inkstep/ui/components/short_text_input.dart';
 
 class SizeSelector extends StatelessWidget {
   SizeSelector({
@@ -35,7 +35,8 @@ class SizeSelector extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Flexible(flex: 4, child: _buildNumberInputBox(widthController)),
+                Flexible(flex: 2, child: _buildNumberInputBox(widthController)),
+                Spacer(),
                 Flexible(
                   flex: 1,
                   child: Text(
@@ -43,7 +44,8 @@ class SizeSelector extends StatelessWidget {
                     style: Theme.of(context).accentTextTheme.subtitle,
                   ),
                 ),
-                Flexible(flex: 4, child: _buildNumberInputBox(heightController)),
+                Spacer(),
+                Flexible(flex: 2, child: _buildNumberInputBox(heightController)),
                 Flexible(
                   flex: 1,
                   child: Text(
@@ -85,13 +87,13 @@ class SizeSelector extends StatelessWidget {
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
       width: 130.0,
-      child: ShortTextInputFormElement(
-        controller: null,
-        textController: textController,
+      child: ShortTextInput(
+        controller:  textController,
         keyboardType: TextInputType.number,
         label: '',
         hint: '',
-        maxLength: 3,
+        maxLength: 3, callback: (_) {},
+        capitalisation: TextCapitalization.words,
       ),
     );
   }
