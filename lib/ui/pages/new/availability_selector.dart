@@ -28,10 +28,7 @@ class AvailabilitySelector extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 40),
-                  child: Wrap(
-                    alignment: WrapAlignment.start,
-                    spacing: 16.0,
-                    runSpacing: 15.0,
+                  child: Column(
                     children: <Widget>[
                       _chooseDayChip('Monday', weekCallbacks.monday, context),
                       _chooseDayChip('Tuesday', weekCallbacks.tuesday, context),
@@ -63,20 +60,22 @@ class AvailabilitySelector extends StatelessWidget {
   }
 
   Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback, BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Text(
-          day,
-          textScaleFactor: 1.5,
-          style: Theme.of(context).accentTextTheme.subtitle,
-        ),
-        Spacer(),
-        FilterChip(
-          label: Text('   '),
-          onSelected: dayCallback.onSwitched,
-          selected: dayCallback.currentValue(),
-        ),
-      ],
+    return Flexible(
+      child: Row(
+        children: <Widget>[
+          Text(
+            day,
+            textScaleFactor: 1.5,
+            style: Theme.of(context).accentTextTheme.subtitle,
+          ),
+          Spacer(),
+          FilterChip(
+            label: Text('   '),
+            onSelected: dayCallback.onSwitched,
+            selected: dayCallback.currentValue(),
+          ),
+        ],
+      ),
     );
   }
 }
