@@ -17,7 +17,7 @@ class ArtistEntity extends Equatable {
     final String name = json['name'] ?? '';
     final String email = json['email'] ?? '';
     final int studioID = json['studioID'] ?? -1;
-    final String profileUrl = json['imagePath'] ??
+    final String profileUrl = json['profileUrl'] ??
         'https://southcitymarket.com/wp-content/uploads/2019/05/ricky-540x540.jpg';
     return ArtistEntity(
       artistID: artistID,
