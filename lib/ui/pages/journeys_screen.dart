@@ -175,7 +175,6 @@ class LoadedJourneyScreen extends StatelessWidget {
                     journeyBloc.dispatch(LogOut(context));
                   },
                 ),
-
               ),
               Spacer(flex: 1),
               HorizontalDivider(

@@ -48,19 +48,19 @@ class DeleteJourneyDialog extends StatelessWidget {
       case AppointmentOfferReceived:
         header = 'Are you sure you want to end your journey?';
         body = '${card.artistName.split(' ').first} will be '
-               'notified that you do not want to proceed.';
+            'notified that you do not want to proceed.';
         confirmButtonText = 'End Journey';
         break;
       case BookedIn:
         header = 'Are you sure you want to cancel your booking?';
         body = '${card.artistName.split(' ').first} will be notified and '
-               'you will not get your deposit back.';
+            'you will not get your deposit back.';
         confirmButtonText = 'Cancel Booking';
         break;
       case Aftercare:
         header = 'Are you sure you want to remove this journey?';
         body = 'You won\'t get to see personalised aftercare advice'
-               'or be able to send a photo to your artist if you proceed.';
+            'or be able to send a photo to your artist if you proceed.';
         confirmButtonText = 'Remove Journey';
         break;
       case Healed:
@@ -290,10 +290,17 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
   }
 }
 
-class SingleJourneyScreen extends StatelessWidget {
+class SingleJourneyScreen extends StatefulWidget {
   SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
 
   final CardModel card;
+
+  @override
+  _SingleJourneyScreenState createState() => _SingleJourneyScreenState();
+}
+
+class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
+  String bgChoice;
 
   Widget _backgroundImage(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -303,9 +310,14 @@ class SingleJourneyScreen extends StatelessWidget {
       'assets/bg4.jpg',
       'assets/bg5.jpg',
     ];
+    if (bgChoice == null) {
+      setState(() {
+        bgChoice = (backgroundPaths..shuffle()).first;
+      });
+    }
     return Center(
       child: Image.asset(
-        (backgroundPaths..shuffle()).first,
+        bgChoice,
         width: size.width,
         height: size.height,
         fit: BoxFit.fitHeight,
@@ -331,7 +343,7 @@ class SingleJourneyScreen extends StatelessWidget {
               },
             ),
             Spacer(),
-            DropdownFloatingActionButtons(card: card),
+            DropdownFloatingActionButtons(card: widget.card),
           ],
         ),
       ),
@@ -339,11 +351,11 @@ class SingleJourneyScreen extends StatelessWidget {
   }
 
   Widget _content(BuildContext context) {
-    final String artistFirstName = card.artistName.split(' ')[0];
+    final String artistFirstName = widget.card.artistName.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
-    final bool hasQuote = card.quote != null;
-    final bool hasDate = card.bookedDate != null;
+    final bool hasQuote = widget.card.quote != null;
+    final bool hasDate = widget.card.bookedDate != null;
     return ListView(
       children: <Widget>[
         Stack(
@@ -358,7 +370,7 @@ class SingleJourneyScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DateBlock(
-                        date: card.bookedDate,
+                        date: widget.card.bookedDate,
                         onlyDate: true,
                         scale: 1.75,
                       ),
@@ -413,7 +425,7 @@ class SingleJourneyScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: Text(
-                    card.description,
+                    widget.card.description,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
@@ -431,11 +443,11 @@ class SingleJourneyScreen extends StatelessWidget {
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
-                      itemCount: card.images.length,
+                      itemCount: widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: card.images[index].image,
+                                image: widget.card.images[index].image,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -463,7 +475,7 @@ class SingleJourneyScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  card.bodyLocation ?? 'N/A',
+                  widget.card.bodyLocation ?? 'N/A',
                   style: Theme.of(context).accentTextTheme.body1,
                 ),
                 Text(
@@ -474,7 +486,7 @@ class SingleJourneyScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  card.size ?? 'N/A',
+                  widget.card.size ?? 'N/A',
                   style: Theme.of(context).accentTextTheme.body1,
                 ),
                 if (hasQuote)
@@ -488,7 +500,7 @@ class SingleJourneyScreen extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        '£${card.quote.start}-£${card.quote.end}',
+                        '£${widget.card.quote.start}-£${widget.card.quote.end}',
                         style: Theme.of(context).accentTextTheme.body1,
                       ),
                     ],

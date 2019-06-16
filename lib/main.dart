@@ -69,8 +69,9 @@ class InkstepState extends State<Inkstep> {
 //      print("Settings registered: $settings");
 //    });
     updateUserId = (userId) {
-      localUserId = userId;
-      print('Local UserID is: $localUserId');
+      setState(() {
+        localUserId = userId;
+      });
     };
   }
 
@@ -200,6 +201,5 @@ Future<bool> localUserExists(void Function(int) updateUserId) async {
   if (!toReturn) {
     updateUserId(userId);
   }
-  print(userId);
   return toReturn;
 }
