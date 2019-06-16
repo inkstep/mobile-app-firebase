@@ -78,6 +78,46 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
   }
 }
 
+class AddCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final textColor = Theme.of(context).backgroundColor;
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(16.0),
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          onTap: () {
+            final nav = sl.get<ScreenNavigator>();
+            nav.openArtistSelection(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add,
+                  size: 52.0,
+                  color: textColor,
+                ),
+                Container(
+                  height: 8.0,
+                ),
+                Text(
+                  'Start a new journey',
+                  style: TextStyle(color: textColor),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class LoadedJourneyCard extends AnimatedWidget {
   const LoadedJourneyCard({
     Key key,

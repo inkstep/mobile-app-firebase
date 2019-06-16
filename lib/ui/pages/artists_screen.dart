@@ -50,6 +50,10 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
     return BlocProvider<ArtistsBloc>(
         bloc: _artistsBloc,
         child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: true,
+            elevation: 0.0,
+          ),
           body: BlocBuilder(
             bloc: _artistsBloc,
             builder: (BuildContext context, ArtistsState state) {
