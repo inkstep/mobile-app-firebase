@@ -412,12 +412,12 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(card.stage.icon,
+                            Icon(widget.card.stage.icon,
                                 color: Theme.of(context).accentTextTheme.subhead.color),
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                '${card.stage.toString()}',
+                                '${widget.card.stage.toString()}',
                                 style: Theme.of(context).accentTextTheme.subhead,
                               ),
                             ),
@@ -456,7 +456,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    card.bodyLocation ?? 'N/A',
+                    widget.card.bodyLocation ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
@@ -473,7 +473,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    card.size ?? 'N/A',
+                    widget.card.size ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
@@ -493,7 +493,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                         child: Text(
-                          '£${card.quote.start}-£${card.quote.end}',
+                          '£${widget.card.quote.start}-£${widget.card.quote.end}',
                           style: Theme.of(context).accentTextTheme.body1,
                         ),
                       ),
@@ -517,21 +517,21 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       crossAxisCount: 4,
                       itemCount: widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: widget.card.images[index].image,
-                            fit: BoxFit.cover,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: widget.card.images[index].image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Container(
+                              transform: Matrix4.translationValues(10, 10, 10),
+                              alignment: Alignment.bottomRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Text('${index + 1}'),
+                              ),
+                            ),
                           ),
-                        ),
-                        child: Container(
-                          transform: Matrix4.translationValues(10, 10, 10),
-                          alignment: Alignment.bottomRight,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Text('${index + 1}'),
-                          ),
-                        ),
-                      ),
                       staggeredTileBuilder: (int index) =>
                           StaggeredTile.count(2, index.isEven ? 2 : 1),
                       mainAxisSpacing: 16.0,
