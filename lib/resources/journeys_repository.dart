@@ -91,18 +91,14 @@ class JourneysRepository {
     return await webClient.updateRow(journeyMap, journeyId);
   }
 
-  Future<bool> sendArtistPhoto(File imageData, int userId, int artistId) async {
+  Future<bool> sendArtistPhoto(File imageData, int journeyId) async {
     final List<int> bytes = imageData.readAsBytesSync();
     final String encodedImage = base64Encode(bytes);
 
     final Map<String, dynamic> photoMap = <String, dynamic>{
       'image_data': encodedImage,
-      'artist_id': artistId,
-      'user_id': userId
+      'journey_id': journeyId,
     };
-
-    print(artistId);
-    print(userId);
 
     int sendLimit = 10;
     while (!await webClient.sendArtistPhoto(photoMap) && sendLimit > 0) {

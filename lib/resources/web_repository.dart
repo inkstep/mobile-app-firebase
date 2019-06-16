@@ -21,6 +21,7 @@ class WebRepository {
   static const String imagesEndpoint = '/images';
   static const String artistEndpoint = '/artist';
   static const String studiosEndpoint = '/studio';
+  static const String tattooEndpoint = '/tattoo';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     final http.Response response = await client.get('$url$artistEndpoint');
@@ -239,7 +240,7 @@ class WebRepository {
     http.Response response;
 
     try {
-      response = await client.put('$url$artistEndpoint$imageEndpoint',
+      response = await client.put('$url$journeyEndpoint$imageEndpoint$tattooEndpoint',
           body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
       print(e);
@@ -247,7 +248,7 @@ class WebRepository {
     }
 
     print(
-        '$artistEndpoint$imageEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response
+        '$journeyEndpoint$imageEndpoint$tattooEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response
             .body}');
 
     if (response.statusCode == 200) {
