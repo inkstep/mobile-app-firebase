@@ -186,7 +186,6 @@ class LoadedJourneyScreen extends StatelessWidget {
                       if (loadedState.cards.isEmpty) {
                         return AddCard();
                       }
-                      print('Adding non empty card!');
                       return JourneyCard(model: loadedState.cards[index]);
                     },
                     loop: false,
