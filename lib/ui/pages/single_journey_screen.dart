@@ -20,7 +20,6 @@ class DeleteJourneyDialog extends StatelessWidget {
 
   final CardModel card;
 
-  // Tell artist they don't want to proceed
   void _cancelJourney(BuildContext context) {
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
     journeyBloc.dispatch(RemoveJourney(card.journeyId));
@@ -40,19 +39,19 @@ class DeleteJourneyDialog extends StatelessWidget {
       case AppointmentOfferReceived:
         header = 'Are you sure you want to end your journey?';
         body = '${card.artistName.split(' ').first} will be '
-               'notified that you do not want to proceed.';
+            'notified that you do not want to proceed.';
         confirmButtonText = 'End Journey';
         break;
       case BookedIn:
         header = 'Are you sure you want to cancel your booking?';
         body = '${card.artistName.split(' ').first} will be notified and '
-               'you will not get your deposit back.';
+            'you will not get your deposit back.';
         confirmButtonText = 'Cancel Booking';
         break;
       case Aftercare:
         header = 'Are you sure you want to remove this journey?';
         body = 'You won\'t get to see personalised aftercare advice'
-               'or be able to send a photo to your artist if you proceed.';
+            'or be able to send a photo to your artist if you proceed.';
         confirmButtonText = 'Remove Journey';
         break;
       case Healed:
@@ -321,50 +320,58 @@ class SingleJourneyScreen extends StatelessWidget {
     final bool hasDate = card.bookedDate != null;
     return ListView(
       children: <Widget>[
-        Stack(
-          alignment: Alignment.bottomLeft,
-          children: <Widget>[
-            if (hasDate)
-              Row(
+        Container(
+          height: 0.8 * fullHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Stack(
+                alignment: Alignment.bottomLeft,
                 children: <Widget>[
-                  Spacer(),
-                  Opacity(
-                    opacity: 0.5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DateBlock(
-                        date: card.bookedDate,
-                        onlyDate: true,
-                        scale: 1.75,
+                  if (hasDate)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Opacity(
+                          opacity: 0.5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DateBlock(
+                              date: card.bookedDate,
+                              onlyDate: true,
+                              scale: 1.75,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  Container(
+                    width: fullWidth,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        stops: const [0.1, 0.5],
+                        colors: const [Colors.black54, Colors.transparent],
                       ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: fullHeight * 0.65),
+                        LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                        SizedBox(height: 20),
+                      ],
                     ),
                   ),
                 ],
               ),
-            Container(
-              width: fullWidth,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  // Where the linear gradient begins and ends
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  // Add one stop for each color. Stops should increase from 0 to 1
-                  stops: const [0.1, 0.5],
-                  colors: const [Colors.black54, Colors.transparent],
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: fullHeight * 0.65),
-                  LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         Container(
           height: 800,
@@ -372,57 +379,147 @@ class SingleJourneyScreen extends StatelessWidget {
             margin: EdgeInsets.zero,
             color: Theme.of(context).cardColor,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 30),
-                  child: Container(
-                    width: 80,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    ),
+                  height: 0.2 * fullHeight,
+                  padding: EdgeInsets.only(top: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: 80,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.black26,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(card.stage.icon,
+                                color: Theme.of(context).accentTextTheme.subhead.color),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Text(
+                                '${card.stage.toString()}',
+                                style: Theme.of(context).accentTextTheme.subhead,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text('Description.',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .subtitle
+                          .copyWith(fontWeight: FontWeight.w500)),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
                     card.description,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
-                Text(
-                  'Inspiration.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Placement.',
+                    style: Theme.of(context)
+                        .accentTextTheme
+                        .subtitle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                  child: Text(
+                    card.bodyLocation ?? 'N/A',
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Size.',
+                    style: Theme.of(context)
+                        .accentTextTheme
+                        .subtitle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                  child: Text(
+                    card.size ?? 'N/A',
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
+                if (hasQuote)
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          'Price.',
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .subtitle
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                        child: Text(
+                          '£${card.quote.start}-£${card.quote.end}',
+                          style: Theme.of(context).accentTextTheme.body1,
+                        ),
+                      ),
+                    ],
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
+                  child: Text('Inspiration.',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .subtitle
+                          .copyWith(fontWeight: FontWeight.w500)),
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),
                     child: StaggeredGridView.countBuilder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
                       itemCount: card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: card.images[index].image,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Container(
-                              transform: Matrix4.translationValues(10, 10, 10),
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Text('${index + 1}'),
-                              ),
-                            ),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: card.images[index].image,
+                            fit: BoxFit.cover,
                           ),
+                        ),
+                        child: Container(
+                          transform: Matrix4.translationValues(10, 10, 10),
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Text('${index + 1}'),
+                          ),
+                        ),
+                      ),
                       staggeredTileBuilder: (int index) =>
                           StaggeredTile.count(2, index.isEven ? 2 : 1),
                       mainAxisSpacing: 16.0,
@@ -430,44 +527,6 @@ class SingleJourneyScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  'Placement.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  card.bodyLocation ?? 'N/A',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                Text(
-                  'Size.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  card.size ?? 'N/A',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                if (hasQuote)
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Price.',
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .subtitle
-                            .copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        '£${card.quote.start}-£${card.quote.end}',
-                        style: Theme.of(context).accentTextTheme.body1,
-                      ),
-                    ],
-                  ),
               ],
             ),
           ),
