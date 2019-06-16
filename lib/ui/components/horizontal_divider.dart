@@ -20,12 +20,10 @@ class HorizontalDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MainAxisAlignment actualAlignment = alignment ?? MainAxisAlignment.center;
-    final int spacerFlex = actualAlignment == MainAxisAlignment.center
-        ? (100 - percentage) ~/ 2
-        : (100 - percentage);
+    final int spacerFlex =
+        actualAlignment == MainAxisAlignment.center ? (100 - percentage) ~/ 2 : (100 - percentage);
 
-    return Expanded(
-        child: Row(
+    return Row(
       children: <Widget>[
         if (actualAlignment == MainAxisAlignment.end || actualAlignment == MainAxisAlignment.center)
           Spacer(flex: spacerFlex),
@@ -50,6 +48,6 @@ class HorizontalDivider extends StatelessWidget {
             actualAlignment == MainAxisAlignment.center)
           Spacer(flex: spacerFlex),
       ],
-    ));
+    );
   }
 }
