@@ -270,6 +270,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               return Scaffold(
                 key: _scaffoldKey,
                 backgroundColor: Theme.of(context).cardColor,
+                resizeToAvoidBottomPadding: false,
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.transparent,

@@ -20,21 +20,12 @@ class DeleteJourneyDialog extends StatelessWidget {
 
   final CardModel card;
 
-  // Tell artist they don't want to proceed
   void _cancelJourney(BuildContext context) {
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
     journeyBloc.dispatch(RemoveJourney(card.journeyId));
     Navigator.pop(context);
     Navigator.pop(context);
   }
-
-  // Release appointment automatically
-  void _cancelBooking() {
-    print('Email artist. Release appointment');
-  }
-
-  // Remove from local storage after backend updated
-  void _removeJourneyLocally() {}
 
   @override
   Widget build(BuildContext context) {
@@ -88,24 +79,7 @@ class DeleteJourneyDialog extends StatelessWidget {
           padding: const EdgeInsets.only(top: 12.0),
           child: RaisedButton(
             color: Colors.white,
-            onPressed: () {
-              switch (card.stage.runtimeType) {
-                case WaitingForQuote:
-                case QuoteReceived:
-                case WaitingForAppointmentOffer:
-                case AppointmentOfferReceived:
-                  _cancelJourney(context);
-                  break;
-                case BookedIn:
-                  _cancelBooking();
-                  break;
-                default:
-                  // Do nothing
-                  break;
-              }
-              // Remove card from list of journeys/update backend here?
-              _removeJourneyLocally();
-            },
+            onPressed: () => _cancelJourney(context),
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -358,50 +332,58 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
     final bool hasDate = widget.card.bookedDate != null;
     return ListView(
       children: <Widget>[
-        Stack(
-          alignment: Alignment.bottomLeft,
-          children: <Widget>[
-            if (hasDate)
-              Row(
+        Container(
+          height: 0.8 * fullHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Stack(
+                alignment: Alignment.bottomLeft,
                 children: <Widget>[
-                  Spacer(),
-                  Opacity(
-                    opacity: 0.5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DateBlock(
-                        date: widget.card.bookedDate,
-                        onlyDate: true,
-                        scale: 1.75,
+                  if (hasDate)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Opacity(
+                          opacity: 0.5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DateBlock(
+                              date: widget.card.bookedDate,
+                              onlyDate: true,
+                              scale: 1.75,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  Container(
+                    width: fullWidth,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        // Where the linear gradient begins and ends
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        // Add one stop for each color. Stops should increase from 0 to 1
+                        stops: const [0.1, 0.5],
+                        colors: const [Colors.black54, Colors.transparent],
                       ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: fullHeight * 0.65),
+                        LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                        SizedBox(height: 20),
+                      ],
                     ),
                   ),
                 ],
               ),
-            Container(
-              width: fullWidth,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  // Where the linear gradient begins and ends
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  // Add one stop for each color. Stops should increase from 0 to 1
-                  stops: const [0.1, 0.5],
-                  colors: const [Colors.black54, Colors.transparent],
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: fullHeight * 0.65),
-                  LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         Container(
           height: 800,
@@ -409,57 +391,147 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
             margin: EdgeInsets.zero,
             color: Theme.of(context).cardColor,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 30),
-                  child: Container(
-                    width: 80,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    ),
+                  height: 0.2 * fullHeight,
+                  padding: EdgeInsets.only(top: 30),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: 80,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.black26,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(card.stage.icon,
+                                color: Theme.of(context).accentTextTheme.subhead.color),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Text(
+                                '${card.stage.toString()}',
+                                style: Theme.of(context).accentTextTheme.subhead,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text('Description.',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .subtitle
+                          .copyWith(fontWeight: FontWeight.w500)),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
                     widget.card.description,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
-                Text(
-                  'Inspiration.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Placement.',
+                    style: Theme.of(context)
+                        .accentTextTheme
+                        .subtitle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                  child: Text(
+                    card.bodyLocation ?? 'N/A',
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    'Size.',
+                    style: Theme.of(context)
+                        .accentTextTheme
+                        .subtitle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                  child: Text(
+                    card.size ?? 'N/A',
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
+                if (hasQuote)
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.0),
+                        child: Text(
+                          'Price.',
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .subtitle
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
+                        child: Text(
+                          '£${card.quote.start}-£${card.quote.end}',
+                          style: Theme.of(context).accentTextTheme.body1,
+                        ),
+                      ),
+                    ],
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
+                  child: Text('Inspiration.',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .subtitle
+                          .copyWith(fontWeight: FontWeight.w500)),
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),
                     child: StaggeredGridView.countBuilder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
                       itemCount: widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: widget.card.images[index].image,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Container(
-                              transform: Matrix4.translationValues(10, 10, 10),
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Text('${index + 1}'),
-                              ),
-                            ),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: widget.card.images[index].image,
+                            fit: BoxFit.cover,
                           ),
+                        ),
+                        child: Container(
+                          transform: Matrix4.translationValues(10, 10, 10),
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Text('${index + 1}'),
+                          ),
+                        ),
+                      ),
                       staggeredTileBuilder: (int index) =>
                           StaggeredTile.count(2, index.isEven ? 2 : 1),
                       mainAxisSpacing: 16.0,
@@ -467,44 +539,6 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                     ),
                   ),
                 ),
-                Text(
-                  'Placement.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  widget.card.bodyLocation ?? 'N/A',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                Text(
-                  'Size.',
-                  style: Theme.of(context)
-                      .accentTextTheme
-                      .subtitle
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  widget.card.size ?? 'N/A',
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                if (hasQuote)
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Price.',
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .subtitle
-                            .copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        '£${widget.card.quote.start}-£${widget.card.quote.end}',
-                        style: Theme.of(context).accentTextTheme.body1,
-                      ),
-                    ],
-                  ),
               ],
             ),
           ),

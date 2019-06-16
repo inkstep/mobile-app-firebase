@@ -23,6 +23,8 @@ abstract class JourneyStage extends Equatable {
         return Aftercare(DateTime.parse(json['bookingDate']));
       case 6:
         return Healed();
+      case 7:
+        return Finished();
       default:
         return InvalidStage();
     }
@@ -31,6 +33,7 @@ abstract class JourneyStage extends Equatable {
   int get progress;
   bool get userActionRequired;
   int get numberRepresentation;
+  IconData get icon;
 }
 
 abstract class JourneyStageWithQuote extends JourneyStage{
@@ -51,11 +54,13 @@ class WaitingForQuote extends JourneyStage {
 
   @override
   int get numberRepresentation => 0;
+
+  @override
+  IconData get icon => Icons.swap_horiz;
 }
 
 class QuoteReceived extends JourneyStageWithQuote {
   QuoteReceived(TextRange quote) : super(quote);
-
 
   @override
   int get progress => 30;
@@ -69,6 +74,9 @@ class QuoteReceived extends JourneyStageWithQuote {
 
   @override
   int get numberRepresentation => 1;
+
+  @override
+  IconData get icon => Icons.priority_high;
 }
 
 class WaitingForAppointmentOffer extends JourneyStageWithQuote {
@@ -85,6 +93,9 @@ class WaitingForAppointmentOffer extends JourneyStageWithQuote {
 
   @override
   int get numberRepresentation => 2;
+
+  @override
+  IconData get icon => Icons.compare_arrows;
 }
 
 class AppointmentOfferReceived extends JourneyStageWithQuote {
@@ -102,6 +113,9 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
 
   @override
   int get numberRepresentation => 3;
+
+  @override
+  IconData get icon => Icons.date_range;
 }
 
 class BookedIn extends JourneyStageWithQuote {
@@ -119,6 +133,9 @@ class BookedIn extends JourneyStageWithQuote {
 
   @override
   int get numberRepresentation => 4;
+
+  @override
+  IconData get icon => Icons.event;
 }
 
 class Aftercare extends JourneyStage {
@@ -137,6 +154,9 @@ class Aftercare extends JourneyStage {
 
   @override
   int get numberRepresentation => 5;
+
+  @override
+  IconData get icon => Icons.healing;
 }
 
 class Healed extends JourneyStage {
@@ -151,6 +171,9 @@ class Healed extends JourneyStage {
 
   @override
   int get numberRepresentation => 6;
+
+  @override
+  IconData get icon => Icons.done_outline;
 }
 
 class Finished extends JourneyStage {
@@ -165,6 +188,9 @@ class Finished extends JourneyStage {
 
   @override
   int get numberRepresentation => 7;
+
+  @override
+  IconData get icon => Icons.done;
 }
 
 class InvalidStage extends JourneyStage {
@@ -179,4 +205,7 @@ class InvalidStage extends JourneyStage {
 
   @override
   int get numberRepresentation => -1;
+
+  @override
+  IconData get icon => Icons.error;
 }

@@ -147,14 +147,6 @@ class LoadedJourneyScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: addJourneyButton,
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: Navigator.of(context).canPop()
-          ? AppBar(
-              title: Text(''),
-              centerTitle: true,
-              elevation: 0.0,
-              backgroundColor: Colors.transparent,
-            )
-          : null,
       body: FadeTransition(
         opacity: _animation,
         child: SafeArea(
@@ -191,11 +183,14 @@ class LoadedJourneyScreen extends StatelessWidget {
                   onNotification: onNotification,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
+                      if (loadedState.cards.isEmpty) {
+                        return AddCard();
+                      }
                       return JourneyCard(model: loadedState.cards[index]);
                     },
                     loop: false,
                     controller: _swiperController,
-                    itemCount: loadedState.cards.length,
+                    itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
                     viewportFraction: 0.8,
                     scale: 0.9,
                   ),

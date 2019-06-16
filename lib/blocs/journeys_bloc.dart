@@ -320,7 +320,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Stream<JourneysState> _mapSendPhotoToState(SendPhoto event) async* {
-    await journeysRepository.sendArtistPhoto(event.imageData, event.userId, event.artistId);
+    await journeysRepository.sendArtistPhoto(event.imageData, event.journeyId);
     await journeysRepository.updateStage(Finished(), event.journeyId);
   }
 
