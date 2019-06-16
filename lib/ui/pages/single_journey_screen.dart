@@ -28,14 +28,6 @@ class DeleteJourneyDialog extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  // Release appointment automatically
-  void _cancelBooking() {
-    print('Email artist. Release appointment');
-  }
-
-  // Remove from local storage after backend updated
-  void _removeJourneyLocally() {}
-
   @override
   Widget build(BuildContext context) {
     String header;
@@ -88,24 +80,7 @@ class DeleteJourneyDialog extends StatelessWidget {
           padding: const EdgeInsets.only(top: 12.0),
           child: RaisedButton(
             color: Colors.white,
-            onPressed: () {
-              switch (card.stage.runtimeType) {
-                case WaitingForQuote:
-                case QuoteReceived:
-                case WaitingForAppointmentOffer:
-                case AppointmentOfferReceived:
-                  _cancelJourney(context);
-                  break;
-                case BookedIn:
-                  _cancelBooking();
-                  break;
-                default:
-                  // Do nothing
-                  break;
-              }
-              // Remove card from list of journeys/update backend here?
-              _removeJourneyLocally();
-            },
+            onPressed: () => _cancelJourney(context),
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
