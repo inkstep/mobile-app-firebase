@@ -23,6 +23,8 @@ abstract class JourneyStage extends Equatable {
         return Aftercare(DateTime.parse(json['bookingDate']));
       case 6:
         return Healed();
+      case 7:
+        return Finished();
       default:
         return InvalidStage();
     }
