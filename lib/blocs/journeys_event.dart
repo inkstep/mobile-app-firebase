@@ -9,6 +9,16 @@ abstract class JourneysEvent extends Equatable {
   JourneysEvent([List<dynamic> props = const <dynamic>[]]) : super(props);
 }
 
+// TODO: Users should have their own bloc
+class AddUser extends JourneysEvent {
+  AddUser({@required this.name}) : super(<dynamic>[name]);
+
+  final String name;
+
+  @override
+  String toString() => 'AddUser { name: $name }';
+}
+
 class AddJourney extends JourneysEvent {
   AddJourney({@required this.result}) : super(<dynamic>[result]);
 

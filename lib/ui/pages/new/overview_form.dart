@@ -17,7 +17,6 @@ class OverviewForm extends StatelessWidget {
   const OverviewForm({
     Key key,
     @required this.formData,
-    @required this.nameController,
     @required this.descController,
     @required this.emailController,
     @required this.widthController,
@@ -28,7 +27,6 @@ class OverviewForm extends StatelessWidget {
   }) : super(key: key);
 
   final Map<String, String> formData;
-  final TextEditingController nameController;
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController widthController;
@@ -39,7 +37,7 @@ class OverviewForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    formData['name'] = nameController.text;
+//    formData['name'] = nameController.text;
     formData['mentalImage'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = widthController.text == '' || heightController.text == ''
@@ -68,14 +66,6 @@ class OverviewForm extends StatelessWidget {
           flex: 12,
           child: Column(
             children: <Widget>[
-              Expanded(
-                  child: Row(
-                children: <Widget>[
-                  getLabel(context, 'Name ', formData, 'name'),
-                  getData(context, formData, 'name'),
-                ],
-              )),
-              HorizontalDivider(),
               Expanded(
                   child: Row(
                 children: <Widget>[

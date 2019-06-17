@@ -17,11 +17,59 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   final PageController _controller = PageController();
   double position;
 
-  @override
-  void dispose() {
-    _controller?.dispose();
-    _notifier?.dispose();
-    super.dispose();
+  Widget _buildOnboardingSlice(
+      BuildContext context, IconData icon, String header, String body, String buttonText,
+      {bool last}) {
+    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
+    return Column(
+      children: [
+        Spacer(flex: 4),
+        Icon(
+          icon,
+          size: 120,
+        ),
+        Spacer(),
+        Text(
+          header,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          child: Text(
+            body,
+            style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Spacer(
+          flex: 8,
+        ),
+        Container(
+          child: Column(
+            children: <Widget>[
+              BoldCallToAction(
+                onTap: () {
+                  if (last == null) {
+                    _controller.nextPage(
+                        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                  } else if (last) {
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openOnboardingRequiredInfoPage(context);
+                  }
+                },
+                label: buttonText,
+                textColor: Theme.of(context).primaryColor,
+                color: Theme.of(context).cardColor,
+              ),
+              Padding(padding: buttonPadding),
+              Padding(padding: buttonPadding),
+              Padding(padding: buttonPadding),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -70,59 +118,11 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildOnboardingSlice(
-      BuildContext context, IconData icon, String header, String body, String buttonText,
-      {bool last}) {
-    const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
-    return Column(
-      children: [
-        Spacer(flex: 4),
-        Icon(
-          icon,
-          size: 120,
-        ),
-        Spacer(),
-        Text(
-          header,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          child: Text(
-            body,
-            style: Theme.of(context).textTheme.title,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Spacer(
-          flex: 8,
-        ),
-        Container(
-          child: Column(
-            children: <Widget>[
-              BoldCallToAction(
-                onTap: () {
-                  if (last == null) {
-                    _controller.nextPage(
-                        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                  } else if (last) {
-                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.openArtistSelectionReplace(context);
-                  }
-                },
-                label: buttonText,
-                textColor: Theme.of(context).primaryColor,
-                color: Theme.of(context).cardColor,
-              ),
-              Padding(padding: buttonPadding),
-              Padding(padding: buttonPadding),
-              Padding(padding: buttonPadding),
-            ],
-          ),
-        ),
-      ],
-    );
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _notifier?.dispose();
+    super.dispose();
   }
 }
 
@@ -177,8 +177,6 @@ class FirstPage extends StatelessWidget {
                 onTap: () {
                   controller.nextPage(
                       duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-//                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//                    nav.openArtistSelectionReplace(context);
                 },
                 label: "Let's get started!",
                 textColor: Theme.of(context).primaryColor,

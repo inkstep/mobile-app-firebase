@@ -52,7 +52,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   int get autoScrollDuration => 500;
 
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController widthController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
@@ -89,14 +88,14 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return Future.value(false);
   }
 
-  List<Widget> _formQuestions(dynamic weekCallbacks, bool newUser) {
+  List<Widget> _formQuestions(dynamic weekCallbacks) {
     final List<Widget> widgets = <Widget>[
-      ShortTextInputFormElement(
+      LongTextInputFormElement(
         controller: controller,
-        textController: nameController,
-        label: 'What do your friends call you?',
-        hint: 'Natasha',
-        maxLength: 16,
+        textController: descController,
+        label: 'Tell your artist what you want and your inspiration behind it. '
+               'You\'ll get to add some photos to show them in a minute!',
+        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
       ),
       ImageGrid(
         images: inspirationImages,
@@ -113,12 +112,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
             setState(() {});
           },
         ).navToNextPage,
-      ),
-      LongTextInputFormElement(
-        controller: controller,
-        textController: descController,
-        label: 'Describe the image in your head of the tattoo you want?',
-        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
       ),
       PositionPickerFormElement(
         controller: controller,
@@ -172,7 +165,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       ),
       OverviewForm(
         formData: formData,
-        nameController: nameController,
         descController: descController,
         emailController: emailController,
         widthController: widthController,
@@ -182,11 +174,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         images: inspirationImages,
       )
     ];
-
-    if (!newUser) {
-      widgets.removeAt(0);
-    }
-
     return widgets;
   }
 
@@ -221,16 +208,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         child: BlocBuilder<JourneysEvent, JourneysState>(
             bloc: journeyBloc,
             builder: (BuildContext context, JourneysState state) {
-              bool newUser = false;
-
-              if (state is JourneysNoUser) {
-                newUser = true;
-              } else if (state is JourneysWithUser) {
+              if (state is JourneysWithUser) {
                 formData['name'] = state.user.name;
-                nameController.text = state.user.name;
+              } else {
+                throw StateError('A new user should not have made it here');
               }
-
-              final List<Widget> formWidgets = _formQuestions(weekCallbacks, newUser);
+              final List<Widget> formWidgets = _formQuestions(weekCallbacks);
 
               return Scaffold(
                 key: _scaffoldKey,

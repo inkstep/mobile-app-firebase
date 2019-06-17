@@ -11,6 +11,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
+import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -67,6 +68,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapRemoveJourneyToState(event);
     } else if (event is LogOut) {
       yield* _mapLogOutState(event);
+    } else if (event is AddUser) {
+      yield* _mapAddUserToState(event);
     }
   }
 
@@ -335,9 +338,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       mutableLoadedCards.removeWhere(
         (card) => card.journeyId == event.journeyId,
       );
-      final reloadedCards = mutableLoadedCards
-          .map((c) => Future.value(c))
-          .toList();
+      final reloadedCards = mutableLoadedCards.map((c) => Future.value(c)).toList();
 
       yield JourneysWithUser(
         cards: reloadedCards,
@@ -352,6 +353,23 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   void _handleDataMessage(Map<String, dynamic> message) {
     if (message['data']['journey'] != null) {
       dispatch(LoadJourney(int.parse(message['data']['journey'])));
+    }
+  }
+
+  Stream<JourneysState> _mapAddUserToState(AddUser event) async* {
+    final String pushToken = await firebase.getToken();
+    final UserEntity user = UserEntity(
+      name: event.name,
+      email: '',
+      token: pushToken,
+    );
+    int userId = await journeysRepository.saveUser(user);
+    print('userID=$userId');
+    if (userId == -1) {
+      yield JourneyError(prev: currentState);
+    } else {
+      final User userModel = User(id: userId, email: '', name: event.name);
+      yield JourneysWithUser(cards: [], firstTime: true, user: userModel);
     }
   }
 }
