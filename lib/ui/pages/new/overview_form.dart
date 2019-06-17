@@ -137,7 +137,7 @@ class OverviewForm extends StatelessWidget {
         Spacer(flex: 1),
         Expanded(
             flex: 2,
-            child: !missingData(formData)
+            child: missingData(formData)
                 ? Text(
                     'Please go back and fill in your missing data!',
                     style: Theme.of(context).accentTextTheme.subtitle,
