@@ -29,15 +29,18 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     final List<Widget> pages = [
       FirstPage(controller: _controller),
       _buildOnboardingSlice(
+        context,
+        Icons.memory,
+        'Feel Smarter',
+        'You get guided as to what artists want you to say.',
+        'Wow',
+      ),
+      _buildOnboardingSlice(
           context,
-          Icons.offline_bolt,
-          'Quicker Responses',
-          'You get responses quicker because artists get information they need immediately.',
-          'Sounds great!'),
-      _buildOnboardingSlice(context, Icons.memory, 'Feel Smarter',
-          'You get guided as to what artists want you to say.', 'Wow'),
-      _buildOnboardingSlice(context, Icons.calendar_today, 'Fill Cancellations',
-          'Help artists out, and get seen quicker with cancellation responses', "That's cool"),
+          Icons.calendar_today,
+          'Get the artist you want',
+          'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
+          "That's cool"),
       _buildOnboardingSlice(
           context,
           Icons.healing,
