@@ -35,7 +35,7 @@ class ImageGrid extends StatelessWidget {
         Spacer(),
         Expanded(
           child: AutoSizeText(
-            "Choose some reference images to show your artist what you want.",
+            'Add some reference images to show your artist what you want.',
             style: Theme.of(context).accentTextTheme.subhead,
             textAlign: TextAlign.center,
           ),

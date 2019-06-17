@@ -8,14 +8,11 @@ import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class OnboardingRequiredInfo extends StatefulWidget {
-  String name;
-
   @override
   State<StatefulWidget> createState() => OnboardingRequiredInfoState();
 }
 
 class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
-
   final nameController = TextEditingController();
 
   @override
@@ -47,8 +44,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                     capitalisation: TextCapitalization.words,
                     hint: 'Natasha',
                     label: 'What do your friends call you?',
-                    callback: (String) => FocusScope.of(context).requestFocus(new FocusNode())
-                ),
+                    callback: (_) => FocusScope.of(context).requestFocus(FocusNode())),
               ),
               Spacer(),
               RaisedButton(
@@ -70,7 +66,6 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
               Spacer(),
             ],
           ),
-        )
-    );
+        ));
   }
 }

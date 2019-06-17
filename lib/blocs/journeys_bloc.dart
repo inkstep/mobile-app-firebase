@@ -11,7 +11,6 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/resources/journeys_repository.dart';
-import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -372,7 +371,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       email: '',
       token: pushToken,
     );
-    int userId = await journeysRepository.saveUser(user);
+    final int userId = await journeysRepository.saveUser(user);
     print('userID=$userId');
     if (userId == -1) {
       yield JourneyError(prev: currentState);
