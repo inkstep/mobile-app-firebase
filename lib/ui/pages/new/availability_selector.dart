@@ -30,7 +30,7 @@ class AvailabilitySelector extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 40),
                   child: Column(
                     children: <Widget>[
-                      ChooseDayChip(day: 'Monday'),
+                      _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),
                       _chooseDayChip('Tuesday', weekCallbacks.callbacks[1], context),
                       _chooseDayChip('Wednesday', weekCallbacks.callbacks[2], context),
                       _chooseDayChip('Thursday', weekCallbacks.callbacks[3], context),
@@ -43,7 +43,6 @@ class AvailabilitySelector extends StatelessWidget {
               ),
               RaisedButton(
                 onPressed: () {
-                  print('availability: monday is ${weekCallbacks.callbacks[0].currentValue() ? '' : 'not'} selected');
                   controller.nextPage(
                       duration: Duration(milliseconds: duration), curve: Curves.ease);
                 },
@@ -74,45 +73,6 @@ class AvailabilitySelector extends StatelessWidget {
             label: Text('   '),
             onSelected: dayCallback.onSwitched,
             selected: dayCallback.currentValue(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ChooseDayChip extends StatefulWidget {
-  ChooseDayChip({@required this.day});
-
-  final String day;
-
-  @override
-  State<StatefulWidget> createState() => ChooseDayChipState();
-}
-
-class ChooseDayChipState extends State<ChooseDayChip> {
-  bool _isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      child: Row(
-        children: <Widget>[
-          Text(
-            widget.day,
-            textScaleFactor: 1.5,
-            style: Theme.of(context).accentTextTheme.subtitle,
-          ),
-          Spacer(),
-          FilterChip(
-            label: Text('   '),
-            onSelected: (newValue) {
-              setState(() {
-                _isSelected = newValue;
-              });
-            },
-            backgroundColor: Colors.red,
-            selected: _isSelected,
           ),
         ],
       ),

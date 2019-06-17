@@ -61,13 +61,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   buttonState deposit = buttonState.Unset;
 
-  bool mon = false;
-  bool tues = false;
-  bool wed = false;
-  bool thurs = false;
-  bool fri = false;
-  bool sat = false;
-  bool sun = false;
+  List<bool> availability = List.filled(7, false);
 
   List<Asset> inspirationImages = <Asset>[];
 
@@ -115,7 +109,9 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         submitCallback: FormElementBuilder(
           builder: (i, d, c) {},
           controller: controller,
-          onSubmitCallback: (_) {setState(() {});},
+          onSubmitCallback: (_) {
+            setState(() {});
+          },
         ).navToNextPage,
       ),
       LongTextInputFormElement(
@@ -194,60 +190,22 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return widgets;
   }
 
+  SingleDayCallbacks cb(int day) {
+    return SingleDayCallbacks((switched) {
+      setState(() {
+        availability[day] = switched;
+      });
+    }, () {
+      return availability[day];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     formData['artistID'] = artistID.toString();
-    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
-      setState(() {
-        mon = switched;
-      });
-    }, () {
-      return mon;
-    });
-    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {
-      setState(() {
-        tues = switched;
-      });
-    }, () {
-      return tues;
-    });
-    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {
-      setState(() {
-        wed = switched;
-      });
-    }, () {
-      return wed;
-    });
-    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {
-      setState(() {
-        thurs = switched;
-      });
-    }, () {
-      return thurs;
-    });
-    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {
-      setState(() {
-        fri = switched;
-      });
-    }, () {
-      return fri;
-    });
-    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {
-      setState(() {
-        sat = switched;
-      });
-    }, () {
-      return sat;
-    });
-    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {
-      setState(() {
-        sun = switched;
-      });
-    }, () {
-      return sun;
-    });
+
     final WeekCallbacks weekCallbacks =
-        WeekCallbacks([monday, tuesday, wednesday, thursday, friday, saturday, sunday]);
+        WeekCallbacks([cb(0), cb(1), cb(2), cb(3), cb(4), cb(5), cb(6)]);
 
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 

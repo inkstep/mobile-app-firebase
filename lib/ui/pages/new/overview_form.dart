@@ -137,7 +137,7 @@ class OverviewForm extends StatelessWidget {
         Spacer(flex: 1),
         Expanded(
             flex: 2,
-            child: missingData(formData)
+            child: !missingData(formData)
                 ? Text(
                     'Please go back and fill in your missing data!',
                     style: Theme.of(context).accentTextTheme.subtitle,
@@ -148,22 +148,23 @@ class OverviewForm extends StatelessWidget {
                     color: Theme.of(context).backgroundColor,
                     textColor: Theme.of(context).cardColor,
                     onTap: () {
-                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                      journeyBloc.dispatch(
-                        AddJourney(
-                            result: FormResult(
-                          name: formData['name'],
-                          email: formData['email'],
-                          size: formData['size'],
-                          availability: formData['availability'],
-                          mentalImage: formData['mentalImage'],
-                          position: formData['position'],
-                          images: images,
-                          artistID: int.parse(formData['artistID']),
-                        )),
-                      );
-                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openViewJourneysScreen(context);
+                      print('availability: ${formData['availability']}');
+//                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+//                      journeyBloc.dispatch(
+//                        AddJourney(
+//                            result: FormResult(
+//                          name: formData['name'],
+//                          email: formData['email'],
+//                          size: formData['size'],
+//                          availability: formData['availability'],
+//                          mentalImage: formData['mentalImage'],
+//                          position: formData['position'],
+//                          images: images,
+//                          artistID: int.parse(formData['artistID']),
+//                        )),
+//                      );
+//                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//                      nav.openViewJourneysScreen(context);
                     },
                   )),
         Spacer(flex: 1),
@@ -225,7 +226,6 @@ class OverviewForm extends StatelessWidget {
 
   String getAvailability(WeekCallbacks weekCallbacks) {
     String availabilityString = '';
-
     for (SingleDayCallbacks callback in weekCallbacks.callbacks) {
       availabilityString += callback.currentValue() ? '1' : '0';
     }
