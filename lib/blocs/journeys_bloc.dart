@@ -208,11 +208,20 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final prefs = await SharedPreferences.getInstance();
       final bool firstTime = prefs.getBool('firstTime');
       prefs.setInt('userId', userState.user.id);
-      final cards = await _getCards(userState.user.id);
+
+      final List<Future<CardModel>> oldCards = userState.cards;
+      List<Future<CardModel>> cards = await _getCards(userState.user.id);
+
+      cards = _mergeCards(cards, oldCards);
+
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(cards: cards, user: userState.user, firstTime: firstTime ?? true);
     }
+  }
+
+  List<Future<CardModel>> _mergeCards(List<Future<CardModel>> c1, List<Future<CardModel>> c2) {
+    return Set<Future<CardModel>>.from(c1).union(c2.toSet()).toList();
   }
 
   Stream<JourneysState> _mapLoadUserToState(LoadUser event) async* {
