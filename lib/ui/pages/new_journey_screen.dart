@@ -88,7 +88,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return Future.value(false);
   }
 
-  List<Widget> _formQuestions(dynamic weekCallbacks) {
+  List<Widget> _formQuestions(dynamic weekCallbacks, JourneysBloc journeyBloc) {
     final List<Widget> widgets = <Widget>[
       LongTextInputFormElement(
         controller: controller,
@@ -155,25 +155,33 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               }
             });
           }),
-      ShortTextInputFormElement(
+    ];
+
+    // If user has no email set, add the email question to the form
+    if (journeyBloc.currentState is JourneysWithUser &&
+       (journeyBloc.currentState as JourneysWithUser).user.email == '') {
+      widgets.add(ShortTextInputFormElement(
         controller: controller,
         textController: emailController,
         keyboardType: TextInputType.emailAddress,
         capitalisation: TextCapitalization.none,
         label: 'What is your email address?',
         hint: 'example@inkstep.com',
-      ),
-      OverviewForm(
-        formData: formData,
-        descController: descController,
-        emailController: emailController,
-        widthController: widthController,
-        heightController: heightController,
-        deposit: deposit,
-        weekCallbacks: weekCallbacks,
-        images: inspirationImages,
-      )
-    ];
+      ));
+    }
+
+    // Add the final overview form screen
+    widgets.add(OverviewForm(
+      formData: formData,
+      descController: descController,
+      emailController: emailController,
+      widthController: widthController,
+      heightController: heightController,
+      deposit: deposit,
+      weekCallbacks: weekCallbacks,
+      images: inspirationImages,
+    ));
+
     return widgets;
   }
 
@@ -213,7 +221,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               } else {
                 throw StateError('A new user should not have made it here');
               }
-              final List<Widget> formWidgets = _formQuestions(weekCallbacks);
+              final List<Widget> formWidgets = _formQuestions(weekCallbacks, journeyBloc);
 
               return Scaffold(
                 key: _scaffoldKey,
