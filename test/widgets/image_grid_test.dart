@@ -46,7 +46,7 @@ void main() {
       ]));
       await tester.pump();
 
-      await tester.tap(find.text('That enough?'));
+      await tester.tap(find.text('Next!'));
       await tester.pump();
 
       verify(controller.nextPage(duration: anyNamed('duration'), curve: anyNamed('curve')));
