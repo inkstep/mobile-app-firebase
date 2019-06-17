@@ -1,10 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_event.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
+import 'package:inkstep/models/form_result_model.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/pages/new/availability_selector.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class OverviewForm extends StatelessWidget {
@@ -142,23 +148,22 @@ class OverviewForm extends StatelessWidget {
                     color: Theme.of(context).backgroundColor,
                     textColor: Theme.of(context).cardColor,
                     onTap: () {
-                      print('availability: ${formData['availability']}');
-//                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-//                      journeyBloc.dispatch(
-//                        AddJourney(
-//                            result: FormResult(
-//                          name: formData['name'],
-//                          email: formData['email'],
-//                          size: formData['size'],
-//                          availability: formData['availability'],
-//                          mentalImage: formData['mentalImage'],
-//                          position: formData['position'],
-//                          images: images,
-//                          artistID: int.parse(formData['artistID']),
-//                        )),
-//                      );
-//                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//                      nav.openViewJourneysScreen(context);
+                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                      journeyBloc.dispatch(
+                        AddJourney(
+                            result: FormResult(
+                          name: formData['name'],
+                          email: formData['email'],
+                          size: formData['size'],
+                          availability: formData['availability'],
+                          mentalImage: formData['mentalImage'],
+                          position: formData['position'],
+                          images: images,
+                          artistID: int.parse(formData['artistID']),
+                        )),
+                      );
+                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                      nav.openViewJourneysScreen(context);
                     },
                   )),
         Spacer(flex: 1),
