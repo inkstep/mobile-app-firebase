@@ -190,8 +190,8 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return widgets;
   }
 
-  SingleDayCallbacks cb(int day) {
-    return SingleDayCallbacks((switched) {
+  SingleDayCallback callbackForDay(int day) {
+    return SingleDayCallback((switched) {
       setState(() {
         availability[day] = switched;
       });
@@ -204,8 +204,15 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   Widget build(BuildContext context) {
     formData['artistID'] = artistID.toString();
 
-    final WeekCallbacks weekCallbacks =
-        WeekCallbacks([cb(0), cb(1), cb(2), cb(3), cb(4), cb(5), cb(6)]);
+    final WeekCallbacks weekCallbacks = WeekCallbacks([
+      callbackForDay(0),
+      callbackForDay(1),
+      callbackForDay(2),
+      callbackForDay(3),
+      callbackForDay(4),
+      callbackForDay(5),
+      callbackForDay(6)
+    ]);
 
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 

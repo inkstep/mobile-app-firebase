@@ -59,7 +59,7 @@ class AvailabilitySelector extends StatelessWidget {
         });
   }
 
-  Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback, BuildContext context) {
+  Widget _chooseDayChip(String day, SingleDayCallback dayCallback, BuildContext context) {
     return Flexible(
       child: Row(
         children: <Widget>[
@@ -83,11 +83,11 @@ class AvailabilitySelector extends StatelessWidget {
 class WeekCallbacks {
   WeekCallbacks(this.callbacks);
 
-  final List<SingleDayCallbacks> callbacks;
+  final List<SingleDayCallback> callbacks;
 }
 
-class SingleDayCallbacks {
-  SingleDayCallbacks(this.onSwitched, this.currentValue);
+class SingleDayCallback {
+  SingleDayCallback(this.onSwitched, this.currentValue);
 
   final BoolCallback onSwitched;
   final bool Function() currentValue;
