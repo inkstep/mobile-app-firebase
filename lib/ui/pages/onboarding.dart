@@ -13,7 +13,7 @@ class Onboarding extends StatefulWidget {
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
-  final Tween inkRatio = Tween<double>(begin: 0.9, end: 2.0);
+  final Tween inkRatio = Tween<double>(begin: 0.9, end: 1.4);
   final PageController _controller = PageController();
   double position;
 
@@ -249,7 +249,7 @@ class InkSplash extends CustomPainter {
     );
     path.close();
 
-    paint.color = Colors.black26;
+    paint.color = color.withOpacity(0.26);
     canvas.drawPath(path, paint);
 
     path = Path();
@@ -262,7 +262,7 @@ class InkSplash extends CustomPainter {
     path.lineTo(size.width, 0);
     path.close();
 
-    paint.color = Colors.black54;
+    paint.color = color.withOpacity(0.54);
 
     canvas.drawPath(path, paint);
 
