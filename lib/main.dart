@@ -62,12 +62,6 @@ class InkstepState extends State<Inkstep> {
       journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
     );
 
-    // iOS Specific
-//    _firebaseMessaging.requestNotificationPermissions(
-//        const IosNotificationSettings(sound: true, badge: true, alert: true));
-//    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
-//      print("Settings registered: $settings");
-//    });
     updateUserId = (userId) {
       setState(() {
         localUserId = userId;

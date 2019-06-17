@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
@@ -25,6 +27,17 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     @required this.journeysRepository,
   }) : firebase = FirebaseMessaging() {
     print('configuring firebase');
+
+    if (Platform.isIOS) {
+      // iOS Specific
+      firebase.requestNotificationPermissions(
+          const IosNotificationSettings(sound: true, badge: true, alert: true));
+      firebase.onIosSettingsRegistered.listen((
+          IosNotificationSettings settings) {
+        print('Settings registered: $settings');
+      });
+    }
+
     firebase.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('onMessage: $message');

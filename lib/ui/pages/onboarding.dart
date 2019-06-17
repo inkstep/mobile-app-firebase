@@ -13,7 +13,7 @@ class Onboarding extends StatefulWidget {
 
 class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
-  final Tween inkRatio = Tween<double>(begin: 0.9, end: 2.0);
+  final Tween inkRatio = Tween<double>(begin: 0.9, end: 1.4);
   final PageController _controller = PageController();
   double position;
 
@@ -74,32 +74,35 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      FirstPage(controller: _controller),
-      _buildOnboardingSlice(
-          context,
-          Icons.offline_bolt,
-          'Quicker Responses',
-          'You get responses quicker because artists get information they need immediately.',
-          'Sounds great!'),
-      _buildOnboardingSlice(context, Icons.memory, 'Feel Smarter',
-          'You get guided as to what artists want you to say.', 'Wow'),
-      _buildOnboardingSlice(context, Icons.calendar_today, 'Fill Cancellations',
-          'Help artists out, and get seen quicker with cancellation responses', "That's cool"),
-      _buildOnboardingSlice(
-          context,
-          Icons.healing,
-          'Care Made Easy',
-          'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
-          'Awesome!'),
-      _buildOnboardingSlice(
-          context,
-          Icons.favorite,
-          "Be the Artist's Favourite",
-          "Make your artist happy! They'll be delighted to have a client like you.",
-          "Enough! Let's get to it.",
-          last: true),
-    ];
+  final List<Widget> pages = [
+    FirstPage(controller: _controller),
+    _buildOnboardingSlice(
+      context,
+      Icons.memory,
+      'Feel Smarter',
+      'You get guided as to what artists want you to say.',
+      'Wow',
+    ),
+    _buildOnboardingSlice(
+        context,
+        Icons.calendar_today,
+        'Get the artist you want',
+        'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
+        "That's cool"),
+    _buildOnboardingSlice(
+        context,
+        Icons.healing,
+        'Care Made Easy',
+        'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
+        'Awesome!'),
+    _buildOnboardingSlice(
+        context,
+        Icons.favorite,
+        "Be the Artist's Favourite",
+        "Make your artist happy! They'll be delighted to have a client like you.",
+        "Enough! Let's get to it.",
+        last: true),
+  ];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -246,7 +249,7 @@ class InkSplash extends CustomPainter {
     );
     path.close();
 
-    paint.color = Colors.black26;
+    paint.color = color.withOpacity(0.26);
     canvas.drawPath(path, paint);
 
     path = Path();
@@ -259,7 +262,7 @@ class InkSplash extends CustomPainter {
     path.lineTo(size.width, 0);
     path.close();
 
-    paint.color = Colors.black54;
+    paint.color = color.withOpacity(0.54);
 
     canvas.drawPath(path, paint);
 
