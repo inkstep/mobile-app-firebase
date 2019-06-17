@@ -85,7 +85,7 @@ class PositionWidget extends InfoWidget {
               child: Text(
                 'Where would you like your tattoo? (Arm, leg,'
                 ' etc)',
-                style: Theme.of(context).accentTextTheme.title,
+                style: Theme.of(context).primaryTextTheme.title,
                 textAlign: TextAlign.center,
               )),
           Spacer(flex: 1),
@@ -104,7 +104,7 @@ class PositionWidget extends InfoWidget {
                   flex: 2,
                   child: Text(
                     generalPos == null ? '' : 'Specifics...',
-                    style: Theme.of(context).accentTextTheme.title,
+                    style: Theme.of(context).primaryTextTheme.title,
                     textAlign: TextAlign.center,
                   ),
                 ),

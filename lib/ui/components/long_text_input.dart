@@ -25,15 +25,15 @@ class LongTextInput extends StatelessWidget {
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       maxLines: 5,
-      style: Theme.of(context).accentTextTheme.body1,
+      style: Theme.of(context).primaryTextTheme.body1,
       cursorColor: Theme.of(context).backgroundColor,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: Theme.of(context).accentTextTheme.body1,
+        hintStyle: Theme.of(context).primaryTextTheme.body1,
         enabledBorder: OutlineInputBorder(borderSide: BorderSide()),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).cardColor,
           ),
         ),
       ),

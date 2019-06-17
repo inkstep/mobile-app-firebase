@@ -54,7 +54,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   'Most artists require a deposit in order to secure you an '
                   'appointment. Don\'t worry, you won\'t have to pay this yet!',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).primaryTextTheme.subtitle,
                 ),
               );
             },

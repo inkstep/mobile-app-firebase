@@ -86,7 +86,7 @@ class AvailabilityWidget extends InfoWidget {
       children: <Widget>[
         Text(
           'What days of the week are you normally available?',
-          style: Theme.of(context).accentTextTheme.title,
+          style: Theme.of(context).primaryTextTheme.title,
           textAlign: TextAlign.center,
         ),
         Expanded(
@@ -116,13 +116,15 @@ class AvailabilityWidget extends InfoWidget {
           Text(
             day,
             textScaleFactor: 1.5,
-            style: Theme.of(context).accentTextTheme.subtitle,
+            style: Theme.of(context).primaryTextTheme.subtitle,
           ),
           Spacer(),
           FilterChip(
             label: Text('   '),
             onSelected: dayCallback.onSwitched,
             selected: dayCallback.currentValue(),
+            backgroundColor: Theme.of(context).cardColor,
+            selectedColor: Colors.green,
           ),
         ],
       ),

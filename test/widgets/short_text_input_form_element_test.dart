@@ -14,7 +14,9 @@ void main() {
             body: ShortTextInputFormElement(
                 textController: null,
                 label: 'label',
-                hint: 'hint'),
+                hint: 'hint',
+              callback: (_) {},
+            ),
           ),
         ),
       );
@@ -35,7 +37,9 @@ void main() {
                 key: inputKey,
                 textController: null,
                 label: 'label',
-                hint: 'hint'),
+                hint: 'hint',
+              callback: (_) {},
+            ),
           ),
         ),
       );
@@ -63,6 +67,7 @@ void main() {
               label: 'label',
               hint: 'hint',
               maxLength: 4,
+              callback: (_) {},
             ),
           ),
         ),

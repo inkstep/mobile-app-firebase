@@ -28,15 +28,20 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DescriptionWidget(descController, navigator);
+    return DescriptionWidget(descController, navigator, (_) {
+      setState(() {
+        print("wah");
+      });
+    });
   }
 }
 
 class DescriptionWidget extends InfoWidget {
-  DescriptionWidget(this.descController, this.navigator);
+  DescriptionWidget(this.descController, this.navigator, this.callback);
 
   final TextEditingController descController;
   final InfoNavigator navigator;
+  final void Function(String) callback;
 
   @override
   Widget getWidget(BuildContext context) {
@@ -45,6 +50,7 @@ class DescriptionWidget extends InfoWidget {
       label: 'Tell your artist what you want and your inspiration behind it. '
           'You\'ll get to add some photos to show them in a minute!',
       hint: 'A sleeping deer protecting a crown with stars splayed behind it',
+      callback: callback,
     );
   }
 

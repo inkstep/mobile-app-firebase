@@ -57,6 +57,7 @@ class OverviewFormWidget extends InfoWidget {
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
+    formData['email'] = 'james.dalboth@gmail.com';
 
     return Container(
         child: Column(
@@ -130,7 +131,7 @@ class OverviewFormWidget extends InfoWidget {
                         alignment: Alignment.centerRight,
                         child: Text(
                           'Deposit: ',
-                          style: Theme.of(context).accentTextTheme.subtitle,
+                          style: Theme.of(context).primaryTextTheme.subtitle,
                         ),
                       )),
                   Expanded(
@@ -138,7 +139,7 @@ class OverviewFormWidget extends InfoWidget {
                       child: Container(
                         alignment: Alignment.center,
                         child: AutoSizeText('Is willing to leave a deposit',
-                            style: Theme.of(context).accentTextTheme.body1),
+                            style: Theme.of(context).primaryTextTheme.body1),
                       )),
                 ],
               )),
@@ -148,16 +149,10 @@ class OverviewFormWidget extends InfoWidget {
         Spacer(flex: 1),
         Expanded(
             flex: 2,
-            child: missingData(formData)
-                ? Text(
-                    'Please go back and fill in your missing data!',
-                    style: Theme.of(context).accentTextTheme.subtitle,
-                    textAlign: TextAlign.center,
-                  )
-                : BoldCallToAction(
+            child: BoldCallToAction(
                     label: 'Contact Artist!',
-                    color: Theme.of(context).backgroundColor,
-                    textColor: Theme.of(context).cardColor,
+                    color: Theme.of(context).cardColor,
+                    textColor: Theme.of(context).primaryColorDark,
                     onTap: () {
                       final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                       journeyBloc.dispatch(
@@ -182,18 +177,6 @@ class OverviewFormWidget extends InfoWidget {
     ));
   }
 
-  bool missingData(Map formData) {
-    for (var key in formData.keys) {
-      if (formData[key] == '') {
-        return true;
-      }
-    }
-    if (formData['availability'] == '0000000') {
-      return true;
-    }
-    return false;
-  }
-
   Widget getData(BuildContext context, Map formData, String param) {
     String data;
 
@@ -212,7 +195,7 @@ class OverviewFormWidget extends InfoWidget {
         flex: 3,
         child: Container(
           alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
         ));
   }
 
@@ -220,8 +203,8 @@ class OverviewFormWidget extends InfoWidget {
     final TextStyle style = (formData[param] == '' ||
             formData[param] == '0000000' ||
             (param == 'noRefImgs' && formData[param] == '1'))
-        ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
-        : Theme.of(context).accentTextTheme.subtitle;
+        ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
+        : Theme.of(context).primaryTextTheme.subtitle;
 
     return Expanded(
         flex: 2,
@@ -236,8 +219,8 @@ class OverviewFormWidget extends InfoWidget {
 
   Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
     final TextStyle style = (formData['size'] == '')
-        ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
-        : Theme.of(context).accentTextTheme.subtitle;
+        ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
+        : Theme.of(context).primaryTextTheme.subtitle;
 
     return Expanded(
         flex: 2,
@@ -263,7 +246,7 @@ class OverviewFormWidget extends InfoWidget {
         flex: 3,
         child: Container(
           alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
+          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
         ));
   }
 

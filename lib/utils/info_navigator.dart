@@ -8,15 +8,17 @@ import 'package:inkstep/ui/pages/new/image_screen.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:inkstep/ui/pages/new/position_picker_screen.dart';
 import 'package:inkstep/ui/pages/new/size_screen.dart';
+import 'package:inkstep/ui/routes/fade_page_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
-  InfoNavigator() {
+  InfoNavigator(int artistId) {
     descController = TextEditingController();
     widthController = TextEditingController();
     heightController = TextEditingController();
-    emailController = TextEditingController();
+    emailController = TextEditingController(text: 'james.dalboth@gmail.com');
     inspirationImages = [];
+    formData['artistID'] = artistId.toString();
   }
 
   TextEditingController descController;
@@ -27,7 +29,7 @@ class InfoNavigator {
 
   Map<String, String> formData = {
     'name': '',
-    'email': 'james.dalboth@gmail.com',
+    'email': '',
     'mentalImage': '',
     'position': '',
     'generalPos': '',
@@ -129,7 +131,7 @@ class InfoNavigator {
     screenNum++;
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => getScreen(screenNum)),
+      FadeRoute(page: getScreen(screenNum)),
     );
   }
 
@@ -141,7 +143,7 @@ class InfoNavigator {
     screenNum--;
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => getScreen(screenNum)),
+      FadeRoute(page: getScreen(screenNum)),
     );
   }
 }

@@ -62,13 +62,13 @@ class ImageWidget extends InfoWidget {
       children: <Widget>[
         Text(
           'Show us your inspiration',
-          style: Theme.of(context).accentTextTheme.title,
+          style: Theme.of(context).primaryTextTheme.title,
         ),
         Spacer(),
         Expanded(
           child: AutoSizeText(
             'Add some reference images to show your artist what you want.',
-            style: Theme.of(context).accentTextTheme.subhead,
+            style: Theme.of(context).primaryTextTheme.subhead,
             textAlign: TextAlign.center,
           ),
           flex: 10,
@@ -138,7 +138,7 @@ class ImageWidget extends InfoWidget {
       inner = Icon(
         Icons.add,
         size: 60.0,
-        color: Theme.of(context).accentIconTheme.color,
+        color: Theme.of(context).primaryIconTheme.color,
       );
     }
 

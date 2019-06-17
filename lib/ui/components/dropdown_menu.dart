@@ -19,17 +19,19 @@ class DropdownMenu extends StatelessWidget {
       value: null,
       hint: Text(
         hintText,
-        style: Theme.of(context).accentTextTheme.subhead,
+        style: Theme.of(context).primaryTextTheme.subhead,
       ),
       items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(
+              value
+          ),
         );
       }).toList(),
       onChanged: callback,
       style: Theme.of(context).textTheme.subhead,
-      iconEnabledColor: Theme.of(context).colorScheme.background,
+      iconEnabledColor: Theme.of(context).cardColor,
     );
   }
 }

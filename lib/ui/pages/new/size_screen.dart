@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:inkstep/ui/components/short_text_input.dart';
+import 'package:inkstep/ui/components/short_text_input_form_element.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 
 import 'info_widget.dart';
@@ -33,16 +33,21 @@ class _SizeSelectorScreenState extends State<SizeSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizeSelectorWidget(widthController, heightController, navigator);
+    return SizeSelectorWidget(widthController, heightController, navigator, (_) {
+      setState(() {
+        print("sup");
+      });
+    });
   }
 }
 
 class SizeSelectorWidget extends InfoWidget {
-  SizeSelectorWidget(this.widthController, this.heightController, this.navigator);
+  SizeSelectorWidget(this.widthController, this.heightController, this.navigator, this.callback);
 
   final TextEditingController widthController;
   final TextEditingController heightController;
   final InfoNavigator navigator;
+  final void Function(String) callback;
 
   @override
   Widget getWidget(BuildContext context) {
@@ -52,7 +57,7 @@ class SizeSelectorWidget extends InfoWidget {
       children: <Widget>[
         Text(
           'How big would you like your tattoo to be?',
-          style: Theme.of(context).accentTextTheme.headline,
+          style: Theme.of(context).primaryTextTheme.headline,
           textScaleFactor: 0.8,
           textAlign: TextAlign.center,
         ),
@@ -65,7 +70,7 @@ class SizeSelectorWidget extends InfoWidget {
               flex: 1,
               child: Text(
                 'by',
-                style: Theme.of(context).accentTextTheme.subtitle,
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
             ),
             Spacer(),
@@ -74,7 +79,7 @@ class SizeSelectorWidget extends InfoWidget {
               flex: 1,
               child: Text(
                 'cm',
-                style: Theme.of(context).accentTextTheme.subtitle,
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
             ),
           ],
@@ -94,13 +99,13 @@ class SizeSelectorWidget extends InfoWidget {
   Widget _buildNumberInputBox(TextEditingController textController) {
     return Container(
       width: 130.0,
-      child: ShortTextInput(
-        controller: textController,
+      child: ShortTextInputFormElement(
+        textController: textController,
         keyboardType: TextInputType.number,
         label: '',
         hint: '',
         maxLength: 3,
-        callback: (_) {},
+        callback: callback,
         capitalisation: TextCapitalization.words,
       ),
     );

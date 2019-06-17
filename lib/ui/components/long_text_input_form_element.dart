@@ -8,11 +8,12 @@ class LongTextInputFormElement extends StatelessWidget {
     @required this.textController,
     @required this.label,
     @required this.hint,
+    @required this.callback,
     Key key,
   }) : super(key: key);
 
   final TextEditingController textController;
-  final SubmitCallback callback = (_) {};
+  final SubmitCallback callback;
 
   final String label;
   final String hint;
@@ -27,7 +28,7 @@ class LongTextInputFormElement extends StatelessWidget {
           children: <Widget>[
             Text(
               label,
-              style: Theme.of(context).accentTextTheme.subhead,
+              style: Theme.of(context).primaryTextTheme.subhead,
             ),
             Spacer(flex: 1),
             Flexible(
