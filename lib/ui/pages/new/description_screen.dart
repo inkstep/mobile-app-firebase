@@ -22,10 +22,13 @@ class DescriptionScreen extends StatefulWidget {
 
 class _DescriptionScreenState extends State<DescriptionScreen> {
   _DescriptionScreenState(this.descController, this.navigator) {
-    descController.addListener(() {
+    listener = () {
       setState(() {});
-    });
+    };
+    descController.addListener(listener);
   }
+
+  VoidCallback listener;
 
   final TextEditingController descController;
   final InfoNavigator navigator;
@@ -35,6 +38,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
     return DescriptionWidget(descController, navigator, (_) {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    descController.removeListener(listener);
+
+    super.dispose();
   }
 }
 

@@ -26,17 +26,26 @@ class SizeSelectorScreen extends StatefulWidget {
 
 class _SizeSelectorScreenState extends State<SizeSelectorScreen> {
   _SizeSelectorScreenState(this.widthController, this.heightController, this.navigator) {
-    widthController.addListener(() {setState(() {});});
-    heightController.addListener(() {setState(() {});});
+    listener = () {setState(() {});};
+    widthController.addListener(listener);
+    heightController.addListener(listener);
   }
 
   final TextEditingController widthController;
   final TextEditingController heightController;
   final InfoNavigator navigator;
+  VoidCallback listener;
 
   @override
   Widget build(BuildContext context) {
     return SizeSelectorWidget(widthController, heightController, navigator, (_) {});
+  }
+
+  @override
+  void dispose() {
+    widthController.removeListener(listener);
+    heightController.removeListener(listener);
+    super.dispose();
   }
 }
 
