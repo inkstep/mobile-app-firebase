@@ -34,9 +34,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
           const IosNotificationSettings(sound: true, badge: true, alert: true));
       firebase.onIosSettingsRegistered.listen((
           IosNotificationSettings settings) {
-        print("Settings registered: $settings");
+        print('Settings registered: $settings');
       });
-    };
+    }
 
     firebase.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -393,7 +393,4 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield JourneysWithUser(cards: [], firstTime: true, user: userModel);
     }
   }
-}
-
-void iOS_Permission() {
 }

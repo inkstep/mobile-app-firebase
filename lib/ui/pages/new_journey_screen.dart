@@ -158,16 +158,18 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     ];
 
     // If user has no email set, add the email question to the form
-    if (journeyBloc.currentState is JourneysWithUser &&
-       (journeyBloc.currentState as JourneysWithUser).user.email == '') {
-      widgets.add(ShortTextInputFormElement(
-        controller: controller,
-        textController: emailController,
-        keyboardType: TextInputType.emailAddress,
-        capitalisation: TextCapitalization.none,
-        label: 'What is your email address?',
-        hint: 'example@inkstep.com',
-      ));
+    if (journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = journeyBloc.currentState;
+      if (state.user.email == '') {
+        widgets.add(ShortTextInputFormElement(
+          controller: controller,
+          textController: emailController,
+          keyboardType: TextInputType.emailAddress,
+          capitalisation: TextCapitalization.none,
+          label: 'What is your email address?',
+          hint: 'example@inkstep.com',
+        ));
+      }
     }
 
     // Add the final overview form screen
