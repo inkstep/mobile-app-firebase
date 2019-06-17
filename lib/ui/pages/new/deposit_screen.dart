@@ -93,4 +93,6 @@ class DepositWidget extends InfoWidget {
   bool valid() {
     return deposit == buttonState.True;
   }
+
+
 }

@@ -25,7 +25,10 @@ class SizeSelectorScreen extends StatefulWidget {
 }
 
 class _SizeSelectorScreenState extends State<SizeSelectorScreen> {
-  _SizeSelectorScreenState(this.widthController, this.heightController, this.navigator);
+  _SizeSelectorScreenState(this.widthController, this.heightController, this.navigator) {
+    widthController.addListener(() {setState(() {});});
+    heightController.addListener(() {setState(() {});});
+  }
 
   final TextEditingController widthController;
   final TextEditingController heightController;
@@ -33,11 +36,7 @@ class _SizeSelectorScreenState extends State<SizeSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizeSelectorWidget(widthController, heightController, navigator, (_) {
-      setState(() {
-        print("sup");
-      });
-    });
+    return SizeSelectorWidget(widthController, heightController, navigator, (_) {});
   }
 }
 
@@ -84,7 +83,6 @@ class SizeSelectorWidget extends InfoWidget {
             ),
           ],
         ),
-        // TODO(Felination): Replace this with a clever grab of how big the user's screen is
         AutoSizeText(
           'We recommend grabbing a ruler and '
           'trying to measure out where you want the tattoo to be',

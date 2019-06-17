@@ -28,7 +28,7 @@ class LongTextInputFormElement extends StatelessWidget {
           children: <Widget>[
             Text(
               label,
-              style: Theme.of(context).primaryTextTheme.subhead,
+              style: Theme.of(context).primaryTextTheme.body1,
             ),
             Spacer(flex: 1),
             Flexible(

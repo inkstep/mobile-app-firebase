@@ -67,7 +67,7 @@ class OverviewFormWidget extends InfoWidget {
             flex: 2,
             child: Text(
               'Check your details!',
-              style: Theme.of(context).accentTextTheme.title,
+              style: Theme.of(context).primaryTextTheme.title,
             )),
         Spacer(flex: 1),
         Expanded(

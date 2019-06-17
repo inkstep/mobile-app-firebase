@@ -21,7 +21,11 @@ class DescriptionScreen extends StatefulWidget {
 }
 
 class _DescriptionScreenState extends State<DescriptionScreen> {
-  _DescriptionScreenState(this.descController, this.navigator);
+  _DescriptionScreenState(this.descController, this.navigator) {
+    descController.addListener(() {
+      setState(() {});
+    });
+  }
 
   final TextEditingController descController;
   final InfoNavigator navigator;
@@ -29,9 +33,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return DescriptionWidget(descController, navigator, (_) {
-      setState(() {
-        print("wah");
-      });
+      setState(() {});
     });
   }
 }
