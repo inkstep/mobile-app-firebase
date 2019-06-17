@@ -6,12 +6,13 @@ import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/main.dart';
 import 'package:inkstep/models/form_result_model.dart';
-import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
-import 'package:inkstep/ui/pages/new/availability_selector.dart';
+import 'package:inkstep/utils/info_navigator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+
+import 'info_widget.dart';
 
 class OverviewForm extends StatelessWidget {
   const OverviewForm({
@@ -21,9 +22,8 @@ class OverviewForm extends StatelessWidget {
     @required this.emailController,
     @required this.widthController,
     @required this.heightController,
-    @required this.weekCallbacks,
-    @required this.deposit,
     @required this.images,
+    this.navigator,
   }) : super(key: key);
 
   final Map<String, String> formData;
@@ -31,25 +31,32 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController widthController;
   final TextEditingController heightController;
-  final WeekCallbacks weekCallbacks;
-  final buttonState deposit;
   final List<Asset> images;
+  final InfoNavigator navigator;
 
   @override
-  Widget build(BuildContext context) {
-//    formData['name'] = nameController.text;
+  Widget build(BuildContext context) => OverviewFormWidget(formData, descController,
+      emailController, widthController, heightController, images, navigator);
+}
+
+class OverviewFormWidget extends InfoWidget {
+  OverviewFormWidget(this.formData, this.descController, this.emailController, this.widthController,
+      this.heightController, this.images, this.navigator);
+
+  final Map<String, String> formData;
+  final TextEditingController descController;
+  final TextEditingController emailController;
+  final TextEditingController widthController;
+  final TextEditingController heightController;
+  final List<Asset> images;
+  final InfoNavigator navigator;
+
+  @override
+  Widget getWidget(BuildContext context) {
     formData['mentalImage'] = descController.text;
-    formData['email'] = emailController.text;
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
-
-    if (formData['position'] == null) {
-      formData['position'] = '';
-    }
-
-    formData['deposit'] = deposit == buttonState.True ? 'Willing to leave a deposit' : '';
-    formData['availability'] = getAvailability(weekCallbacks);
 
     return Container(
         child: Column(
@@ -117,8 +124,22 @@ class OverviewForm extends StatelessWidget {
               Expanded(
                   child: Row(
                 children: <Widget>[
-                  getLabel(context, 'Deposit ', formData, 'deposit'),
-                  getData(context, formData, 'deposit'),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Deposit: ',
+                          style: Theme.of(context).accentTextTheme.subtitle,
+                        ),
+                      )),
+                  Expanded(
+                      flex: 3,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: AutoSizeText('Is willing to leave a deposit',
+                            style: Theme.of(context).accentTextTheme.body1),
+                      )),
                 ],
               )),
             ],
@@ -213,14 +234,6 @@ class OverviewForm extends StatelessWidget {
         ));
   }
 
-  String getAvailability(WeekCallbacks weekCallbacks) {
-    String availabilityString = '';
-    for (SingleDayCallback callback in weekCallbacks.callbacks) {
-      availabilityString += callback.currentValue() ? '1' : '0';
-    }
-    return availabilityString;
-  }
-
   Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
     final TextStyle style = (formData['size'] == '')
         ? Theme.of(context).accentTextTheme.subtitle.copyWith(color: baseColors['error'])
@@ -252,5 +265,20 @@ class OverviewForm extends StatelessWidget {
           alignment: Alignment.center,
           child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
         ));
+  }
+
+  @override
+  InfoNavigator getNavigator() {
+    return navigator;
+  }
+
+  @override
+  void submitCallback() {
+    return;
+  }
+
+  @override
+  bool valid() {
+    return false;
   }
 }

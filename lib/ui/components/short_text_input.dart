@@ -40,7 +40,7 @@ class ShortTextInput extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           textCapitalization: capitalisation,
-          autofocus: true,
+          autofocus: false,
           maxLength: maxLength,
           style: theme.accentTextTheme.headline,
           cursorColor: theme.backgroundColor,

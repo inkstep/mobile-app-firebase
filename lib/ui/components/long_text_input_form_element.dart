@@ -5,14 +5,12 @@ import 'long_text_input.dart';
 
 class LongTextInputFormElement extends StatelessWidget {
   LongTextInputFormElement({
-    @required this.controller,
     @required this.textController,
     @required this.label,
     @required this.hint,
     Key key,
   }) : super(key: key);
 
-  final PageController controller;
   final TextEditingController textController;
   final SubmitCallback callback = (_) {};
 
@@ -45,7 +43,6 @@ class LongTextInputFormElement extends StatelessWidget {
         );
       },
       onSubmitCallback: callback,
-      controller: controller,
       fieldKey: key,
     );
   }

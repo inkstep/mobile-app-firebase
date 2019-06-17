@@ -16,7 +16,6 @@ void main() {
           home: Scaffold(
               body: FormElementBuilder(
                 onSubmitCallback: (text) {},
-                controller: null,
                 builder: (BuildContext context, FocusNode focus,
                     SubmitCallback onSubmit) {return text;},
               )
@@ -31,8 +30,6 @@ void main() {
     testWidgets('Passes callback correctly', (WidgetTester tester) async {
       String testData = '';
 
-      final PageController pageController = MockController();
-
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -40,7 +37,6 @@ void main() {
                 onSubmitCallback: (text) {
                   testData = text;
                 },
-                controller: pageController,
                 builder: (BuildContext context, FocusNode focus,
                     SubmitCallback onSubmit) {
                   return FlatButton(

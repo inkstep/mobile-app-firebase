@@ -123,6 +123,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         email: event.result.email,
         token: pushToken,
       );
+
       userId = await journeysRepository.saveUser(user);
       print('userID=$userId');
       if (userId == -1) {

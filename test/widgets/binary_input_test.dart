@@ -14,7 +14,6 @@ void main() {
           home: Scaffold(
               body: BinaryInput(
                 label: 'label',
-                controller: null,
                 currentState: buttonState.Unset,
                 callback: (text) {},
               )

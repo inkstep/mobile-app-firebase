@@ -6,18 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
 import 'package:inkstep/blocs/journeys_state.dart';
-import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
-import 'package:inkstep/ui/components/form_element_builder.dart';
-import 'package:inkstep/ui/components/long_text_input_form_element.dart';
-import 'package:inkstep/ui/components/short_text_input_form_element.dart';
-import 'package:inkstep/ui/pages/new/image_grid.dart';
-import 'package:inkstep/ui/pages/new/overview_form.dart';
-import 'package:inkstep/ui/pages/new/size_selector.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-import 'new/availability_selector.dart';
-import 'new/position_picker_form_element.dart';
+import 'new/availability_screen.dart';
 
 class NewJourneyScreen extends StatefulWidget {
   const NewJourneyScreen(this.artistID);
@@ -89,92 +81,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
   }
 
   List<Widget> _formQuestions(dynamic weekCallbacks) {
-    final List<Widget> widgets = <Widget>[
-      LongTextInputFormElement(
-        controller: controller,
-        textController: descController,
-        label: 'Tell your artist what you want and your inspiration behind it. '
-            'You\'ll get to add some photos to show them in a minute!',
-        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
-      ),
-      ImageGrid(
-        images: inspirationImages,
-        updateCallback: (images) {
-          setState(() {
-            inspirationImages = images;
-            formData['noRefImgs'] = images.length.toString();
-          });
-        },
-        submitCallback: FormElementBuilder(
-          builder: (i, d, c) {},
-          controller: controller,
-          onSubmitCallback: (_) {
-            setState(() {});
-          },
-        ).navToNextPage,
-      ),
-      PositionPickerFormElement(
-        controller: controller,
-        formData: formData,
-        textController: posController,
-      ),
-      SizeSelector(
-        controller: controller,
-        widthController: widthController,
-        heightController: heightController,
-      ),
-      AvailabilitySelector(
-        controller: controller,
-        weekCallbacks: weekCallbacks,
-      ),
-      BinaryInput(
-          label: 'Are you willing to leave a deposit?',
-          controller: controller,
-          currentState: deposit,
-          callback: (buttonPressed) {
-            setState(() {
-              if (buttonPressed == 'true') {
-                deposit = buttonState.True;
-                controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
-              } else {
-                deposit = buttonState.False;
-                showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return RoundedAlertDialog(
-                      title: 'Are you sure?',
-                      child: Text(
-                        'Most artists require a deposit in order to secure you an '
-                        'appointment. Don\'t worry, you won\'t have to pay this yet!',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle,
-                      ),
-                    );
-                  },
-                );
-              }
-            });
-          }),
-      ShortTextInputFormElement(
-        controller: controller,
-        textController: emailController,
-        keyboardType: TextInputType.emailAddress,
-        capitalisation: TextCapitalization.none,
-        label: 'What is your email address?',
-        hint: 'example@inkstep.com',
-      ),
-      OverviewForm(
-        formData: formData,
-        descController: descController,
-        emailController: emailController,
-        widthController: widthController,
-        heightController: heightController,
-        deposit: deposit,
-        weekCallbacks: weekCallbacks,
-        images: inspirationImages,
-      )
-    ];
-    return widgets;
+    return [];
   }
 
   SingleDayCallback callbackForDay(int day) {

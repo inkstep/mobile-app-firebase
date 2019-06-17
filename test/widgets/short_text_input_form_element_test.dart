@@ -12,7 +12,6 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ShortTextInputFormElement(
-                controller: null,
                 textController: null,
                 label: 'label',
                 hint: 'hint'),
@@ -34,7 +33,6 @@ void main() {
           home: Scaffold(
             body: ShortTextInputFormElement(
                 key: inputKey,
-                controller: controller,
                 textController: null,
                 label: 'label',
                 hint: 'hint'),
@@ -61,7 +59,6 @@ void main() {
           home: Scaffold(
             body: ShortTextInputFormElement(
               key: inputKey,
-              controller: null,
               textController: null,
               label: 'label',
               hint: 'hint',

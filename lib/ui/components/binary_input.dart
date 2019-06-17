@@ -3,7 +3,6 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 
 class BinaryInput extends StatelessWidget {
   BinaryInput({
-    @required this.controller,
     @required this.callback,
     @required this.label,
     @required this.currentState,
@@ -11,7 +10,6 @@ class BinaryInput extends StatelessWidget {
   }) : super(key: key);
 
   final SubmitCallback callback;
-  final PageController controller;
   final buttonState currentState;
 
   final String label;
@@ -51,7 +49,6 @@ class BinaryInput extends StatelessWidget {
         );
       },
       onSubmitCallback: callback,
-      controller: controller,
       fieldKey: key,
       scroll: false,
     );

@@ -2,20 +2,52 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/utils/info_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-class ImageGrid extends StatelessWidget {
-  const ImageGrid({
+import 'info_widget.dart';
+
+class ImageScreen extends StatefulWidget {
+  ImageScreen({
+    Key key,
     @required this.images,
-    @required this.updateCallback,
-    @required this.submitCallback,
-    this.updateAsset,
-  });
+    @required this.navigator,
+    @required this.callback
+  }) : super(key: key);
+
+  final List<Asset> images;
+  final InfoNavigator navigator;
+  final void Function(List<Asset>) callback;
+
+  @override
+  State<StatefulWidget> createState() =>
+      _ImageScreenState(images, navigator, callback);
+}
+
+class _ImageScreenState extends State<ImageScreen> {
+  _ImageScreenState(this.inspirationImages, this.navigator, this.callback);
+
+  List<Asset> inspirationImages;
+  final InfoNavigator navigator;
+  final void Function(List<Asset>) callback;
+
+  @override
+  Widget build(BuildContext context) {
+    return ImageWidget(inspirationImages, (images) {
+      setState(() {
+        inspirationImages = images;
+      });
+    }, navigator, callback);
+  }
+}
+
+class ImageWidget extends InfoWidget {
+  ImageWidget(this.images, this.updateCallback, this.navigator, this.callback);
 
   final List<Asset> images;
   final void Function(List<Asset>) updateCallback;
-  final VoidCallback submitCallback;
-  final Future<void> Function() updateAsset;
+  final InfoNavigator navigator;
+  final void Function(List<Asset>) callback;
 
   List<Asset> get inspirationImages => images;
 
@@ -24,7 +56,7 @@ class ImageGrid extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget getWidget(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -72,37 +104,12 @@ class ImageGrid extends StatelessWidget {
                       _buildImageThumbnail(context, 3, thumbSize)
                     ],
                   ),
-//                  Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                    crossAxisAlignment: CrossAxisAlignment.center,
-//                    children: <Widget>[
-//                      _buildImageThumbnail(context, 4, thumbSize),
-//                      _buildImageThumbnail(context, 5, thumbSize)
-//                    ],
-//                  ),
                 ],
               );
             },
           ),
           flex: 60,
         ),
-        inspirationImages.length > 1
-            ? Expanded(
-                child: Center(
-                  child: RaisedButton(
-                    onPressed: submitCallback,
-                    elevation: 15.0,
-                    padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    child: Text(
-                      'Next!',
-                      style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
-                    ),
-                  ),
-                ),
-                flex: 10,
-              )
-            : Container(),
       ],
     );
   }
@@ -134,19 +141,37 @@ class ImageGrid extends StatelessWidget {
         color: Theme.of(context).accentIconTheme.color,
       );
     }
+
     return Container(
       width: size,
       height: size,
       child: InkWell(
         child: inner,
-        onTap: updateAsset ?? _updateAssets,
+        onTap: _updateAssets,
       ),
     );
   }
 
   Future<void> _updateAssets() async {
     // TODO(DJRHails): Proper error handling to enduser
-    inspirationImages =
-        await MultiImagePicker.pickImages(maxImages: 4, selectedAssets: inspirationImages);
+    inspirationImages = await MultiImagePicker.pickImages(maxImages: 4, selectedAssets: inspirationImages);
+  }
+
+  @override
+  InfoNavigator getNavigator() {
+    return navigator;
+  }
+
+  @override
+  void submitCallback() {
+    print(inspirationImages.length);
+    callback(inspirationImages);
+  }
+
+  @override
+  bool valid() {
+    return inspirationImages.isNotEmpty;
   }
 }
+
+

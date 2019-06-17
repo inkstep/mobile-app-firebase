@@ -8,12 +8,13 @@ import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new/login_screen.dart';
-import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
+
+import 'info_navigator.dart';
 
 class ScreenNavigator {
 
@@ -100,11 +101,7 @@ class ScreenNavigator {
   }
 
   void openNewJourneyScreen(BuildContext context, int artistID) {
-    Navigator.pushReplacement<dynamic, dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-          builder: (context) => NewJourneyScreen(artistID), fullscreenDialog: true),
-    );
+    InfoNavigator().start(context);
   }
 
   void openCareScreen(BuildContext context, DateTime bookedTime) {
