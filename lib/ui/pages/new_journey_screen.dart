@@ -247,7 +247,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
       return sun;
     });
     final WeekCallbacks weekCallbacks =
-        WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        WeekCallbacks([monday, tuesday, wednesday, thursday, friday, saturday, sunday]);
 
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 

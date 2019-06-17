@@ -225,40 +225,9 @@ class OverviewForm extends StatelessWidget {
 
   String getAvailability(WeekCallbacks weekCallbacks) {
     String availabilityString = '';
-    if (weekCallbacks.monday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.tuesday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.wednesday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.thursday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.friday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.saturday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
-    }
-    if (weekCallbacks.sunday.currentValue()) {
-      availabilityString += '1';
-    } else {
-      availabilityString += '0';
+
+    for (SingleDayCallbacks callback in weekCallbacks.callbacks) {
+      availabilityString += callback.currentValue() ? '1' : '0';
     }
     return availabilityString;
   }
@@ -273,7 +242,7 @@ class OverviewForm extends StatelessWidget {
         child: Container(
           alignment: Alignment.centerRight,
           child: Text(
-              'Size: ',
+            'Size: ',
             style: style,
           ),
         ));
@@ -293,7 +262,6 @@ class OverviewForm extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           child: AutoSizeText(data, style: Theme.of(context).accentTextTheme.body1),
-        )
-    );
+        ));
   }
 }

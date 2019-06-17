@@ -30,19 +30,20 @@ class AvailabilitySelector extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 40),
                   child: Column(
                     children: <Widget>[
-                      _chooseDayChip('Monday', weekCallbacks.monday, context),
-                      _chooseDayChip('Tuesday', weekCallbacks.tuesday, context),
-                      _chooseDayChip('Wednesday', weekCallbacks.wednesday, context),
-                      _chooseDayChip('Thursday', weekCallbacks.thursday, context),
-                      _chooseDayChip('Friday', weekCallbacks.friday, context),
-                      _chooseDayChip('Saturday', weekCallbacks.saturday, context),
-                      _chooseDayChip('Sunday', weekCallbacks.sunday, context),
+                      ChooseDayChip(day: 'Monday'),
+                      _chooseDayChip('Tuesday', weekCallbacks.callbacks[1], context),
+                      _chooseDayChip('Wednesday', weekCallbacks.callbacks[2], context),
+                      _chooseDayChip('Thursday', weekCallbacks.callbacks[3], context),
+                      _chooseDayChip('Friday', weekCallbacks.callbacks[4], context),
+                      _chooseDayChip('Saturday', weekCallbacks.callbacks[5], context),
+                      _chooseDayChip('Sunday', weekCallbacks.callbacks[6], context),
                     ],
                   ),
                 ),
               ),
               RaisedButton(
                 onPressed: () {
+                  print('availability: monday is ${weekCallbacks.callbacks[0].currentValue() ? '' : 'not'} selected');
                   controller.nextPage(
                       duration: Duration(milliseconds: duration), curve: Curves.ease);
                 },
@@ -80,24 +81,49 @@ class AvailabilitySelector extends StatelessWidget {
   }
 }
 
-class WeekCallbacks {
-  WeekCallbacks(
-    this.monday,
-    this.tuesday,
-    this.wednesday,
-    this.thursday,
-    this.friday,
-    this.saturday,
-    this.sunday,
-  );
+class ChooseDayChip extends StatefulWidget {
+  ChooseDayChip({@required this.day});
 
-  final SingleDayCallbacks monday;
-  final SingleDayCallbacks tuesday;
-  final SingleDayCallbacks wednesday;
-  final SingleDayCallbacks thursday;
-  final SingleDayCallbacks friday;
-  final SingleDayCallbacks saturday;
-  final SingleDayCallbacks sunday;
+  final String day;
+
+  @override
+  State<StatefulWidget> createState() => ChooseDayChipState();
+}
+
+class ChooseDayChipState extends State<ChooseDayChip> {
+  bool _isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Row(
+        children: <Widget>[
+          Text(
+            widget.day,
+            textScaleFactor: 1.5,
+            style: Theme.of(context).accentTextTheme.subtitle,
+          ),
+          Spacer(),
+          FilterChip(
+            label: Text('   '),
+            onSelected: (newValue) {
+              setState(() {
+                _isSelected = newValue;
+              });
+            },
+            backgroundColor: Colors.red,
+            selected: _isSelected,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WeekCallbacks {
+  WeekCallbacks(this.callbacks);
+
+  final List<SingleDayCallbacks> callbacks;
 }
 
 class SingleDayCallbacks {
