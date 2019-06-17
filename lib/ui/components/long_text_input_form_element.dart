@@ -27,12 +27,9 @@ class LongTextInputFormElement extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: Text(
-                label,
-                style: Theme.of(context).accentTextTheme.subhead,
-              ),
-              flex: 5,
+            Text(
+              label,
+              style: Theme.of(context).accentTextTheme.subhead,
             ),
             Spacer(flex: 1),
             Flexible(

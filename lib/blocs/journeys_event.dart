@@ -3,10 +3,30 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/form_result_model.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 abstract class JourneysEvent extends Equatable {
   JourneysEvent([List<dynamic> props = const <dynamic>[]]) : super(props);
+}
+
+// TODO(mm5917): Users should have their own bloc
+class AddUser extends JourneysEvent {
+  AddUser({@required this.name}) : super(<dynamic>[name]);
+
+  final String name;
+
+  @override
+  String toString() => 'AddUser { name: $name }';
+}
+
+class UpdateUser extends JourneysEvent {
+  UpdateUser({@required this.user}) : super(<dynamic>[user]);
+
+  final User user;
+
+  @override
+  String toString() => 'UpdateUser { user: ${user.toString()} }';
 }
 
 class AddJourney extends JourneysEvent {

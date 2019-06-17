@@ -10,7 +10,6 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/progress_indicator.dart';
-import 'package:inkstep/ui/pages/care/advice_snippet.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';

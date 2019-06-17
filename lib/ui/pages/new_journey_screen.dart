@@ -52,7 +52,6 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   int get autoScrollDuration => 500;
 
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController widthController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
@@ -61,13 +60,7 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
 
   buttonState deposit = buttonState.Unset;
 
-  bool mon = false;
-  bool tues = false;
-  bool wed = false;
-  bool thurs = false;
-  bool fri = false;
-  bool sat = false;
-  bool sun = false;
+  List<bool> availability = List.filled(7, false);
 
   List<Asset> inspirationImages = <Asset>[];
 
@@ -95,14 +88,14 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
     return Future.value(false);
   }
 
-  List<Widget> _formQuestions(dynamic weekCallbacks, bool newUser) {
+  List<Widget> _formQuestions(dynamic weekCallbacks, JourneysBloc journeyBloc) {
     final List<Widget> widgets = <Widget>[
-      ShortTextInputFormElement(
+      LongTextInputFormElement(
         controller: controller,
-        textController: nameController,
-        label: 'What do your friends call you?',
-        hint: 'Natasha',
-        maxLength: 16,
+        textController: descController,
+        label: 'Tell your artist what you want and your inspiration behind it. '
+            'You\'ll get to add some photos to show them in a minute!',
+        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
       ),
       ImageGrid(
         images: inspirationImages,
@@ -115,14 +108,10 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         submitCallback: FormElementBuilder(
           builder: (i, d, c) {},
           controller: controller,
-          onSubmitCallback: (_) {setState(() {});},
+          onSubmitCallback: (_) {
+            setState(() {});
+          },
         ).navToNextPage,
-      ),
-      LongTextInputFormElement(
-        controller: controller,
-        textController: descController,
-        label: 'Describe the image in your head of the tattoo you want?',
-        hint: 'A sleeping deer protecting a crown with stars splayed behind it',
       ),
       PositionPickerFormElement(
         controller: controller,
@@ -166,88 +155,61 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
               }
             });
           }),
-      ShortTextInputFormElement(
-        controller: controller,
-        textController: emailController,
-        keyboardType: TextInputType.emailAddress,
-        capitalisation: TextCapitalization.none,
-        label: 'What is your email address?',
-        hint: 'example@inkstep.com',
-      ),
-      OverviewForm(
-        formData: formData,
-        nameController: nameController,
-        descController: descController,
-        emailController: emailController,
-        widthController: widthController,
-        heightController: heightController,
-        deposit: deposit,
-        weekCallbacks: weekCallbacks,
-        images: inspirationImages,
-      )
     ];
 
-    if (!newUser) {
-      widgets.removeAt(0);
+    // If user has no email set, add the email question to the form
+    if (journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = journeyBloc.currentState;
+      if (state.user.email == '') {
+        widgets.add(ShortTextInputFormElement(
+          controller: controller,
+          textController: emailController,
+          keyboardType: TextInputType.emailAddress,
+          capitalisation: TextCapitalization.none,
+          label: 'What is your email address?',
+          hint: 'example@inkstep.com',
+        ));
+      }
     }
 
+    // Add the final overview form screen
+    widgets.add(OverviewForm(
+      formData: formData,
+      descController: descController,
+      emailController: emailController,
+      widthController: widthController,
+      heightController: heightController,
+      deposit: deposit,
+      weekCallbacks: weekCallbacks,
+      images: inspirationImages,
+    ));
+
     return widgets;
+  }
+
+  SingleDayCallback callbackForDay(int day) {
+    return SingleDayCallback((switched) {
+      setState(() {
+        availability[day] = switched;
+      });
+    }, () {
+      return availability[day];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     formData['artistID'] = artistID.toString();
-    final SingleDayCallbacks monday = SingleDayCallbacks((switched) {
-      setState(() {
-        mon = switched;
-      });
-    }, () {
-      return mon;
-    });
-    final SingleDayCallbacks tuesday = SingleDayCallbacks((switched) {
-      setState(() {
-        tues = switched;
-      });
-    }, () {
-      return tues;
-    });
-    final SingleDayCallbacks wednesday = SingleDayCallbacks((switched) {
-      setState(() {
-        wed = switched;
-      });
-    }, () {
-      return wed;
-    });
-    final SingleDayCallbacks thursday = SingleDayCallbacks((switched) {
-      setState(() {
-        thurs = switched;
-      });
-    }, () {
-      return thurs;
-    });
-    final SingleDayCallbacks friday = SingleDayCallbacks((switched) {
-      setState(() {
-        fri = switched;
-      });
-    }, () {
-      return fri;
-    });
-    final SingleDayCallbacks saturday = SingleDayCallbacks((switched) {
-      setState(() {
-        sat = switched;
-      });
-    }, () {
-      return sat;
-    });
-    final SingleDayCallbacks sunday = SingleDayCallbacks((switched) {
-      setState(() {
-        sun = switched;
-      });
-    }, () {
-      return sun;
-    });
-    final WeekCallbacks weekCallbacks =
-        WeekCallbacks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+
+    final WeekCallbacks weekCallbacks = WeekCallbacks([
+      callbackForDay(0),
+      callbackForDay(1),
+      callbackForDay(2),
+      callbackForDay(3),
+      callbackForDay(4),
+      callbackForDay(5),
+      callbackForDay(6)
+    ]);
 
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 
@@ -256,16 +218,12 @@ class _NewJourneyScreenState extends State<NewJourneyScreen> {
         child: BlocBuilder<JourneysEvent, JourneysState>(
             bloc: journeyBloc,
             builder: (BuildContext context, JourneysState state) {
-              bool newUser = false;
-
-              if (state is JourneysNoUser) {
-                newUser = true;
-              } else if (state is JourneysWithUser) {
+              if (state is JourneysWithUser) {
                 formData['name'] = state.user.name;
-                nameController.text = state.user.name;
+              } else {
+                throw StateError('A new user should not have made it here');
               }
-
-              final List<Widget> formWidgets = _formQuestions(weekCallbacks, newUser);
+              final List<Widget> formWidgets = _formQuestions(weekCallbacks, journeyBloc);
 
               return Scaffold(
                 key: _scaffoldKey,

@@ -30,13 +30,13 @@ class AvailabilitySelector extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 40),
                   child: Column(
                     children: <Widget>[
-                      _chooseDayChip('Monday', weekCallbacks.monday, context),
-                      _chooseDayChip('Tuesday', weekCallbacks.tuesday, context),
-                      _chooseDayChip('Wednesday', weekCallbacks.wednesday, context),
-                      _chooseDayChip('Thursday', weekCallbacks.thursday, context),
-                      _chooseDayChip('Friday', weekCallbacks.friday, context),
-                      _chooseDayChip('Saturday', weekCallbacks.saturday, context),
-                      _chooseDayChip('Sunday', weekCallbacks.sunday, context),
+                      _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),
+                      _chooseDayChip('Tuesday', weekCallbacks.callbacks[1], context),
+                      _chooseDayChip('Wednesday', weekCallbacks.callbacks[2], context),
+                      _chooseDayChip('Thursday', weekCallbacks.callbacks[3], context),
+                      _chooseDayChip('Friday', weekCallbacks.callbacks[4], context),
+                      _chooseDayChip('Saturday', weekCallbacks.callbacks[5], context),
+                      _chooseDayChip('Sunday', weekCallbacks.callbacks[6], context),
                     ],
                   ),
                 ),
@@ -59,7 +59,7 @@ class AvailabilitySelector extends StatelessWidget {
         });
   }
 
-  Widget _chooseDayChip(String day, SingleDayCallbacks dayCallback, BuildContext context) {
+  Widget _chooseDayChip(String day, SingleDayCallback dayCallback, BuildContext context) {
     return Flexible(
       child: Row(
         children: <Widget>[
@@ -81,27 +81,13 @@ class AvailabilitySelector extends StatelessWidget {
 }
 
 class WeekCallbacks {
-  WeekCallbacks(
-    this.monday,
-    this.tuesday,
-    this.wednesday,
-    this.thursday,
-    this.friday,
-    this.saturday,
-    this.sunday,
-  );
+  WeekCallbacks(this.callbacks);
 
-  final SingleDayCallbacks monday;
-  final SingleDayCallbacks tuesday;
-  final SingleDayCallbacks wednesday;
-  final SingleDayCallbacks thursday;
-  final SingleDayCallbacks friday;
-  final SingleDayCallbacks saturday;
-  final SingleDayCallbacks sunday;
+  final List<SingleDayCallback> callbacks;
 }
 
-class SingleDayCallbacks {
-  SingleDayCallbacks(this.onSwitched, this.currentValue);
+class SingleDayCallback {
+  SingleDayCallback(this.onSwitched, this.currentValue);
 
   final BoolCallback onSwitched;
   final bool Function() currentValue;

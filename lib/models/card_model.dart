@@ -20,17 +20,7 @@ class CardModel extends Equatable {
     @required this.journeyId,
     @required this.bookedDate,
   }) : super(<dynamic>[
-          description,
-          artistId,
-          artistName,
-          userId,
-          bodyLocation,
-          size,
-          quote,
-          images,
-          stage,
-          index,
-          bookedDate
+          journeyId,
         ]);
 
   JourneyStage stage;

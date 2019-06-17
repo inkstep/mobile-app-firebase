@@ -10,6 +10,7 @@ import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/new_journey_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
+import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/studios_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
@@ -28,6 +29,13 @@ class ScreenNavigator {
     );
   }
 
+  void openOnboardingRequiredInfoPage(BuildContext context) {
+    Navigator.pushReplacement<dynamic, dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+            builder: (context) => OnboardingRequiredInfo(), fullscreenDialog: true)
+    );
+  }
 
   void openViewJourneysScreen(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(

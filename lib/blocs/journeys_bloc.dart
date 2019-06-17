@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
@@ -25,6 +27,17 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     @required this.journeysRepository,
   }) : firebase = FirebaseMessaging() {
     print('configuring firebase');
+
+    if (Platform.isIOS) {
+      // iOS Specific
+      firebase.requestNotificationPermissions(
+          const IosNotificationSettings(sound: true, badge: true, alert: true));
+      firebase.onIosSettingsRegistered.listen((
+          IosNotificationSettings settings) {
+        print('Settings registered: $settings');
+      });
+    }
+
     firebase.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('onMessage: $message');
@@ -67,6 +80,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       yield* _mapRemoveJourneyToState(event);
     } else if (event is LogOut) {
       yield* _mapLogOutState(event);
+    } else if (event is AddUser) {
+      yield* _mapAddUserToState(event);
     }
   }
 
@@ -208,11 +223,20 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       final prefs = await SharedPreferences.getInstance();
       final bool firstTime = prefs.getBool('firstTime');
       prefs.setInt('userId', userState.user.id);
-      final cards = await _getCards(userState.user.id);
+
+      final List<Future<CardModel>> oldCards = userState.cards;
+      List<Future<CardModel>> cards = await _getCards(userState.user.id);
+
+      cards = _mergeCards(cards, oldCards);
+
       print('Reloaded cards for user ${userState.user.id}: $cards');
 
       yield JourneysWithUser(cards: cards, user: userState.user, firstTime: firstTime ?? true);
     }
+  }
+
+  List<Future<CardModel>> _mergeCards(List<Future<CardModel>> c1, List<Future<CardModel>> c2) {
+    return Set<Future<CardModel>>.from(c1).union(c2.toSet()).toList();
   }
 
   Stream<JourneysState> _mapLoadUserToState(LoadUser event) async* {
@@ -335,9 +359,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       mutableLoadedCards.removeWhere(
         (card) => card.journeyId == event.journeyId,
       );
-      final reloadedCards = mutableLoadedCards
-          .map((c) => Future.value(c))
-          .toList();
+      final reloadedCards = mutableLoadedCards.map((c) => Future.value(c)).toList();
 
       yield JourneysWithUser(
         cards: reloadedCards,
@@ -352,6 +374,23 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   void _handleDataMessage(Map<String, dynamic> message) {
     if (message['data']['journey'] != null) {
       dispatch(LoadJourney(int.parse(message['data']['journey'])));
+    }
+  }
+
+  Stream<JourneysState> _mapAddUserToState(AddUser event) async* {
+    final String pushToken = await firebase.getToken();
+    final UserEntity user = UserEntity(
+      name: event.name,
+      email: '',
+      token: pushToken,
+    );
+    final int userId = await journeysRepository.saveUser(user);
+    print('userID=$userId');
+    if (userId == -1) {
+      yield JourneyError(prev: currentState);
+    } else {
+      final User userModel = User(id: userId, email: '', name: event.name);
+      yield JourneysWithUser(cards: [], firstTime: true, user: userModel);
     }
   }
 }

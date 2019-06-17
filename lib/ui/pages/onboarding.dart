@@ -17,62 +17,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   final PageController _controller = PageController();
   double position;
 
-  @override
-  void dispose() {
-    _controller?.dispose();
-    _notifier?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      FirstPage(controller: _controller),
-      _buildOnboardingSlice(
-        context,
-        Icons.memory,
-        'Feel Smarter',
-        'You get guided as to what artists want you to say.',
-        'Wow',
-      ),
-      _buildOnboardingSlice(
-          context,
-          Icons.calendar_today,
-          'Get the artist you want',
-          'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
-          "That's cool"),
-      _buildOnboardingSlice(
-          context,
-          Icons.healing,
-          'Care Made Easy',
-          'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
-          'Awesome!'),
-      _buildOnboardingSlice(
-          context,
-          Icons.favorite,
-          "Be the Artist's Favourite",
-          "Make your artist happy! They'll be delighted to have a client like you.",
-          "Enough! Let's get to it.",
-          last: true),
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: AnimatedBuilder(
-        animation: _notifier,
-        builder: (context, _) => CustomPaint(
-              painter: InkSplash(Theme.of(context).backgroundColor,
-                  inkRatio.transform(_notifier.value / pages.length)),
-              child: NotifyingPageView(
-                notifier: _notifier,
-                pageController: _controller,
-                pages: pages,
-              ),
-            ),
-      ),
-    );
-  }
-
   Widget _buildOnboardingSlice(
       BuildContext context, IconData icon, String header, String body, String buttonText,
       {bool last}) {
@@ -111,7 +55,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
                         duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                   } else if (last) {
                     final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.openArtistSelectionReplace(context);
+                    nav.openOnboardingRequiredInfoPage(context);
                   }
                 },
                 label: buttonText,
@@ -126,6 +70,62 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         ),
       ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+  final List<Widget> pages = [
+    FirstPage(controller: _controller),
+    _buildOnboardingSlice(
+      context,
+      Icons.memory,
+      'Feel Smarter',
+      'You get guided as to what artists want you to say.',
+      'Wow',
+    ),
+    _buildOnboardingSlice(
+        context,
+        Icons.calendar_today,
+        'Get the artist you want',
+        'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
+        "That's cool"),
+    _buildOnboardingSlice(
+        context,
+        Icons.healing,
+        'Care Made Easy',
+        'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
+        'Awesome!'),
+    _buildOnboardingSlice(
+        context,
+        Icons.favorite,
+        "Be the Artist's Favourite",
+        "Make your artist happy! They'll be delighted to have a client like you.",
+        "Enough! Let's get to it.",
+        last: true),
+  ];
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: AnimatedBuilder(
+        animation: _notifier,
+        builder: (context, _) => CustomPaint(
+              painter: InkSplash(Theme.of(context).backgroundColor,
+                  inkRatio.transform(_notifier.value / pages.length)),
+              child: NotifyingPageView(
+                notifier: _notifier,
+                pageController: _controller,
+                pages: pages,
+              ),
+            ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _notifier?.dispose();
+    super.dispose();
   }
 }
 
@@ -180,8 +180,6 @@ class FirstPage extends StatelessWidget {
                 onTap: () {
                   controller.nextPage(
                       duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-//                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//                    nav.openArtistSelectionReplace(context);
                 },
                 label: "Let's get started!",
                 textColor: Theme.of(context).primaryColor,
