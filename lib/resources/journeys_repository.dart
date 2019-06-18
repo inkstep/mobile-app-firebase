@@ -86,7 +86,6 @@ class JourneysRepository {
   }
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
-    // TODO(Felination): Something useful here
     final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
     return await webClient.updateRow(journeyMap, journeyId);
   }
