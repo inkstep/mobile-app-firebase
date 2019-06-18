@@ -17,9 +17,7 @@ abstract class InfoWidget extends StatelessWidget {
               color: Theme.of(context).cardColor,
               tooltip: 'Previous question',
               onPressed: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                submitCallback();
-                getNavigator().back(context, this);
+                back(context);
               }),
         ],
       ),
@@ -31,9 +29,7 @@ abstract class InfoWidget extends StatelessWidget {
             flex: valid() ? 2 : 1,
               child: valid() ? RaisedButton(
             onPressed: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              submitCallback();
-              getNavigator().next(context, this);
+              next(context);
             },
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
@@ -61,5 +57,17 @@ abstract class InfoWidget extends StatelessWidget {
 
   bool isForm() {
     return false;
+  }
+
+  void next(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    submitCallback();
+    getNavigator().next(context, this);
+  }
+
+  void back(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    submitCallback();
+    getNavigator().back(context, this);
   }
 }

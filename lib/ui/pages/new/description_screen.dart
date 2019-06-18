@@ -62,7 +62,11 @@ class DescriptionWidget extends InfoWidget {
       label: 'Tell your artist what you want and your inspiration behind it. '
           'You\'ll get to add some photos to show them in a minute!',
       hint: '',
-      callback: callback,
+      callback: (_) {
+        if (valid()) {
+          next(context);
+        }
+      },
     );
   }
 

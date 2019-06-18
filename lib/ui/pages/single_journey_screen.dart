@@ -340,6 +340,31 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
               Stack(
                 alignment: Alignment.bottomLeft,
                 children: <Widget>[
+                  Transform.translate(
+                    child: Container(
+                      width: fullWidth,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          // Where the linear gradient begins and ends
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          // Add one stop for each color. Stops should increase from 0 to 1
+                          stops: const [0.1, 0.5],
+                          colors: const [Colors.black54, Colors.transparent],
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: fullHeight * 0.65),
+                          LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                          SizedBox(height: 40),
+                        ],
+                      ),
+                    ), offset: Offset(0, 20),
+                  ),
                   if (hasDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -357,29 +382,6 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         ),
                       ],
                     ),
-                  Container(
-                    width: fullWidth,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        // Where the linear gradient begins and ends
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        // Add one stop for each color. Stops should increase from 0 to 1
-                        stops: const [0.1, 0.5],
-                        colors: const [Colors.black54, Colors.transparent],
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: fullHeight * 0.65),
-                        LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ],

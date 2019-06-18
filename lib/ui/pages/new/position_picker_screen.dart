@@ -18,8 +18,7 @@ class PositionPickerScreen extends StatefulWidget {
   final void Function(String pos, String genPos) callback;
 
   @override
-  State<StatefulWidget> createState() =>
-      _PositionPickerScreenState(formData, navigator, callback);
+  State<StatefulWidget> createState() => _PositionPickerScreenState(formData, navigator, callback);
 }
 
 class _PositionPickerScreenState extends State<StatefulWidget> {
@@ -119,7 +118,10 @@ class PositionWidget extends InfoWidget {
                       hint: '...',
                       maxLength: 20,
                       capitalisation: TextCapitalization.sentences,
-                      callback: specificPosCallback,
+                      callback: (text) {
+                        next(context);
+                        specificPosCallback(text);
+                      },
                     )
                   : DropdownMenu(
                       hintText: specificPos == null ? 'Specific Area' : specificPos,
