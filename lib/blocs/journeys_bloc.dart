@@ -32,8 +32,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       // iOS Specific
       firebase.requestNotificationPermissions(
           const IosNotificationSettings(sound: true, badge: true, alert: true));
-      firebase.onIosSettingsRegistered.listen((
-          IosNotificationSettings settings) {
+      firebase.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
         print('Settings registered: $settings');
       });
     }
@@ -193,8 +192,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     assert(currentState is JourneysWithUser);
     if (event is QuoteAccepted) {
       await journeysRepository.updateStage(AppointmentOfferReceived(null, null), event.journeyId);
-    } else if (event is QuoteDenied || event is DateDenied) {
-      // TODO(DJRHails): Should have deny state / warning
+    } else if (event is DateDenied) {
+      await journeysRepository.updateStage(WaitingList(null), event.journeyId);
     } else if (event is DateAccepted) {
       await journeysRepository.updateStage(BookedIn(null, null), event.journeyId);
     }
