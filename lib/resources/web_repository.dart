@@ -219,7 +219,7 @@ class WebRepository {
     return mappedStudios;
   }
 
-  Future<int> updateRow(Map<String, dynamic> journeyMap, int journeyId) async {
+  Future<int> updateJourneyRow(Map<String, dynamic> journeyMap, int journeyId) async {
     final String jsonStr = jsonEncode(journeyMap);
 
     final http.Response response = await client.patch('$url$journeyEndpoint/$journeyId',
@@ -277,5 +277,20 @@ class WebRepository {
       return true;
     }
     return false;
+  }
+
+  Future<int> updateUserRow(Map<String, String> userMap, int userId) async {
+    final String jsonStr = jsonEncode(userMap);
+
+    final http.Response response = await client.patch('$url$userEndpoint/$userId',
+        body: jsonStr, headers: {'Content-Type': 'application/json'});
+
+    print('PATCH $userEndpoint/$userId ${response.reasonPhrase} '
+        '(${response.statusCode}): ${response.body}');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = jsonDecode(response.body);
+      return Future.value(int.parse(responseJson['user_id']));
+    }
+    return Future.value(-1);
   }
 }

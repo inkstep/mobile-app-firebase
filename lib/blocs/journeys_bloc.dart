@@ -257,6 +257,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
       prefs.setInt('userId', userId);
+      final token = await firebase.getToken();
+      journeysRepository.updateToken(token, userId);
       final User user = await journeysRepository.getUser(userId);
       final cards = await _getCards(userId);
 
