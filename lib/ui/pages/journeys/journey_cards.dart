@@ -14,6 +14,7 @@ import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/ui/pages/journeys/stage_dialogs.dart';
+import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class JourneyCard extends StatefulWidget {
@@ -207,10 +208,17 @@ class LoadedJourneyCard extends AnimatedWidget {
                             nav.pop(context);
                           },
                           onDenial: () {
-                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                            journeyBloc.dispatch(QuoteDenied(card.journeyId));
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
+                            showDialog<dynamic>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DeleteJourneyDialog(
+                                  card: card,
+                                  doublePop: false,
+                                );
+                              },
+                            );
                           },
                         );
                       } else if (card.stage is AppointmentOfferReceived) {

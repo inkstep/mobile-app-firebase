@@ -16,15 +16,19 @@ class DeleteJourneyDialog extends StatelessWidget {
   const DeleteJourneyDialog({
     Key key,
     @required this.card,
+    this.doublePop = true,
   }) : super(key: key);
 
   final CardModel card;
+  final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
     journeyBloc.dispatch(RemoveJourney(card.journeyId));
     Navigator.pop(context);
-    Navigator.pop(context);
+    if (doublePop) {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -34,7 +38,18 @@ class DeleteJourneyDialog extends StatelessWidget {
     String confirmButtonText;
     switch (card.stage.runtimeType) {
       case WaitingForQuote:
+        header = 'Are you sure you want to end your journey?';
+        body = '${card.artistName.split(' ').first} will be '
+            'notified that you do not want to proceed.';
+        confirmButtonText = 'End Journey';
+        break;
       case QuoteReceived:
+        header = 'If you don\'t accept this quote, it will end your journey with this artist.';
+        body = 'Think about a tattoo like a dentist\'s appointment, '
+            'you don\'t haggle with your dentist. Even more importantly a tattoo is not something'
+            ' to cheap out on.';
+        confirmButtonText = 'End Journey';
+        break;
       case WaitingForAppointmentOffer:
       case AppointmentOfferReceived:
         header = 'Are you sure you want to end your journey?';
@@ -363,7 +378,8 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           SizedBox(height: 40),
                         ],
                       ),
-                    ), offset: Offset(0, 20),
+                    ),
+                    offset: Offset(0, 20),
                   ),
                   if (hasDate)
                     Row(
