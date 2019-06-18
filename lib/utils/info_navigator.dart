@@ -70,13 +70,12 @@ class InfoNavigator {
         );
       case 2:
         return HelpScreen(
-          navigator: this,
-          help: 'Oohhh, that tattoo sounds nice!\n\nA description goes a long way in helping the '
-              'artist know the motivation for your tattoo and the kind of thing you want!'
-              '\nAnother great way to help the artist is to provide a few reference images!\n'
-              '\nGo online and find a few images that you think capture the kind of tattoo you '
-              "want to get!\n\nDone that? Let's go!"
-        );
+            navigator: this,
+            help: 'Oohhh, that tattoo sounds nice!\n\nA description goes a long way in helping the '
+                'artist know the motivation for your tattoo and the kind of thing you want!'
+                '\nAnother great way to help the artist is to provide a few reference images!\n'
+                '\nGo online and find a few images that you think capture the kind of tattoo you '
+                "want to get!\n\nDone that? Let's go!");
       case 3:
         return ImageScreen(
           images: inspirationImages,
@@ -94,8 +93,7 @@ class InfoNavigator {
                 "going to go?\nThere's a whole variety of places it could go and all of them "
                 'matter to the artist, different positions have different types of skin, and '
                 'surfaces and can dramatically influence the kind of tattoo job that needs to be '
-                "done!\nLet us help you out with specifying exactly where it needs to go, Let's go!"
-        );
+                "done!\nLet us help you out with specifying exactly where it needs to go, Let's go!");
       case 5:
         return PositionPickerScreen(
           formData: formData,
