@@ -34,12 +34,12 @@ class ShortTextInput extends StatelessWidget {
       borderSide: BorderSide(color: theme.cardColor),
     );
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           AutoSizeText(label, style: Theme.of(context).primaryTextTheme.headline, textScaleFactor: 0.8,),
           Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: TextFormField(
               controller: controller,
               keyboardType: keyboardType,

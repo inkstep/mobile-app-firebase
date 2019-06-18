@@ -85,17 +85,17 @@ class SizeSelectorWidget extends InfoWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Flexible(flex: 4, child: _buildNumberInputBox(widthController, context)),
+              Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
               Spacer(),
               Flexible(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   'by',
                   style: Theme.of(context).primaryTextTheme.subtitle,
                 ),
               ),
               Spacer(),
-              Flexible(flex: 4, child: _buildNumberInputBox(heightController, context)),
+              Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
               Flexible(
                 flex: 2,
                 child: Text(
@@ -119,7 +119,7 @@ class SizeSelectorWidget extends InfoWidget {
 
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
     return Container(
-      width: 130.0,
+      width: 430.0,
       child: ShortTextInputFormElement(
         textController: textController,
         keyboardType: TextInputType.number,
@@ -134,10 +134,6 @@ class SizeSelectorWidget extends InfoWidget {
       ),
     );
   }
-
-  @override
-  Widget setButtonHeight(BuildContext context) => Spacer(flex: 12);
-
 
   @override
   InfoNavigator getNavigator() {
