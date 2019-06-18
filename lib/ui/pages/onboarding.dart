@@ -21,54 +21,57 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       BuildContext context, IconData icon, String header, String body, String buttonText,
       {bool last}) {
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
-    return Column(
-      children: [
-        Spacer(flex: 4),
-        Icon(
-          icon,
-          size: 120,
-        ),
-        Spacer(),
-        Text(
-          header,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          child: Text(
-            body,
-            style: Theme.of(context).textTheme.title,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Spacer(flex: 4),
+          Icon(
+            icon,
+            size: 120,
+          ),
+          Spacer(),
+          Text(
+            header,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline,
           ),
-        ),
-        Spacer(
-          flex: 8,
-        ),
-        Container(
-          child: Column(
-            children: <Widget>[
-              BoldCallToAction(
-                onTap: () {
-                  if (last == null) {
-                    _controller.nextPage(
-                        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                  } else if (last) {
-                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.openOnboardingRequiredInfoPage(context);
-                  }
-                },
-                label: buttonText,
-                textColor: Theme.of(context).primaryColor,
-                color: Theme.of(context).cardColor,
-              ),
-              Padding(padding: buttonPadding),
-              Padding(padding: buttonPadding),
-              Padding(padding: buttonPadding),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0),
+            child: Text(
+              body,
+              style: Theme.of(context).textTheme.title,
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-      ],
+          Spacer(
+            flex: 8,
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                BoldCallToAction(
+                  onTap: () {
+                    if (last == null) {
+                      _controller.nextPage(
+                          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    } else if (last) {
+                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                      nav.openOnboardingRequiredInfoPage(context);
+                    }
+                  },
+                  label: buttonText,
+                  textColor: Theme.of(context).primaryColor,
+                  color: Theme.of(context).cardColor,
+                ),
+                Padding(padding: buttonPadding),
+                Padding(padding: buttonPadding),
+                Padding(padding: buttonPadding),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -79,26 +82,26 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     _buildOnboardingSlice(
       context,
       Icons.memory,
-      'Feel Smarter',
+      'Feel smarter',
       'You get guided as to what artists want you to say.',
       'Wow',
     ),
     _buildOnboardingSlice(
         context,
         Icons.calendar_today,
-        'Get the artist you want',
+        'Get the Artist you want',
         'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
         "That's cool"),
     _buildOnboardingSlice(
         context,
         Icons.healing,
-        'Care Made Easy',
-        'Personal, artist specified pre-care and aftercare in one place, and only when you need it',
+        'Care made easy',
+        'Personal, artist specified pre-care and aftercare all in one place, exactly when you need it',
         'Awesome!'),
     _buildOnboardingSlice(
         context,
         Icons.favorite,
-        "Be the Artist's Favourite",
+        "Be the Artist's favourite",
         "Make your artist happy! They'll be delighted to have a client like you.",
         "Enough! Let's get to it.",
         last: true),
