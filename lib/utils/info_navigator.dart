@@ -45,6 +45,14 @@ class InfoNavigator {
 
   int screenNum = 0;
 
+  // TODO(DJRHails): Style
+  // Most artists do more than one style, while many develop their own style
+  // by combining two or more existing ones. And some experimental artists who
+  // like to push the boundaries often go on to create new styles entirely!
+
+  // It's worth selecting what style of tattoo you like so that artists knows what's involved
+  // for them
+
   Widget getScreen(int screenNum) {
     switch (screenNum) {
       case 0:

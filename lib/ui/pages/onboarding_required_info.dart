@@ -42,7 +42,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                     controller: nameController,
                     maxLength: 16,
                     capitalisation: TextCapitalization.words,
-                    hint: 'Natasha',
+                    hint: 'e.g. Natasha',
                     label: 'What do your friends call you?',
                     callback: (_) => FocusScope.of(context).requestFocus(FocusNode())),
               ),

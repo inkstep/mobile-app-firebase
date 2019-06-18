@@ -57,6 +57,14 @@ class SizeSelectorWidget extends InfoWidget {
   final InfoNavigator navigator;
   final void Function(String) callback;
 
+  // TODO(DJRHails): Use default sizes, and use inches
+  // XS – 0.5″ x 0.5″
+  // S – 1″ x 2″
+  // M – 2″ x 3″
+  // L – 3″ x 4″
+  // XL – 5″ x 6″
+  // XXL – 6″ x 7″
+  // TODO(DJRHails): Warnings on small tattoo sizes
   @override
   Widget getWidget(BuildContext context) {
     return Column(
