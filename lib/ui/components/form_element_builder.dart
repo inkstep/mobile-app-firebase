@@ -12,7 +12,6 @@ typedef BoolCallback = void Function(bool);
 class FormElementBuilder extends StatelessWidget {
   FormElementBuilder({
     @required this.builder,
-    @required this.controller,
     this.scroll = true,
     this.fieldKey,
     this.duration = 500,
@@ -21,7 +20,6 @@ class FormElementBuilder extends StatelessWidget {
 
   final SubmitCallback onSubmitCallback;
 
-  final PageController controller;
   final Key fieldKey;
   final int duration;
   final bool scroll;
@@ -29,10 +27,6 @@ class FormElementBuilder extends StatelessWidget {
   final ElementBuilder builder;
 
   final EdgeInsets kPadding = const EdgeInsets.all(20);
-
-  VoidCallback get navToNextPage => () {
-        controller.nextPage(duration: Duration(milliseconds: duration), curve: Curves.ease);
-      };
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +40,6 @@ class FormElementBuilder extends StatelessWidget {
     return (textBoxValue) {
       func(textBoxValue);
       focus.unfocus();
-      if (scroll) {
-        navToNextPage();
-      }
     };
   }
 }

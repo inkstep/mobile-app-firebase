@@ -104,6 +104,7 @@ class InkstepState extends State<Inkstep> {
           accentTextTheme: _getTextWithColor(baseColors['dark']),
           iconTheme: _getIconWithColor(baseColors['light']),
           accentIconTheme: _getIconWithColor(baseColors['dark']),
+          primaryTextTheme: _getTextWithColor(baseColors['light']),
           buttonTheme: ButtonThemeData(
             buttonColor: baseColors['dark'],
           ),

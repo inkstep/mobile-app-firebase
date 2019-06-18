@@ -12,10 +12,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: LongTextInputFormElement(
-                controller: null,
-                textController: null,
-                label: 'label',
-                hint: 'hint'),
+              textController: null,
+              label: 'label',
+              hint: 'hint',
+              callback: (_) {},
+            ),
           ),
         ),
       );
@@ -24,8 +25,7 @@ void main() {
       expect(find.text('hint'), findsOneWidget);
     });
 
-    testWidgets('transitions to next view on enter',
-        (WidgetTester tester) async {
+    testWidgets('transitions to next view on enter', (WidgetTester tester) async {
       final PageController controller = MockController();
 
       final inputKey = UniqueKey();
@@ -33,11 +33,12 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: LongTextInputFormElement(
-                key: inputKey,
-                controller: controller,
-                textController: null,
-                label: 'label',
-                hint: 'hint'),
+              key: inputKey,
+              textController: null,
+              label: 'label',
+              hint: 'hint',
+              callback: (_) {},
+            ),
           ),
         ),
       );
@@ -49,10 +50,7 @@ void main() {
 
       expect(find.text('matthew'), findsOneWidget);
 
-      verify(controller.nextPage(
-          duration: anyNamed('duration'),
-          curve: anyNamed('curve'))
-      );
+      verify(controller.nextPage(duration: anyNamed('duration'), curve: anyNamed('curve')));
     });
   });
 }

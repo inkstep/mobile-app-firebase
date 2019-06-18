@@ -31,24 +31,24 @@ class ShortTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final underline = UnderlineInputBorder(
-      borderSide: BorderSide(color: theme.backgroundColor),
+      borderSide: BorderSide(color: theme.cardColor),
     );
     return Column(
       children: <Widget>[
-        AutoSizeText(label, style: Theme.of(context).accentTextTheme.title),
+        AutoSizeText(label, style: Theme.of(context).primaryTextTheme.title),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           textCapitalization: capitalisation,
           autofocus: true,
           maxLength: maxLength,
-          style: theme.accentTextTheme.headline,
+          style: theme.primaryTextTheme.headline,
           cursorColor: theme.backgroundColor,
           decoration: InputDecoration(
             hintText: hint,
             focusedBorder: underline,
             enabledBorder: underline,
-            labelStyle: theme.accentTextTheme.title,
+            labelStyle: theme.primaryTextTheme.title,
             hintStyle: hintStyle,
             helperStyle: hintStyle,
           ),

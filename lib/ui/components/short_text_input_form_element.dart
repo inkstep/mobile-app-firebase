@@ -4,7 +4,6 @@ import 'package:inkstep/ui/components/short_text_input.dart';
 
 class ShortTextInputFormElement extends StatelessWidget {
   ShortTextInputFormElement({
-    @required this.controller,
     @required this.textController,
     @required this.label,
     @required this.hint,
@@ -13,14 +12,14 @@ class ShortTextInputFormElement extends StatelessWidget {
     Key key,
     this.keyboardType,
     this.capitalisation = TextCapitalization.words,
+    @required this.callback,
   }) : super(key: key);
 
-  final PageController controller;
   final TextEditingController textController;
   final TextInputType keyboardType;
   final TextCapitalization capitalisation;
 
-  final void Function(String) callback = (_) {};
+  final SubmitCallback callback;
 
   final String label;
   final String hint;
@@ -30,28 +29,18 @@ class ShortTextInputFormElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormElementBuilder(
       builder: (context, focus, submitCallback) {
-        return
-          Column(
-            children: <Widget>[
-              Spacer(),
-              Flexible(
-                child: ShortTextInput(
-                  controller: textController,
-                  keyboardType: keyboardType,
-                  maxLength: maxLength,
-                  capitalisation: capitalisation,
-                  hint: hint,
-                  label: label,
-                  focus: focus,
-                  callback: submitCallback,
-                ),
-              ),
-              Spacer(flex: 2),
-            ],
-          );
+        return ShortTextInput(
+          controller: textController,
+          keyboardType: keyboardType,
+          maxLength: maxLength,
+          capitalisation: capitalisation,
+          hint: hint,
+          label: label,
+          focus: focus,
+          callback: submitCallback,
+        );
       },
       onSubmitCallback: callback,
-      controller: controller,
       fieldKey: key,
     );
   }

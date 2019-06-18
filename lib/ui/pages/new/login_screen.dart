@@ -70,7 +70,6 @@ class LoginScreen extends StatelessWidget {
             ],
           );
         },
-        controller: null,
         onSubmitCallback: (_) {},
       ),
     );

@@ -3,7 +3,6 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 
 class BinaryInput extends StatelessWidget {
   BinaryInput({
-    @required this.controller,
     @required this.callback,
     @required this.label,
     @required this.currentState,
@@ -11,7 +10,6 @@ class BinaryInput extends StatelessWidget {
   }) : super(key: key);
 
   final SubmitCallback callback;
-  final PageController controller;
   final buttonState currentState;
 
   final String label;
@@ -28,7 +26,7 @@ class BinaryInput extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
-                style: theme.accentTextTheme.title,
+                style: theme.primaryTextTheme.title,
               ),
               flex: 5,
             ),
@@ -51,7 +49,6 @@ class BinaryInput extends StatelessWidget {
         );
       },
       onSubmitCallback: callback,
-      controller: controller,
       fieldKey: key,
       scroll: false,
     );
@@ -61,10 +58,10 @@ class BinaryInput extends StatelessWidget {
     final Radius r = Radius.circular(10);
     return FlatButton(
       padding: EdgeInsets.all(20),
-      child: Text(left ? 'Yes' : 'No'),
+      child: Text(left ? 'Yes' : 'No', style: Theme.of(context).primaryTextTheme.subtitle,),
       onPressed: enabled ? response : null,
-      disabledColor: Theme.of(context).primaryColorDark,
-      color: left ? Theme.of(context).accentColor : Theme.of(context).backgroundColor,
+      disabledColor: Colors.green,
+      color: left ? Theme.of(context).accentColor : Theme.of(context).accentColor,
       shape: RoundedRectangleBorder(
         borderRadius: left
             ? BorderRadius.horizontal(
