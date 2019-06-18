@@ -61,8 +61,8 @@ class BinaryInput extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Text(left ? 'Yes' : 'No', style: Theme.of(context).primaryTextTheme.subtitle,),
       onPressed: enabled ? response : null,
-      disabledColor: Colors.green,
-      color: left ? Theme.of(context).accentColor : Theme.of(context).accentColor,
+      disabledColor: left ? Colors.green : Theme.of(context).accentColor,
+      color: left ? Theme.of(context).disabledColor : Theme.of(context).primaryColorDark,
       shape: RoundedRectangleBorder(
         borderRadius: left
             ? BorderRadius.horizontal(
