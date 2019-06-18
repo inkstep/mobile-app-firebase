@@ -114,4 +114,9 @@ class JourneysRepository {
 
     webClient.saveUserEmail(emailMap, id);
   }
+
+  Future<int> updateToken(String token, int userId) async {
+    final Map<String, String> userMap = {'Token': token};
+    return await webClient.updateUserRow(userMap, userId);
+  }
 }
