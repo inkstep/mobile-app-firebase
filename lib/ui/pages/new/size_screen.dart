@@ -133,11 +133,8 @@ class SizeSelectorWidget extends InfoWidget {
   }
 
   @override
-  Widget setButtonHeight(BuildContext context) {
-    return Spacer(
-      flex: 8,
-    );
-  }
+  Widget setButtonHeight(BuildContext context) => Spacer(flex: 12);
+
 
   @override
   InfoNavigator getNavigator() {
