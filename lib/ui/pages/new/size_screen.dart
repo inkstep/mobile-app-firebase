@@ -72,51 +72,81 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'How big would you like your tattoo to be?',
-            style: Theme.of(context).primaryTextTheme.headline,
-            textScaleFactor: 0.8,
-            textAlign: TextAlign.center,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
-              Spacer(),
-              Flexible(
-                flex: 3,
-                child: Text(
-                  'by',
-                  style: Theme.of(context).primaryTextTheme.subtitle,
-                ),
+    final int width = int.tryParse(widthController.text);
+    final int height = int.tryParse(heightController.text);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'How big would you like your tattoo to be?',
+          style: Theme.of(context).primaryTextTheme.headline,
+          textScaleFactor: 0.8,
+          textAlign: TextAlign.center,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
+            Spacer(),
+            Flexible(
+              flex: 3,
+              child: Text(
+                'by',
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
-              Spacer(),
-              Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
-              Flexible(
-                flex: 2,
-                child: Text(
-                  'cm',
-                  style: Theme.of(context).primaryTextTheme.subtitle,
-                ),
+            ),
+            Spacer(),
+            Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
+            Flexible(
+              flex: 2,
+              child: Text(
+                'cm',
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
-            ],
-          ),
-          AutoSizeText(
+            ),
+          ],
+        ),
+        Flexible(
+          child: AutoSizeText(
             'We recommend grabbing a ruler and '
             'trying to measure out where you want the tattoo to be',
             style: Theme.of(context).primaryTextTheme.subtitle,
             maxLines: 2,
           ),
-          Spacer(),
-        ],
-      ),
+        ),
+        Spacer(),
+        if (checkSquareArea(width, height, 2, 13))
+          _buildSizeIndicator('assets/size-xs.jpg'), // 2
+        if (checkSquareArea(width, height, 13, 25))
+          _buildSizeIndicator('assets/size-s.jpg'), // 13
+        if (checkSquareArea(width, height, 25, 60))
+          _buildSizeIndicator('assets/size-m.jpg'), // 40
+        if (checkSquareArea(width, height, 60, 130))
+          _buildSizeIndicator('assets/size-l.jpg'), // 80
+        if (checkSquareArea(width, height, 130, 200))
+          _buildSizeIndicator('assets/size-xl.jpg'), // 190
+        if (checkSquareArea(width, height, 200, 500)) // 270
+          _buildSizeIndicator('assets/size-xxl.jpg'),
+        if (checkSquareArea(width, height, 500, 999 * 999)) // 270
+          _buildSizeIndicator('assets/size-xxxl.jpg'),
+        Spacer(),
+      ],
     );
+  }
+
+  Widget _buildSizeIndicator(String path) => Container(
+        height: 150,
+        child: Image.asset(path),
+      );
+
+  bool checkSquareArea(int width, int height, int lower, int upper) {
+    if (width == null || height == null) {
+      return false;
+    }
+    return width * height > lower && width * height <= upper;
   }
 
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
