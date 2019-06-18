@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -148,6 +150,17 @@ class SizeSelectorWidget extends InfoWidget {
   @override
   bool valid() {
     return widthController.text.isNotEmpty && heightController.text.isNotEmpty;
+  }
+
+  @override
+  Widget setButtonHeight(BuildContext context) {
+    int toFlex = 2;
+    if (Platform.isIOS) {
+      toFlex = 18;
+    }
+    return Spacer(
+      flex: toFlex,
+    );
   }
 
   @override
