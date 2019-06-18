@@ -377,8 +377,14 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   void _handleDataMessage(Map<String, dynamic> message) {
-    if (message['data']['journey'] != null) {
-      dispatch(LoadJourney(int.parse(message['data']['journey'])));
+    if (Platform.isAndroid) {
+      if (message['data']['journey'] != null) {
+        dispatch(LoadJourney(int.parse(message['data']['journey'])));
+      }
+    } else if (Platform.isIOS) {
+      if (message['journey']!=null) {
+        dispatch(LoadJourney(int.parse(message['journey'])));
+      }
     }
   }
 
