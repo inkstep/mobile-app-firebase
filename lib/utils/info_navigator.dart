@@ -10,6 +10,7 @@ import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:inkstep/ui/pages/new/position_picker_screen.dart';
 import 'package:inkstep/ui/pages/new/size_screen.dart';
 import 'package:inkstep/ui/routes/fade_page_route.dart';
+import 'package:inkstep/ui/routes/slide_exit_enter_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
@@ -83,7 +84,7 @@ class InfoNavigator {
           navigator: this,
           callback: (images) {
             inspirationImages = images;
-            formData['noRefImgs'] = images.length.toString();
+            formData['noRefImgs'] = inspirationImages.length.toString();
           },
         );
       case 4:
@@ -188,27 +189,27 @@ class InfoNavigator {
   void start(BuildContext context) {
     screenNum = 0;
 
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       MaterialPageRoute<dynamic>(builder: (context) => getScreen(screenNum)),
     );
   }
 
-  void next(BuildContext context) {
+  void next(BuildContext context, Widget exitScreen) {
     screenNum++;
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       FadeRoute(page: getScreen(screenNum)),
     );
   }
 
-  void back(BuildContext context) {
+  void back(BuildContext context, Widget exitScreen) {
     if (screenNum == 0) {
       return;
     }
 
     screenNum--;
-    Navigator.push<dynamic>(
+    Navigator.pushReplacement<dynamic, dynamic>(
       context,
       FadeRoute(page: getScreen(screenNum)),
     );

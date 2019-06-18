@@ -16,7 +16,14 @@ class FadeRoute extends PageRouteBuilder<dynamic> {
         Widget child,
         ) =>
         FadeTransition(
-          opacity: animation,
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Interval(
+              0.00,
+              1.00,
+              curve: Curves.easeIn,
+            ),
+          ),
           child: child,
         ),
   );

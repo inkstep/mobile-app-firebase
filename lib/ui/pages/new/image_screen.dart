@@ -78,7 +78,7 @@ class ImageWidget extends InfoWidget {
           child: LayoutBuilder(
             builder: (context, constraint) {
               const double thumbNoWidth = 2;
-              const double thumbNoHeight = 3;
+              const double thumbNoHeight = 2;
               const double thumbSizeFactor = 0.9;
               final double thumbHeight =
                   constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
@@ -118,6 +118,7 @@ class ImageWidget extends InfoWidget {
     Widget inner;
     if (i < inspirationImages.length) {
       final Asset asset = inspirationImages[i];
+      print(asset.name);
       inner = Container(
         decoration: BoxDecoration(
           boxShadow: const [
@@ -164,8 +165,7 @@ class ImageWidget extends InfoWidget {
 
   @override
   void submitCallback() {
-    print(inspirationImages.length);
-    callback(inspirationImages);
+    callback(images);
   }
 
   @override

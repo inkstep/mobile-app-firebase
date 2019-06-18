@@ -19,7 +19,7 @@ abstract class InfoWidget extends StatelessWidget {
               onPressed: () {
                 FocusScope.of(context).requestFocus(FocusNode());
                 submitCallback();
-                getNavigator().back(context);
+                getNavigator().back(context, this);
               }),
         ],
       ),
@@ -33,7 +33,7 @@ abstract class InfoWidget extends StatelessWidget {
             onPressed: () {
               FocusScope.of(context).requestFocus(FocusNode());
               submitCallback();
-              getNavigator().next(context);
+              getNavigator().next(context, this);
             },
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
