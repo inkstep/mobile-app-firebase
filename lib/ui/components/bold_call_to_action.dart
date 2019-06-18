@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class BoldCallToAction extends StatelessWidget {
@@ -23,7 +24,7 @@ class BoldCallToAction extends StatelessWidget {
       textColor: textColor,
       padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: Text(
+      child: AutoSizeText(
         label,
         style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
       ),

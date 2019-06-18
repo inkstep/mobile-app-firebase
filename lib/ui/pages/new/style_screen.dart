@@ -272,6 +272,11 @@ class StyleScreenWidget extends InfoWidget {
   bool valid() {
     return styleController.text.isNotEmpty;
   }
+
+  @override
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
+  }
 }
 
 class Style {

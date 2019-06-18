@@ -1,11 +1,13 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';
 import 'package:inkstep/ui/pages/new/description_screen.dart';
-import 'package:inkstep/ui/pages/new/help_screen.dart';
+import 'package:inkstep/ui/pages/new/email_screen.dart';
 import 'package:inkstep/ui/pages/new/image_screen.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:inkstep/ui/pages/new/position_picker_screen.dart';
@@ -15,14 +17,27 @@ import 'package:inkstep/ui/routes/fade_page_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
-  InfoNavigator(int artistId) {
+  InfoNavigator(int artistId, BuildContext context) {
     descController = TextEditingController();
     widthController = TextEditingController();
     heightController = TextEditingController();
     styleController = TextEditingController();
-    emailController = TextEditingController(text: 'james.dalboth@gmail.com');
+
     inspirationImages = [];
     formData['artistID'] = artistId.toString();
+
+    _journeyBloc = BlocProvider.of<JourneysBloc>(context);
+
+    if (_journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = _journeyBloc.currentState;
+      if (state.user.email != '') {
+        emailController = TextEditingController(text: state.user.email);
+      } else {
+        emailController = TextEditingController();
+      }
+    } else {
+      emailController = TextEditingController();
+    }
   }
 
   TextEditingController descController;
@@ -57,37 +72,22 @@ class InfoNavigator {
   // It's worth selecting what style of tattoo you like so that artists knows what's involved
   // for them
 
+  JourneysBloc _journeyBloc;
+
+
+
   List<Widget> getScreens(BuildContext context) {
+    bool displayEmail = true;
+
+    if (_journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = _journeyBloc.currentState;
+      displayEmail = state.user.email == '';
+    }
+
     return [
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            'We want to help you provide the tattoo artist with the exact info they need! \n\n'
-            "In a few moments we're going to ask you for some reference images, size information, "
-            "position info and more!\n\nDon't worry!\nAll of this info is easy to get! The "
-            "first thing we're going to ask you for though is for a brief description about what "
-            "you want! \n\nLet's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
-      ),
       DescriptionScreen(
         descController: descController,
         navigator: this,
-      ),
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            'Oohhh, that tattoo sounds nice!\n\nA description goes a long way in helping the '
-            'artist know the motivation for your tattoo and the kind of thing you want!'
-            '\nAnother great way to help the artist is to provide a few reference images!\n'
-            '\nGo online and find a few images that you think capture the kind of tattoo you '
-            "want to get!\n\nDone that? Let's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
       ),
       ImageScreen(
         images: inspirationImages,
@@ -101,20 +101,6 @@ class InfoNavigator {
         navigator: this,
         styleController: styleController,
       ),
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            'Wow those images look great! \n\nYour tattoo artist definitely knows the kind'
-            ' of thing you want now!\n\nThe next thing we want to work out is where is it '
-            "going to go?\nThere's a whole variety of places it could go and all of them "
-            'matter to the artist, different positions have different types of skin, and '
-            'surfaces and can dramatically influence the kind of tattoo job that needs to be '
-            "done!\nLet us help you out with specifying exactly where it needs to go, Let's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
-      ),
       PositionPickerScreen(
         formData: formData,
         callback: (pos, genPos) {
@@ -123,38 +109,10 @@ class InfoNavigator {
         },
         navigator: this,
       ),
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            'This is going great!\n\nNow your artist knows what you want and where you want '
-            "it!\nNext let's supply the artist with a nice size! Sizing is one of the most "
-            'important factors in doing a tattoo, artists really like to know accurate sizings '
-            'going in the job because even a small change in size can lead to dramatically '
-            'different times and prices!\nA good way to solve this issue is to go away and '
-            'get someone to draw with a pencil a rough shape with the size you want. Once you '
-            "have that, grab a ruler get measuring!\nReady? Let's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
-      ),
       SizeSelectorScreen(
         heightController: heightController,
         widthController: widthController,
         navigator: this,
-      ),
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            'Fantastic!\n\nAt this stage the artist has all the information they need about '
-            'the tattoo!\n\nA few questions remain however about you!\nTattoo artists are super'
-            ' busy and end up booking months in advanced!\nThis does making booking quiet hard '
-            'unfornately\nInstead of given an exact date, say what days your usually free on '
-            "and the artist will find a date on one of those days for you\nLet's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
       ),
       AvailabilityScreen(
         navigator: this,
@@ -165,20 +123,6 @@ class InfoNavigator {
           }
         },
         avail: formData['availability'],
-      ),
-      HelpScreen(
-        navigator: this,
-        help: [
-          AutoSizeText(
-            "Phew! Getting tired? Getting a tattoo isn't a quick job and needs a lot of "
-            "thought about, but don't worry! Almost done!\n\nTattoo artists want to make sure "
-            "they aren't going to waste a booking slot, they rely heavily on clients turning up"
-            ' to the session! it is for this reason they ask for a deposit, please understand a'
-            ' tattoo artist is unlikely to accept your job if your not willing to leave a '
-            "deposit\nLet's go!",
-            style: Theme.of(context).accentTextTheme.body1,
-          ),
-        ],
       ),
       DepositScreen(
         navigator: this,
@@ -192,6 +136,10 @@ class InfoNavigator {
             formData['deposit'] = '';
           }
         },
+      ),
+      if (displayEmail) EmailScreen(
+        navigator: this,
+        emailController: emailController,
       ),
       OverviewForm(
         emailController: emailController,
@@ -212,10 +160,6 @@ class InfoNavigator {
       return screens[screenNum];
     }
     return null;
-  }
-
-  void pop(BuildContext context) {
-    Navigator.pop(context);
   }
 
   void start(BuildContext context) {
@@ -244,6 +188,17 @@ class InfoNavigator {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
       FadeRoute(page: getScreen(context, screenNum)),
+    );
+  }
+
+  void pop(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void showHelp(BuildContext context, Widget help) {
+    Navigator.push<dynamic>(
+      context,
+      FadeRoute(page: help),
     );
   }
 }

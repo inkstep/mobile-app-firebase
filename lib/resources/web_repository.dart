@@ -22,6 +22,7 @@ class WebRepository {
   static const String artistEndpoint = '/artist';
   static const String studiosEndpoint = '/studio';
   static const String tattooEndpoint = '/tattoo';
+  static const String emailEndpoint = '/email';
 
   Future<List<Map<String, dynamic>>> loadArtists(int studioID) async {
     final http.Response response = await client.get('$url$artistEndpoint');
@@ -249,6 +250,30 @@ class WebRepository {
 
     print(
         '$journeyEndpoint$imageEndpoint$tattooEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response
+            .body}');
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> saveUserEmail(Map<String, dynamic> emailMap, int id) async {
+    final String jsonStr = jsonEncode(emailMap);
+
+    http.Response response;
+
+    try {
+      response = await client.put('$url$userEndpoint/$id$emailEndpoint',
+          body: jsonStr, headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print(e);
+      return true;
+    }
+
+    print(
+        '$userEndpoint/$id$emailEndpoint ${response.reasonPhrase} (${response.statusCode}): '
+            '${response
             .body}');
 
     if (response.statusCode == 200) {

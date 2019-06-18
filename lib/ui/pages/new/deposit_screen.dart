@@ -94,5 +94,8 @@ class DepositWidget extends InfoWidget {
     return deposit == buttonState.True;
   }
 
-
+  @override
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
+  }
 }

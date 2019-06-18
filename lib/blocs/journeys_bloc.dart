@@ -126,7 +126,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int userId = -1;
     User user;
     bool firstTime = true;
-    print('doing a firstTime thing');
+
     if (currentState is JourneysNoUser) {
       final String pushToken = await firebase.getToken();
 
@@ -151,6 +151,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       firstTime = prefs.getBool('firstTime');
       prefs.setInt('userId', userId);
       print('firstTime is set to: $firstTime');
+
+      if (user.email == '') {
+        journeysRepository.saveUserEmail(user.id, event.result.email);
+        user.email = event.result.email;
+      }
     }
 
     // Now send the corresponding journey

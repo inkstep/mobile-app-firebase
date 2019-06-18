@@ -92,6 +92,7 @@ class InkstepState extends State<Inkstep> {
           primaryColor: baseColors['dark'],
           backgroundColor: baseColors['dark'],
           dialogBackgroundColor: baseColors['dark'],
+          disabledColor: baseColors['grey'],
           cardColor: baseColors['light'],
           cardTheme: CardTheme(
             color: baseColors['light'],

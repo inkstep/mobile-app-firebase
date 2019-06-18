@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,53 +72,56 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'How big would you like your tattoo to be?',
-          style: Theme.of(context).primaryTextTheme.headline,
-          textScaleFactor: 0.8,
-          textAlign: TextAlign.center,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(flex: 2, child: _buildNumberInputBox(widthController, context)),
-            Spacer(),
-            Flexible(
-              flex: 1,
-              child: Text(
-                'cm by',
-                style: Theme.of(context).primaryTextTheme.subtitle,
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'How big would you like your tattoo to be?',
+            style: Theme.of(context).primaryTextTheme.headline,
+            textScaleFactor: 0.8,
+            textAlign: TextAlign.center,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
+              Spacer(),
+              Flexible(
+                flex: 3,
+                child: Text(
+                  'by',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
               ),
-            ),
-            Spacer(),
-            Flexible(flex: 2, child: _buildNumberInputBox(heightController, context)),
-            Flexible(
-              flex: 1,
-              child: Text(
-                'cm',
-                style: Theme.of(context).primaryTextTheme.subtitle,
+              Spacer(),
+              Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'cm',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
               ),
-            ),
-          ],
-        ),
-        AutoSizeText(
-          'We recommend grabbing a ruler and '
-          'trying to measure out where you want the tattoo to be',
-          style: Theme.of(context).primaryTextTheme.subtitle,
-          maxLines: 2,
-        ),
-        Spacer(),
-      ],
+            ],
+          ),
+          AutoSizeText(
+            'We recommend grabbing a ruler and '
+            'trying to measure out where you want the tattoo to be',
+            style: Theme.of(context).primaryTextTheme.subtitle,
+            maxLines: 2,
+          ),
+          Spacer(),
+        ],
+      ),
     );
   }
 
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
     return Container(
-      width: 130.0,
+      width: 430.0,
       child: ShortTextInputFormElement(
         textController: textController,
         keyboardType: TextInputType.number,
@@ -133,10 +138,6 @@ class SizeSelectorWidget extends InfoWidget {
   }
 
   @override
-  Widget setButtonHeight(BuildContext context) => Spacer(flex: 12);
-
-
-  @override
   InfoNavigator getNavigator() {
     return navigator;
   }
@@ -149,6 +150,22 @@ class SizeSelectorWidget extends InfoWidget {
   @override
   bool valid() {
     return widthController.text.isNotEmpty && heightController.text.isNotEmpty;
+  }
+
+  @override
+  Widget setButtonHeight(BuildContext context) {
+    int toFlex = 2;
+    if (Platform.isIOS) {
+      toFlex = 18;
+    }
+    return Spacer(
+      flex: toFlex,
+    );
+  }
+
+  @override
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
 

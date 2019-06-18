@@ -33,30 +33,36 @@ class ShortTextInput extends StatelessWidget {
     final underline = UnderlineInputBorder(
       borderSide: BorderSide(color: theme.cardColor),
     );
-    return Column(
-      children: <Widget>[
-        AutoSizeText(label, style: Theme.of(context).primaryTextTheme.title),
-        TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          textCapitalization: capitalisation,
-          autofocus: true,
-          maxLength: maxLength,
-          style: theme.primaryTextTheme.headline,
-          cursorColor: theme.backgroundColor,
-          decoration: InputDecoration(
-            hintText: hint,
-            focusedBorder: underline,
-            enabledBorder: underline,
-            labelStyle: theme.primaryTextTheme.title,
-            hintStyle: hintStyle,
-            helperStyle: hintStyle,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: <Widget>[
+          AutoSizeText(label, style: Theme.of(context).primaryTextTheme.headline, textScaleFactor: 0.8,),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: TextFormField(
+              controller: controller,
+              keyboardType: keyboardType,
+              textCapitalization: capitalisation,
+              autofocus: true,
+              maxLength: maxLength,
+              style: theme.primaryTextTheme.title,
+              cursorColor: theme.backgroundColor,
+              decoration: InputDecoration(
+                hintText: hint,
+                focusedBorder: underline,
+                enabledBorder: underline,
+                labelStyle: theme.primaryTextTheme.title,
+                hintStyle: hintStyle,
+                helperStyle: hintStyle,
+              ),
+              focusNode: focus,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: callback,
+            ),
           ),
-          focusNode: focus,
-          textInputAction: TextInputAction.next,
-          onFieldSubmitted: callback,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

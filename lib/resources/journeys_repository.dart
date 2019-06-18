@@ -86,7 +86,6 @@ class JourneysRepository {
   }
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
-    // TODO(Felination): Something useful here
     final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
     return await webClient.updateRow(journeyMap, journeyId);
   }
@@ -106,5 +105,13 @@ class JourneysRepository {
     }
 
     return true;
+  }
+
+  void saveUserEmail(int id, String email) {
+    final Map<String, dynamic> emailMap = <String, dynamic>{
+      'Email': email,
+    };
+
+    webClient.saveUserEmail(emailMap, id);
   }
 }

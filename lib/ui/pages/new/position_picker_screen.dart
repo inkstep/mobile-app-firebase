@@ -26,11 +26,18 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
     generalPos ??= formData['generalPos'];
     specificPos ??= formData['position'];
     textController = TextEditingController(text: specificPos ?? '...');
+    listener = () {setState(() {
+      specificPos = textController.text;
+    });};
+    textController.addListener(listener);
   }
+
+
 
   TextEditingController textController;
   final InfoNavigator navigator;
   final void Function(String pos, String genPos) callback;
+  VoidCallback listener;
 
   String generalPos;
   String specificPos;
@@ -46,7 +53,13 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
       setState(() {
         specificPos = text;
       });
-    });
+    },);
+  }
+
+  @override
+  void dispose() {
+    textController.removeListener(listener);
+    super.dispose();
   }
 }
 
@@ -76,15 +89,16 @@ class PositionWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Flexible(
               flex: generalPos == 'Other' ? 10 : 4,
               child: Text(
-                'Where would you like your tattoo? (Arm, leg,'
-                ' etc)',
-                style: Theme.of(context).primaryTextTheme.title,
+                'Where would you like your tattoo?',
+                style: Theme.of(context).primaryTextTheme.headline,
+                textScaleFactor: 0.8,
                 textAlign: TextAlign.center,
               )),
           Spacer(flex: 1),
@@ -120,7 +134,6 @@ class PositionWidget extends InfoWidget {
                       capitalisation: TextCapitalization.sentences,
                       callback: (text) {
                         next(context);
-                        specificPosCallback(text);
                       },
                     )
                   : DropdownMenu(
@@ -148,5 +161,10 @@ class PositionWidget extends InfoWidget {
   @override
   bool valid() {
     return specificPos.isNotEmpty;
+  }
+
+  @override
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }

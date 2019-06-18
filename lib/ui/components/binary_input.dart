@@ -16,7 +16,6 @@ class BinaryInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return FormElementBuilder(
       builder: (context, focus, submitCallback) {
         return Column(
@@ -27,7 +26,8 @@ class BinaryInput extends StatelessWidget {
               child: Text(
                 label,
                 textAlign: TextAlign.center,
-                style: theme.primaryTextTheme.title,
+                style: Theme.of(context).primaryTextTheme.headline,
+                textScaleFactor: 0.8,
               ),
               flex: 5,
             ),
@@ -61,8 +61,8 @@ class BinaryInput extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Text(left ? 'Yes' : 'No', style: Theme.of(context).primaryTextTheme.subtitle,),
       onPressed: enabled ? response : null,
-      disabledColor: Colors.green,
-      color: left ? Theme.of(context).accentColor : Theme.of(context).accentColor,
+      disabledColor: left ? Colors.green : Theme.of(context).accentColor,
+      color: left ? Theme.of(context).disabledColor : Theme.of(context).primaryColorDark,
       shape: RoundedRectangleBorder(
         borderRadius: left
             ? BorderRadius.horizontal(

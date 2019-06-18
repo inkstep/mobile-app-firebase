@@ -52,60 +52,64 @@ class ImageWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          'Show us your inspiration',
-          style: Theme.of(context).primaryTextTheme.title,
-        ),
-        Spacer(),
-        Expanded(
-          child: AutoSizeText(
-            'Add some reference images to show your artist what you want.',
-            style: Theme.of(context).primaryTextTheme.subhead,
-            textAlign: TextAlign.center,
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            'Show us your inspiration',
+            style: Theme.of(context).primaryTextTheme.headline,
+            textScaleFactor: 0.8,
           ),
-          flex: 10,
-        ),
-        Spacer(flex: 2),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraint) {
-              const double thumbNoWidth = 2;
-              const double thumbNoHeight = 2;
-              const double thumbSizeFactor = 0.9;
-              final double thumbHeight =
-                  constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
-              final double thumbWidth = constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
-              final double thumbSize = min(thumbHeight, thumbWidth);
+          Spacer(),
+          Expanded(
+            child: AutoSizeText(
+              'Add some reference images to show your artist what you want.',
+              style: Theme.of(context).primaryTextTheme.subhead,
+              textAlign: TextAlign.center,
+            ),
+            flex: 10,
+          ),
+          Spacer(flex: 2),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraint) {
+                const double thumbNoWidth = 2;
+                const double thumbNoHeight = 2;
+                const double thumbSizeFactor = 0.9;
+                final double thumbHeight =
+                    constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
+                final double thumbWidth = constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
+                final double thumbSize = min(thumbHeight, thumbWidth);
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      _buildImageThumbnail(context, 0, thumbSize),
-                      _buildImageThumbnail(context, 1, thumbSize)
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      _buildImageThumbnail(context, 2, thumbSize),
-                      _buildImageThumbnail(context, 3, thumbSize)
-                    ],
-                  ),
-                ],
-              );
-            },
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _buildImageThumbnail(context, 0, thumbSize),
+                        _buildImageThumbnail(context, 1, thumbSize)
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _buildImageThumbnail(context, 2, thumbSize),
+                        _buildImageThumbnail(context, 3, thumbSize)
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+            flex: 60,
           ),
-          flex: 60,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -168,6 +172,11 @@ class ImageWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return inspirationImages.isNotEmpty;
+    return inspirationImages.length >= 2;
+  }
+
+  @override
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
