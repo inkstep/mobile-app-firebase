@@ -16,6 +16,7 @@ class ShortTextInput extends StatelessWidget {
     @required this.callback,
     this.keyboardType,
     @required this.capitalisation,
+    this.validator,
   }) : super(key: key);
 
   final int maxLength;
@@ -26,6 +27,7 @@ class ShortTextInput extends StatelessWidget {
   final TextInputType keyboardType;
   final TextCapitalization capitalisation;
   final SubmitCallback callback;
+  final FormFieldValidator<String> validator;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,11 @@ class ShortTextInput extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
-          AutoSizeText(label, style: Theme.of(context).primaryTextTheme.headline, textScaleFactor: 0.8,),
+          AutoSizeText(
+            label,
+            style: Theme.of(context).primaryTextTheme.headline,
+            textScaleFactor: 0.8,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: TextFormField(
@@ -59,6 +65,7 @@ class ShortTextInput extends StatelessWidget {
               focusNode: focus,
               textInputAction: TextInputAction.next,
               onFieldSubmitted: callback,
+              validator: validator,
             ),
           ),
         ],

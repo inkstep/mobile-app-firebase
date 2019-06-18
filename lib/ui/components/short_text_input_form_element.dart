@@ -13,6 +13,7 @@ class ShortTextInputFormElement extends StatelessWidget {
     this.keyboardType,
     this.capitalisation = TextCapitalization.words,
     @required this.callback,
+    this.validator,
   }) : super(key: key);
 
   final TextEditingController textController;
@@ -20,6 +21,7 @@ class ShortTextInputFormElement extends StatelessWidget {
   final TextCapitalization capitalisation;
 
   final SubmitCallback callback;
+  final FormFieldValidator<String> validator;
 
   final String label;
   final String hint;
@@ -38,6 +40,7 @@ class ShortTextInputFormElement extends StatelessWidget {
           label: label,
           focus: focus,
           callback: submitCallback,
+          validator: validator,
         );
       },
       onSubmitCallback: callback,
