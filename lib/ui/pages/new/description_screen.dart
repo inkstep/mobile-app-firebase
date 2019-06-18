@@ -85,7 +85,7 @@ class DescriptionWidget extends InfoWidget {
   }
 
   @override
-  String getHelp() {
-    return 'Help Help Help';
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }

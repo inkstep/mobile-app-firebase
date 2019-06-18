@@ -88,7 +88,7 @@ class SizeSelectorWidget extends InfoWidget {
             Flexible(
               flex: 1,
               child: Text(
-                'by',
+                'cm by',
                 style: Theme.of(context).primaryTextTheme.subtitle,
               ),
             ),
@@ -106,7 +106,7 @@ class SizeSelectorWidget extends InfoWidget {
         AutoSizeText(
           'We recommend grabbing a ruler and '
           'trying to measure out where you want the tattoo to be',
-          style: Theme.of(context).accentTextTheme.subtitle,
+          style: Theme.of(context).primaryTextTheme.subtitle,
           maxLines: 2,
         ),
         Spacer(),
@@ -133,6 +133,10 @@ class SizeSelectorWidget extends InfoWidget {
   }
 
   @override
+  Widget setButtonHeight(BuildContext context) => Spacer(flex: 12);
+
+
+  @override
   InfoNavigator getNavigator() {
     return navigator;
   }
@@ -148,7 +152,8 @@ class SizeSelectorWidget extends InfoWidget {
   }
 
   @override
-  String getHelp() {
-    return 'Help, Help, Help';
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
+

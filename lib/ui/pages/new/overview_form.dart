@@ -22,6 +22,7 @@ class OverviewForm extends StatelessWidget {
     @required this.emailController,
     @required this.widthController,
     @required this.heightController,
+    @required this.styleController,
     @required this.images,
     this.navigator,
   }) : super(key: key);
@@ -31,23 +32,25 @@ class OverviewForm extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController widthController;
   final TextEditingController heightController;
+  final TextEditingController styleController;
   final List<Asset> images;
   final InfoNavigator navigator;
 
   @override
   Widget build(BuildContext context) => OverviewFormWidget(formData, descController,
-      emailController, widthController, heightController, images, navigator);
+      emailController, widthController, heightController, styleController, images, navigator);
 }
 
 class OverviewFormWidget extends InfoWidget {
   OverviewFormWidget(this.formData, this.descController, this.emailController, this.widthController,
-      this.heightController, this.images, this.navigator);
+      this.heightController, this.styleController, this.images, this.navigator);
 
   final Map<String, String> formData;
   final TextEditingController descController;
   final TextEditingController emailController;
   final TextEditingController widthController;
   final TextEditingController heightController;
+  final TextEditingController styleController;
   final List<Asset> images;
   final InfoNavigator navigator;
 
@@ -58,6 +61,8 @@ class OverviewFormWidget extends InfoWidget {
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
     formData['email'] = 'james.dalboth@gmail.com';
+
+    formData['style'] = styleController.text ?? '';
 
     return Container(
         child: Column(
@@ -91,6 +96,15 @@ class OverviewFormWidget extends InfoWidget {
               )),
               HorizontalDivider(),
               Expanded(
+                child: Row(
+                  children: <Widget>[
+                    getLabel(context, 'Style ', formData, 'style'),
+                    getData(context, formData, 'style'),
+                  ],
+                ),
+              ),
+              HorizontalDivider(),
+              Expanded(
                   child: Row(
                 children: <Widget>[
                   getLabel(context, 'Description ', formData, 'mentalImage'),
@@ -99,12 +113,13 @@ class OverviewFormWidget extends InfoWidget {
               )),
               HorizontalDivider(),
               Expanded(
-                  child: Row(
-                children: <Widget>[
-                  getLabel(context, 'Position ', formData, 'position'),
-                  getData(context, formData, 'position'),
-                ],
-              )),
+                child: Row(
+                  children: <Widget>[
+                    getLabel(context, 'Position ', formData, 'position'),
+                    getData(context, formData, 'position'),
+                  ],
+                ),
+              ),
               HorizontalDivider(),
               Expanded(
                   child: Row(
@@ -150,28 +165,28 @@ class OverviewFormWidget extends InfoWidget {
         Expanded(
             flex: 2,
             child: BoldCallToAction(
-                    label: 'Contact Artist!',
-                    color: Theme.of(context).cardColor,
-                    textColor: Theme.of(context).primaryColorDark,
-                    onTap: () {
-                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                      journeyBloc.dispatch(
-                        AddJourney(
-                            result: FormResult(
-                          name: formData['name'],
-                          email: formData['email'],
-                          size: formData['size'],
-                          availability: formData['availability'],
-                          mentalImage: formData['mentalImage'],
-                          position: formData['position'],
-                          images: images,
-                          artistID: int.parse(formData['artistID']),
-                        )),
-                      );
-                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openViewJourneysScreen(context);
-                    },
+              label: 'Contact Artist!',
+              color: Theme.of(context).cardColor,
+              textColor: Theme.of(context).primaryColorDark,
+              onTap: () {
+                final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                journeyBloc.dispatch(
+                  AddJourney(
+                      result: FormResult(
+                    name: formData['name'],
+                    email: formData['email'],
+                    size: formData['size'],
+                    availability: formData['availability'],
+                    mentalImage: formData['mentalImage'],
+                    position: formData['position'],
+                    images: images,
+                    artistID: int.parse(formData['artistID']),
                   )),
+                );
+                final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                nav.openViewJourneysScreen(context);
+              },
+            )),
         Spacer(flex: 1),
       ],
     ));
@@ -266,7 +281,7 @@ class OverviewFormWidget extends InfoWidget {
   }
 
   @override
-  String getHelp() {
-    return 'Help, Help, Help';
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }

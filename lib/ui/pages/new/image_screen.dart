@@ -8,20 +8,15 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'info_widget.dart';
 
 class ImageScreen extends StatefulWidget {
-  ImageScreen({
-    Key key,
-    @required this.images,
-    @required this.navigator,
-    @required this.callback
-  }) : super(key: key);
+  ImageScreen({Key key, @required this.images, @required this.navigator, @required this.callback})
+      : super(key: key);
 
   final List<Asset> images;
   final InfoNavigator navigator;
   final void Function(List<Asset>) callback;
 
   @override
-  State<StatefulWidget> createState() =>
-      _ImageScreenState(images, navigator, callback);
+  State<StatefulWidget> createState() => _ImageScreenState(images, navigator, callback);
 }
 
 class _ImageScreenState extends State<ImageScreen> {
@@ -155,7 +150,10 @@ class ImageWidget extends InfoWidget {
 
   Future<void> _updateAssets() async {
     // TODO(DJRHails): Proper error handling to enduser
-    inspirationImages = await MultiImagePicker.pickImages(maxImages: 4, selectedAssets: inspirationImages);
+    inspirationImages = await MultiImagePicker.pickImages(
+      maxImages: 4,
+      selectedAssets: inspirationImages,
+    );
   }
 
   @override
@@ -174,9 +172,7 @@ class ImageWidget extends InfoWidget {
   }
 
   @override
-  String getHelp() {
-    return 'Help, Help, Help';
+  List<String> getHelp() {
+    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
-
-

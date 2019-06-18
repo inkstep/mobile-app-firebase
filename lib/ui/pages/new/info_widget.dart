@@ -1,5 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 
 import 'help_screen.dart';
@@ -45,34 +45,36 @@ abstract class InfoWidget extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(flex: valid() ? 15 : 25, child: getWidget(context)),
-          Spacer(),
-          Expanded(
+          if (shouldHaveNext()) Spacer(),
+          if (shouldHaveNext()) Expanded(
               flex: valid() ? 2 : 1,
-              child: valid()
-                  ? RaisedButton(
-                      onPressed: () {
-                        next(context);
-                      },
-                      elevation: 15.0,
-                      padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                      color: Theme.of(context).cardColor,
-                      child: Text(
-                        'Next!',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: 'Signika',
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                    )
-                  : Container()),
-          Spacer(flex: 2),
+              child: valid() ? RaisedButton(
+                onPressed: () {
+                  next(context);
+                },
+                elevation: 15.0,
+                padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                color: Theme.of(context).cardColor,
+                child: Text(
+                  'Next!',
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context)
+                      .primaryColorDark),
+                ),
+              ) : Container()),
+          if (shouldHaveNext()) setButtonHeight(context),
         ],
       ),
     );
   }
 
-  String getHelp();
+  List<String> getHelp();
+
+  Widget setButtonHeight(BuildContext context) {
+   return Spacer(
+     flex: 2,
+   );
+  }
 
   Widget getWidget(BuildContext context);
 
@@ -82,9 +84,9 @@ abstract class InfoWidget extends StatelessWidget {
 
   bool valid();
 
-  bool isForm() {
-    return false;
-  }
+  bool isForm() => false;
+
+  bool shouldHaveNext() => true;
 
   void next(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
