@@ -42,7 +42,8 @@ class InfoNavigator {
     'deposit': '',
     'email': '',
     'noRefImgs': '',
-    'artistID': ''
+    'artistID': '',
+    'style': '',
   };
 
   int screenNum = 0;
@@ -164,6 +165,7 @@ class InfoNavigator {
         heightController: heightController,
         widthController: widthController,
         descController: descController,
+        styleController: styleController,
         formData: formData,
         images: inspirationImages,
         navigator: this,

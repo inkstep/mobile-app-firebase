@@ -42,6 +42,9 @@ class _StyleScreenState extends State<StyleScreen> {
   }
 }
 
+typedef StyleBuilder = Widget Function(
+    BuildContext, TextEditingController, void Function(BuildContext));
+
 class StyleScreenWidget extends InfoWidget {
   StyleScreenWidget(this.styleController, this.navigator, this.callback);
 
@@ -49,8 +52,8 @@ class StyleScreenWidget extends InfoWidget {
   final InfoNavigator navigator;
   final void Function(String) callback;
 
-  final List<Widget Function(BuildContext, TextEditingController)> styles = [
-    _styleBuilder(
+  final List<Style> styles = [
+    Style(
       name: 'Abstract',
       images: ['assets/style-abstract-1.jpg', 'assets/style-abstract-2.jpg'],
       description: 'Abstract tattoos draw heavily from early surrealist painters. '
@@ -60,14 +63,14 @@ class StyleScreenWidget extends InfoWidget {
           'Abstract designs are therefore open to interpretation and usually have personal '
           'meaning for the wearers of such tattoos.',
     ),
-    _styleBuilder(
+    Style(
       name: 'Black & Grey',
       images: [
         'assets/style-black&grey-1.jpg',
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Blackwork',
       images: [
         'assets/style-blackwork-1.jpg',
@@ -76,7 +79,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Brushstroke',
       images: [
         'assets/style-brushstroke-1.jpg',
@@ -84,14 +87,14 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Classic',
       images: [
         'assets/style-classic-1.jpg',
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Dotwork',
       images: [
         'assets/style-dotwork-1.jpg',
@@ -100,7 +103,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Geometric',
       images: [
         'assets/style-geometric-1.jpg',
@@ -109,7 +112,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Hyperrealism',
       images: [
         'assets/style-hyperrealism-1.jpg',
@@ -117,7 +120,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Linework',
       images: [
         'assets/style-linework-1.jpg',
@@ -127,7 +130,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Negative Space',
       images: [
         'assets/style-negative-space-1.jpg',
@@ -135,7 +138,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'New School',
       images: [
         'assets/style-new-school-1.jpg',
@@ -143,7 +146,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Realism',
       images: [
         'assets/style-realism-1.jpg',
@@ -152,7 +155,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Script',
       images: [
         'assets/style-script-1.jpg',
@@ -160,7 +163,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Silhouette / Shadow',
       images: [
         'assets/style-silhouette-shadow-1.jpg',
@@ -168,7 +171,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Trash Polka',
       images: [
         'assets/style-trash-polka-1.jpg',
@@ -176,7 +179,7 @@ class StyleScreenWidget extends InfoWidget {
       ],
       description: 'TODO',
     ),
-    _styleBuilder(
+    Style(
       name: 'Watercolour',
       images: [
         'assets/style-watercolour-1.jpg',
@@ -188,6 +191,12 @@ class StyleScreenWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
+    if (styleController.value != null) {
+      styles.sort((s1, s2) => s1.name == styleController.value.text
+          ? -1
+          : s2.name == styleController.value.text ? 1 : 0);
+    }
+    final orderedStyles = styles;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -201,49 +210,49 @@ class StyleScreenWidget extends InfoWidget {
         Expanded(
           child: ListView.builder(
             itemCount: styles.length,
-            itemBuilder: (context, idx) => styles[idx](context, styleController),
+            itemBuilder: (context, idx) => _styleBuilder(context, orderedStyles[idx]),
           ),
         )
       ],
     );
   }
 
-  static Widget Function(BuildContext, TextEditingController) _styleBuilder(
-      {String name, List<String> images, String description}) {
-    return (context, controller) => InkWell(
-          onTap: () {
-            controller.value = TextEditingValue(text: name);
-          },
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            children: <Widget>[
-              Container(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: images.length,
-                  itemBuilder: (context, idx) => Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Image.asset(images[idx]),
-                      ),
-                  padding: EdgeInsets.only(left: 64.0),
-                ),
-              ),
-              Text(
-                name,
-                style: Theme.of(context).textTheme.headline.copyWith(
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(3.0, 3.0),
-                      blurRadius: 3.0,
-                      color: Colors.black54,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+  Widget _styleBuilder(BuildContext context, Style style) {
+    return InkWell(
+      onTap: () {
+        styleController.value = TextEditingValue(text: style.name);
+        next(context);
+      },
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: <Widget>[
+          Container(
+            height: 200,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: style.images.length,
+              itemBuilder: (context, idx) => Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Image.asset(style.images[idx]),
+                  ),
+              padding: EdgeInsets.only(left: 64.0),
+            ),
           ),
-        );
+          Text(
+            style.name,
+            style: Theme.of(context).textTheme.headline.copyWith(
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(3.0, 3.0),
+                  blurRadius: 3.0,
+                  color: Colors.black54,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -257,7 +266,18 @@ class StyleScreenWidget extends InfoWidget {
   }
 
   @override
+  bool shouldHaveNext() => false;
+
+  @override
   bool valid() {
     return styleController.text.isNotEmpty;
   }
+}
+
+class Style {
+  Style({this.name, this.images, this.description});
+
+  String description;
+  String name;
+  List<String> images;
 }
