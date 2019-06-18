@@ -100,6 +100,7 @@ class InkstepState extends State<Inkstep> {
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
+          canvasColor: baseColors['dark'],
           textTheme: _getTextWithColor(baseColors['light']),
           accentTextTheme: _getTextWithColor(baseColors['dark']),
           iconTheme: _getIconWithColor(baseColors['light']),

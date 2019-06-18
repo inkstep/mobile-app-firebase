@@ -26,7 +26,9 @@ class SizeSelectorScreen extends StatefulWidget {
 
 class _SizeSelectorScreenState extends State<SizeSelectorScreen> {
   _SizeSelectorScreenState(this.widthController, this.heightController, this.navigator) {
-    listener = () {setState(() {});};
+    listener = () {
+      setState(() {});
+    };
     widthController.addListener(listener);
     heightController.addListener(listener);
   }
@@ -65,6 +67,7 @@ class SizeSelectorWidget extends InfoWidget {
   // XL – 5″ x 6″
   // XXL – 6″ x 7″
   // TODO(DJRHails): Warnings on small tattoo sizes
+
   @override
   Widget getWidget(BuildContext context) {
     return Column(
