@@ -127,7 +127,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     int userId = -1;
     User user;
     bool firstTime = true;
-    print('doing a firstTime thing');
+
     if (currentState is JourneysNoUser) {
       final String pushToken = await firebase.getToken();
 
