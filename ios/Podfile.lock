@@ -86,6 +86,8 @@ PODS:
   - Protobuf (3.8.0)
   - shared_preferences (0.0.1):
     - Flutter
+  - speech_bubble (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
@@ -94,6 +96,7 @@ DEPENDENCIES:
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - speech_bubble (from `.symlinks/plugins/speech_bubble/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -124,6 +127,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/multi_image_picker/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  speech_bubble:
+    :path: ".symlinks/plugins/speech_bubble/ios"
 
 SPEC CHECKSUMS:
   BSGridCollectionViewLayout: 568273e113fbc815f868f1898ef0465aee68f955
@@ -145,6 +150,7 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  speech_bubble: 51ae0c27684a0d858d4283cafd66591337a851c2
 
 PODFILE CHECKSUM: 31ae2accfa1f055825f0184b23ccadf7b6533aea
 
