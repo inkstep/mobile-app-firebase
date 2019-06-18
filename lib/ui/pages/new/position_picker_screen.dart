@@ -149,4 +149,9 @@ class PositionWidget extends InfoWidget {
   bool valid() {
     return specificPos.isNotEmpty;
   }
+
+  @override
+  String getHelp() {
+    return 'Help, Help, Help';
+  }
 }

@@ -16,8 +16,7 @@ class DescriptionScreen extends StatefulWidget {
   final InfoNavigator navigator;
 
   @override
-  State<StatefulWidget> createState() =>
-      _DescriptionScreenState(descController, navigator);
+  State<StatefulWidget> createState() => _DescriptionScreenState(descController, navigator);
 }
 
 class _DescriptionScreenState extends State<DescriptionScreen> {
@@ -83,5 +82,10 @@ class DescriptionWidget extends InfoWidget {
   @override
   bool valid() {
     return descController.text.isNotEmpty;
+  }
+
+  @override
+  String getHelp() {
+    return 'Help Help Help';
   }
 }

@@ -145,4 +145,9 @@ class AvailabilityWidget extends InfoWidget {
   bool valid() {
     return availability.contains(true);
   }
+
+  @override
+  String getHelp() {
+    return 'Help, Help, Help';
+  }
 }

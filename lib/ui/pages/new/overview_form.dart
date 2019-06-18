@@ -264,4 +264,9 @@ class OverviewFormWidget extends InfoWidget {
   bool valid() {
     return false;
   }
+
+  @override
+  String getHelp() {
+    return 'Help, Help, Help';
+  }
 }

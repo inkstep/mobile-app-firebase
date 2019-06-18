@@ -172,6 +172,11 @@ class ImageWidget extends InfoWidget {
   bool valid() {
     return inspirationImages.isNotEmpty;
   }
+
+  @override
+  String getHelp() {
+    return 'Help, Help, Help';
+  }
 }
 
 

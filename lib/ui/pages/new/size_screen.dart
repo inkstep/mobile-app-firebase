@@ -146,4 +146,9 @@ class SizeSelectorWidget extends InfoWidget {
   bool valid() {
     return widthController.text.isNotEmpty && heightController.text.isNotEmpty;
   }
+
+  @override
+  String getHelp() {
+    return 'Help, Help, Help';
+  }
 }

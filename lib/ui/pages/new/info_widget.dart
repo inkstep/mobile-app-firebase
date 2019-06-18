@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/utils/info_navigator.dart';
+
+import 'help_screen.dart';
 
 abstract class InfoWidget extends StatelessWidget {
   @override
@@ -12,6 +15,24 @@ abstract class InfoWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         iconTheme: Theme.of(context).accentIconTheme,
         actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.info,
+            ),
+            color: Theme.of(context).cardColor,
+            tooltip: 'Information',
+            onPressed: () {
+              showDialog<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return HelpDialog(
+                    navigator: getNavigator(),
+                    help: getHelp(),
+                  );
+                },
+              );
+            },
+          ),
           IconButton(
               icon: Icon(Icons.keyboard_arrow_up),
               color: Theme.of(context).cardColor,
@@ -26,26 +47,32 @@ abstract class InfoWidget extends StatelessWidget {
           Expanded(flex: valid() ? 15 : 25, child: getWidget(context)),
           Spacer(),
           Expanded(
-            flex: valid() ? 2 : 1,
-              child: valid() ? RaisedButton(
-            onPressed: () {
-              next(context);
-            },
-            elevation: 15.0,
-            padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                color: Theme.of(context).cardColor,
-            child: Text(
-              'Next!',
-              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context)
-                  .primaryColorDark),
-            ),
-          ) : Container()),
+              flex: valid() ? 2 : 1,
+              child: valid()
+                  ? RaisedButton(
+                      onPressed: () {
+                        next(context);
+                      },
+                      elevation: 15.0,
+                      padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                      color: Theme.of(context).cardColor,
+                      child: Text(
+                        'Next!',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: 'Signika',
+                            color: Theme.of(context).primaryColorDark),
+                      ),
+                    )
+                  : Container()),
           Spacer(flex: 2),
         ],
       ),
     );
   }
+
+  String getHelp();
 
   Widget getWidget(BuildContext context);
 
