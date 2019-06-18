@@ -26,16 +26,18 @@ class LongTextInput extends StatelessWidget {
       textCapitalization: TextCapitalization.sentences,
       maxLines: 5,
       style: Theme.of(context).primaryTextTheme.body1,
-      cursorColor: Theme.of(context).backgroundColor,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: Theme.of(context).primaryTextTheme.body1,
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide()),
+        enabledBorder: OutlineInputBorder(borderSide: BorderSide(
+          color: Theme.of(context).cardColor
+        )),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).cardColor,
           ),
         ),
+        fillColor: Colors.green,
       ),
       focusNode: focus,
       textInputAction: TextInputAction.next,

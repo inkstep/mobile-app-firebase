@@ -17,13 +17,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: Theme.of(context).accentIconTheme,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        iconTheme: Theme.of(context).primaryIconTheme,
       ),
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: Theme.of(context).primaryColor,
       body: FormElementBuilder(
         builder: (context, focus, submitCallback) {
           return Column(
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 'What is your UserID?',
-                style: Theme.of(context).accentTextTheme.headline,
+                style: Theme.of(context).primaryTextTheme.headline,
                 textScaleFactor: 0.8,
                 textAlign: TextAlign.center,
               ),
@@ -52,9 +52,8 @@ class LoginScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.subtitle,
                             ),
                           );
-                          }
-                        );
-                      } else {
+                        });
+                  } else {
                     final ScreenNavigator nav = sl.get<ScreenNavigator>();
                     nav.openViewJourneysScreenWithNewDevice(context, userId);
                   }
@@ -64,8 +63,10 @@ class LoginScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   'Next!',
-                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+                  style: TextStyle(
+                      fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context).primaryColor),
                 ),
+                color: Theme.of(context).cardColor,
               ),
             ],
           );
