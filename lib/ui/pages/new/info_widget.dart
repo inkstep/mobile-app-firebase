@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 
 import 'help_screen.dart';
@@ -43,23 +44,12 @@ abstract class InfoWidget extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(flex: valid() ? 15 : 25, child: getWidget(context)),
+          Expanded(flex: isForm() ? 15 : 25, child: getWidget(context)),
           if (shouldHaveNext()) Spacer(),
           if (shouldHaveNext()) Expanded(
-              flex: valid() ? 2 : 1,
-              child: valid() ? RaisedButton(
-                onPressed: () {
-                  next(context);
-                },
-                elevation: 15.0,
-                padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                color: Theme.of(context).cardColor,
-                child: Text(
-                  'Next!',
-                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context)
-                      .primaryColorDark),
-                ),
+              flex: isForm() ? 1 : 3,
+              child: valid() ? BoldCallToAction(label: 'Next!', color: Theme.of(context)
+        .cardColor, onTap: () {next(context);}, textColor: Theme.of(context).primaryColor,
               ) : Container()),
           if (shouldHaveNext()) setButtonHeight(context),
         ],
