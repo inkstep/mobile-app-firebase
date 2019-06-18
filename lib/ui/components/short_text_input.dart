@@ -42,7 +42,7 @@ class ShortTextInput extends StatelessWidget {
           textCapitalization: capitalisation,
           autofocus: true,
           maxLength: maxLength,
-          style: theme.primaryTextTheme.headline,
+          style: theme.primaryTextTheme.title,
           cursorColor: theme.backgroundColor,
           decoration: InputDecoration(
             hintText: hint,

@@ -57,10 +57,10 @@ class OverviewFormWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     formData['mentalImage'] = descController.text;
+    formData['email'] = emailController.text;
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
-    formData['email'] = 'james.dalboth@gmail.com';
 
     formData['style'] = styleController.text ?? '';
 

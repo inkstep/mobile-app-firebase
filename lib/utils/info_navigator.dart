@@ -4,6 +4,7 @@ import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';
 import 'package:inkstep/ui/pages/new/description_screen.dart';
+import 'package:inkstep/ui/pages/new/email_screen.dart';
 import 'package:inkstep/ui/pages/new/image_screen.dart';
 import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:inkstep/ui/pages/new/position_picker_screen.dart';
@@ -108,6 +109,10 @@ class InfoNavigator {
             formData['deposit'] = '';
           }
         },
+      ),
+      EmailScreen(
+        navigator: this,
+        emailController: emailController,
       ),
       OverviewForm(
         emailController: emailController,

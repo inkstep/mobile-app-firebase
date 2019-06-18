@@ -168,7 +168,7 @@ class ImageWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return inspirationImages.isNotEmpty;
+    return inspirationImages.length >= 2;
   }
 
   @override
