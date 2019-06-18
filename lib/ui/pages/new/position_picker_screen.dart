@@ -26,6 +26,9 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
     generalPos ??= formData['generalPos'];
     specificPos ??= formData['position'];
     textController = TextEditingController(text: specificPos ?? '...');
+    textController.addListener(() {setState(() {
+      specificPos = textController.text;
+    });});
   }
 
   TextEditingController textController;
@@ -46,7 +49,7 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
       setState(() {
         specificPos = text;
       });
-    });
+    },);
   }
 }
 
@@ -120,7 +123,6 @@ class PositionWidget extends InfoWidget {
                       capitalisation: TextCapitalization.sentences,
                       callback: (text) {
                         next(context);
-                        specificPosCallback(text);
                       },
                     )
                   : DropdownMenu(
