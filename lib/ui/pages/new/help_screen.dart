@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 import 'package:speech_bubble/speech_bubble.dart';
@@ -9,7 +8,7 @@ class HelpScreen extends StatelessWidget {
   const HelpScreen({Key key, @required this.navigator, @required this.help}) : super(key: key);
 
   final InfoNavigator navigator;
-  final String help;
+  final List<Widget> help;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class HelpScreenWidget extends InfoWidget {
   HelpScreenWidget(this.navigator, this.help);
 
   final InfoNavigator navigator;
-  final String help;
+  final List<Widget> help;
 
   @override
   InfoNavigator getNavigator() {
@@ -32,8 +31,11 @@ class HelpScreenWidget extends InfoWidget {
   Widget getWidget(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SpeechBubble(child: AutoSizeText(help, style: Theme.of(context).primaryTextTheme
-          .subtitle), borderRadius: 10,),
+      child: SpeechBubble(
+        child: Column(children: [for (Widget child in help) child]),
+        borderRadius: 10,
+        color: Theme.of(context).cardColor,
+      ),
     );
   }
 

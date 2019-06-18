@@ -24,8 +24,8 @@ abstract class InfoWidget extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(flex: valid() ? 15 : 25, child: getWidget(context)),
-          Spacer(),
-          Expanded(
+          if (shouldHaveNext()) Spacer(),
+          if (shouldHaveNext()) Expanded(
               flex: valid() ? 2 : 1,
               child: valid() ? RaisedButton(
                 onPressed: () {
@@ -41,7 +41,7 @@ abstract class InfoWidget extends StatelessWidget {
                       .primaryColorDark),
                 ),
               ) : Container()),
-          setButtonHeight(context),
+          if (shouldHaveNext()) setButtonHeight(context),
         ],
       ),
     );
@@ -61,9 +61,9 @@ abstract class InfoWidget extends StatelessWidget {
 
   bool valid();
 
-  bool isForm() {
-    return false;
-  }
+  bool isForm() => false;
+
+  bool shouldHaveNext() => true;
 
   void next(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
