@@ -26,14 +26,18 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
     generalPos ??= formData['generalPos'];
     specificPos ??= formData['position'];
     textController = TextEditingController(text: specificPos ?? '...');
-    textController.addListener(() {setState(() {
+    listener = () {setState(() {
       specificPos = textController.text;
-    });});
+    });};
+    textController.addListener(listener);
   }
+
+
 
   TextEditingController textController;
   final InfoNavigator navigator;
   final void Function(String pos, String genPos) callback;
+  VoidCallback listener;
 
   String generalPos;
   String specificPos;
@@ -50,6 +54,12 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
         specificPos = text;
       });
     },);
+  }
+
+  @override
+  void dispose() {
+    textController.removeListener(listener);
+    super.dispose();
   }
 }
 

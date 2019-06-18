@@ -24,13 +24,14 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           automaticallyImplyLeading: true,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -44,7 +45,14 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                     capitalisation: TextCapitalization.words,
                     hint: 'e.g. Natasha',
                     label: 'What do your friends call you?',
-                    callback: (_) => FocusScope.of(context).requestFocus(FocusNode())),
+                    callback: (_) {
+                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                      journeyBloc.dispatch(AddUser(name: nameController.text));
+
+                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                      nav.openViewJourneysScreen(context);
+                    }
+                ),
               ),
               Spacer(),
               RaisedButton(
@@ -60,8 +68,10 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   'Get Started!',
-                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of
+                    (context).primaryColor),
                 ),
+                color: Theme.of(context).cardColor,
               ),
               Spacer(),
             ],
