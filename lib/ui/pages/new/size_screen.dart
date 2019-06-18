@@ -80,7 +80,7 @@ class SizeSelectorWidget extends InfoWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Flexible(flex: 2, child: _buildNumberInputBox(widthController)),
+            Flexible(flex: 2, child: _buildNumberInputBox(widthController, context)),
             Spacer(),
             Flexible(
               flex: 1,
@@ -90,7 +90,7 @@ class SizeSelectorWidget extends InfoWidget {
               ),
             ),
             Spacer(),
-            Flexible(flex: 2, child: _buildNumberInputBox(heightController)),
+            Flexible(flex: 2, child: _buildNumberInputBox(heightController, context)),
             Flexible(
               flex: 1,
               child: Text(
@@ -111,7 +111,7 @@ class SizeSelectorWidget extends InfoWidget {
     );
   }
 
-  Widget _buildNumberInputBox(TextEditingController textController) {
+  Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
     return Container(
       width: 130.0,
       child: ShortTextInputFormElement(
@@ -120,7 +120,10 @@ class SizeSelectorWidget extends InfoWidget {
         label: '',
         hint: '',
         maxLength: 3,
-        callback: callback,
+        callback: (text) {
+          next(context);
+          callback(text);
+          },
         capitalisation: TextCapitalization.words,
       ),
     );
