@@ -219,7 +219,7 @@ class WebRepository {
     return mappedStudios;
   }
 
-  Future<int> updateRow(Map<String, dynamic> journeyMap, int journeyId) async {
+  Future<int> updateJourneyRow(Map<String, dynamic> journeyMap, int journeyId) async {
     final String jsonStr = jsonEncode(journeyMap);
 
     final http.Response response = await client.patch('$url$journeyEndpoint/$journeyId',

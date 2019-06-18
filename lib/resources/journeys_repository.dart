@@ -87,7 +87,7 @@ class JourneysRepository {
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
     final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
-    return await webClient.updateRow(journeyMap, journeyId);
+    return await webClient.updateJourneyRow(journeyMap, journeyId);
   }
 
   Future<bool> sendArtistPhoto(File imageData, int journeyId) async {
