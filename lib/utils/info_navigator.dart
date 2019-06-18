@@ -10,7 +10,6 @@ import 'package:inkstep/ui/pages/new/overview_form.dart';
 import 'package:inkstep/ui/pages/new/position_picker_screen.dart';
 import 'package:inkstep/ui/pages/new/size_screen.dart';
 import 'package:inkstep/ui/routes/fade_page_route.dart';
-import 'package:inkstep/ui/routes/slide_exit_enter_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
