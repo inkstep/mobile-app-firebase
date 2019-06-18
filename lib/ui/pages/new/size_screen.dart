@@ -159,9 +159,9 @@ class SizeSelectorWidget extends InfoWidget {
         hint: '',
         maxLength: 3,
         callback: (text) {
-          next(context);
+          SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
           callback(text);
-          },
+        },
         capitalisation: TextCapitalization.words,
       ),
     );
