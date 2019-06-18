@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/utils/info_navigator.dart';
@@ -72,42 +70,54 @@ class ImageWidget extends InfoWidget {
             flex: 10,
           ),
           Spacer(flex: 2),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraint) {
-                const double thumbNoWidth = 2;
-                const double thumbNoHeight = 2;
-                const double thumbSizeFactor = 0.9;
-                final double thumbHeight =
-                    constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
-                final double thumbWidth = constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
-                final double thumbSize = min(thumbHeight, thumbWidth);
-
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        _buildImageThumbnail(context, 0, thumbSize),
-                        _buildImageThumbnail(context, 1, thumbSize)
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        _buildImageThumbnail(context, 2, thumbSize),
-                        _buildImageThumbnail(context, 3, thumbSize)
-                      ],
-                    ),
-                  ],
-                );
-              },
-            ),
+          Flexible(
             flex: 60,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: images.length + 1,
+              itemBuilder: (context, idx) => Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: _buildImageThumbnail(context, idx, 500),
+                  ),
+            ),
           ),
+//          Expanded(
+//            child: LayoutBuilder(
+//              builder: (context, constraint) {
+//                const double thumbNoWidth = 2;
+//                const double thumbNoHeight = 2;
+//                const double thumbSizeFactor = 0.9;
+//                final double thumbHeight =
+//                    constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
+//                final double thumbWidth =
+//                    constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
+//                final double thumbSize = min(thumbHeight, thumbWidth);
+//
+//                return Column(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                  children: <Widget>[
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                      crossAxisAlignment: CrossAxisAlignment.center,
+//                      children: <Widget>[
+//                        _buildImageThumbnail(context, 0, thumbSize),
+//                        _buildImageThumbnail(context, 1, thumbSize)
+//                      ],
+//                    ),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                      crossAxisAlignment: CrossAxisAlignment.center,
+//                      children: <Widget>[
+//                        _buildImageThumbnail(context, 2, thumbSize),
+//                        _buildImageThumbnail(context, 3, thumbSize)
+//                      ],
+//                    ),
+//                  ],
+//                );
+//              },
+//            ),
+//            flex: 60,
+//          ),
         ],
       ),
     );
@@ -118,27 +128,73 @@ class ImageWidget extends InfoWidget {
     if (i < inspirationImages.length) {
       final Asset asset = inspirationImages[i];
       print(asset.name);
-      inner = Container(
-        decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black87,
-              blurRadius: 10,
-              offset: Offset(-1, 1),
-            )
-          ],
-        ),
-        child: AssetThumb(
-          asset: asset,
-          width: size.floor(),
-          height: size.floor(),
-        ),
+      inner = Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black87,
+                  blurRadius: 10,
+                  offset: Offset(-1, 1),
+                )
+              ],
+            ),
+            child: AssetThumb(
+              asset: asset,
+              width: size.floor(),
+              height: size.floor(),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+              color: Theme.of(context).cardColor,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black87,
+                  blurRadius: 3,
+                  offset: Offset(-1, 1),
+                )
+              ],
+            ),
+            width: size,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AutoSizeText(
+                      'Add a description...',
+                      style: Theme.of(context).accentTextTheme.body1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).accentIconTheme.color,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       );
     } else {
-      inner = Icon(
-        Icons.add,
-        size: 60.0,
-        color: Theme.of(context).primaryIconTheme.color,
+      inner = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.add,
+            size: 60.0,
+            color: Theme.of(context).primaryIconTheme.color,
+          ),
+          Text('Add image ${i + 1}', style: Theme.of(context).primaryTextTheme.body1),
+        ],
       );
     }
 
@@ -153,7 +209,7 @@ class ImageWidget extends InfoWidget {
   }
 
   Future<void> _updateAssets() async {
-    // TODO(DJRHails): Proper error handling to enduser
+    // TODO(DJRHails): Proper error handling to end-user
     inspirationImages = await MultiImagePicker.pickImages(
       maxImages: 4,
       selectedAssets: inspirationImages,
@@ -172,7 +228,7 @@ class ImageWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return inspirationImages.length >= 2;
+    return inspirationImages.isNotEmpty;
   }
 
   @override
