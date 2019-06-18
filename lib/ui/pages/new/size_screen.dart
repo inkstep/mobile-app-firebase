@@ -179,7 +179,17 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return widthController.text.isNotEmpty && heightController.text.isNotEmpty;
+    final String width = widthController.text;
+    final String height = heightController.text;
+    if (width.isEmpty || height.isEmpty) {
+      return false;
+    }
+    final int widthInt = int.tryParse(width);
+    final int heightInt = int.tryParse(height);
+    if (widthInt == null || heightInt == null) {
+      return false;
+    }
+    return heightInt >= 1 && widthInt >= 1 && heightInt < 400 && widthInt < 400;
   }
 
   @override
@@ -198,4 +208,3 @@ class SizeSelectorWidget extends InfoWidget {
     return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
-
