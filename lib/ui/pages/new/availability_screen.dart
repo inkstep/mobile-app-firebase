@@ -80,18 +80,20 @@ class AvailabilityWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Container(
+    return Padding(
+      padding: EdgeInsets.all(20.0),
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           'What days of the week are you normally available?',
-          style: Theme.of(context).primaryTextTheme.title,
+          style: Theme.of(context).primaryTextTheme.headline,
+          textScaleFactor: 0.8,
           textAlign: TextAlign.center,
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+            padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
             child: Column(
               children: <Widget>[
                 _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),

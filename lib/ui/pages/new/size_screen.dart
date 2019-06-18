@@ -70,47 +70,50 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'How big would you like your tattoo to be?',
-          style: Theme.of(context).primaryTextTheme.headline,
-          textScaleFactor: 0.8,
-          textAlign: TextAlign.center,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(flex: 2, child: _buildNumberInputBox(widthController, context)),
-            Spacer(),
-            Flexible(
-              flex: 1,
-              child: Text(
-                'cm by',
-                style: Theme.of(context).primaryTextTheme.subtitle,
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'How big would you like your tattoo to be?',
+            style: Theme.of(context).primaryTextTheme.headline,
+            textScaleFactor: 0.8,
+            textAlign: TextAlign.center,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Flexible(flex: 4, child: _buildNumberInputBox(widthController, context)),
+              Spacer(),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'by',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
               ),
-            ),
-            Spacer(),
-            Flexible(flex: 2, child: _buildNumberInputBox(heightController, context)),
-            Flexible(
-              flex: 1,
-              child: Text(
-                'cm',
-                style: Theme.of(context).primaryTextTheme.subtitle,
+              Spacer(),
+              Flexible(flex: 4, child: _buildNumberInputBox(heightController, context)),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'cm',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
               ),
-            ),
-          ],
-        ),
-        AutoSizeText(
-          'We recommend grabbing a ruler and '
-          'trying to measure out where you want the tattoo to be',
-          style: Theme.of(context).primaryTextTheme.subtitle,
-          maxLines: 2,
-        ),
-        Spacer(),
-      ],
+            ],
+          ),
+          AutoSizeText(
+            'We recommend grabbing a ruler and '
+            'trying to measure out where you want the tattoo to be',
+            style: Theme.of(context).primaryTextTheme.subtitle,
+            maxLines: 2,
+          ),
+          Spacer(),
+        ],
+      ),
     );
   }
 

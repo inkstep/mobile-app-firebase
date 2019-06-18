@@ -16,12 +16,13 @@ class RoundedAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     // If text is given, add button
     final Widget defaultDismiss = RaisedButton(
+      color: Colors.white,
       elevation: 15.0,
       padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
         'Ok',
-        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Colors.black),
       ),
       onPressed: () => Navigator.pop(context),
     );
