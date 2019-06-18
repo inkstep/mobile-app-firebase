@@ -81,7 +81,7 @@ class EmailWidget extends InfoWidget {
 
   @override
   bool valid() {
-    RegExp regExp = RegExp(
+    final RegExp regExp = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
       caseSensitive: false,
       multiLine: false,
