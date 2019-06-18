@@ -46,7 +46,7 @@ abstract class InfoWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(flex: isForm() ? 15 : 25, child: getWidget(context)),
           if (shouldHaveNext()) Spacer(),
-          if (shouldHaveNext()) Expanded(
+          if (shouldHaveNext()) Flexible(
               flex: isForm() ? 1 : 3,
               child: valid() ? BoldCallToAction(label: 'Next!', color: Theme.of(context)
         .cardColor, onTap: () {next(context);}, textColor: Theme.of(context).primaryColor,
