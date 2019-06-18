@@ -154,7 +154,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       print('firstTime is set to: $firstTime');
 
       if (user.email == '') {
-        await journeysRepository.saveUserEmail(user.id, event.result.email);
+        journeysRepository.saveUserEmail(user.id, event.result.email);
+        user.email = event.result.email;
       }
     }
 

@@ -107,11 +107,11 @@ class JourneysRepository {
     return true;
   }
 
-  void saveUserEmail(int id, String email) async {
+  void saveUserEmail(int id, String email) {
     final Map<String, dynamic> emailMap = <String, dynamic>{
       'Email': email,
     };
 
-    await webClient.saveUserEmail(emailMap, id);
+    webClient.saveUserEmail(emailMap, id);
   }
 }

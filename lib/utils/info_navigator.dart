@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';
@@ -56,7 +59,20 @@ class InfoNavigator {
   // It's worth selecting what style of tattoo you like so that artists knows what's involved
   // for them
 
+  JourneysBloc _journeyBloc;
+  
+
+
   List<Widget> getScreens(BuildContext context) {
+    _journeyBloc = BlocProvider.of<JourneysBloc>(context);
+
+    bool displayEmail = true;
+
+    if (_journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = _journeyBloc.currentState;
+      displayEmail = state.user.email == '';
+    }
+
     return [
       DescriptionScreen(
         descController: descController,
@@ -110,7 +126,7 @@ class InfoNavigator {
           }
         },
       ),
-      EmailScreen(
+      if (displayEmail) EmailScreen(
         navigator: this,
         emailController: emailController,
       ),

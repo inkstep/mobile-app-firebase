@@ -258,7 +258,7 @@ class WebRepository {
     return false;
   }
 
-  void saveUserEmail(Map<String, dynamic> emailMap, int id) async {
+  Future<bool> saveUserEmail(Map<String, dynamic> emailMap, int id) async {
     final String jsonStr = jsonEncode(emailMap);
 
     http.Response response;
@@ -268,11 +268,17 @@ class WebRepository {
           body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
       print(e);
+      return true;
     }
 
     print(
         '$userEndpoint/$id$emailEndpoint ${response.reasonPhrase} (${response.statusCode}): '
             '${response
             .body}');
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }
