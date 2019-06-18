@@ -19,7 +19,7 @@ class InfoNavigator {
     widthController = TextEditingController();
     heightController = TextEditingController();
     styleController = TextEditingController();
-    emailController = TextEditingController(text: 'james.dalboth@gmail.com');
+    emailController = TextEditingController();
     inspirationImages = [];
     formData['artistID'] = artistId.toString();
   }

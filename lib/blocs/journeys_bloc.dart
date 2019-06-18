@@ -152,6 +152,10 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       firstTime = prefs.getBool('firstTime');
       prefs.setInt('userId', userId);
       print('firstTime is set to: $firstTime');
+
+      if (user.email == '') {
+        await journeysRepository.saveUserEmail(user.id, event.result.email);
+      }
     }
 
     // Now send the corresponding journey
