@@ -78,9 +78,11 @@ abstract class InfoWidget extends StatelessWidget {
   bool shouldHaveNext() => true;
 
   void next(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
-    submitCallback();
-    getNavigator().next(context, this);
+    if (valid()) {
+      FocusScope.of(context).requestFocus(FocusNode());
+      submitCallback();
+      getNavigator().next(context, this);
+    }
   }
 
   void back(BuildContext context) {
