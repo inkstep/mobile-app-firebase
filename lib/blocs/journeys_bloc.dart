@@ -32,8 +32,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       // iOS Specific
       firebase.requestNotificationPermissions(
           const IosNotificationSettings(sound: true, badge: true, alert: true));
-      firebase.onIosSettingsRegistered.listen((
-          IosNotificationSettings settings) {
+      firebase.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
         print('Settings registered: $settings');
       });
     }
@@ -198,8 +197,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     assert(currentState is JourneysWithUser);
     if (event is QuoteAccepted) {
       await journeysRepository.updateStage(AppointmentOfferReceived(null, null), event.journeyId);
-    } else if (event is QuoteDenied || event is DateDenied) {
-      // TODO(DJRHails): Should have deny state / warning
+    } else if (event is DateDenied) {
+      await journeysRepository.updateStage(WaitingList(null), event.journeyId);
     } else if (event is DateAccepted) {
       await journeysRepository.updateStage(BookedIn(null, null), event.journeyId);
     }
@@ -258,6 +257,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (currentState is JourneysNoUser) {
       final userId = event.userId;
       prefs.setInt('userId', userId);
+      final token = await firebase.getToken();
+      journeysRepository.updateToken(token, userId);
       final User user = await journeysRepository.getUser(userId);
       final cards = await _getCards(userId);
 
@@ -378,8 +379,14 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   void _handleDataMessage(Map<String, dynamic> message) {
-    if (message['data']['journey'] != null) {
-      dispatch(LoadJourney(int.parse(message['data']['journey'])));
+    if (Platform.isAndroid) {
+      if (message['data']['journey'] != null) {
+        dispatch(LoadJourney(int.parse(message['data']['journey'])));
+      }
+    } else if (Platform.isIOS) {
+      if (message['journey']!=null) {
+        dispatch(LoadJourney(int.parse(message['journey'])));
+      }
     }
   }
 

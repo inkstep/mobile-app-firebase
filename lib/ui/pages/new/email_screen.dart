@@ -57,16 +57,17 @@ class EmailWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     return ShortTextInputFormElement(
-        textController: emailController,
-        keyboardType: TextInputType.emailAddress,
-        capitalisation: TextCapitalization.none,
-        label: 'What\'s your email address?',
-        hint: 'example@inkstep.com',
-        callback: (_) {
-          if (valid()) {
-            next(context);
-          }
-        });
+      textController: emailController,
+      keyboardType: TextInputType.emailAddress,
+      capitalisation: TextCapitalization.none,
+      label: 'What\'s your email address?',
+      hint: 'e.g. example@inkstep.com',
+      callback: (_) {
+        if (valid()) {
+          next(context);
+        }
+      },
+    );
   }
 
   @override

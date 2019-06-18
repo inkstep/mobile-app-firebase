@@ -96,7 +96,7 @@ class ScreenNavigator {
   }
 
   void openNewJourneyScreen(BuildContext context, int artistID) {
-    InfoNavigator(artistID).start(context);
+    InfoNavigator(artistID, context).start(context);
   }
 
   void openCareScreen(BuildContext context, DateTime bookedTime) {

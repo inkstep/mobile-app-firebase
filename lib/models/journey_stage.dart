@@ -25,6 +25,8 @@ abstract class JourneyStage extends Equatable {
         return Healed();
       case 7:
         return Finished();
+      case 8:
+        return WaitingList(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       default:
         return InvalidStage();
     }
@@ -36,7 +38,7 @@ abstract class JourneyStage extends Equatable {
   IconData get icon;
 }
 
-abstract class JourneyStageWithQuote extends JourneyStage{
+abstract class JourneyStageWithQuote extends JourneyStage {
   JourneyStageWithQuote(this.quote);
 
   final TextRange quote;
@@ -136,6 +138,25 @@ class BookedIn extends JourneyStageWithQuote {
 
   @override
   IconData get icon => Icons.event;
+}
+
+class WaitingList extends JourneyStageWithQuote {
+  WaitingList(TextRange quote) : super(quote);
+
+  @override
+  IconData get icon => Icons.access_time;
+
+  @override
+  int get numberRepresentation => 8;
+
+  @override
+  int get progress => 50;
+
+  @override
+  String toString() => 'Wating List';
+
+  @override
+  bool get userActionRequired => false;
 }
 
 class Aftercare extends JourneyStage {

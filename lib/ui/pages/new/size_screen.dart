@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,56 +72,86 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'How big would you like your tattoo to be?',
-            style: Theme.of(context).primaryTextTheme.headline,
-            textScaleFactor: 0.8,
-            textAlign: TextAlign.center,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Flexible(flex: 4, child: _buildNumberInputBox(widthController, context)),
-              Spacer(),
-              Flexible(
-                flex: 2,
-                child: Text(
-                  'by',
-                  style: Theme.of(context).primaryTextTheme.subtitle,
-                ),
+    final int width = int.tryParse(widthController.text);
+    final int height = int.tryParse(heightController.text);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'How big would you like your tattoo to be?',
+          style: Theme.of(context).primaryTextTheme.headline,
+          textScaleFactor: 0.8,
+          textAlign: TextAlign.center,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
+            Spacer(),
+            Flexible(
+              flex: 3,
+              child: Text(
+                'by',
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
-              Spacer(),
-              Flexible(flex: 4, child: _buildNumberInputBox(heightController, context)),
-              Flexible(
-                flex: 2,
-                child: Text(
-                  'cm',
-                  style: Theme.of(context).primaryTextTheme.subtitle,
-                ),
+            ),
+            Spacer(),
+            Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
+            Flexible(
+              flex: 2,
+              child: Text(
+                'cm',
+                style: Theme.of(context).primaryTextTheme.subtitle,
               ),
-            ],
-          ),
-          AutoSizeText(
+            ),
+          ],
+        ),
+        Flexible(
+          child: AutoSizeText(
             'We recommend grabbing a ruler and '
             'trying to measure out where you want the tattoo to be',
             style: Theme.of(context).primaryTextTheme.subtitle,
             maxLines: 2,
           ),
-          Spacer(),
-        ],
-      ),
+        ),
+        Spacer(),
+        if (checkSquareArea(width, height, 2, 13))
+          _buildSizeIndicator('assets/size-xs.jpg'), // 2
+        if (checkSquareArea(width, height, 13, 25))
+          _buildSizeIndicator('assets/size-s.jpg'), // 13
+        if (checkSquareArea(width, height, 25, 60))
+          _buildSizeIndicator('assets/size-m.jpg'), // 40
+        if (checkSquareArea(width, height, 60, 130))
+          _buildSizeIndicator('assets/size-l.jpg'), // 80
+        if (checkSquareArea(width, height, 130, 200))
+          _buildSizeIndicator('assets/size-xl.jpg'), // 190
+        if (checkSquareArea(width, height, 200, 500)) // 270
+          _buildSizeIndicator('assets/size-xxl.jpg'),
+        if (checkSquareArea(width, height, 500, 999 * 999)) // 270
+          _buildSizeIndicator('assets/size-xxxl.jpg'),
+        Spacer(),
+      ],
     );
+  }
+
+  Widget _buildSizeIndicator(String path) => Container(
+        height: 150,
+        child: Image.asset(path),
+      );
+
+  bool checkSquareArea(int width, int height, int lower, int upper) {
+    if (width == null || height == null) {
+      return false;
+    }
+    return width * height > lower && width * height <= upper;
   }
 
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
     return Container(
-      width: 130.0,
+      width: 430.0,
       child: ShortTextInputFormElement(
         textController: textController,
         keyboardType: TextInputType.number,
@@ -127,17 +159,13 @@ class SizeSelectorWidget extends InfoWidget {
         hint: '',
         maxLength: 3,
         callback: (text) {
-          next(context);
+          SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
           callback(text);
-          },
+        },
         capitalisation: TextCapitalization.words,
       ),
     );
   }
-
-  @override
-  Widget setButtonHeight(BuildContext context) => Spacer(flex: 12);
-
 
   @override
   InfoNavigator getNavigator() {
@@ -151,7 +179,28 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return widthController.text.isNotEmpty && heightController.text.isNotEmpty;
+    final String width = widthController.text;
+    final String height = heightController.text;
+    if (width.isEmpty || height.isEmpty) {
+      return false;
+    }
+    final int widthInt = int.tryParse(width);
+    final int heightInt = int.tryParse(height);
+    if (widthInt == null || heightInt == null) {
+      return false;
+    }
+    return heightInt >= 1 && widthInt >= 1 && heightInt < 400 && widthInt < 400;
+  }
+
+  @override
+  Widget setButtonHeight(BuildContext context) {
+    int toFlex = 2;
+    if (Platform.isIOS) {
+      toFlex = 18;
+    }
+    return Spacer(
+      flex: toFlex,
+    );
   }
 
   @override
@@ -159,4 +208,3 @@ class SizeSelectorWidget extends InfoWidget {
     return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
   }
 }
-

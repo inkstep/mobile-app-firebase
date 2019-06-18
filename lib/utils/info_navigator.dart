@@ -17,14 +17,27 @@ import 'package:inkstep/ui/routes/fade_page_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
-  InfoNavigator(int artistId) {
+  InfoNavigator(int artistId, BuildContext context) {
     descController = TextEditingController();
     widthController = TextEditingController();
     heightController = TextEditingController();
     styleController = TextEditingController();
-    emailController = TextEditingController();
+
     inspirationImages = [];
     formData['artistID'] = artistId.toString();
+
+    _journeyBloc = BlocProvider.of<JourneysBloc>(context);
+
+    if (_journeyBloc.currentState is JourneysWithUser) {
+      final JourneysWithUser state = _journeyBloc.currentState;
+      if (state.user.email != '') {
+        emailController = TextEditingController(text: state.user.email);
+      } else {
+        emailController = TextEditingController();
+      }
+    } else {
+      emailController = TextEditingController();
+    }
   }
 
   TextEditingController descController;
@@ -60,12 +73,10 @@ class InfoNavigator {
   // for them
 
   JourneysBloc _journeyBloc;
-  
+
 
 
   List<Widget> getScreens(BuildContext context) {
-    _journeyBloc = BlocProvider.of<JourneysBloc>(context);
-
     bool displayEmail = true;
 
     if (_journeyBloc.currentState is JourneysWithUser) {
