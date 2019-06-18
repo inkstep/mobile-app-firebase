@@ -202,7 +202,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                           onAcceptance: () {
                             final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                             journeyBloc.dispatch(QuoteAccepted(card.journeyId));
-                            card.stage = AppointmentOfferReceived(card.bookedDate, card.quote);
+                            card.stage = WaitingForAppointmentOffer(card.quote);
                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                             nav.pop(context);
                           },
