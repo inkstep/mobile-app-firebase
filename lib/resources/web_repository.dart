@@ -12,7 +12,7 @@ class WebRepository {
   final http.Client client;
   final Duration delay;
 
-  static const String url = 'http://inkstep-backend.eu-west-2.elasticbeanstalk.com';
+  static const String url = 'http://inkstep.hails.info';
   //static const String url = 'http://localhost:4567';
 
   static const String userEndpoint = '/user';
@@ -249,8 +249,7 @@ class WebRepository {
     }
 
     print(
-        '$journeyEndpoint$imageEndpoint$tattooEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response
-            .body}');
+        '$journeyEndpoint$imageEndpoint$tattooEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode == 200) {
       return true;
@@ -271,10 +270,8 @@ class WebRepository {
       return true;
     }
 
-    print(
-        '$userEndpoint/$id$emailEndpoint ${response.reasonPhrase} (${response.statusCode}): '
-            '${response
-            .body}');
+    print('$userEndpoint/$id$emailEndpoint ${response.reasonPhrase} (${response.statusCode}): '
+        '${response.body}');
 
     if (response.statusCode == 200) {
       return true;
