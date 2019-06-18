@@ -12,15 +12,18 @@ class HelpDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [for (String child in help) SpeechBubble(child: Text(child))]
+        children: [for (String child in help) getBubble(child, context)]
     );
   }
 
-  Widget getBubble(String child) {
+  Widget getBubble(String child, BuildContext context) {
     return SpeechBubble(
       child: Text(
-        child
+        child,
+        style: Theme.of(context).accentTextTheme.subtitle,
       ),
+      borderRadius: 10,
+      color: Theme.of(context).cardColor,
     );
   }
 }
