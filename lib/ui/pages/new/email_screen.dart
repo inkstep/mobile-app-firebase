@@ -60,7 +60,7 @@ class EmailWidget extends InfoWidget {
         textController: emailController,
         keyboardType: TextInputType.emailAddress,
         capitalisation: TextCapitalization.none,
-        label: 'What is your email address?',
+        label: 'What\'s your email address?',
         hint: 'example@inkstep.com',
         callback: (_) {
           if (valid()) {

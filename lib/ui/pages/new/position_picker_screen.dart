@@ -89,15 +89,16 @@ class PositionWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Flexible(
               flex: generalPos == 'Other' ? 10 : 4,
               child: Text(
-                'Where would you like your tattoo? (Arm, leg,'
-                ' etc)',
-                style: Theme.of(context).primaryTextTheme.title,
+                'Where would you like your tattoo?',
+                style: Theme.of(context).primaryTextTheme.headline,
+                textScaleFactor: 0.8,
                 textAlign: TextAlign.center,
               )),
           Spacer(flex: 1),
