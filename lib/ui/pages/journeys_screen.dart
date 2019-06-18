@@ -1,3 +1,5 @@
+import 'dart:math' show pi;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -21,12 +23,15 @@ class JourneysScreen extends StatefulWidget {
   final void Function() onInit;
 }
 
-class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProviderStateMixin {
+class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
   int _currentPageIndex = 0;
 
   AnimationController _controller;
   Animation<double> _animation;
   SwiperController _swiperController;
+
+  Animation<double> _angleAnimation;
+  AnimationController loopController;
 
   @override
   void initState() {
@@ -37,6 +42,17 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _swiperController = SwiperController();
+
+    loopController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    _angleAnimation = Tween(begin: 0.0, end: 360.0).animate(loopController)
+      ..addListener(() {
+        setState(() {
+          // the state that has changed here is the animation object’s value
+        });
+      });
+
+    loopController.forward();
+
     super.initState();
   }
 
@@ -56,10 +72,7 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
             return Container(
               decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
               child: Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 1.0,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
+                child: _buildAnimation(),
               ),
             );
           } else if (state is JourneysWithUser) {
@@ -99,8 +112,26 @@ class _JourneysScreenState extends State<JourneysScreen> with SingleTickerProvid
     );
   }
 
+  Widget _buildAnimation() {
+    const double circleWidth = 50.0;
+    final Widget circles = Container(
+      width: circleWidth * 2.0,
+      height: circleWidth * 2.0,
+      child: Hero(tag: 'logo', child: Image.asset('assets/inksplotw.png')),
+    );
+
+    final double angleInDegrees = _angleAnimation.value;
+    return Transform.rotate(
+      angle: angleInDegrees / 360 * 2 * pi,
+      child: Container(
+        child: circles,
+      ),
+    );
+  }
+
   @override
   void dispose() {
+    loopController.dispose();
     _controller.dispose();
     super.dispose();
   }
