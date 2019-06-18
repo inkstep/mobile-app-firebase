@@ -75,9 +75,14 @@ class DeleteJourneyDialog extends StatelessWidget {
         confirmButtonText = 'Remove Journey';
         break;
       case Finished:
-        header = 'Are you sure you want to remove this journey?';
-        body = 'It doesn\'t look like you\'ve got anything left to do.';
+        header = 'It doesn\'t look like you\'ve got anything left to do.';
+        body = 'Hope you enjoyed your tattoo journey';
         confirmButtonText = 'Remove Journey';
+        break;
+      case WaitingList:
+        header = 'Are you sure you want to end your journey?';
+        body = 'You won\'t get notified about any cancellation slots!';
+        confirmButtonText = 'End Journey';
         break;
       default:
         throw Exception('Journey stage not supported');
