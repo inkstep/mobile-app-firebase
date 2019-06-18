@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
@@ -56,27 +57,38 @@ class InfoNavigator {
   // It's worth selecting what style of tattoo you like so that artists knows what's involved
   // for them
 
-  List<Widget> getScreens() {
+  List<Widget> getScreens(BuildContext context) {
     return [
       HelpScreen(
         navigator: this,
-        help: 'We want to help you provide the tattoo artist with the exact info they need! \n\n'
+        help: [
+          AutoSizeText(
+            'We want to help you provide the tattoo artist with the exact info they need! \n\n'
             "In a few moments we're going to ask you for some reference images, size information, "
             "position info and more!\n\nDon't worry!\nAll of this info is easy to get! The "
             "first thing we're going to ask you for though is for a brief description about what "
             "you want! \n\nLet's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
       ),
       DescriptionScreen(
         descController: descController,
         navigator: this,
       ),
       HelpScreen(
-          navigator: this,
-          help: 'Oohhh, that tattoo sounds nice!\n\nA description goes a long way in helping the '
-              'artist know the motivation for your tattoo and the kind of thing you want!'
-              '\nAnother great way to help the artist is to provide a few reference images!\n'
-              '\nGo online and find a few images that you think capture the kind of tattoo you '
-              "want to get!\n\nDone that? Let's go!"),
+        navigator: this,
+        help: [
+          AutoSizeText(
+            'Oohhh, that tattoo sounds nice!\n\nA description goes a long way in helping the '
+            'artist know the motivation for your tattoo and the kind of thing you want!'
+            '\nAnother great way to help the artist is to provide a few reference images!\n'
+            '\nGo online and find a few images that you think capture the kind of tattoo you '
+            "want to get!\n\nDone that? Let's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
+      ),
       ImageScreen(
         images: inspirationImages,
         navigator: this,
@@ -90,13 +102,19 @@ class InfoNavigator {
         styleController: styleController,
       ),
       HelpScreen(
-          navigator: this,
-          help: 'Wow those images look great! \n\nYour tattoo artist definitely knows the kind'
-              ' of thing you want now!\n\nThe next thing we want to work out is where is it '
-              "going to go?\nThere's a whole variety of places it could go and all of them "
-              'matter to the artist, different positions have different types of skin, and '
-              'surfaces and can dramatically influence the kind of tattoo job that needs to be '
-              "done!\nLet us help you out with specifying exactly where it needs to go, Let's go!"),
+        navigator: this,
+        help: [
+          AutoSizeText(
+            'Wow those images look great! \n\nYour tattoo artist definitely knows the kind'
+            ' of thing you want now!\n\nThe next thing we want to work out is where is it '
+            "going to go?\nThere's a whole variety of places it could go and all of them "
+            'matter to the artist, different positions have different types of skin, and '
+            'surfaces and can dramatically influence the kind of tattoo job that needs to be '
+            "done!\nLet us help you out with specifying exactly where it needs to go, Let's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
+      ),
       PositionPickerScreen(
         formData: formData,
         callback: (pos, genPos) {
@@ -107,13 +125,18 @@ class InfoNavigator {
       ),
       HelpScreen(
         navigator: this,
-        help: 'This is going great!\n\nNow your artist knows what you want and where you want '
+        help: [
+          AutoSizeText(
+            'This is going great!\n\nNow your artist knows what you want and where you want '
             "it!\nNext let's supply the artist with a nice size! Sizing is one of the most "
             'important factors in doing a tattoo, artists really like to know accurate sizings '
             'going in the job because even a small change in size can lead to dramatically '
             'different times and prices!\nA good way to solve this issue is to go away and '
             'get someone to draw with a pencil a rough shape with the size you want. Once you '
             "have that, grab a ruler get measuring!\nReady? Let's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
       ),
       SizeSelectorScreen(
         heightController: heightController,
@@ -122,11 +145,16 @@ class InfoNavigator {
       ),
       HelpScreen(
         navigator: this,
-        help: 'Fantastic!\n\nAt this stage the artist has all the information they need about '
+        help: [
+          AutoSizeText(
+            'Fantastic!\n\nAt this stage the artist has all the information they need about '
             'the tattoo!\n\nA few questions remain however about you!\nTattoo artists are super'
             ' busy and end up booking months in advanced!\nThis does making booking quiet hard '
             'unfornately\nInstead of given an exact date, say what days your usually free on '
             "and the artist will find a date on one of those days for you\nLet's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
       ),
       AvailabilityScreen(
         navigator: this,
@@ -140,12 +168,17 @@ class InfoNavigator {
       ),
       HelpScreen(
         navigator: this,
-        help: "Phew! Getting tired? Getting a tattoo isn't a quick job and needs a lot of "
+        help: [
+          AutoSizeText(
+            "Phew! Getting tired? Getting a tattoo isn't a quick job and needs a lot of "
             "thought about, but don't worry! Almost done!\n\nTattoo artists want to make sure "
             "they aren't going to waste a booking slot, they rely heavily on clients turning up"
             ' to the session! it is for this reason they ask for a deposit, please understand a'
             ' tattoo artist is unlikely to accept your job if your not willing to leave a '
             "deposit\nLet's go!",
+            style: Theme.of(context).accentTextTheme.body1,
+          ),
+        ],
       ),
       DepositScreen(
         navigator: this,
@@ -173,8 +206,8 @@ class InfoNavigator {
     ];
   }
 
-  Widget getScreen(int screenNum) {
-    final screens = getScreens();
+  Widget getScreen(BuildContext context, int screenNum) {
+    final screens = getScreens(context);
     if (screenNum < screens.length && screenNum >= 0) {
       return screens[screenNum];
     }
@@ -190,7 +223,7 @@ class InfoNavigator {
 
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => getScreen(screenNum)),
+      MaterialPageRoute<dynamic>(builder: (context) => getScreen(context, screenNum)),
     );
   }
 
@@ -198,7 +231,7 @@ class InfoNavigator {
     screenNum++;
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      FadeRoute(page: getScreen(screenNum)),
+      FadeRoute(page: getScreen(context, screenNum)),
     );
   }
 
@@ -210,7 +243,7 @@ class InfoNavigator {
     screenNum--;
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      FadeRoute(page: getScreen(screenNum)),
+      FadeRoute(page: getScreen(context, screenNum)),
     );
   }
 }
