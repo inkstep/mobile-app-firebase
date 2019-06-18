@@ -91,7 +91,7 @@ class AvailabilityWidget extends InfoWidget {
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 40),
+            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             child: Column(
               children: <Widget>[
                 _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),

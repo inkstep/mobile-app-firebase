@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' show pi;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,12 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
   Animation<double> loopedAnimation;
   AnimationController loopController;
 
+  Animation<double> _angleAnimation;
+
   @override
   void initState() {
     super.initState();
+
     loopController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
     loopedAnimation = CurvedAnimation(parent: loopController, curve: Curves.easeIn)
       ..addStatusListener((status) {
@@ -42,6 +46,14 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
         // Mark widget as dirty
         setState(() {});
       });
+
+    _angleAnimation = Tween(begin: 0.0, end: 360.0).animate(loopController)
+      ..addListener(() {
+        setState(() {
+          // the state that has changed here is the animation object’s value
+        });
+      });
+
     loopController.forward();
   }
 
@@ -65,13 +77,36 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
             : Card(
                 margin: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1.0,
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildAnimation(),
+                      Text(
+                        'Loading card...',
+                        style: Theme.of(context).accentTextTheme.subtitle,
+                      ),
+                    ],
                   ),
                 ),
               );
       },
+    );
+  }
+
+  Widget _buildAnimation() {
+    const double circleWidth = 50.0;
+    final Widget circles = Container(
+      width: circleWidth * 2.0,
+      height: circleWidth * 2.0,
+      child: Image.asset('assets/inksplot.png'),
+    );
+
+    final double angleInDegrees = _angleAnimation.value;
+    return Transform.rotate(
+      angle: angleInDegrees / 360 * 2 * pi,
+      child: Container(
+        child: circles,
+      ),
     );
   }
 }

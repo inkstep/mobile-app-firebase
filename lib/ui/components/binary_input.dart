@@ -26,11 +26,12 @@ class BinaryInput extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
+                textAlign: TextAlign.center,
                 style: theme.primaryTextTheme.title,
               ),
               flex: 5,
             ),
-            Spacer(flex: 1),
+            Spacer(flex: 2),
             Flexible(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
