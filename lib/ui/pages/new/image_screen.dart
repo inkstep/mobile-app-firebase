@@ -80,7 +80,8 @@ class ImageWidget extends InfoWidget {
                 const double thumbSizeFactor = 0.9;
                 final double thumbHeight =
                     constraint.maxHeight * thumbSizeFactor * (1 / thumbNoHeight);
-                final double thumbWidth = constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
+                final double thumbWidth =
+                    constraint.maxWidth * thumbSizeFactor * (1 / thumbNoWidth);
                 final double thumbSize = min(thumbHeight, thumbWidth);
 
                 return Column(
@@ -172,7 +173,7 @@ class ImageWidget extends InfoWidget {
 
   @override
   bool valid() {
-    return inspirationImages.length >= 2;
+    return inspirationImages.isNotEmpty;
   }
 
   @override
