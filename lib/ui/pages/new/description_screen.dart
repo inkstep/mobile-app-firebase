@@ -61,7 +61,7 @@ class DescriptionWidget extends InfoWidget {
       textController: descController,
       label: 'Tell your artist what you want and your inspiration behind it. '
           'You\'ll get to add some photos to show them in a minute!',
-      hint: 'A sleeping deer protecting a crown with stars splayed behind it',
+      hint: '',
       callback: callback,
     );
   }

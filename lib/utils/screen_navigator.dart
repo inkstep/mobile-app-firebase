@@ -17,25 +17,20 @@ import 'package:inkstep/ui/routes/scale_page_route.dart';
 import 'info_navigator.dart';
 
 class ScreenNavigator {
-
   void pop(BuildContext context) {
     Navigator.pop(context);
   }
 
   void openOnboardingPage(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-          builder: (context) => Onboarding())
-    );
+        context, MaterialPageRoute<dynamic>(builder: (context) => Onboarding()));
   }
 
   void openOnboardingRequiredInfoPage(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-            builder: (context) => OnboardingRequiredInfo(), fullscreenDialog: true)
-    );
+            builder: (context) => OnboardingRequiredInfo(), fullscreenDialog: true));
   }
 
   void openViewJourneysScreen(BuildContext context) {
