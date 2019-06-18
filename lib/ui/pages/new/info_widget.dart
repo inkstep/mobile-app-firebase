@@ -25,32 +25,32 @@ abstract class InfoWidget extends StatelessWidget {
         children: <Widget>[
           Expanded(flex: valid() ? 15 : 25, child: getWidget(context)),
           if (shouldHaveNext()) Spacer(),
-          if (shouldHaveNext())
-            Expanded(
+          if (shouldHaveNext()) Expanded(
               flex: valid() ? 2 : 1,
-              child: valid()
-                  ? RaisedButton(
-                      onPressed: () {
-                        next(context);
-                      },
-                      elevation: 15.0,
-                      padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                      color: Theme.of(context).cardColor,
-                      child: Text(
-                        'Next!',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: 'Signika',
-                            color: Theme.of(context).primaryColorDark),
-                      ),
-                    )
-                  : Container(),
-            ),
-          if (shouldHaveNext()) Spacer(flex: 2),
+              child: valid() ? RaisedButton(
+                onPressed: () {
+                  next(context);
+                },
+                elevation: 15.0,
+                padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                color: Theme.of(context).cardColor,
+                child: Text(
+                  'Next!',
+                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context)
+                      .primaryColorDark),
+                ),
+              ) : Container()),
+          if (shouldHaveNext()) setButtonHeight(context),
         ],
       ),
     );
+  }
+
+  Widget setButtonHeight(BuildContext context) {
+   return Spacer(
+     flex: 2,
+   );
   }
 
   Widget getWidget(BuildContext context);
