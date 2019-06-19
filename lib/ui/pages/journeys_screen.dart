@@ -72,14 +72,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
           } else if (state is JourneysWithUser) {
             final JourneysWithUser loadedState = state;
             _controller.forward();
-            _animation.addStatusListener((status) {
-              if (status == AnimationStatus.completed) {
-                if (loadedState.firstTime == true) {
-                  FeatureDiscovery.discoverFeatures(context, ['care_button_0']);
-                  journeyBloc.dispatch(ShownFeatureDiscovery());
-                }
-              }
-            });
 
             final void Function(ScrollNotification) onNotification = (notification) {
               if (notification is ScrollEndNotification) {
