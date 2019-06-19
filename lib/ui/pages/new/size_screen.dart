@@ -205,6 +205,10 @@ class SizeSelectorWidget extends InfoWidget {
 
   @override
   List<String> getHelp() {
-    return <String>['Help!', 'Me!', 'Lorem ipsum stuff'];
+    return <String>[
+      'Why do we want you to be so precise with size?',
+      "What's wrong with giving a rough estimate?",
+      'Even a small change in tattoo size can lead to drastically different session times and prices'
+    ];
   }
 }
