@@ -74,8 +74,6 @@ class InfoNavigator {
 
   JourneysBloc _journeyBloc;
 
-
-
   List<Widget> getScreens(BuildContext context) {
     bool displayEmail = true;
 

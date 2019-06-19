@@ -81,7 +81,7 @@ class AvailabilityWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20),
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

@@ -65,7 +65,7 @@ class OverviewFormWidget extends InfoWidget {
     formData['style'] = styleController.text ?? '';
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

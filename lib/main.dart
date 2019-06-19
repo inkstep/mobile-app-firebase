@@ -121,31 +121,31 @@ class InkstepState extends State<Inkstep> {
 
   TextTheme _getTextWithColor(Color color) => TextTheme(
       headline: TextStyle(
-        fontSize: 40.0,
+        fontSize: 40,
         fontWeight: FontWeight.w600,
         color: color,
       ),
       subhead: TextStyle(
-        fontSize: 28.0,
+        fontSize: 28,
         color: color,
         fontWeight: FontWeight.w300,
       ),
       title: TextStyle(
-        fontSize: 28.0,
+        fontSize: 28,
         fontWeight: FontWeight.w300,
         color: color,
       ),
       subtitle: TextStyle(
-        fontSize: 20.0,
+        fontSize: 20,
         color: color,
         fontWeight: FontWeight.w400,
       ),
       body1: TextStyle(
-        fontSize: 18.0,
+        fontSize: 18,
         color: color,
       ),
       caption: TextStyle(
-        fontSize: 12.0,
+        fontSize: 12,
         color: color,
         fontWeight: FontWeight.w400,
       ));

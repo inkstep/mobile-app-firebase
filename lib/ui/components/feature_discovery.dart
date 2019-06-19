@@ -264,7 +264,7 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
           title: widget.title,
           description: widget.description,
           touchTargetRadius: 44.0,
-          touchTargetToContentPadding: 20.0,
+          touchTargetToContentPadding: 20,
         ),
         _Pulse(
           state: state,
@@ -329,7 +329,7 @@ class _Background extends StatelessWidget {
     } else {
       final startingBackgroundPosition = anchor;
       final endingBackgroundPosition = Offset(
-          screenSize.width / 2.0 + (isOnLeftHalfOfScreen(anchor) ? -20.0 : 20.0),
+          screenSize.width / 2.0 + (isOnLeftHalfOfScreen(anchor) ? -20 : 20),
           anchor.dy +
               (isOnTopHalfOfScreen(anchor)
                   ? -(screenSize.width / 2.0) + 40.0
@@ -476,7 +476,7 @@ class _Content extends StatelessWidget {
     final contentOrientation = getContentOrientation(anchor);
     final contentOffsetMultiplier =
         contentOrientation == DescribedFeatureContentOrientation.below ? 1.0 : -1.0;
-    final contentY = anchor.dy + (contentOffsetMultiplier * (touchTargetRadius + 20.0));
+    final contentY = anchor.dy + (contentOffsetMultiplier * (touchTargetRadius + 20));
     final contentFractionalOffset = contentOffsetMultiplier.clamp(-1.0, 0.0);
 
     return Positioned(
@@ -499,7 +499,7 @@ class _Content extends StatelessWidget {
                             child: Text(
                               title,
                               style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
@@ -615,7 +615,7 @@ class _TouchTarget extends StatelessWidget {
           expandedPercent = 0.0;
         }
 
-        return 44.0 + (20.0 * expandedPercent);
+        return 44.0 + (20 * expandedPercent);
       case _OverlayState.activating:
       case _OverlayState.dismissing:
         return 20 + (24.0 * (1.0 - transitionPercent));
