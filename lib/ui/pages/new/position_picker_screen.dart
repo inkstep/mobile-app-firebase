@@ -26,13 +26,13 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
     generalPos ??= formData['generalPos'];
     specificPos ??= formData['position'];
     textController = TextEditingController(text: specificPos ?? '...');
-    listener = () {setState(() {
-      specificPos = textController.text;
-    });};
+    listener = () {
+      setState(() {
+        specificPos = textController.text;
+      });
+    };
     textController.addListener(listener);
   }
-
-
 
   TextEditingController textController;
   final InfoNavigator navigator;
@@ -44,16 +44,24 @@ class _PositionPickerScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PositionWidget(navigator, callback, generalPos, specificPos, textController, (text) {
-      setState(() {
-        generalPos = text;
-        specificPos = '';
-      });
-    }, (text) {
-      setState(() {
-        specificPos = text;
-      });
-    },);
+    return PositionWidget(
+      navigator,
+      callback,
+      generalPos,
+      specificPos,
+      textController,
+      (text) {
+        setState(() {
+          generalPos = text;
+          specificPos = '';
+        });
+      },
+      (text) {
+        setState(() {
+          specificPos = text;
+        });
+      },
+    );
   }
 
   @override
@@ -76,13 +84,47 @@ class PositionWidget extends InfoWidget {
   final void Function(String text) specificPosCallback;
 
   final Map<String, List<String>> positions = {
-    'Leg': ['Lower Leg', 'Calf'],
-    'Arm': ['Inner Wrist', 'Inner Arm', 'Biceps', 'Upper Arm', 'Side'],
-    'Chest': ['Full Front Chest', 'Pec', 'Ribs'],
-    'Foot': ['Ankle'],
-    'Head': ['Inner Ear', 'Behind Ear'],
-    'Hand': ['Fingers'],
-    'Back': ['Back', 'Shoulders', 'Neck'],
+    'Leg': [
+      'Lower Leg',
+      'Calf',
+      'Thigh',
+    ],
+    'Arm': [
+      'Inner Wrist',
+      'Inner Forearm',
+      'Biceps',
+      'Upper Arm',
+      'Side',
+    ],
+    'Upper Body': [
+      'Upper Chest',
+      'Sternum',
+      'Collarbone',
+      'Pec',
+      'Ribs',
+    ],
+    'Lower Body': [
+      'Stomach',
+    ],
+    'Foot': [
+      'Ankle',
+    ],
+    'Head': [
+      'Inner Ear',
+      'Behind Ear',
+      'Neck',
+    ],
+    'Hand': [
+      'Finger',
+      'Fingers',
+      'Wrist',
+    ],
+    'Back': [
+      'Lower Back',
+      'Shoulders',
+      'Neck',
+      'Spine',
+    ],
     'Other': [],
   };
 
