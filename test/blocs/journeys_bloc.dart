@@ -140,11 +140,12 @@ void main() {
             artistID: 101,
             position: '',
             availability: '',
-            mentalImage: 'Flower',
+            description: 'Flower',
             name: testUser.name,
             size: '',
             email: testUser.email,
             images: <Asset>[],
+            style: 'Blackwork'
           ),
         ),
       );

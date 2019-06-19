@@ -209,10 +209,11 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         userId: userId,
         artistId: result.artistID,
         availability: result.availability,
-        mentalImage: result.mentalImage,
+        description: result.description,
         position: result.position,
         size: result.size,
-        noImages: result.images.length);
+        noImages: result.images.length,
+        style: result.style);
   }
 
   Stream<JourneysState> _mapLoadJourneysToState(LoadJourneys event) async* {

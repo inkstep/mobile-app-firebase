@@ -178,10 +178,11 @@ class OverviewFormWidget extends InfoWidget {
                   email: formData['email'],
                   size: formData['size'],
                   availability: formData['availability'],
-                  mentalImage: formData['mentalImage'],
+                  description: formData['mentalImage'],
                   position: formData['position'],
                   images: images,
                   artistID: int.parse(formData['artistID']),
+                  style: formData['style'],
                 )),
               );
               final ScreenNavigator nav = sl.get<ScreenNavigator>();
