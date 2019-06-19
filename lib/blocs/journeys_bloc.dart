@@ -296,7 +296,12 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   }
 
   Future<CardModel> _getCardFromJourney(JourneyEntity je, int idx) async {
-    final List<Image> images = await journeysRepository.getImages(je.id);
+    final List<Image> images = [];
+
+    for (int i = 0; i < je.noImages; i++) {
+      images.add(Image.network('http://inkstep.hails.info/journey/${je.id}/thumb/$i'));
+    }
+
     final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
 
     final List<PaletteColor> palettes = <PaletteColor>[];
