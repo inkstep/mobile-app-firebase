@@ -195,10 +195,32 @@ class WebRepository {
       throw http.ClientException;
     }
 
-    final List<dynamic> responseData = json.decode(response.body);
+    List<dynamic> responseData = json.decode(response.body);
     List<String> imageData = [];
     for (String data in responseData) {
       imageData += [data];
+    }
+
+    int limit = 0;
+    while (imageData.isEmpty && limit < 10) {
+      sleep(Duration(milliseconds: 100));
+
+      final http.Response response = await client.get('$url$journeyEndpoint/$id$imagesEndpoint');
+
+      print(
+          '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+
+      if (response.statusCode != 200) {
+        throw http.ClientException;
+      }
+
+      responseData = json.decode(response.body);
+      imageData = [];
+      for (String data in responseData) {
+        imageData += [data];
+      }
+
+      limit++;
     }
 
     return imageData;
