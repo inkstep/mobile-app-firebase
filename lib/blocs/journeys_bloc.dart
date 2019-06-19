@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_entity.dart';
@@ -163,6 +164,37 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     print('About to save the journey: $newJourney');
     final int journeyId = await journeysRepository.saveJourneys(<EmptyJourneyEntity>[newJourney]);
+
+    List<Future<CardModel>> oldCards = [];
+
+    if (currentState is JourneysWithUser) {
+      JourneysWithUser state = currentState;
+      oldCards = state.cards;
+    }
+
+    final List<Image> loadingImages = [];
+
+    for (int i = 0; i < event.result.images.length; i++) {
+      loadingImages.add(Image.asset('assets/loading.gif'));
+    }
+
+    yield JourneysWithUser(cards: [
+      Future.value(CardModel(
+          description: event.result.description,
+          size: event.result.size,
+          artistId: event.result.artistID,
+          artistName: '',
+          userId: userId,
+          bodyLocation: event.result.position,
+          images: loadingImages,
+          quote: TextRange(start: -1, end: -1),
+          stage: WaitingForQuote(),
+          index: null,
+          palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 100)]),
+          journeyId: null,
+          bookedDate: null))
+    ] + oldCards, user: user, firstTime: firstTime);
+
     if (journeyId == -1) {
       print('Failed to save journeys');
       yield JourneyError(prev: currentState);
