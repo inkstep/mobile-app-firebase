@@ -168,7 +168,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     List<Future<CardModel>> oldCards = [];
 
     if (currentState is JourneysWithUser) {
-      JourneysWithUser state = currentState;
+      final JourneysWithUser state = currentState;
       oldCards = state.cards;
     }
 
