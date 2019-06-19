@@ -189,7 +189,7 @@ class SizeSelectorWidget extends InfoWidget {
     if (widthInt == null || heightInt == null) {
       return false;
     }
-    return heightInt >= 1 && widthInt >= 1 && heightInt < 400 && widthInt < 400;
+    return heightInt >= 1 && widthInt >= 1 && heightInt < 100 && widthInt < 100;
   }
 
   @override
