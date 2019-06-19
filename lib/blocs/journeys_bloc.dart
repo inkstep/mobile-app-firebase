@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -175,7 +176,9 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<Image> loadingImages = [];
 
     for (int i = 0; i < event.result.images.length; i++) {
-      loadingImages.add(Image.asset('assets/loading.gif'));
+      final ByteData byteData = await event.result.images[i].requestThumbnail(200, 200);
+
+      loadingImages.add(Image.memory(byteData.buffer.asUint8List()));
     }
 
     yield JourneysWithUser(cards: [
