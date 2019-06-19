@@ -131,7 +131,7 @@ class CareScreen extends StatelessWidget {
   }
 
   Widget _adviceWidget(DateTime bookedTime) {
-    final DateTime currTime = DateTime.parse('2019-06-00 13:00:00'); //= DateTime.now();
+    final DateTime currTime = DateTime.now();
 
     for (AdviceSnippet adviceDialog in snippets) {
       DateTime adviceDate;
