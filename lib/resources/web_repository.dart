@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -13,6 +14,7 @@ class WebRepository {
   final Duration delay;
 
   static const String url = 'http://inkstep.hails.info';
+
   //static const String url = 'http://localhost:4567';
 
   static const String userEndpoint = '/user';
@@ -147,10 +149,20 @@ class WebRepository {
   }
 
   Future<Map<String, dynamic>> loadArtist(int artistId) async {
-    final http.Response response = await client.get('$url$artistEndpoint/$artistId');
+    http.Response response = await client.get('$url$artistEndpoint/$artistId');
+    print('GET $artistEndpoint/$artistId ${response.reasonPhrase}'
+          ' (${response.statusCode}): ${response.body}');
 
-    print(
-        '$artistEndpoint/$artistId ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+    // If getting the artist fails, wait and then try again up to 10 times
+    int limit = 0;
+    while (response.statusCode != 200 && limit < 10) {
+      sleep(Duration(milliseconds: 100));
+
+      response = await client.get('$url$artistEndpoint/$artistId');
+      print('Retry: GET $artistEndpoint/$artistId ${response.reasonPhrase}'
+            ' (${response.statusCode}): ${response.body}');
+      limit++;
+    }
 
     if (response.statusCode != 200) {
       throw http.ClientException;
@@ -290,7 +302,7 @@ class WebRepository {
         '(${response.statusCode}): ${response.body}');
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = jsonDecode(response.body);
-      return Future.value(int.parse(responseJson['user_id']));
+      return Future.value(int.parse(responseJson['UserID']));
     }
     return Future.value(-1);
   }

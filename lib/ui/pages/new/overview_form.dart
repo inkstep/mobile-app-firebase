@@ -200,8 +200,6 @@ class OverviewFormWidget extends InfoWidget {
 
     if (formData[param] == '' || formData[param] == '0000000') {
       data = 'MISSING';
-    } else if (param == 'noRefImgs' && formData[param] == '1') {
-      data = 'NEED AT LEAST 2';
     } else {
       data = formData[param];
       if (param == 'availability') {
