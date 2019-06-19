@@ -49,7 +49,7 @@ class WaitingForQuote extends JourneyStage {
   int get progress => 20;
 
   @override
-  String toString() => 'Awaiting artist\'s response';
+  String toString() => 'Awaiting response';
 
   @override
   bool get userActionRequired => false;
