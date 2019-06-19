@@ -22,7 +22,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       {bool last}) {
     const EdgeInsets buttonPadding = EdgeInsets.only(top: 16.0);
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           Spacer(flex: 4),
@@ -37,7 +37,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
             style: Theme.of(context).textTheme.headline,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32.0),
             child: Text(
               body,
               style: Theme.of(context).textTheme.title,

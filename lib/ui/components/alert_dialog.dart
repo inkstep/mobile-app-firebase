@@ -22,7 +22,7 @@ class RoundedAlertDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
         'Ok',
-        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Colors.black),
+        style: TextStyle(fontSize: 20, fontFamily: 'Signika', color: Colors.black),
       ),
       onPressed: () => Navigator.pop(context),
     );

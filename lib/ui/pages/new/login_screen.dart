@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                 child: Text(
                   'Next!',
                   style: TextStyle(
-                      fontSize: 20.0, fontFamily: 'Signika', color: Theme.of(context).primaryColor),
+                      fontSize: 20, fontFamily: 'Signika', color: Theme.of(context).primaryColor),
                 ),
                 color: Theme.of(context).cardColor,
               ),

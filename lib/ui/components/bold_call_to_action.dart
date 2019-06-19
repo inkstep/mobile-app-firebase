@@ -26,7 +26,7 @@ class BoldCallToAction extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: AutoSizeText(
         label,
-        style: TextStyle(fontSize: 20.0, fontFamily: 'Signika'),
+        style: TextStyle(fontSize: 20, fontFamily: 'Signika'),
       ),
     );
   }
