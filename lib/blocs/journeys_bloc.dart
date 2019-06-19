@@ -403,6 +403,8 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     if (userId == -1) {
       yield JourneyError(prev: currentState);
     } else {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setInt('userId', userId);
       final User userModel = User(id: userId, email: '', name: event.name);
       yield JourneysWithUser(cards: [], firstTime: true, user: userModel);
     }
