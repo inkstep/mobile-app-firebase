@@ -20,7 +20,7 @@ class ImageSnippet extends StatelessWidget {
 
     final List<Widget> children = <Widget>[
       for (Image img in imageSection)
-        Expanded(
+        Flexible(
           child: img,
         ),
       if (images.length > 2)
