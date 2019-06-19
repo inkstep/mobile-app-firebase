@@ -385,7 +385,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
         dispatch(LoadJourney(int.parse(message['data']['journey'])));
       }
     } else if (Platform.isIOS) {
-      if (message['journey']!=null) {
+      if (message['journey'] != null) {
         dispatch(LoadJourney(int.parse(message['journey'])));
       }
     }
@@ -395,7 +395,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final String pushToken = await firebase.getToken();
     final UserEntity user = UserEntity(
       name: event.name,
-      email: '',
+      email: 'temp.email',
       token: pushToken,
     );
     final int userId = await journeysRepository.saveUser(user);
