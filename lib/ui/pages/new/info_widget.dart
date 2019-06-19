@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
+import 'package:inkstep/ui/components/text_button.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 
 import 'help_screen.dart';
@@ -33,13 +34,24 @@ abstract class InfoWidget extends StatelessWidget {
               );
             },
           ),
-          IconButton(
-              icon: Icon(Icons.keyboard_arrow_up),
-              color: Theme.of(context).cardColor,
-              tooltip: 'Previous question',
-              onPressed: () {
-                back(context);
-              }),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                label: 'Back!',
+                onTap: () {
+                  back(context);
+                },
+              ),
+            ],
+          ),
+//          IconButton(
+//              icon: Icon(Icons.keyboard_arrow_up),
+//              color: Theme.of(context).cardColor,
+//              tooltip: 'Previous question',
+//              onPressed: () {
+//                back(context);
+//              }),
         ],
       ),
       body: Column(
