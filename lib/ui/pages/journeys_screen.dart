@@ -1,7 +1,6 @@
-import 'dart:math' show pi;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
@@ -72,7 +71,10 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
             return Container(
               decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
               child: Center(
-                child: _buildAnimation(),
+                child: SpinKitChasingDots(
+                  color: Theme.of(context).cardColor,
+                  size: 50.0,
+                ),
               ),
             );
           } else if (state is JourneysWithUser) {
@@ -108,23 +110,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
             );
           }
         },
-      ),
-    );
-  }
-
-  Widget _buildAnimation() {
-    const double circleWidth = 50.0;
-    final Widget circles = Container(
-      width: circleWidth * 2.0,
-      height: circleWidth * 2.0,
-      child: Hero(tag: 'logo', child: Image.asset('assets/inksplotw.png')),
-    );
-
-    final double angleInDegrees = _angleAnimation.value;
-    return Transform.rotate(
-      angle: angleInDegrees / 360 * 2 * pi,
-      child: Container(
-        child: circles,
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'dart:math' show pi;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/journeys_event.dart';
@@ -81,7 +81,7 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _buildAnimation(),
+                      _buildAnimation(context),
                       Text(
                         'Loading card...',
                         style: Theme.of(context).accentTextTheme.subtitle,
@@ -94,20 +94,10 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
     );
   }
 
-  Widget _buildAnimation() {
-    const double circleWidth = 50.0;
-    final Widget circles = Container(
-      width: circleWidth * 2.0,
-      height: circleWidth * 2.0,
-      child: Image.asset('assets/inksplot.png'),
-    );
-
-    final double angleInDegrees = _angleAnimation.value;
-    return Transform.rotate(
-      angle: angleInDegrees / 360 * 2 * pi,
-      child: Container(
-        child: circles,
-      ),
+  Widget _buildAnimation(BuildContext context) {
+    return SpinKitChasingDots(
+      color: Theme.of(context).backgroundColor,
+      size: 50.0,
     );
   }
 }
