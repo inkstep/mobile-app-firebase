@@ -49,7 +49,7 @@ class LongTextInputFormElement extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              'You\'ll get to add some photos to show them in a minute!'
+              'You\'ll get to add some photos to show them in a minute.'
             ),
           ],
         );

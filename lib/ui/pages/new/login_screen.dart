@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
-                  'Next!',
+                  'Next',
                   style: TextStyle(
                       fontSize: 20, fontFamily: 'Signika', color: Theme.of(context).primaryColor),
                 ),

@@ -48,7 +48,7 @@ abstract class InfoWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextButton(
-                label: 'Back!',
+                label: 'Back',
                 onTap: () {
                   back(context);
                 },
@@ -66,7 +66,7 @@ abstract class InfoWidget extends StatelessWidget {
                 flex: isForm() ? 1 : 3,
                 child: valid()
                     ? BoldCallToAction(
-                        label: 'Next!',
+                        label: 'Next',
                         color: Theme.of(context).cardColor,
                         onTap: () {
                           next(context);
