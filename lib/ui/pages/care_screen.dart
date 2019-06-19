@@ -35,6 +35,7 @@ class CareScreen extends StatelessWidget {
       timeOffset: Duration(days: 1),
       preCare: true,
       children: <Widget>[
+
         Text('Come sober'),
         Text('Hygiene'), // Co// me freshly showered! Tattooing required good hygiene. ],
         Text('Prep the tattoo spot'),
@@ -48,6 +49,7 @@ class CareScreen extends StatelessWidget {
       timeOffset: Duration(days: 1),
       preCare: true,
       children: <Widget>[
+
         Text('Your appointment day is finally here! And with it, the usual hits play - '
             '"Do I prep the tattoo spot? Should I shave? Can I do a shot to calm my '
             'nerves before I get inked? Can I get there early? WHAT DO I WEAR?!"'
@@ -64,8 +66,23 @@ class CareScreen extends StatelessWidget {
       description: 'For the first 2 hours',
       timeOffset: Duration(hours: 2),
       children: <Widget>[
-        Text('Leave in plastic wrap'),
-        Text('Only remove after 2 hours'),
+        Text('Your tattoo is going to be sore for the rest of day one. '
+            'It might look a bit red and swollen and feel warm to the touch due to blood rushing'
+            ' to the spot while it heals.'),
+        Text(''),
+        BulletElement('Be gentle with your freshly inked tattoo, especially once you unwrap it,'
+            ' and avoid touching your tattoo – or letting anyone else touch it!'),
+        Text(''),
+        BulletElement('The wrap is basically a temporary bandage. Leave it on for as long as '
+            'directed by your artist – this can be anything from an hour to the whole day, '
+            'sometimes even longer.'),
+        BulletElement('Cut through the wrap carefully using scissors instead of peeling it right '
+            'off as this could pull out some ink that hasn’t settled yet, especially if you were '
+            'given a cloth wrap which tends to stick to the skin.'),
+        BulletElement('Refrain from long and/or hot showers – opt for shorter showers in room '
+            'temperature water, and try to keep your tattoo from getting wet.'),
+        BulletElement('For up to 48 hours after getting inked, avoid all of these – sorry, '
+            'you’re going to have to delay that freshly inked party you were planning on throwing!')
       ],
     ),
     AdviceSnippet(
@@ -73,9 +90,19 @@ class CareScreen extends StatelessWidget {
       description: 'Caring for a Sore and Itchy Tattoo',
       timeOffset: Duration(days: 2),
       children: <Widget>[
-        Text('Do not itch skin'),
-        Text('Moisturise tattoo area 3 times a day'),
-        Text('Apply cream every 8 hours'),
+        Text('You’re likely still going to feel sore on the tattoo area for a few days more, '
+            'up to a week (or slightly longer for larger or more detailed tattoos).'),
+        Text(''),
+        BulletElement('Cleanse and moisturize at least twice during the day and once at '
+            'night before you sleep – that’s three times a day!'),
+        Text(''),
+        BulletElement('Your tattoo might also start to get itchy at this point. '
+            'And what are we NOT going to do? That’s right, we WILL NOT scratch!'),
+        BulletElement('Wear loose, comfortable clothing in smooth fabrics.'),
+        BulletElement('Do not apply any sunscreen or heavy products until your '
+            'tattoo is fully healed. Keep it out of the sun and water as much as possible.'),
+        BulletElement('It’s going to be uncomfortable for at least a week, especially if the '
+            'tattoo is quite large or is placed in a spot that is hard to avoid sleeping on.')
       ],
     ),
     AdviceSnippet(
@@ -98,7 +125,22 @@ class CareScreen extends StatelessWidget {
       timeDescription: 'Week 2',
       description: 'Dreaded Tattoo Itch!',
       timeOffset: Duration(days: 14),
-      children: <Widget>[],
+      children: <Widget>[
+        Text('You may have heard about this stage already – an itchy tattoo during week 2!'),
+        Text(''),
+        BulletElement('Annoying enough just because you have to refrain from scratching, '
+            'this stage is also hard because your tattoo is going to start peeling and '
+            'flaking and won’t look its best.'),
+        Text(''),
+        BulletElement('The scabs are now fully formed and are starting to come off, '
+            'which is what is causing the peeling, flaking, and itching.'),
+        BulletElement('And just like the previous 5 days, what are we not going to do? '
+            'Scratch, rub, pick at, or pull off the peeling skin.'),
+        BulletElement('Keep the area very clean and well-moisturized (using a light lotion, '
+            'preferably your recommended aftercare lotion, or alternatively a light oil '
+            'such as baby oil).'),
+        BulletElement('Moisturize after every wash and once before bed.'),
+      ],
     ),
     AdviceSnippet(
       timeDescription: 'Week 3',
