@@ -113,6 +113,7 @@ class WebRepository {
       response = await http
           .put('$url$userEndpoint', body: jsonStr, headers: {'Content-Type': 'application/json'});
     } catch (e) {
+      print('Error $e');
       return Future.value(-1);
     }
     print('$userEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
