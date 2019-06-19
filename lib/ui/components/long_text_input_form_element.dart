@@ -27,10 +27,17 @@ class LongTextInputFormElement extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              label,
-              style: Theme.of(context).primaryTextTheme.body1,
+              'Describe your concept',
+              style: Theme.of(context).primaryTextTheme.headline,
+              textScaleFactor: 0.8,
             ),
-            Spacer(flex: 1),
+            Spacer(),
+            Text(
+              label,
+              style: Theme.of(context).primaryTextTheme.subhead,
+              textAlign: TextAlign.center,
+            ),
+            Spacer(),
             Flexible(
               child: LongTextInput(
                 hint: hint,
@@ -39,6 +46,10 @@ class LongTextInputFormElement extends StatelessWidget {
                 callback: submitCallback,
               ),
               flex: 20,
+            ),
+            Spacer(),
+            Text(
+              'You\'ll get to add some photos to show them in a minute!'
             ),
           ],
         );

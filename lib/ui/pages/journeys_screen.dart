@@ -29,7 +29,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
   Animation<double> _animation;
   SwiperController _swiperController;
 
-  Animation<double> _angleAnimation;
   AnimationController loopController;
 
   @override
@@ -43,13 +42,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     _swiperController = SwiperController();
 
     loopController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    _angleAnimation = Tween(begin: 0.0, end: 360.0).animate(loopController)
-      ..addListener(() {
-        setState(() {
-          // the state that has changed here is the animation object’s value
-        });
-      });
-
     loopController.forward();
 
     super.initState();

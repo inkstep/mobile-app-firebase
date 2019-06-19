@@ -30,8 +30,6 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
   Animation<double> loopedAnimation;
   AnimationController loopController;
 
-  Animation<double> _angleAnimation;
-
   @override
   void initState() {
     super.initState();
@@ -46,13 +44,6 @@ class _JourneyCardState extends State<JourneyCard> with SingleTickerProviderStat
         }
         // Mark widget as dirty
         setState(() {});
-      });
-
-    _angleAnimation = Tween(begin: 0.0, end: 360.0).animate(loopController)
-      ..addListener(() {
-        setState(() {
-          // the state that has changed here is the animation object’s value
-        });
       });
 
     loopController.forward();

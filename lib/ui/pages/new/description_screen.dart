@@ -58,9 +58,8 @@ class DescriptionWidget extends InfoWidget {
   Widget getWidget(BuildContext context) {
     return LongTextInputFormElement(
       textController: descController,
-      label: 'Tell your artist what you want and your inspiration behind it. '
-          'You\'ll get to add some photos to show them in a minute!',
-      hint: '',
+      label: 'And tell your artist the inspiration behind it.',
+      hint: 'e.g. A sleeping dear protecting a crown surrounded by stars',
       callback: (_) {
         if (valid()) {
           next(context);
