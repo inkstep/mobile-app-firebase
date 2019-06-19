@@ -141,7 +141,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       child: Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          splashColor: Colors.lightGreenAccent,
+                                          splashColor: Colors.grey[50].withOpacity(0.2),
                                           onTap: () {
                                             final ScreenNavigator nav = sl.get<ScreenNavigator>();
                                             nav.openNewJourneyScreen(
