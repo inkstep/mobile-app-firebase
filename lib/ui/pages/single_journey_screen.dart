@@ -105,7 +105,7 @@ class DeleteJourneyDialog extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
             child: Text(
               confirmButtonText,
-              style: TextStyle(fontSize: 20.0, fontFamily: 'Signika').copyWith(color: Colors.red),
+              style: TextStyle(fontSize: 20, fontFamily: 'Signika').copyWith(color: Colors.red),
             ),
           ),
         ));
@@ -353,35 +353,42 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
     return ListView(
       children: <Widget>[
         Container(
-          height: 0.8 * fullHeight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Stack(
                 alignment: Alignment.bottomLeft,
                 children: <Widget>[
-                  Container(
-                    width: fullWidth,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        // Where the linear gradient begins and ends
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        // Add one stop for each color. Stops should increase from 0 to 1
-                        stops: const [0.1, 0.5],
-                        colors: const [Colors.black54, Colors.transparent],
+                  Transform.translate(
+                    offset: Offset(0, 10),
+                    child: Container(
+                      width: fullWidth,
+                      height: fullHeight * 0.8,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          // Where the linear gradient begins and ends
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          // Add one stop for each color. Stops should increase from 0 to 1
+                          stops: const [0.1, 0.5],
+                          colors: const [Colors.black54, Colors.transparent],
+                        ),
                       ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+
+                  Container(
+                    width: fullWidth,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: fullHeight * 0.65),
                         LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
                       ],
                     ),
                   ),
+
                   if (hasDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

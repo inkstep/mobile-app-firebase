@@ -68,7 +68,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   'Get Started!',
-                  style: TextStyle(fontSize: 20.0, fontFamily: 'Signika', color: Theme.of
+                  style: TextStyle(fontSize: 20, fontFamily: 'Signika', color: Theme.of
                     (context).primaryColor),
                 ),
                 color: Theme.of(context).cardColor,

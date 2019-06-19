@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/text_button.dart';
 import 'package:inkstep/utils/info_navigator.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'help_screen.dart';
 
@@ -15,6 +17,14 @@ abstract class InfoWidget extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: Theme.of(context).accentIconTheme,
+        leading: IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            final ScreenNavigator nav = sl.get<ScreenNavigator>();
+            nav.pop(context);
+          },
+          color: Colors.white,
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -45,24 +55,25 @@ abstract class InfoWidget extends StatelessWidget {
               ),
             ],
           ),
-//          IconButton(
-//              icon: Icon(Icons.keyboard_arrow_up),
-//              color: Theme.of(context).cardColor,
-//              tooltip: 'Previous question',
-//              onPressed: () {
-//                back(context);
-//              }),
         ],
       ),
       body: Column(
         children: <Widget>[
           Expanded(flex: isForm() ? 15 : 25, child: getWidget(context)),
           if (shouldHaveNext()) Spacer(),
-          if (shouldHaveNext()) Expanded(
-              flex: isForm() ? 1 : 3,
-              child: valid() ? BoldCallToAction(label: 'Next!', color: Theme.of(context)
-        .cardColor, onTap: () {next(context);}, textColor: Theme.of(context).primaryColor,
-              ) : Container()),
+          if (shouldHaveNext())
+            Expanded(
+                flex: isForm() ? 1 : 3,
+                child: valid()
+                    ? BoldCallToAction(
+                        label: 'Next!',
+                        color: Theme.of(context).cardColor,
+                        onTap: () {
+                          next(context);
+                        },
+                        textColor: Theme.of(context).primaryColor,
+                      )
+                    : Container()),
           if (shouldHaveNext()) setButtonHeight(context),
         ],
       ),
@@ -72,9 +83,9 @@ abstract class InfoWidget extends StatelessWidget {
   List<String> getHelp();
 
   Widget setButtonHeight(BuildContext context) {
-   return Spacer(
-     flex: 2,
-   );
+    return Spacer(
+      flex: 2,
+    );
   }
 
   Widget getWidget(BuildContext context);
