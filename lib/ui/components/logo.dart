@@ -46,15 +46,14 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(duration: duration, vsync: this);
-    animation =
-        Tween<double>(begin: startSize, end: endSize).animate(controller)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              controller.reverse();
-            } else if (status == AnimationStatus.dismissed) {
-              controller.forward();
-            }
-          });
+    animation = Tween<double>(begin: startSize, end: endSize).animate(controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
     controller.forward();
   }
 

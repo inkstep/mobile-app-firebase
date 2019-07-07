@@ -135,16 +135,15 @@ void main() {
       journeysBloc.dispatch(
         AddJourney(
           result: FormResult(
-            artistID: 101,
-            position: '',
-            availability: '',
-            description: 'Flower',
-            name: testUser.name,
-            size: '',
-            email: testUser.email,
-            images: <Asset>[],
-            style: 'Blackwork'
-          ),
+              artistID: 101,
+              position: '',
+              availability: '',
+              description: 'Flower',
+              name: testUser.name,
+              size: '',
+              email: testUser.email,
+              images: <Asset>[],
+              style: 'Blackwork'),
         ),
       );
     });

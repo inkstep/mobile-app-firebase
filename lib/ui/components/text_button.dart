@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/main.dart';
+
+import '../../theme.dart';
 
 class TextButton extends StatelessWidget {
   TextButton({

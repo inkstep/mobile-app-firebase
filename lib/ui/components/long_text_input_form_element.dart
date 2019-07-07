@@ -48,9 +48,7 @@ class LongTextInputFormElement extends StatelessWidget {
               flex: 20,
             ),
             Spacer(),
-            Text(
-              'You\'ll get to add some photos to show them in a minute.'
-            ),
+            Text('You\'ll get to add some photos to show them in a minute.'),
           ],
         );
       },
@@ -59,5 +57,3 @@ class LongTextInputFormElement extends StatelessWidget {
     );
   }
 }
-
-

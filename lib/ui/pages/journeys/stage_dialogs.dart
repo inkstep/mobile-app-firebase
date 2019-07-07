@@ -92,8 +92,8 @@ class DateDialog extends StatelessWidget {
 }
 
 class PictureDialog extends StatelessWidget {
-  const PictureDialog({Key key, @required this.onAcceptance, @required this.onDenial}) : super(key:
-key);
+  const PictureDialog({Key key, @required this.onAcceptance, @required this.onDenial})
+      : super(key: key);
 
   final VoidCallback onAcceptance;
   final VoidCallback onDenial;
@@ -119,9 +119,7 @@ key);
           Container(
             padding: const EdgeInsets.all(16.0),
           ),
-          Icon(
-            Icons.camera_enhance
-          ),
+          Icon(Icons.camera_enhance),
           Container(
             padding: const EdgeInsets.all(16.0),
           ),
@@ -130,7 +128,6 @@ key);
       dismiss: SentimentRow(onAcceptance: onAcceptance, onDenial: onDenial),
     );
   }
-
 }
 
 class SentimentRow extends StatelessWidget {

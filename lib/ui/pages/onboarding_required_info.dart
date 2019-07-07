@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
-
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -24,7 +23,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           automaticallyImplyLeading: true,
@@ -51,8 +50,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
 
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
                       nav.openViewJourneysScreen(context);
-                    }
-                ),
+                    }),
               ),
               Spacer(),
               RaisedButton(
@@ -68,8 +66,8 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                 child: Text(
                   'Get Started!',
-                  style: TextStyle(fontSize: 20, fontFamily: 'Signika', color: Theme.of
-                    (context).primaryColor),
+                  style: TextStyle(
+                      fontSize: 20, fontFamily: 'Signika', color: Theme.of(context).primaryColor),
                 ),
                 color: Theme.of(context).cardColor,
               ),

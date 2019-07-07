@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 
 class DropdownMenu extends StatelessWidget {
   const DropdownMenu(
-      {@required this.hintText,
-      @required this.items,
-      @required this.callback,
-      Key key})
+      {@required this.hintText, @required this.items, @required this.callback, Key key})
       : super(key: key);
 
   final String hintText;
@@ -24,9 +21,7 @@ class DropdownMenu extends StatelessWidget {
       items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(
-              value
-          ),
+          child: Text(value),
         );
       }).toList(),
       onChanged: callback,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Bullet extends StatelessWidget{
+class Bullet extends StatelessWidget {
   const Bullet({Key key, this.color}) : super(key: key);
 
   final Color color;

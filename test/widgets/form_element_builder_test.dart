@@ -6,8 +6,7 @@ import 'package:mockito/mockito.dart';
 class MockController extends Mock implements PageController {}
 
 void main() {
-  group('Form Element Builder', ()
-  {
+  group('Form Element Builder', () {
     testWidgets('Builds Text Object', (WidgetTester tester) async {
       final Text text = Text('test');
 
@@ -15,11 +14,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
               body: FormElementBuilder(
-                onSubmitCallback: (text) {},
-                builder: (BuildContext context, FocusNode focus,
-                    SubmitCallback onSubmit) {return text;},
-              )
-          ),
+            onSubmitCallback: (text) {},
+            builder: (BuildContext context, FocusNode focus, SubmitCallback onSubmit) {
+              return text;
+            },
+          )),
         ),
       );
 
@@ -34,20 +33,18 @@ void main() {
         MaterialApp(
           home: Scaffold(
               body: FormElementBuilder(
-                onSubmitCallback: (text) {
-                  testData = text;
+            onSubmitCallback: (text) {
+              testData = text;
+            },
+            builder: (BuildContext context, FocusNode focus, SubmitCallback onSubmit) {
+              return FlatButton(
+                onPressed: () {
+                  onSubmit('test');
                 },
-                builder: (BuildContext context, FocusNode focus,
-                    SubmitCallback onSubmit) {
-                  return FlatButton(
-                    onPressed: () {
-                      onSubmit('test');
-                    },
-                    child: null,
-                  );
-                },
-              )
-          ),
+                child: null,
+              );
+            },
+          )),
         ),
       );
 

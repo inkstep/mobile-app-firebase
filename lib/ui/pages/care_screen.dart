@@ -35,7 +35,6 @@ class CareScreen extends StatelessWidget {
       timeOffset: Duration(days: 1),
       preCare: true,
       children: <Widget>[
-
         Text('Come sober'),
         Text('Hygiene'), // Co// me freshly showered! Tattooing required good hygiene. ],
         Text('Prep the tattoo spot'),
@@ -49,7 +48,6 @@ class CareScreen extends StatelessWidget {
       timeOffset: Duration(days: 1),
       preCare: true,
       children: <Widget>[
-
         Text('Your appointment day is finally here! And with it, the usual hits play - '
             '"Do I prep the tattoo spot? Should I shave? Can I do a shot to calm my '
             'nerves before I get inked? Can I get there early? WHAT DO I WEAR?!"'

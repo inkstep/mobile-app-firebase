@@ -151,7 +151,7 @@ class WebRepository {
   Future<Map<String, dynamic>> loadArtist(int artistId) async {
     http.Response response = await client.get('$url$artistEndpoint/$artistId');
     print('GET $artistEndpoint/$artistId ${response.reasonPhrase}'
-          ' (${response.statusCode}): ${response.body}');
+        ' (${response.statusCode}): ${response.body}');
 
     // If getting the artist fails, wait and then try again up to 10 times
     int limit = 0;
@@ -160,7 +160,7 @@ class WebRepository {
 
       response = await client.get('$url$artistEndpoint/$artistId');
       print('Retry: GET $artistEndpoint/$artistId ${response.reasonPhrase}'
-            ' (${response.statusCode}): ${response.body}');
+          ' (${response.statusCode}): ${response.body}');
       limit++;
     }
 

@@ -59,7 +59,10 @@ class BinaryInput extends StatelessWidget {
     final Radius r = Radius.circular(10);
     return FlatButton(
       padding: EdgeInsets.all(20),
-      child: Text(left ? 'Yes' : 'No', style: Theme.of(context).primaryTextTheme.subtitle,),
+      child: Text(
+        left ? 'Yes' : 'No',
+        style: Theme.of(context).primaryTextTheme.subtitle,
+      ),
       onPressed: enabled ? response : null,
       disabledColor: left ? Colors.green : Theme.of(context).accentColor,
       color: left ? Theme.of(context).disabledColor : Theme.of(context).primaryColorDark,

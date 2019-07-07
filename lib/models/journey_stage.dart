@@ -33,8 +33,11 @@ abstract class JourneyStage extends Equatable {
   }
 
   int get progress;
+
   bool get userActionRequired;
+
   int get numberRepresentation;
+
   IconData get icon;
 }
 
@@ -161,6 +164,7 @@ class WaitingList extends JourneyStageWithQuote {
 
 class Aftercare extends JourneyStage {
   Aftercare(this.appointmentDate);
+
   final DateTime appointmentDate;
 
   @override

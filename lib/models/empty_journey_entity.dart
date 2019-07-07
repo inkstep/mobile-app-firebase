@@ -25,15 +25,14 @@ class EmptyJourneyEntity extends Equatable {
 
   factory EmptyJourneyEntity.fromJson(Map<String, dynamic> json) {
     return EmptyJourneyEntity(
-      userId: json['userID'],
-      artistId: json['artistID'],
-      description: json['tattooDesc'],
-      size: json['size'],
-      position: json['position'],
-      availability: json['availability'],
-      noImages: int.parse(json['noRefImages']),
-      style: json['style']
-    );
+        userId: json['userID'],
+        artistId: json['artistID'],
+        description: json['tattooDesc'],
+        size: json['size'],
+        position: json['position'],
+        availability: json['availability'],
+        noImages: int.parse(json['noRefImages']),
+        style: json['style']);
   }
 
   final int userId;

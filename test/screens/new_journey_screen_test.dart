@@ -11,7 +11,7 @@ void main() {
 //    setUp(() {
 //
 //      screen = MaterialApp(home: NewJourneyScreen(101));
-    });
+  });
 
 //    testWidgets('Journey should start with requesting a name if not already provided',
 //        (WidgetTester tester) async {

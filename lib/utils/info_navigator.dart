@@ -134,10 +134,11 @@ class InfoNavigator {
           }
         },
       ),
-      if (displayEmail) EmailScreen(
-        navigator: this,
-        emailController: emailController,
-      ),
+      if (displayEmail)
+        EmailScreen(
+          navigator: this,
+          emailController: emailController,
+        ),
       OverviewForm(
         emailController: emailController,
         heightController: heightController,

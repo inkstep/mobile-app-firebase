@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
-
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -376,7 +375,6 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       ),
                     ),
                   ),
-
                   Container(
                     width: fullWidth,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -388,7 +386,6 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       ],
                     ),
                   ),
-
                   if (hasDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

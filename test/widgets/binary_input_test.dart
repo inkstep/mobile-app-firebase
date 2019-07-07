@@ -6,18 +6,16 @@ import 'package:mockito/mockito.dart';
 class MockController extends Mock implements PageController {}
 
 void main() {
-  group('Binary Input', ()
-  {
+  group('Binary Input', () {
     testWidgets('renders text properly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
               body: BinaryInput(
-                label: 'label',
-                currentState: buttonState.Unset,
-                callback: (text) {},
-              )
-          ),
+            label: 'label',
+            currentState: buttonState.Unset,
+            callback: (text) {},
+          )),
         ),
       );
 

@@ -28,11 +28,10 @@ class LongTextInput extends StatelessWidget {
       style: Theme.of(context).primaryTextTheme.body1,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: Theme.of(context).primaryTextTheme.body1
-                    .copyWith(color: Colors.white.withOpacity(0.8)),
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(
-          color: Theme.of(context).cardColor
-        )),
+        hintStyle:
+            Theme.of(context).primaryTextTheme.body1.copyWith(color: Colors.white.withOpacity(0.8)),
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).cardColor)),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).cardColor,

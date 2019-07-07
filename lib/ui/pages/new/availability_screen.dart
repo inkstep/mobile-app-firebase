@@ -40,7 +40,7 @@ class _AvailabilityScreenState extends State<AvailabilityScreen> {
       callbackForDay(6)
     ]);
 
-    for(int i = 0; i < avail.length; i++) {
+    for (int i = 0; i < avail.length; i++) {
       final char = avail[i];
       availability[i] = char == '1';
     }
@@ -81,34 +81,34 @@ class AvailabilityWidget extends InfoWidget {
   @override
   Widget getWidget(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'What days of the week are you normally available?',
-          style: Theme.of(context).primaryTextTheme.headline,
-          textScaleFactor: 0.8,
-          textAlign: TextAlign.center,
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),
-                _chooseDayChip('Tuesday', weekCallbacks.callbacks[1], context),
-                _chooseDayChip('Wednesday', weekCallbacks.callbacks[2], context),
-                _chooseDayChip('Thursday', weekCallbacks.callbacks[3], context),
-                _chooseDayChip('Friday', weekCallbacks.callbacks[4], context),
-                _chooseDayChip('Saturday', weekCallbacks.callbacks[5], context),
-                _chooseDayChip('Sunday', weekCallbacks.callbacks[6], context),
-              ],
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'What days of the week are you normally available?',
+              style: Theme.of(context).primaryTextTheme.headline,
+              textScaleFactor: 0.8,
+              textAlign: TextAlign.center,
             ),
-          ),
-        ),
-      ],
-    ));
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+                child: Column(
+                  children: <Widget>[
+                    _chooseDayChip('Monday', weekCallbacks.callbacks[0], context),
+                    _chooseDayChip('Tuesday', weekCallbacks.callbacks[1], context),
+                    _chooseDayChip('Wednesday', weekCallbacks.callbacks[2], context),
+                    _chooseDayChip('Thursday', weekCallbacks.callbacks[3], context),
+                    _chooseDayChip('Friday', weekCallbacks.callbacks[4], context),
+                    _chooseDayChip('Saturday', weekCallbacks.callbacks[5], context),
+                    _chooseDayChip('Sunday', weekCallbacks.callbacks[6], context),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _chooseDayChip(String day, SingleDayCallback dayCallback, BuildContext context) {

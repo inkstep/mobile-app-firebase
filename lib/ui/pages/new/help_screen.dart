@@ -12,8 +12,7 @@ class HelpDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [for (String child in help) getBubble(child, context)]
-    );
+        children: [for (String child in help) getBubble(child, context)]);
   }
 
   Widget getBubble(String child, BuildContext context) {

@@ -77,35 +77,35 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-  final List<Widget> pages = [
-    FirstPage(controller: _controller),
-    _buildOnboardingSlice(
-      context,
-      Icons.memory,
-      'Feel smarter',
-      'You get guided as to what artists want you to say.',
-      'Wow',
-    ),
-    _buildOnboardingSlice(
+    final List<Widget> pages = [
+      FirstPage(controller: _controller),
+      _buildOnboardingSlice(
         context,
-        Icons.calendar_today,
-        'Get the Artist you want',
-        'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
-        "That's cool"),
-    _buildOnboardingSlice(
-        context,
-        Icons.healing,
-        'Care made easy',
-        'Personal, artist specified pre-care and aftercare all in one place, exactly when you need it',
-        'Awesome!'),
-    _buildOnboardingSlice(
-        context,
-        Icons.favorite,
-        "Be the Artist's favourite",
-        "Make your artist happy! They'll be delighted to have a client like you.",
-        "Enough! Let's get to it.",
-        last: true),
-  ];
+        Icons.memory,
+        'Feel smarter',
+        'You get guided as to what artists want you to say.',
+        'Wow',
+      ),
+      _buildOnboardingSlice(
+          context,
+          Icons.calendar_today,
+          'Get the Artist you want',
+          'Help artists out by taking a cancellation slot and you\'re more likely to get seen.',
+          "That's cool"),
+      _buildOnboardingSlice(
+          context,
+          Icons.healing,
+          'Care made easy',
+          'Personal, artist specified pre-care and aftercare all in one place, exactly when you need it',
+          'Awesome!'),
+      _buildOnboardingSlice(
+          context,
+          Icons.favorite,
+          "Be the Artist's favourite",
+          "Make your artist happy! They'll be delighted to have a client like you.",
+          "Enough! Let's get to it.",
+          last: true),
+    ];
 
     return Scaffold(
       backgroundColor: Colors.white,
