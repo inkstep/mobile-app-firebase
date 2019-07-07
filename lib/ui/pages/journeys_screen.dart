@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/blocs/journeys_event.dart';
-import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/feature_discovery.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';

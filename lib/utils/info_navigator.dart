@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/blocs/journeys_state.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';

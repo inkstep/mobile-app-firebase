@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,8 +22,165 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'journeys_event.dart';
-import 'journeys_state.dart';
+
+// EVENT
+
+abstract class JourneysEvent extends Equatable {
+  JourneysEvent([List<dynamic> props = const <dynamic>[]]) : super(props);
+}
+
+// TODO(mm5917): Users should have their own bloc
+class AddUser extends JourneysEvent {
+  AddUser({@required this.name}) : super(<dynamic>[name]);
+
+  final String name;
+
+  @override
+  String toString() => 'AddUser { name: $name }';
+}
+
+class UpdateUser extends JourneysEvent {
+  UpdateUser({@required this.user}) : super(<dynamic>[user]);
+
+  final User user;
+
+  @override
+  String toString() => 'UpdateUser { user: ${user.toString()} }';
+}
+
+class AddJourney extends JourneysEvent {
+  AddJourney({@required this.result}) : super(<dynamic>[result]);
+
+  final FormResult result;
+
+  @override
+  String toString() => 'AddJourney { formResult: $result }';
+}
+
+class LoadUser extends JourneysEvent {
+  LoadUser(this.userId);
+
+  final int userId;
+
+  @override
+  String toString() => 'LoadUser';
+}
+
+class LoadJourneys extends JourneysEvent {
+  @override
+  String toString() => 'LoadJourneys';
+}
+
+class LoadJourney extends JourneysEvent {
+  LoadJourney(this.journeyId);
+
+  final int journeyId;
+}
+
+class ShownFeatureDiscovery extends JourneysEvent {
+  @override
+  String toString() => 'ShownFeatureDiscovery';
+}
+
+class DialogJourneyEvent extends JourneysEvent {
+  DialogJourneyEvent(this.journeyId);
+
+  final int journeyId;
+}
+
+class QuoteAccepted extends DialogJourneyEvent {
+  QuoteAccepted(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'QuoteAccepted';
+}
+
+class QuoteDenied extends DialogJourneyEvent {
+  QuoteDenied(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'QuoteDenied';
+}
+
+class DateAccepted extends DialogJourneyEvent {
+  DateAccepted(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'DateAccepted';
+}
+
+class DateDenied extends DialogJourneyEvent {
+  DateDenied(int journeyId) : super(journeyId);
+
+  @override
+  String toString() => 'DateDenied';
+}
+
+class LogOut extends JourneysEvent {
+  LogOut(this.context);
+
+  final BuildContext context;
+}
+
+class SendPhoto extends JourneysEvent {
+  SendPhoto(this.imageData, this.userId, this.artistId, this.journeyId);
+
+  final File imageData;
+  final int userId;
+  final int artistId;
+  final int journeyId;
+
+  @override
+  String toString() => 'SendPhoto';
+}
+
+class RemoveJourney extends JourneysEvent {
+  RemoveJourney(this.journeyId);
+
+  final int journeyId;
+
+  @override
+  String toString() => 'RemoveJourney';
+}
+
+
+// STATE
+
+abstract class JourneysState extends Equatable {
+  JourneysState([List<dynamic> props = const <dynamic>[]]) : super(props);
+}
+
+class JourneysNoUser extends JourneysState {
+  @override
+  String toString() => 'JourneysNoUser';
+}
+
+class JourneyError extends JourneysState {
+  JourneyError({@required this.prev}) : super(<dynamic>[prev]);
+
+  final JourneysState prev;
+
+  @override
+  String toString() => 'JourneysError { prev : $prev } ';
+}
+
+class JourneysWithUser extends JourneysState {
+  JourneysWithUser({
+    @required this.user,
+    @required this.cards,
+    @required this.firstTime,
+  }) : super(<dynamic>[user, cards]);
+
+  final User user;
+  final List<Future<CardModel>> cards;
+  final bool firstTime;
+
+  @override
+  String toString() => 'JourneysWithUser { user: $user, cards: ${cards?.length} }';
+}
+
+
+// BLOC
 
 class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
   JourneysBloc({
@@ -181,22 +339,26 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       loadingImages.add(Image.memory(byteData.buffer.asUint8List()));
     }
 
-    yield JourneysWithUser(cards: [
-      Future.value(CardModel(
-          description: event.result.description,
-          size: event.result.size,
-          artistId: event.result.artistID,
-          artistName: '',
-          userId: userId,
-          bodyLocation: event.result.position,
-          images: loadingImages,
-          quote: TextRange(start: -1, end: -1),
-          stage: WaitingForQuote(),
-          index: null,
-          palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 100)]),
-          journeyId: null,
-          bookedDate: null))
-    ] + oldCards, user: user, firstTime: firstTime);
+    yield JourneysWithUser(
+        cards: [
+              Future.value(CardModel(
+                  description: event.result.description,
+                  size: event.result.size,
+                  artistId: event.result.artistID,
+                  artistName: '',
+                  userId: userId,
+                  bodyLocation: event.result.position,
+                  images: loadingImages,
+                  quote: TextRange(start: -1, end: -1),
+                  stage: WaitingForQuote(),
+                  index: null,
+                  palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 100)]),
+                  journeyId: null,
+                  bookedDate: null))
+            ] +
+            oldCards,
+        user: user,
+        firstTime: firstTime);
 
     if (journeyId == -1) {
       print('Failed to save journeys');

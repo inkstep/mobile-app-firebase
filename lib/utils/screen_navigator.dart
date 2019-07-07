@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/blocs/journeys_event.dart';
+
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';

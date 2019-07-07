@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/artists_bloc.dart';
-import 'package:inkstep/blocs/artists_event.dart';
-import 'package:inkstep/blocs/artists_state.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/artists_repository.dart';
 import 'package:inkstep/resources/web_repository.dart';

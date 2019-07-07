@@ -12,8 +12,6 @@ import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'blocs/journeys_event.dart';
-
 void main() {
   // Set up error handling
   FlutterError.onError = (FlutterErrorDetails details) {

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:inkstep/blocs/artists_state.dart';
+import 'package:equatable/equatable.dart';
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/artists_model.dart';
 import 'package:inkstep/models/studio_entity.dart';
@@ -7,7 +7,42 @@ import 'package:inkstep/models/studio_model.dart';
 import 'package:inkstep/resources/artists_repository.dart';
 import 'package:meta/meta.dart';
 
-import 'artists_event.dart';
+
+// EVENT
+
+abstract class ArtistsEvent extends Equatable {
+  ArtistsEvent([List props = const <dynamic>[]]) : super(props);
+}
+
+class LoadArtists extends ArtistsEvent {
+  LoadArtists(this.studioID) : super(<dynamic>[studioID]);
+
+  final int studioID;
+}
+
+
+// STATE
+
+abstract class ArtistsState extends Equatable {
+  ArtistsState([List<dynamic> props = const <dynamic>[]]) : super(props);
+}
+
+class ArtistsUninitialised extends ArtistsState {
+  @override
+  String toString() => 'ArtistsUninitialised';
+}
+
+class ArtistsLoaded extends ArtistsState {
+  ArtistsLoaded({@required this.artists}) : super(<dynamic>[artists]);
+
+  final List<Artist> artists;
+
+  @override
+  String toString() => 'ArtistsLoaded { artists: ${artists?.length}';
+}
+
+
+// BLOC
 
 class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
   ArtistsBloc({@required this.artistsRepository});
