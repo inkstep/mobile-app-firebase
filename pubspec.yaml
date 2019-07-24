@@ -57,4 +57,4 @@ flutter:
   assets:
     - assets/
     - assets/icon/
-    - assets/offlineImages/
+    - assets/offline/

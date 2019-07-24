@@ -18,83 +18,56 @@ import 'offline_data.dart';
 
 class OfflineJourneysRepository implements JourneysRepository {
   @override
-  Future<List<JourneyEntity>> loadJourneys({@required int userId}) async {
-    return Future.value(
-      <JourneyEntity>[offlineCherub, offlineRose],
-    );
-  }
+  Future<List<JourneyEntity>> loadJourneys({@required int userId}) async
+    => Future.value(offlineJourneys);
 
   @override
-  Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async {
-    return Future.value(0);
-  }
+  Future<int> saveJourneys(List<EmptyJourneyEntity> journeys) async
+    => Future.value(0);
 
   @override
-  Future<int> saveUser(UserEntity user) async {
-    return Future.value(0);
-  }
+  Future<int> saveUser(UserEntity user) async
+    => Future.value(0);
 
   @override
-  Future<int> saveImage(int journeyId, Asset img) async {
-    return Future.value(0);
-  }
+  Future<int> saveImage(int journeyId, Asset img) async
+    => Future.value(0);
 
   @override
-  Future<ArtistEntity> loadArtist(int artistId) async {
-    return Future.value(
+  Future<ArtistEntity> loadArtist(int artistId) async
+    => Future.value(
         offlineArtists.firstWhere((a) => a.artistID == artistId, orElse: () => offlineArtists[0]));
-  }
 
   @override
-  Future<User> getUser(int userId) async {
-    return Future.value(
+  Future<User> getUser(int userId) async
+    => Future.value(
         offlineUsers.firstWhere((u) => u.id == userId, orElse: () => offlineUsers[0]));
-  }
 
   @override
-  Future<List<Image>> getImages(int journeyId) async {
-    return Future.value(offlineJourneyImages[journeyId]);
-  }
+  Future<List<Image>> getImages(int journeyId) async
+    => Future.value(offlineJourneyImages[journeyId]);
 
   @override
-  Future<List<Image>> getImageThumbnails(int journeyId, int numImages) {
-    return Future.value(offlineJourneyImages[journeyId]);
-  }
+  Future<List<Image>> getImageThumbnails(int journeyId, int numImages)
+    => Future.value(offlineJourneyImages[journeyId]);
 
   @override
-  Future<JourneyEntity> loadJourney({int id}) {
-    // TODO: implement loadJourney
-    return null;
-  }
+  Future<JourneyEntity> loadJourney({int id}) => null;
 
   @override
-  void removeJourney(int journeyId) {
-    // TODO: implement removeJourney
-  }
+  void removeJourney(int journeyId) {}
 
   @override
-  Future<bool> saveUserEmail(int id, String email) {
-    // TODO: implement saveUserEmail
-    return null;
-  }
+  Future<bool> saveUserEmail(int id, String email) => null;
 
   @override
-  Future<bool> sendArtistPhoto(File imageData, int journeyId) {
-    // TODO: implement sendArtistPhoto
-    return null;
-  }
+  Future<bool> sendArtistPhoto(File imageData, int journeyId) => null;
 
   @override
-  Future<int> updateStage(JourneyStage updateStage, int journeyId) {
-    // TODO: implement updateStage
-    return null;
-  }
+  Future<int> updateStage(JourneyStage updateStage, int journeyId) => null;
 
   @override
-  Future<int> updateToken(String token, int userId) {
-    // TODO: implement updateToken
-    return null;
-  }
+  Future<int> updateToken(String token, int userId) => null;
 
   @override
   WebRepository get webClient => null;
