@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -13,7 +17,7 @@ class WebRepository {
   final http.Client client;
   final Duration delay;
 
-  static const String url = 'http://inkstep.hails.info';
+  static const String url = 'https://ictf.co.uk';
 
   //static const String url = 'http://localhost:4567';
 
@@ -183,13 +187,14 @@ class WebRepository {
     return json.decode(response.body);
   }
 
-  Future<List<String>> loadImages(int id) async {
-    print('journey_id = $id');
+  Future<List<String>> loadImages(int journeyId) async {
+    print('journey_id = $journeyId');
 
-    final http.Response response = await client.get('$url$journeyEndpoint/$id$imagesEndpoint');
+    final http.Response response =
+        await client.get('$url$journeyEndpoint/$journeyId$imagesEndpoint');
 
     print(
-        '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+        '$journeyEndpoint/$journeyId$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
     if (response.statusCode != 200) {
       throw http.ClientException;
@@ -205,10 +210,11 @@ class WebRepository {
     while (imageData.isEmpty && limit < 10) {
       sleep(Duration(milliseconds: 100));
 
-      final http.Response response = await client.get('$url$journeyEndpoint/$id$imagesEndpoint');
+      final http.Response response =
+          await client.get('$url$journeyEndpoint/$journeyId$imagesEndpoint');
 
       print(
-          '$journeyEndpoint/$id$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
+          '$journeyEndpoint/$journeyId$imagesEndpoint ${response.reasonPhrase} (${response.statusCode}): ${response.body}');
 
       if (response.statusCode != 200) {
         throw http.ClientException;
@@ -224,6 +230,14 @@ class WebRepository {
     }
 
     return imageData;
+  }
+
+  Future<List<Image>> loadImageThumbnails(int journeyId, int numImages) async {
+    final List<Image> images = [];
+    for (int i = 0; i < numImages; i++) {
+      images.add(Image.network('http://inkstep.hails.info/journey/$journeyId/thumb/$i'));
+    }
+    return Future.value(images);
   }
 
   Future<Map<String, dynamic>> loadStudio(int studioID) async {

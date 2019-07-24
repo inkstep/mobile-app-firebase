@@ -72,8 +72,8 @@ class JourneysRepository {
     return User.fromJson(await webClient.loadUser(userId));
   }
 
-  Future<List<Image>> getImages(int id) async {
-    final List<String> imageData = await webClient.loadImages(id);
+  Future<List<Image>> getImages(int journeyId) async {
+    final List<String> imageData = await webClient.loadImages(journeyId);
 
     List<Image> images = [];
 
@@ -84,6 +84,9 @@ class JourneysRepository {
 
     return Future.value(images);
   }
+
+  Future<List<Image>> getImageThumbnails(int journeyId, int numImages) async
+    => webClient.loadImageThumbnails(journeyId, numImages);
 
   Future<int> updateStage(JourneyStage updateStage, int journeyId) async {
     final Map<String, int> journeyMap = {'Stage': updateStage.numberRepresentation};
