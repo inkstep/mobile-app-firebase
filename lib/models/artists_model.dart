@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import 'studio_model.dart';
@@ -9,13 +10,13 @@ class Artist extends Equatable {
     @required this.name,
     @required this.email,
     @required this.studio,
-    @required this.profileUrl,
+    @required this.profileImage,
   }) : super(<dynamic>[artistID]);
 
   final String name;
   final String email;
   final Studio studio;
-  String profileUrl;
+  Widget profileImage;
   final int artistID;
 
   Map<String, dynamic> toJson() {

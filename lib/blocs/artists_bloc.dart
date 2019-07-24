@@ -71,7 +71,7 @@ class ArtistsBloc extends Bloc<ArtistsEvent, ArtistsState> {
           Artist(
             name: artistEntity.name,
             email: artistEntity.email,
-            profileUrl: artistEntity.profileUrl,
+            profileImage: artistEntity.artistImage,
             studio: Studio(name: se.name, id: 1),
             artistID: artistEntity.artistID,
           )

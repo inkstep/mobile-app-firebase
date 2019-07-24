@@ -20,12 +20,20 @@ final List<ArtistEntity> offlineArtists = [
     name: 'Ricky',
     studioID: 0,
     artistID: 2,
+    artistImage: Image.asset(
+      'assets/offlineImages/ricky.jpg',
+      fit: BoxFit.cover,
+    ),
   ),
   ArtistEntity(
     email: 'loz@email.com',
     name: 'Loz',
     studioID: 0,
     artistID: 1,
+    artistImage: Image.asset(
+      'assets/offlineImages/loz.jpg',
+      fit: BoxFit.cover,
+    ),
   )
 ];
 

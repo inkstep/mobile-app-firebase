@@ -113,11 +113,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                           child: Card(
                                             color: Colors.black,
                                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                                            child: FadeInImage.assetNetwork(
-                                              placeholder: 'assets/ricky.png',
-                                              image: state.artists[idx].profileUrl,
-                                              fit: BoxFit.cover,
-                                            ),
+                                            child: state.artists[idx].profileImage,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),

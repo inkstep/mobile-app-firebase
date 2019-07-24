@@ -58,7 +58,6 @@ class OfflineJourneysRepository implements JourneysRepository {
 
   @override
   Future<List<Image>> getImageThumbnails(int journeyId, int numImages) {
-    print('get fake images');
     return Future.value(offlineJourneyImages[journeyId]);
   }
 
