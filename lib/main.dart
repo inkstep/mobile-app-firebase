@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/resources/journeys_repository.dart';
-import 'package:inkstep/resources/web_repository.dart';
+import 'package:inkstep/resources/offline_journeys_repository.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
@@ -47,7 +46,8 @@ class InkstepState extends State<Inkstep> {
     super.initState();
     client = http.Client();
     _journeyBloc = JourneysBloc(
-      journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
+      //journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
+      journeysRepository: OfflineJourneysRepository(),
     );
 
     updateUserId = (userId) {

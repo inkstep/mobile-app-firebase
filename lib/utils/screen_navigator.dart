@@ -5,6 +5,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
+import 'package:inkstep/ui/pages/journey_messages_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
@@ -114,6 +115,15 @@ class ScreenNavigator {
       context,
       MaterialPageRoute<dynamic>(
           builder: (context) => SingleJourneyScreen(card: card), fullscreenDialog: true),
+    );
+  }
+
+  void openJourneyMessagesScreen(BuildContext context, CardModel card) {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+          builder: (context) => JourneyMessagesScreen(card: card),
+          fullscreenDialog: true),
     );
   }
 }

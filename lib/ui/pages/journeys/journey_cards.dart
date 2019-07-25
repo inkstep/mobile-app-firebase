@@ -276,16 +276,29 @@ class LoadedJourneyCard extends AnimatedWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  Spacer(flex: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DescribedIconButton(
+                      icon: Icons.mail_outline,
+                      featureId: card.messagesID,
+                      onPressed: () {
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.openJourneyMessagesScreen(context, card);
+                      },
+                    ),
+                  ),
                   showCare
-                      ? DescribedIconButton(
-                          icon: Icons.healing,
-                          featureId: card.aftercareID,
-                          onPressed: () {
-                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                            nav.openCareScreen(context, card.bookedDate);
-                          },
-                        )
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: DescribedIconButton(
+                            icon: Icons.healing,
+                            featureId: card.aftercareID,
+                            onPressed: () {
+                              final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                              nav.openCareScreen(context, card.bookedDate);
+                            },
+                          ))
                       : Spacer(),
                 ],
               ),

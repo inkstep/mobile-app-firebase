@@ -38,4 +38,5 @@ class CardModel extends Equatable {
   DateTime bookedDate;
 
   String get aftercareID => 'care_button_$index';
+  String get messagesID => 'messages_button_$index';
 }
