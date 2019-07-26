@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class BoldCallToAction extends StatelessWidget {
-  BoldCallToAction({
+  const BoldCallToAction({
     @required this.onTap,
     @required this.label,
     @required this.color,

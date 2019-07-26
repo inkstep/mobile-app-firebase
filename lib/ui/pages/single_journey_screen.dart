@@ -284,7 +284,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 }
 
 class SingleJourneyScreen extends StatefulWidget {
-  SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
+  const SingleJourneyScreen({Key key, @required this.card}) : super(key: key);
 
   final CardModel card;
 

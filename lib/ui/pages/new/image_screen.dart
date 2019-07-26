@@ -8,8 +8,12 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'info_widget.dart';
 
 class ImageScreen extends StatefulWidget {
-  ImageScreen({Key key, @required this.images, @required this.navigator, @required this.callback})
-      : super(key: key);
+  const ImageScreen({
+    Key key,
+    @required this.images,
+    @required this.navigator,
+    @required this.callback
+  }) : super(key: key);
 
   final List<Asset> images;
   final InfoNavigator navigator;

@@ -3,7 +3,7 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 
 class ShortTextInputFormElement extends StatelessWidget {
-  ShortTextInputFormElement({
+  const ShortTextInputFormElement({
     @required this.textController,
     @required this.label,
     @required this.hint,

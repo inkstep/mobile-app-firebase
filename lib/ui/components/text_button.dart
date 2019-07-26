@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme.dart';
 
 class TextButton extends StatelessWidget {
-  TextButton({
+  const TextButton({
     @required this.onTap,
     @required this.label,
     Key key,

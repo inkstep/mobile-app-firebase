@@ -10,7 +10,7 @@ import 'package:inkstep/utils/info_navigator.dart';
 import 'info_widget.dart';
 
 class SizeSelectorScreen extends StatefulWidget {
-  SizeSelectorScreen({
+  const SizeSelectorScreen({
     Key key,
     @required this.widthController,
     @required this.heightController,

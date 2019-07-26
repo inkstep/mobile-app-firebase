@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 
 class BinaryInput extends StatelessWidget {
-  BinaryInput({
+  const BinaryInput({
     @required this.callback,
     @required this.label,
     @required this.currentState,

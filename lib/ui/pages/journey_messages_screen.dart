@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/models/card_model.dart';
 
 class JourneyMessagesScreen extends StatelessWidget {
-  JourneyMessagesScreen({Key key, @required this.card}) : super(key: key);
+  const JourneyMessagesScreen({Key key, @required this.card}) : super(key: key);
 
   final CardModel card;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(card.artistName), backgroundColor: Colors.black,),
+      appBar: AppBar(
+        title: Text(card.artistName),
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[

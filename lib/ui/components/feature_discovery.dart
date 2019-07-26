@@ -85,7 +85,7 @@ class _FeatureDiscoveryState extends State<FeatureDiscovery> {
 }
 
 class _InheritedFeatureDiscovery extends InheritedWidget {
-  _InheritedFeatureDiscovery({
+  const _InheritedFeatureDiscovery({
     this.activeStepId,
     Widget child,
   }) : super(child: child);

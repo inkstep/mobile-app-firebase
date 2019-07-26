@@ -9,7 +9,7 @@ import 'package:inkstep/resources/offline_artists_repository.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistSelectionScreen extends StatefulWidget {
-  ArtistSelectionScreen({
+  const ArtistSelectionScreen({
     Key key,
   }) : super(key: key);
 
@@ -52,17 +52,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
           body: BlocBuilder(
             bloc: _artistsBloc,
             builder: (BuildContext context, ArtistsState state) {
-              if (state is ArtistsUninitialised) {
-                return Container(
-                  color: Theme.of(context).backgroundColor,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1.0,
-                      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).cardColor),
-                    ),
-                  ),
-                );
-              } else if (state is ArtistsLoaded) {
+              if (state is ArtistsLoaded) {
                 return Container(
                   color: Theme.of(context).backgroundColor,
                   child: SafeArea(
@@ -157,6 +147,15 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                   ),
                 );
               }
+              return Container(
+                color: Theme.of(context).backgroundColor,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).cardColor),
+                  ),
+                ),
+              );
             },
           ),
         ));

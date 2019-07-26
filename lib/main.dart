@@ -13,14 +13,6 @@ import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  // Set up error handling
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (details.context.contains('layout')) {
-      print('RENDERING ERROR:');
-    }
-    print(details.exception);
-  };
-
   // Set up BlocSupervisor
   BlocSupervisor.delegate = SimpleBlocDelegate();
 

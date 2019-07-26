@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LargeTwoPartHeader extends StatelessWidget {
-  LargeTwoPartHeader({Key key, @required this.largeText, @required this.name, this.taskStatus})
-      : super(key: key);
+  const LargeTwoPartHeader({
+    Key key,
+    @required this.largeText,
+    @required this.name, this.taskStatus
+  }) : super(key: key);
 
   final String largeText;
   final String name;

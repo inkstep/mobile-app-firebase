@@ -5,7 +5,7 @@ import 'package:inkstep/utils/info_navigator.dart';
 import 'info_widget.dart';
 
 class StyleScreen extends StatefulWidget {
-  StyleScreen({
+  const StyleScreen({
     Key key,
     @required this.styleController,
     this.navigator,
