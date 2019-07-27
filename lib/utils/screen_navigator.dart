@@ -11,7 +11,6 @@ import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
-import 'package:inkstep/ui/pages/studios_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
 
 import 'info_navigator.dart';
@@ -85,13 +84,6 @@ class ScreenNavigator {
         rect: rect,
         child: ArtistSelectionScreen(),
       ),
-    );
-  }
-
-  void openStudioSelection(BuildContext context) {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(builder: (context) => StudioSelectionScreen()),
     );
   }
 
