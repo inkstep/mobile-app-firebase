@@ -32,65 +32,10 @@ class DeleteJourneyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String header;
-    String body;
-    String confirmButtonText;
-    switch (card.stage.runtimeType) {
-      case WaitingForQuote:
-        header = 'Are you sure you want to end your journey?';
-        body = '${card.artistName.split(' ').first} will be '
-            'notified that you do not want to proceed.';
-        confirmButtonText = 'End Journey';
-        break;
-      case QuoteReceived:
-        header = 'If you don\'t accept this quote, it will end your journey with this artist.';
-        body = 'Think about a tattoo like a dentist\'s appointment, '
-            'you don\'t haggle with your dentist. Even more importantly a tattoo is not something'
-            ' to cheap out on.';
-        confirmButtonText = 'End Journey';
-        break;
-      case WaitingForAppointmentOffer:
-      case AppointmentOfferReceived:
-        header = 'Are you sure you want to end your journey?';
-        body = '${card.artistName.split(' ').first} will be '
-            'notified that you do not want to proceed.';
-        confirmButtonText = 'End Journey';
-        break;
-      case BookedIn:
-        header = 'Are you sure you want to cancel your booking?';
-        body = '${card.artistName.split(' ').first} will be notified and '
-            'you will not get your deposit back.';
-        confirmButtonText = 'Cancel Booking';
-        break;
-      case Aftercare:
-        header = 'Are you sure you want to remove this journey?';
-        body = 'You won\'t get to see personalised aftercare advice'
-            'or be able to send a photo to your artist if you proceed.';
-        confirmButtonText = 'Remove Journey';
-        break;
-      case Healed:
-        header = 'Are you sure you want to remove this journey?';
-        body = 'Please consider sending your artist a healed photo first!';
-        confirmButtonText = 'Remove Journey';
-        break;
-      case Finished:
-        header = 'It doesn\'t look like you\'ve got anything left to do.';
-        body = 'Hope you enjoyed your tattoo journey';
-        confirmButtonText = 'Remove Journey';
-        break;
-      case WaitingList:
-        header = 'Are you sure you want to end your journey?';
-        body = 'You won\'t get notified about any cancellation slots!';
-        confirmButtonText = 'End Journey';
-        break;
-      default:
-        throw Exception('Journey stage not supported');
-    }
-
     return RoundedAlertDialog(
-        title: header,
+        title: card.stage.deleteDialogHeader,
         child: Text(
-          body,
+          card.stage.deleteDialogBody(card.artistName),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle,
         ),
@@ -103,7 +48,7 @@ class DeleteJourneyDialog extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
             child: Text(
-              confirmButtonText,
+              card.stage.deleteDialogConfirmText,
               style: TextStyle(fontSize: 20, fontFamily: 'Signika').copyWith(color: Colors.red),
             ),
           ),

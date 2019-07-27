@@ -39,6 +39,12 @@ abstract class JourneyStage extends Equatable {
   int get numberRepresentation;
 
   IconData get icon;
+
+  String get deleteDialogHeader;
+
+  String get deleteDialogConfirmText;
+
+  String deleteDialogBody(String artistName);
 }
 
 abstract class JourneyStageWithQuote extends JourneyStage {
@@ -62,6 +68,16 @@ class WaitingForQuote extends JourneyStage {
 
   @override
   IconData get icon => Icons.swap_horiz;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to end your journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'End Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      '${artistName.split(' ').first} will be notified that you do not want to proceed.';
 }
 
 class QuoteReceived extends JourneyStageWithQuote {
@@ -82,6 +98,18 @@ class QuoteReceived extends JourneyStageWithQuote {
 
   @override
   IconData get icon => Icons.priority_high;
+
+  @override
+  String get deleteDialogHeader =>
+      'If you don\'t accept this quote, it will end your journey with this artist.';
+
+  @override
+  String get deleteDialogConfirmText => 'End Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      'Think about a tattoo like a dentist\'s appointment, you don\'t haggle with your dentist. '
+      'Even more importantly a tattoo is not something to cheap out on.';
 }
 
 class WaitingForAppointmentOffer extends JourneyStageWithQuote {
@@ -101,6 +129,16 @@ class WaitingForAppointmentOffer extends JourneyStageWithQuote {
 
   @override
   IconData get icon => Icons.compare_arrows;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to end your journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'End Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      '${artistName.split(' ').first} will be notified that you do not want to proceed.';
 }
 
 class AppointmentOfferReceived extends JourneyStageWithQuote {
@@ -121,6 +159,16 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
 
   @override
   IconData get icon => Icons.date_range;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to end your journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'End Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      '${artistName.split(' ').first} will be notified that you do not want to proceed.';
 }
 
 class BookedIn extends JourneyStageWithQuote {
@@ -141,6 +189,16 @@ class BookedIn extends JourneyStageWithQuote {
 
   @override
   IconData get icon => Icons.event;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to cancel your booking?';
+
+  @override
+  String get deleteDialogConfirmText => 'Cancel Booking';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      '${artistName.split(' ').first} will be notified and you will not get your deposit back.';
 }
 
 class WaitingList extends JourneyStageWithQuote {
@@ -160,6 +218,15 @@ class WaitingList extends JourneyStageWithQuote {
 
   @override
   bool get userActionRequired => false;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to end your journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'You won\'t get notified about any cancellation slots!';
+
+  @override
+  String deleteDialogBody(String artistName) => 'End Journey';
 }
 
 class Aftercare extends JourneyStage {
@@ -182,6 +249,17 @@ class Aftercare extends JourneyStage {
 
   @override
   IconData get icon => Icons.healing;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to remove this journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'Remove Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      'You won\'t get to see personalised aftercare advice or be able to send a photo to your '
+      'artist if you proceed.';
 }
 
 class Healed extends JourneyStage {
@@ -199,6 +277,16 @@ class Healed extends JourneyStage {
 
   @override
   IconData get icon => Icons.done_outline;
+
+  @override
+  String get deleteDialogHeader => 'Are you sure you want to remove this journey?';
+
+  @override
+  String get deleteDialogConfirmText => 'Remove Journey';
+
+  @override
+  String deleteDialogBody(String artistName) =>
+      'Please consider sending your artist a healed photo first!';
 }
 
 class Finished extends JourneyStage {
@@ -216,6 +304,15 @@ class Finished extends JourneyStage {
 
   @override
   IconData get icon => Icons.done;
+
+  @override
+  String get deleteDialogHeader => 'It doesn\'t look like you\'ve got anything left to do.';
+
+  @override
+  String get deleteDialogConfirmText => 'Remove Journey';
+
+  @override
+  String deleteDialogBody(String artistName) => 'We hope you enjoyed your tattoo journey';
 }
 
 class InvalidStage extends JourneyStage {
@@ -233,4 +330,13 @@ class InvalidStage extends JourneyStage {
 
   @override
   IconData get icon => Icons.error;
+
+  @override
+  String get deleteDialogHeader => 'Invalid';
+
+  @override
+  String get deleteDialogConfirmText => 'Invalid';
+
+  @override
+  String deleteDialogBody(String artistName) => 'Invalid';
 }
