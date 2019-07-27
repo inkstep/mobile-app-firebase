@@ -20,55 +20,50 @@ var appTheme = ThemeData(
   dialogBackgroundColor: baseColors['dark'],
   disabledColor: baseColors['grey'],
   cardColor: baseColors['light'],
-  cardTheme: CardTheme(
-    color: baseColors['light'],
-    elevation: 4.0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16.0),
-    ),
-  ),
   canvasColor: baseColors['dark'],
   textTheme: _getTextWithColor(baseColors['light']),
-  accentTextTheme: _getTextWithColor(baseColors['dark']),
-  iconTheme: _getIconWithColor(baseColors['light']),
-  accentIconTheme: _getIconWithColor(baseColors['dark']),
   primaryTextTheme: _getTextWithColor(baseColors['light']),
-  buttonTheme: ButtonThemeData(
-    buttonColor: baseColors['dark'],
-  ),
+  accentTextTheme: _getTextWithColor(baseColors['dark']),
+  iconTheme: IconThemeData(color: baseColors['light']),
+  accentIconTheme: IconThemeData(color: baseColors['dark']),
+  buttonTheme: ButtonThemeData(buttonColor: baseColors['dark']),
   cursorColor: baseColors['dark'],
   toggleableActiveColor: baseColors['dark'],
 );
 
-TextTheme _getTextWithColor(Color color) => TextTheme(
-    headline: TextStyle(
-      fontSize: 40,
-      fontWeight: FontWeight.w600,
-      color: color,
-    ),
-    subhead: TextStyle(
-      fontSize: 28,
-      color: color,
-      fontWeight: FontWeight.w300,
-    ),
-    title: TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w300,
-      color: color,
-    ),
-    subtitle: TextStyle(
-      fontSize: 20,
-      color: color,
-      fontWeight: FontWeight.w400,
-    ),
-    body1: TextStyle(
-      fontSize: 18,
-      color: color,
-    ),
-    caption: TextStyle(
-      fontSize: 12,
-      color: color,
-      fontWeight: FontWeight.w400,
-    ));
+var smallBorderRadius = BorderRadius.circular(16.0);
+var mediumBorderRadius = BorderRadius.circular(24.0);
+var largeBorderRadius = BorderRadius.circular(32.0);
 
-IconThemeData _getIconWithColor(Color color) => IconThemeData(color: color);
+TextTheme _getTextWithColor(Color color) => TextTheme(
+  headline: TextStyle(
+    color: color,
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+  ),
+  subhead: TextStyle(
+    color: color,
+    fontSize: 28,
+    fontWeight: FontWeight.w300,
+  ),
+  title: TextStyle(
+    color: color,
+    fontSize: 28,
+    fontWeight: FontWeight.w300,
+  ),
+  subtitle: TextStyle(
+    color: color,
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+  ),
+  body1: TextStyle(
+    color: color,
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  ),
+  caption: TextStyle(
+    color: color,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  )
+);

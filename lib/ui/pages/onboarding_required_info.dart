@@ -6,6 +6,8 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+import '../../theme.dart';
+
 class OnboardingRequiredInfo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => OnboardingRequiredInfoState();
@@ -25,7 +27,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: appTheme.accentIconTheme,
           automaticallyImplyLeading: true,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
