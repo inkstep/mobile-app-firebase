@@ -496,15 +496,15 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
     final List<Image> images = await journeysRepository.getImageThumbnails(je.id, je.noImages);
     final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
 
-    final List<PaletteColor> palettes = <PaletteColor>[];
-    for (ImageProvider img in images.map((img) => img.image)) {
-      final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
-        img,
-        maximumColorCount: 15,
-      );
-      palettes.addAll(palette.paletteColors);
-    }
-    final palette = PaletteGenerator.fromColors(palettes);
+//    final List<PaletteColor> palettes = <PaletteColor>[];
+//    for (ImageProvider img in images.map((img) => img.image)) {
+//      final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
+//        img,
+//        maximumColorCount: 15,
+//      );
+//      palettes.addAll(palette.paletteColors);
+//    }
+//    final palette = PaletteGenerator.fromColors(palettes);
 
     TextRange quote;
 
@@ -534,7 +534,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       quote: quote,
       stage: je.stage,
       index: idx,
-      palette: palette,
+      palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 90)]),
       journeyId: je.id,
       bookedDate: bookedDate,
     );
