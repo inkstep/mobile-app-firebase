@@ -29,6 +29,11 @@ var appTheme = ThemeData(
   buttonTheme: ButtonThemeData(buttonColor: baseColors['dark']),
   cursorColor: baseColors['dark'],
   toggleableActiveColor: baseColors['dark'],
+  cardTheme: CardTheme(
+    color: baseColors['light'],
+    elevation: 4.0,
+    shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
+  ),
 );
 
 var smallBorderRadius = BorderRadius.circular(16.0);
