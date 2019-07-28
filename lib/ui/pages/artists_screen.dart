@@ -5,7 +5,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/artists_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/resources/offline_artists_repository.dart';
+import 'package:inkstep/resources/artists_repository.dart';
+import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -28,7 +29,9 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
   void initState() {
     _client = http.Client();
     _artistsBloc = ArtistsBloc(
-      artistsRepository: OfflineArtistsRepository(),
+      artistsRepository: ArtistsRepository(
+        webClient: WebRepository(client: _client),
+      ),
     );
     _artistsBloc.dispatch(LoadArtists(0));
     super.initState();
