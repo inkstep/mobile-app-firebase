@@ -17,16 +17,7 @@ class JourneyMessagesScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[
-          Card(
-            margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-            child: Material(
-              borderRadius: BorderRadius.circular(16.0),
-              color: Colors.black,
-              child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                  child: Center(child: Text('message'))),
-            ),
-          ),
+          card.stage.asMessage(),
         ],
       ),
     );

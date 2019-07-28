@@ -45,6 +45,19 @@ abstract class JourneyStage extends Equatable {
   String get deleteDialogConfirmText;
 
   String deleteDialogBody(String artistName);
+
+  Widget asMessage() {
+    return Card(
+        margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(16.0),
+          color: Colors.black,
+          child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: Center(child: Text('${this.toString()}'))),
+        )
+    );
+  }
 }
 
 abstract class JourneyStageWithQuote extends JourneyStage {
