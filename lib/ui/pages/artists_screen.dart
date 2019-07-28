@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:inkstep/blocs/artists_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/offline_artists_repository.dart';
+import 'package:inkstep/theme.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistSelectionScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                             clipBehavior: Clip.antiAliasWithSaveLayer,
                                             child: state.artists[idx].profileImage,
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderRadius: smallBorderRadius,
                                             ),
                                             elevation: 10,
                                             margin: EdgeInsets.all(10),

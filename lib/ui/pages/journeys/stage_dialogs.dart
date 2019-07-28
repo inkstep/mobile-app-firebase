@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 
@@ -188,7 +189,7 @@ class SentimentButton extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: smallBorderRadius,
         ),
         child: Icon(
           icon,

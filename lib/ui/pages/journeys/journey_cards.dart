@@ -9,6 +9,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/progress_indicator.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
@@ -99,7 +100,7 @@ class AddCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       child: Material(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: smallBorderRadius,
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
@@ -273,7 +274,7 @@ class LoadedJourneyCard extends AnimatedWidget {
                         avatar: card.stage.userActionRequired ? Icon(Icons.error) : null,
                         label: Text(card.stage.toString()),
                         backgroundColor: accentColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
                       ),
                     ),
                   ),

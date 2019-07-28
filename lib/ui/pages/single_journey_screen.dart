@@ -6,6 +6,7 @@ import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
@@ -46,7 +47,7 @@ class DeleteJourneyDialog extends StatelessWidget {
             onPressed: () => _cancelJourney(context),
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            shape: RoundedRectangleBorder(borderRadius: largeBorderRadius),
             child: Text(
               card.stage.deleteDialogConfirmText,
               style: TextStyle(fontSize: 20, fontFamily: 'Signika').copyWith(color: Colors.red),
@@ -369,7 +370,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         decoration: BoxDecoration(
                           color: Colors.black26,
                           shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderRadius: smallBorderRadius,
                         ),
                       ),
                       Container(

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/theme.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
@@ -50,7 +51,7 @@ abstract class JourneyStage extends Equatable {
     return Card(
         margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
         child: Material(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: smallBorderRadius,
           color: Colors.black,
           child: Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),

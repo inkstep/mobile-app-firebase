@@ -65,7 +65,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                 },
                 elevation: 15.0,
                 padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                shape: RoundedRectangleBorder(borderRadius: largeBorderRadius),
                 child: Text(
                   'Get Started!',
                   style: TextStyle(
