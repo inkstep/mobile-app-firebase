@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/ui/components/feature_discovery.dart';
+import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/firestore.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -45,55 +48,46 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-    return FeatureDiscovery(
-      child: BlocBuilder<JourneysEvent, JourneysState>(
-        bloc: journeyBloc,
-        builder: (BuildContext context, JourneysState state) {
-          if (state is JourneyError) {
-            print('JourneyError');
-            Navigator.pop(context);
-          }
-
-          if (state is JourneysNoUser) {
-            return Container(
-              decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-              child: Center(
-                child: SpinKitChasingDots(
-                  color: Theme.of(context).cardColor,
-                  size: 50.0,
-                ),
-              ),
-            );
-          } else if (state is JourneysWithUser) {
-            final JourneysWithUser loadedState = state;
-            _controller.forward();
-
-            final void Function(ScrollNotification) onNotification = (notification) {
-              if (notification is ScrollEndNotification) {
-                final currentPage = _swiperController.index;
-                if (_currentPageIndex != currentPage) {
-                  setState(() => _currentPageIndex = currentPage);
-                }
-              }
-            };
-            return LoadedJourneyScreen(
-              animation: _animation,
-              loadedState: loadedState,
-              onNotification: onNotification,
-              swiperController: _swiperController,
-            );
-          } else {
-            print(state);
-            return Container(
-              child: Center(child: Text('Abort Mission')),
-            );
-          }
-        },
+  Widget _buildLoading() {
+    return Container(
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: Center(
+        child: SpinKitChasingDots(
+          color: Theme.of(context).cardColor,
+          size: 50.0,
+        ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _controller.forward();
+
+    // For firebase notification handler
+    final void Function(ScrollNotification) onNotification = (notification) {
+      if (notification is ScrollEndNotification) {
+        final currentPage = _swiperController.index;
+        if (_currentPageIndex != currentPage) {
+          setState(() => _currentPageIndex = currentPage);
+        }
+      }
+    };
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('journeys').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return _buildLoading();
+          }
+
+          return LoadedJourneyScreen(
+            animation: _animation,
+            onNotification: onNotification,
+            swiperController: _swiperController,
+            journeys: snapshot.data.documents,
+          );
+        });
   }
 
   @override
@@ -108,16 +102,17 @@ class LoadedJourneyScreen extends StatelessWidget {
   const LoadedJourneyScreen({
     Key key,
     @required Animation<double> animation,
-    @required this.loadedState,
     @required this.onNotification,
     @required SwiperController swiperController,
+    @required this.journeys,
   })  : _animation = animation,
         _swiperController = swiperController,
         super(key: key);
 
-  final Animation<double> _animation;
-  final JourneysWithUser loadedState;
   final void Function(ScrollNotification) onNotification;
+  final List<DocumentSnapshot> journeys;
+
+  final Animation<double> _animation;
   final SwiperController _swiperController;
 
   @override
@@ -127,7 +122,7 @@ class LoadedJourneyScreen extends StatelessWidget {
     //  if (_swiperController.hasClients) {
     //    accentColor = loadedState.cards[_swiperController.page.toInt()].palette.vibrantColor?.color;
     //  }
-    final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
+    final FloatingActionButton addJourneyButton = journeys.isEmpty
         ? null
         : FloatingActionButton(
             child: Icon(
@@ -158,7 +153,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: GestureDetector(
                   child: LargeTwoPartHeader(
                     largeText: 'Welcome back',
-                    name: loadedState.user?.name,
+                    name: "Placeholder",
                   ),
                   onLongPress: () {
                     final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
@@ -181,14 +176,21 @@ class LoadedJourneyScreen extends StatelessWidget {
                   onNotification: onNotification,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
-                      if (loadedState.cards.isEmpty) {
+                      if (journeys.isEmpty) {
                         return AddCard();
                       }
-                      return JourneyCard(model: loadedState.cards[index]);
+                      // return AddCard();
+                      // .map((dynamic d) => Journey.fromMap(d.data, d.documentID)),
+                      return JourneyCard(
+                          card: CardModel(
+                              journey:
+                                  Journey.fromMap(journeys[index].data, journeys[index].documentID),
+                              artist: Artist('Ricky'),
+                              stage: WaitingForQuote()));
                     },
                     loop: false,
                     controller: _swiperController,
-                    itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
+                    itemCount: journeys.isEmpty ? 1 : journeys.length,
                     viewportFraction: 0.8,
                     scale: 0.9,
                   ),

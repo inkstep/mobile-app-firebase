@@ -1,42 +1,28 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/models/journey_stage.dart';
 import 'package:meta/meta.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import 'firestore.dart';
+import 'journey_stage.dart';
+
 class CardModel extends Equatable {
   CardModel({
-    @required this.description,
-    @required this.size,
-    @required this.artistId,
-    @required this.artistName,
-    @required this.userId,
-    @required this.bodyLocation,
-    @required this.images,
-    @required this.quote,
+    @required this.journey,
+    @required this.artist,
     @required this.stage,
-    @required this.index,
-    @required this.palette,
-    @required this.journeyId,
-    @required this.bookedDate,
-  }) : super(<dynamic>[
-          journeyId,
-        ]);
+    this.images,
+    this.palette,
+  }) : super(<dynamic>[journey.id,]);
 
-  JourneyStage stage;
-  String description;
-  int artistId;
-  String artistName;
-  int userId;
-  String bodyLocation;
-  String size;
+  final Journey journey;
+  final Artist artist;
+  final JourneyStage stage;
+
   List<Image> images;
-  TextRange quote;
-  int index;
-  int journeyId;
-  PaletteGenerator palette;
-  DateTime bookedDate;
 
-  String get aftercareID => 'care_button_$index';
-  String get messagesID => 'messages_button_$index';
+  PaletteGenerator palette;
+
+  String get aftercareID => 'care_button_${journey.id}';
+  String get messagesID => 'messages_button_${journey.id}';
 }

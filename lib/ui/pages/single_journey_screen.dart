@@ -23,12 +23,13 @@ class DeleteJourneyDialog extends StatelessWidget {
   final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
-    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-    journeyBloc.dispatch(RemoveJourney(card.journeyId));
-    Navigator.pop(context);
-    if (doublePop) {
-      Navigator.pop(context);
-    }
+    // TODO(mdm)
+//    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+//    journeyBloc.dispatch(RemoveJourney(card.journeyId));
+//    Navigator.pop(context);
+//    if (doublePop) {
+//      Navigator.pop(context);
+//    }
   }
 
   @override
@@ -36,7 +37,7 @@ class DeleteJourneyDialog extends StatelessWidget {
     return RoundedAlertDialog(
         title: card.stage.deleteDialogHeader,
         child: Text(
-          card.stage.deleteDialogBody(card.artistName),
+          card.stage.deleteDialogBody(card.artist.name),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle,
         ),
@@ -81,7 +82,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   void initState() {
-    _numFabs = widget.card.bookedDate == null ? 2 : 3;
+//    _numFabs = widget.card.bookedDate == null ? 2 : 3;
+    _numFabs = 2;
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
@@ -148,8 +150,9 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'careBtn',
       onPressed: () {
-        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-        nav.openCareScreen(context, widget.card.bookedDate);
+        // TODO(mdm
+//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//        nav.openCareScreen(context, widget.card.bookedDate);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -290,11 +293,13 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
   }
 
   Widget _content(BuildContext context) {
-    final String artistFirstName = widget.card.artistName.split(' ')[0];
+    final String artistFirstName = widget.card.artist.name.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
-    final bool hasQuote = widget.card.quote != null;
-    final bool hasDate = widget.card.bookedDate != null;
+//    final bool hasQuote = widget.card.quote != null;
+    final bool hasQuote = false;
+//    final bool hasDate = widget.card.bookedDate != null;
+    final bool hasDate = false;
     return ListView(
       children: <Widget>[
         Container(
@@ -339,7 +344,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         Opacity(
                           opacity: 0.5,
                           child: DateBlock(
-                            date: widget.card.bookedDate,
+                            date: DateTime(2001), // widget.card.bookedDate,
                             onlyDate: true,
                             scale: 1.75,
                           ),
@@ -405,7 +410,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.description,
+                    widget.card.journey.mentalImage,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
@@ -422,7 +427,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.bodyLocation ?? 'N/A',
+                    widget.card.journey.position ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
@@ -439,7 +444,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.size ?? 'N/A',
+                    widget.card.journey.size ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
@@ -459,7 +464,8 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                         child: Text(
-                          '£${widget.card.quote.start}-£${widget.card.quote.end}',
+//                          '£${widget.card.quote.start}-£${widget.card.quote.end}',
+                          '£5',
                           style: Theme.of(context).accentTextTheme.body1,
                         ),
                       ),
