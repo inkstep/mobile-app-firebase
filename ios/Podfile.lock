@@ -1,9 +1,19 @@
 PODS:
+  - BoringSSL-GRPC (0.0.3):
+    - BoringSSL-GRPC/Implementation (= 0.0.3)
+    - BoringSSL-GRPC/Interface (= 0.0.3)
+  - BoringSSL-GRPC/Implementation (0.0.3):
+    - BoringSSL-GRPC/Interface (= 0.0.3)
+  - BoringSSL-GRPC/Interface (0.0.3)
   - BSGridCollectionViewLayout (1.2.3)
   - BSImagePicker (2.10.0):
     - BSGridCollectionViewLayout (= 1.2.3)
     - BSImageView (= 1.0.3)
   - BSImageView (1.0.3)
+  - cloud_firestore (0.0.1):
+    - Firebase/Core
+    - Firebase/Firestore (~> 6.0)
+    - Flutter
   - Firebase/Analytics (6.5.0):
     - Firebase/Core
   - Firebase/Core (6.5.0):
@@ -11,11 +21,17 @@ PODS:
     - FirebaseAnalytics (= 6.0.4)
   - Firebase/CoreOnly (6.5.0):
     - FirebaseCore (= 6.1.0)
+  - Firebase/Firestore (6.5.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 1.4.2)
   - Firebase/Messaging (6.5.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 4.1.1)
   - firebase_analytics (0.0.1):
     - Firebase/Analytics (~> 6.0)
+    - Firebase/Core
+    - Flutter
+  - firebase_core (0.0.1):
     - Firebase/Core
     - Flutter
   - firebase_messaging (0.0.1):
@@ -32,9 +48,25 @@ PODS:
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
   - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseAuthInterop (1.0.0)
   - FirebaseCore (6.1.0):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
+  - FirebaseFirestore (1.4.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - FirebaseFirestore/abseil-cpp (= 1.4.2)
+    - "gRPC-C++ (= 0.0.9)"
+    - leveldb-library (~> 1.20)
+    - nanopb (~> 0.3.901)
+    - Protobuf (~> 3.1)
+  - FirebaseFirestore/abseil-cpp (1.4.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - "gRPC-C++ (= 0.0.9)"
+    - leveldb-library (~> 1.20)
+    - nanopb (~> 0.3.901)
+    - Protobuf (~> 3.1)
   - FirebaseInstanceID (4.2.2):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
@@ -73,9 +105,26 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
+  - "gRPC-C++ (0.0.9)":
+    - "gRPC-C++/Implementation (= 0.0.9)"
+    - "gRPC-C++/Interface (= 0.0.9)"
+  - "gRPC-C++/Implementation (0.0.9)":
+    - "gRPC-C++/Interface (= 0.0.9)"
+    - gRPC-Core (= 1.21.0)
+    - nanopb (~> 0.3)
+  - "gRPC-C++/Interface (0.0.9)"
+  - gRPC-Core (1.21.0):
+    - gRPC-Core/Implementation (= 1.21.0)
+    - gRPC-Core/Interface (= 1.21.0)
+  - gRPC-Core/Implementation (1.21.0):
+    - BoringSSL-GRPC (= 0.0.3)
+    - gRPC-Core/Interface (= 1.21.0)
+    - nanopb (~> 0.3)
+  - gRPC-Core/Interface (1.21.0)
   - image_picker (0.0.1):
     - Flutter
-  - multi_image_picker (4.3.3):
+  - leveldb-library (1.20)
+  - multi_image_picker (4.3.6):
     - BSImagePicker (~> 2.10.0)
     - Flutter
   - nanopb (0.3.901):
@@ -90,7 +139,9 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -100,23 +151,33 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - BoringSSL-GRPC
     - BSGridCollectionViewLayout
     - BSImagePicker
     - BSImageView
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
+    - FirebaseAuthInterop
     - FirebaseCore
+    - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleUtilities
+    - "gRPC-C++"
+    - gRPC-Core
+    - leveldb-library
     - nanopb
     - Protobuf
 
 EXTERNAL SOURCES:
+  cloud_firestore:
+    :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
@@ -131,22 +192,30 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/speech_bubble/ios"
 
 SPEC CHECKSUMS:
+  BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   BSGridCollectionViewLayout: 568273e113fbc815f868f1898ef0465aee68f955
   BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
+  cloud_firestore: 41f84086d2e1a5c216a6af07ef050758de825ff0
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
   firebase_analytics: 5afaaf8f43ae6a640f200d98f3ecff32e9873538
+  firebase_core: b3b02d0b5e9d01aab5e50ba7cbcf84c73cb6883c
   firebase_messaging: 049d2d722cb4c48d62be7f7a8020fc4d7b2b9e0a
   FirebaseAnalytics: 3fb375bc9d13779add4039716f868d233a473fad
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: aecf02fb2274ec361b9bebeac112f5daa18273bd
+  FirebaseFirestore: 41a035642eb017fc7206318985501626993840bd
   FirebaseInstanceID: 662b8108a09fe9ed01aafdedba100fde8536b0f6
   FirebaseMessaging: 6bb0bdaf64c55fef7a219b7bb1e94e94a0855ced
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
+  "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
+  gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
-  multi_image_picker: d6f2d6fad79ced3a6547658c86a68f49814e3bac
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  multi_image_picker: 3a6afea72a3271d9b0bcc67d8888d38c4ff53efd
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523

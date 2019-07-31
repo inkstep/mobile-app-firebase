@@ -28,14 +28,14 @@ packages:
       name: auto_size_text
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2+1"
   bloc:
     dependency: "direct main"
     description:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.2"
+    version: "0.14.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.9"
   collection:
     dependency: transitive
     description:
@@ -92,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
+  firebase_core:
+    dependency: transitive
+    description:
+      name: firebase_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0+8"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -117,7 +131,7 @@ packages:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2"
+    version: "0.7.2+1"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -157,7 +171,7 @@ packages:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3+1"
+    version: "1.0.3+2"
   http:
     dependency: "direct main"
     description:
@@ -185,7 +199,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+9"
+    version: "0.6.0+18"
   intl:
     dependency: "direct main"
     description:
@@ -220,7 +234,7 @@ packages:
       name: multi_image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.3"
+    version: "4.3.6"
   palette_generator:
     dependency: "direct main"
     description:
@@ -248,14 +262,14 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.4.0"
   platform:
     dependency: transitive
     description:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   quiver:
     dependency: transitive
     description:
@@ -269,14 +283,14 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.0"
+    version: "0.22.1"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3+1"
+    version: "0.5.3+4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -358,14 +372,14 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.4.1"
+    version: "3.5.0"
   yaml:
     dependency: transitive
     description:
       name: yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.15"
+    version: "2.1.16"
 sdks:
-  dart: ">=2.2.2 <3.0.0"
+  dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.6.2 <2.0.0"
