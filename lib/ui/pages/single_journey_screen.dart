@@ -477,7 +477,8 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           .subtitle
                           .copyWith(fontWeight: FontWeight.w500)),
                 ),
-                Flexible(
+                // TODO: this
+                /*Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),
                     child: StaggeredGridView.countBuilder(
@@ -507,7 +508,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       crossAxisSpacing: 16.0,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

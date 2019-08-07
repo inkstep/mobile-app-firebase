@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/firestore.dart';
-import 'package:inkstep/resources/artists_repository.dart';
 import 'package:inkstep/resources/offline_data.dart';
-import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -29,7 +26,6 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
   @override
   void initState() {
     _client = http.Client();
-    // TODO: load artists
     super.initState();
   }
 
@@ -59,9 +55,6 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
         if (!snapshot.hasData) {
           return _buildLoading();
         }
-
-        List<Artist> artists = snapshot.data.documents.map((dynamic d) => Artist.fromMap(d.data));
-
         return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
@@ -92,7 +85,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                           return Swiper(
                               loop: true,
                               viewportFraction: 0.7,
-                              itemCount: artists.length,
+                              itemCount: snapshot.data.documents.length,
                               layout: SwiperLayout.CUSTOM,
                               customLayoutOption:
                                   CustomLayoutOption(startIndex: 0, stateCount: 5).addTranslate(
@@ -107,6 +100,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                               itemWidth: 300.0,
                               itemHeight: height,
                               itemBuilder: (context, idx) {
+                                final artist = Artist.fromMap(snapshot.data.documents[idx].data);
                                 final card = Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -124,7 +118,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       ),
                                     ),
                                     Text(
-                                      artists[idx].name,
+                                      artist.name,
                                       style: Theme.of(context).textTheme.title,
                                     ),
                                     Text(
@@ -141,8 +135,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       splashColor: Colors.grey[50].withOpacity(0.2),
                                       onTap: () {
                                         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                                        nav.openNewJourneyScreen(
-                                            context, artists[idx].id);
+                                        nav.openNewJourneyScreen(context, artist.id);
                                       },
                                     ),
                                   ),
