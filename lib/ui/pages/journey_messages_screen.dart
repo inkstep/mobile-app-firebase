@@ -11,7 +11,7 @@ class JourneyMessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(card.artistName),
+        title: Text(card.artist.name),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.white,

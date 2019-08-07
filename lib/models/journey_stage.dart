@@ -5,8 +5,13 @@ import 'package:inkstep/theme.dart';
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
 
-  factory JourneyStage.fromJson(Map<String, dynamic> json) {
-    switch (json['stage']) {
+  factory JourneyStage.fromInt(int stage) {
+    return WaitingForQuote();
+  }
+
+  // TODO: this
+  /*factory JourneyStage.fromInt(int stage) {
+    switch (stage) {
       case 0:
         return WaitingForQuote();
       case 1:
@@ -31,7 +36,7 @@ abstract class JourneyStage extends Equatable {
       default:
         return InvalidStage();
     }
-  }
+  }*/
 
   int get progress;
 

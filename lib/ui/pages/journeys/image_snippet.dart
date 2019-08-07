@@ -12,6 +12,12 @@ class ImageSnippet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container();
+  }
+
+  // TODO: this
+  /*@override
+  Widget build(BuildContext context) {
     final List<Image> imageSection = images.sublist(0, 2.clamp(0, images.length));
     final bool withOverlay = images.length > 3;
     final BoxDecoration overlay = withOverlay
@@ -45,5 +51,5 @@ class ImageSnippet extends StatelessWidget {
     ];
 
     return axis == Axis.horizontal ? Row(children: children) : Column(children: children);
-  }
+  }*/
 }

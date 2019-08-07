@@ -35,7 +35,7 @@ class JourneyEntity extends Equatable {
       position: json['position'],
       availability: json['availability'],
       noImages: int.parse(json['noRefImages']),
-      stage: JourneyStage.fromJson(json),
+      stage: JourneyStage.fromInt(0),
     );
   }
 

@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/firestore.dart';
@@ -115,6 +113,42 @@ class LoadedJourneyScreen extends StatelessWidget {
   final Animation<double> _animation;
   final SwiperController _swiperController;
 
+  Widget _buildJourneyCards() {
+    return NotificationListener<ScrollNotification>(
+      onNotification: onNotification,
+      child: Swiper(
+        itemBuilder: (BuildContext context, int index) {
+          if (journeys.isEmpty) {
+            return AddCard();
+          }
+          return JourneyCard(
+              card: CardModel(
+                  journey: Journey.fromMap(journeys[index].data),
+                  artist: Artist(id: 0, name: 'Ricky'),
+                  stage: WaitingForQuote()));
+        },
+        loop: false,
+        controller: _swiperController,
+        itemCount: journeys.isEmpty ? 1 : journeys.length,
+        viewportFraction: 0.8,
+        scale: 0.9,
+      ),
+    );
+  }
+
+  // TODO: query for this
+  Widget buildWelcomeBack() {
+    return GestureDetector(
+      child: LargeTwoPartHeader(
+        largeText: 'Welcome back',
+        name: "Placeholder",
+      ),
+      onLongPress: () {
+        // TODO: log out
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color accentColor = Theme.of(context).accentColor;
@@ -150,16 +184,7 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 4),
               Padding(
                 padding: EdgeInsets.only(left: paddingSize),
-                child: GestureDetector(
-                  child: LargeTwoPartHeader(
-                    largeText: 'Welcome back',
-                    name: "Placeholder",
-                  ),
-                  onLongPress: () {
-                    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                    journeyBloc.dispatch(LogOut(context));
-                  },
-                ),
+                child: buildWelcomeBack(),
               ),
               Spacer(flex: 1),
               HorizontalDivider(
@@ -172,29 +197,7 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 2),
               Expanded(
                 flex: 60,
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: onNotification,
-                  child: Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      if (journeys.isEmpty) {
-                        return AddCard();
-                      }
-                      // return AddCard();
-                      // .map((dynamic d) => Journey.fromMap(d.data, d.documentID)),
-                      return JourneyCard(
-                          card: CardModel(
-                              journey:
-                                  Journey.fromMap(journeys[index].data, journeys[index].documentID),
-                              artist: Artist('Ricky'),
-                              stage: WaitingForQuote()));
-                    },
-                    loop: false,
-                    controller: _swiperController,
-                    itemCount: journeys.isEmpty ? 1 : journeys.length,
-                    viewportFraction: 0.8,
-                    scale: 0.9,
-                  ),
-                ),
+                child: _buildJourneyCards(),
               ),
               Spacer(flex: 4),
             ],

@@ -1,23 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/blocs/simple_bloc_delegate.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/resources/journeys_repository.dart';
-import 'package:inkstep/resources/offline_journeys_repository.dart';
-import 'package:inkstep/resources/web_repository.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  // Set up BlocSupervisor
-  BlocSupervisor.delegate = SimpleBlocDelegate();
-
   // Set up Service Locator
   setup();
 
@@ -31,7 +21,6 @@ class Inkstep extends StatefulWidget {
 
 class InkstepState extends State<Inkstep> {
   http.Client client;
-  JourneysBloc _journeyBloc;
   int localUserId = -1;
   void Function(int) updateUserId;
 
@@ -39,9 +28,6 @@ class InkstepState extends State<Inkstep> {
   void initState() {
     super.initState();
     client = http.Client();
-    _journeyBloc = JourneysBloc(
-      journeysRepository: JourneysRepository(webClient: WebRepository(client: client)),
-    );
 
     updateUserId = (userId) {
       setState(() {
@@ -53,7 +39,6 @@ class InkstepState extends State<Inkstep> {
   @override
   void dispose() {
     client.close();
-    _journeyBloc.dispose();
     super.dispose();
   }
 
@@ -63,14 +48,11 @@ class InkstepState extends State<Inkstep> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return BlocProvider<JourneysBloc>(
-      child: MaterialApp(
-        title: 'inkstep',
-        debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        home: SetInitialPage(updateUserId: updateUserId, localUserId: localUserId),
-      ),
-      bloc: _journeyBloc,
+    return MaterialApp(
+      title: 'inkstep',
+      debugShowCheckedModeBanner: false,
+      theme: appTheme,
+      home: SetInitialPage(updateUserId: updateUserId, localUserId: localUserId),
     );
   }
 }
@@ -98,8 +80,7 @@ class SetInitialPage extends StatelessWidget {
           // Return your home here
           return JourneysScreen(onInit: () {
             if (localUserId != -1) {
-              final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-              journeyBloc.dispatch(LoadUser(localUserId));
+              // TODO: load user
             }
           });
         } else {

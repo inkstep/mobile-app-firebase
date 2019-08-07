@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -47,8 +46,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
                     hint: 'e.g. Natasha',
                     label: 'What do your friends call you?',
                     callback: (_) {
-                      final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                      journeyBloc.dispatch(AddUser(name: nameController.text));
+                      // TODO: add user
 
                       final ScreenNavigator nav = sl.get<ScreenNavigator>();
                       nav.openViewJourneysScreen(context);
@@ -57,8 +55,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
               Spacer(),
               RaisedButton(
                 onPressed: () {
-                  final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                  journeyBloc.dispatch(AddUser(name: nameController.text));
+                  // TODO: add user
 
                   final ScreenNavigator nav = sl.get<ScreenNavigator>();
                   nav.openViewJourneysScreen(context);

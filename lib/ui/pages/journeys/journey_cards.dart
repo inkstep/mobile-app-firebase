@@ -21,7 +21,8 @@ class JourneyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
+//    final Color accentColor = card.palette?.vibrantColor?.color ?? Theme.of(context).accentColor;
+    final Color accentColor = Theme.of(context).accentColor;
     bool showCare = card.stage is BookedIn || card.stage is Aftercare;
     return Card(
       margin: EdgeInsets.zero,
