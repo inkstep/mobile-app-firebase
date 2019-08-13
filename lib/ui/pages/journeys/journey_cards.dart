@@ -50,7 +50,7 @@ class JourneyCard extends StatelessWidget {
                           stage: card.stage,
                           artistName: card.artist.name,
                           onAcceptance: () {
-                            // TODO(mdm)
+                            // TODO(mm)
                             // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
                             // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
                             // card.stage = WaitingForAppointmentOffer(card.quote);
@@ -76,7 +76,7 @@ class JourneyCard extends StatelessWidget {
                           stage: card.stage,
                           artistName: card.artist.name,
                           onAcceptance: () {
-                            // TODO(mdm)
+                            // TODO(mm)
 //                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 //                            journeyBloc.dispatch(DateAccepted(card.journeyId));
 //                            card.stage = BookedIn(card.bookedDate, card.quote);
@@ -84,7 +84,7 @@ class JourneyCard extends StatelessWidget {
 //                            nav.pop(context);
                           },
                           onDenial: () {
-                            // TODO(mdm)
+                            // TODO(mm)
 //                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 //                            journeyBloc.dispatch(DateDenied(card.journey.id));
 //                            final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -94,7 +94,7 @@ class JourneyCard extends StatelessWidget {
                       } else if (card.stage is Healed) {
                         dialog = PictureDialog(
                           onAcceptance: () async {
-                            // TODO(mdm)
+                            // TODO(mm)
 //                            final File image = await ImagePicker.pickImage(
 //                                source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
 //                            final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
@@ -157,7 +157,7 @@ class JourneyCard extends StatelessWidget {
                             icon: Icons.healing,
                             featureId: card.aftercareID,
                             onPressed: () {
-                              // TODO(mdm)
+                              // TODO(mm)
 //                              final ScreenNavigator nav = sl.get<ScreenNavigator>();
 //                              nav.openCareScreen(context, card.bookedDate);
                             },

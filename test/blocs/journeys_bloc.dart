@@ -71,7 +71,7 @@ void main() {
       stage: WaitingForQuote(),
     );
 
-    final User testUser = User(id: 0, name: 'test.name', email: 'test.email');
+    final UserModel testUser = UserModel(id: 0, name: 'test.name', email: 'test.email');
 
     setUp(() {
       repo = MockJourneysRepository();

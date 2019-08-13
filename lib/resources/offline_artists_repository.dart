@@ -1,10 +1,9 @@
 import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/studio_entity.dart';
-import 'package:inkstep/resources/artists_repository.dart';
 import 'package:inkstep/resources/offline_data.dart';
 import 'package:inkstep/resources/web_repository.dart';
 
-class OfflineArtistsRepository implements ArtistsRepository {
+class OfflineArtistsRepository {
   @override
   Future<List<ArtistEntity>> loadArtists(int studioID) {
     return Future.value(offlineArtists);

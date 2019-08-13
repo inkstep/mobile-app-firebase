@@ -20,7 +20,7 @@ class DeleteJourneyDialog extends StatelessWidget {
   final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
-    // TODO(mdm)
+    // TODO(mm)
 //    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 //    journeyBloc.dispatch(RemoveJourney(card.journeyId));
 //    Navigator.pop(context);

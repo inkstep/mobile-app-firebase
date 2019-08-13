@@ -6,6 +6,7 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/firestore.dart';
 import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -13,12 +14,8 @@ import 'package:inkstep/utils/screen_navigator.dart';
 import 'journeys/journey_cards.dart';
 
 class JourneysScreen extends StatefulWidget {
-  const JourneysScreen({Key key, this.onInit}) : super(key: key);
-
   @override
   _JourneysScreenState createState() => _JourneysScreenState();
-
-  final void Function() onInit;
 }
 
 class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
@@ -32,7 +29,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 
   @override
   void initState() {
-    widget.onInit();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
@@ -73,19 +69,30 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     };
 
     return StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('journeys').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return _buildLoading();
-          }
+      // TODO(mm): load journeys for this user, not all
+      stream: Firestore.instance.collection('journeys').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return _buildLoading();
+        }
 
-          return LoadedJourneyScreen(
-            animation: _animation,
-            onNotification: onNotification,
-            swiperController: _swiperController,
-            journeys: snapshot.data.documents,
-          );
-        });
+        return FutureBuilder(
+          future: UserModel.getName(),
+          builder: (buildContext, user) {
+            if (user.hasData) {
+              return LoadedJourneyScreen(
+                username: user.data,
+                animation: _animation,
+                onNotification: onNotification,
+                swiperController: _swiperController,
+                journeys: snapshot.data.documents,
+              );
+            }
+            return Center();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -99,6 +106,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 class LoadedJourneyScreen extends StatelessWidget {
   const LoadedJourneyScreen({
     Key key,
+    @required this.username,
     @required Animation<double> animation,
     @required this.onNotification,
     @required SwiperController swiperController,
@@ -109,6 +117,8 @@ class LoadedJourneyScreen extends StatelessWidget {
 
   final void Function(ScrollNotification) onNotification;
   final List<DocumentSnapshot> journeys;
+
+  final String username;
 
   final Animation<double> _animation;
   final SwiperController _swiperController;
@@ -133,19 +143,6 @@ class LoadedJourneyScreen extends StatelessWidget {
         viewportFraction: 0.8,
         scale: 0.9,
       ),
-    );
-  }
-
-  // TODO: query for this
-  Widget buildWelcomeBack() {
-    return GestureDetector(
-      child: LargeTwoPartHeader(
-        largeText: 'Welcome back',
-        name: "Placeholder",
-      ),
-      onLongPress: () {
-        // TODO: log out
-      },
     );
   }
 
@@ -184,7 +181,17 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 4),
               Padding(
                 padding: EdgeInsets.only(left: paddingSize),
-                child: buildWelcomeBack(),
+                child: GestureDetector(
+                  child: LargeTwoPartHeader(
+                    largeText: 'Welcome back',
+                    name: this.username,
+                  ),
+                  onLongPress: () {
+                    UserModel.logOut();
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.restartApp(context);
+                  },
+                ),
               ),
               Spacer(flex: 1),
               HorizontalDivider(

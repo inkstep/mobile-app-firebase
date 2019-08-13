@@ -7,8 +7,8 @@ import 'package:inkstep/models/studio_model.dart';
 import 'package:inkstep/models/user_model.dart';
 
 // Users
-final User offlineUser = User(id: 0, name: 'Natasha', email: 'natasha@email.com');
-final List<User> offlineUsers = [offlineUser];
+final UserModel offlineUser = UserModel(id: 0, name: 'Natasha', email: 'natasha@email.com');
+final List<UserModel> offlineUsers = [offlineUser];
 
 // Studios
 final Studio offlineScm = Studio(id: 0, name: 'South City Market');

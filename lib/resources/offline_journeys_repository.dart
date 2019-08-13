@@ -9,14 +9,13 @@ import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_entity.dart';
 import 'package:inkstep/models/user_model.dart';
-import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:inkstep/resources/web_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'offline_data.dart';
 
-class OfflineJourneysRepository implements JourneysRepository {
+class OfflineJourneysRepository {
   @override
   Future<List<JourneyEntity>> loadJourneys({@required int userId}) async
     => Future.value(offlineJourneys);
@@ -39,7 +38,7 @@ class OfflineJourneysRepository implements JourneysRepository {
         offlineArtists.firstWhere((a) => a.artistID == artistId, orElse: () => offlineArtists[0]));
 
   @override
-  Future<User> getUser(int userId) async
+  Future<UserModel> getUser(int userId) async
     => Future.value(
         offlineUsers.firstWhere((u) => u.id == userId, orElse: () => offlineUsers[0]));
 
