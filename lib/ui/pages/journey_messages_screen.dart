@@ -12,12 +12,16 @@ class JourneyMessagesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(card.artist.name),
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).appBarTheme.color,
       ),
       backgroundColor: Colors.white,
       body: ListView(
         children: <Widget>[
-          card.stage.asMessage(),
+          Card(
+            color: Theme.of(context).primaryColor,
+            margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+            child: card.stage.buildStageWidget(context, card),
+          ),
         ],
       ),
     );

@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/theme.dart';
+import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/ui/components/date_block.dart';
+import 'package:inkstep/ui/pages/journeys/sentiment_row.dart';
+import 'package:inkstep/ui/pages/single_journey_screen.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
+
+import 'card_model.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
@@ -52,17 +58,15 @@ abstract class JourneyStage extends Equatable {
 
   String deleteDialogBody(String artistName);
 
-  Widget asMessage() {
-    return Card(
-        margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-        child: Material(
-          borderRadius: smallBorderRadius,
-          color: Colors.black,
-          child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Center(child: Text('${this.toString()}'))),
-        )
+  Widget buildStageWidget(BuildContext context, CardModel card) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(child: Text('${this.toString()}')),
     );
+  }
+
+  Widget buildDismissStageWidget(BuildContext context, CardModel card) {
+    return null;
   }
 }
 
@@ -129,6 +133,61 @@ class QuoteReceived extends JourneyStageWithQuote {
   String deleteDialogBody(String artistName) =>
       'Think about a tattoo like a dentist\'s appointment, you don\'t haggle with your dentist. '
       'Even more importantly a tattoo is not something to cheap out on.';
+
+  @override
+  Widget buildStageWidget(BuildContext context, CardModel card) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Hey! ${card.artist.name.split(' ').first} wants to do your tattoo! They think this is a fair estimate.',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            (this.quote.start != this.quote.end)
+                ? '£${this.quote.start}-£${this.quote.end}.'
+                : '£${this.quote.start}.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline,
+          ),
+        ),
+        Text(
+          'You happy with this?',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget buildDismissStageWidget(BuildContext context, CardModel card) {
+    return SentimentRow(
+      onAcceptance: () {
+        // TODO(mm)
+        // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+        // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
+        // card.stage = WaitingForAppointmentOffer(card.quote);
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.pop(context);
+      },
+      onDenial: () {
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.pop(context);
+        showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return DeleteJourneyDialog(
+              card: card,
+              doublePop: false,
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
 class WaitingForAppointmentOffer extends JourneyStageWithQuote {
@@ -188,6 +247,46 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
   @override
   String deleteDialogBody(String artistName) =>
       '${artistName.split(' ').first} will be notified that you do not want to proceed.';
+
+  @override
+  Widget buildStageWidget(BuildContext context, CardModel card) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Hey! ${card.artist.name.split(' ').first} is excited to do your appointment:',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          child: DateBlock(date: this.appointmentDate),
+        ),
+        Text(
+          'You happy with this?',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget buildDismissStageWidget(BuildContext context, CardModel card) {
+    return SentimentRow(onAcceptance: () {
+      // TODO(mm)
+      // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+      // journeyBloc.dispatch(DateAccepted(card.journeyId));
+      // card.stage = BookedIn(card.bookedDate, card.quote);
+      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
+      // nav.pop(context);
+    }, onDenial: () {
+      // TODO(mm)
+      // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+      // journeyBloc.dispatch(DateDenied(card.journey.id));
+      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
+      // nav.pop(context);
+    });
+  }
 }
 
 class BookedIn extends JourneyStageWithQuote {
@@ -306,6 +405,53 @@ class Healed extends JourneyStage {
   @override
   String deleteDialogBody(String artistName) =>
       'Please consider sending your artist a healed photo first!';
+
+  @override
+  Widget buildStageWidget(BuildContext context, CardModel card) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Hey! Congratulations! You tattoo is nice an healed!!!',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+        ),
+        Text(
+          'You know, you should send a sweet pic of your healed tattoo to your tattoo artist!',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+        ),
+        Icon(Icons.camera_enhance),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget buildDismissStageWidget(BuildContext context, CardModel card) {
+    return SentimentRow(
+      onAcceptance: () async {
+        // TODO(mm)
+        // final File image = await ImagePicker.pickImage(source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
+        // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+        // journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId, card.journeyId));
+        // card.stage = Finished();
+        // final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        // nav.pop(context);
+      },
+      onDenial: () {
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.pop(context);
+      },
+    );
+  }
 }
 
 class Finished extends JourneyStage {

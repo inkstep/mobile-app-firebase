@@ -132,10 +132,12 @@ class LoadedJourneyScreen extends StatelessWidget {
             return AddCard();
           }
           return JourneyCard(
-              card: CardModel(
-                  journey: Journey.fromMap(journeys[index].data),
-                  artist: Artist(id: 0, name: 'Ricky'),
-                  stage: WaitingForQuote()));
+            card: CardModel(
+              journey: Journey.fromMap(journeys[index].data),
+              artist: Artist(id: 0, name: 'Ricky'),
+              stage: WaitingForQuote(),
+            ),
+          );
         },
         loop: false,
         controller: _swiperController,

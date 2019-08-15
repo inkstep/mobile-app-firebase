@@ -108,8 +108,8 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       child: Card(
                                         color: Colors.black,
                                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        // TODO(mm): get image from store
                                         child: offlineArtists[0].artistImage,
-                                        //  child: artists[idx].,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: smallBorderRadius,
                                         ),
@@ -122,8 +122,8 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                       style: Theme.of(context).textTheme.title,
                                     ),
                                     Text(
+                                      // TODO(mm): get studio
                                       'SCM',
-                                      // artists[idx].studio.name,
                                       style: Theme.of(context).textTheme.subtitle,
                                     )
                                   ],
