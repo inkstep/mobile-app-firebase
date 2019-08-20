@@ -1,43 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/models/artists_entity.dart';
 import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/journey_stage.dart';
-import 'package:inkstep/models/studio_entity.dart';
-import 'package:inkstep/models/studio_model.dart';
 import 'package:inkstep/models/user_model.dart';
 
 // Users
 final UserModel offlineUser = UserModel(id: 0, name: 'Natasha', email: 'natasha@email.com');
 final List<UserModel> offlineUsers = [offlineUser];
-
-// Studios
-final Studio offlineScm = Studio(id: 0, name: 'South City Market');
-final StudioEntity offlineScmEntity = StudioEntity(id: 0, name: 'South City Market');
-final List<StudioEntity> offlineStudios = [offlineScmEntity];
-
-// Artists
-final List<ArtistEntity> offlineArtists = [
-  ArtistEntity(
-    email: 'ricky@email.com',
-    name: 'Ricky',
-    studioID: 0,
-    artistID: 2,
-    artistImage: Image.asset(
-      'assets/offline/ricky.jpg',
-      fit: BoxFit.cover,
-    ),
-  ),
-  ArtistEntity(
-    email: 'loz@email.com',
-    name: 'Loz',
-    studioID: 0,
-    artistID: 1,
-    artistImage: Image.asset(
-      'assets/offline/loz.jpg',
-      fit: BoxFit.cover,
-    ),
-  )
-];
 
 // Journeys
 final JourneyEntity offlineCherub = JourneyEntity(

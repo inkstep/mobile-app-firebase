@@ -12,10 +12,13 @@ abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
 
   factory JourneyStage.fromInt(int stage) {
+    if (stage != 0) {
+      return Finished();
+    }
     return WaitingForQuote();
   }
 
-  // TODO: this
+  // TODO(mm): this
   /*factory JourneyStage.fromInt(int stage) {
     switch (stage) {
       case 0:
@@ -61,7 +64,7 @@ abstract class JourneyStage extends Equatable {
   Widget buildStageWidget(BuildContext context, CardModel card) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Center(child: Text('${this.toString()}')),
+      child: Center(child: Text('${toString()}')),
     );
   }
 
@@ -146,9 +149,9 @@ class QuoteReceived extends JourneyStageWithQuote {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            (this.quote.start != this.quote.end)
-                ? '£${this.quote.start}-£${this.quote.end}.'
-                : '£${this.quote.start}.',
+            (quote.start != quote.end)
+                ? '£${quote.start}-£${quote.end}.'
+                : '£${quote.start}.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline,
           ),
@@ -166,7 +169,7 @@ class QuoteReceived extends JourneyStageWithQuote {
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
       onAcceptance: () {
-        // TODO(mm)
+        // TODO(mm): this
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
         // card.stage = WaitingForAppointmentOffer(card.quote);
@@ -259,7 +262,7 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
         ),
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: DateBlock(date: this.appointmentDate),
+          child: DateBlock(date: appointmentDate),
         ),
         Text(
           'You happy with this?',
@@ -273,14 +276,14 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(onAcceptance: () {
-      // TODO(mm)
+      // TODO(mm): this
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateAccepted(card.journeyId));
       // card.stage = BookedIn(card.bookedDate, card.quote);
       // final ScreenNavigator nav = sl.get<ScreenNavigator>();
       // nav.pop(context);
     }, onDenial: () {
-      // TODO(mm)
+      // TODO(mm): this
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateDenied(card.journey.id));
       // final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -438,7 +441,7 @@ class Healed extends JourneyStage {
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
       onAcceptance: () async {
-        // TODO(mm)
+        // TODO(mm): this
         // final File image = await ImagePicker.pickImage(source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId, card.journeyId));

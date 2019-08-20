@@ -15,7 +15,7 @@ class ImageSnippet extends StatelessWidget {
     return Container();
   }
 
-  // TODO: this
+  // TODO(mm): this
   /*@override
   Widget build(BuildContext context) {
     final List<Image> imageSection = images.sublist(0, 2.clamp(0, images.length));

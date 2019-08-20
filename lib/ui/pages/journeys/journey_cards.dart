@@ -22,7 +22,7 @@ class JourneyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // final Color accentColor = card.palette?.vibrantColor?.color ?? Theme.of(context).accentColor;
     final Color accentColor = Theme.of(context).accentColor;
-    bool showCare = card.stage is BookedIn || card.stage is Aftercare;
+    final bool showCare = card.stage is BookedIn || card.stage is Aftercare;
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
@@ -46,7 +46,7 @@ class JourneyCard extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          Widget dialog = RoundedAlertDialog(
+                          final Widget dialog = RoundedAlertDialog(
                             title: null,
                             child: card.stage.buildStageWidget(context, card),
                             dismiss: card.stage.buildDismissStageWidget(context, card),
@@ -143,7 +143,7 @@ class JourneyCard extends StatelessWidget {
                       icon: Icons.healing,
                       featureId: card.aftercareID,
                       onPressed: () {
-                        // TODO(mm)
+                        // TODO(mm): this
                         // final ScreenNavigator nav = sl.get<ScreenNavigator>();
                         // nav.openCareScreen(context, card.bookedDate);
                       },

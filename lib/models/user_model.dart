@@ -4,7 +4,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel extends Equatable {
 
+  UserModel({@required this.id, @required this.name, @required this.email})
+      : super(<dynamic>[id, name, email]);
+
+  UserModel.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        email = json['email'],
+        id = json['id'];
+
   static String usernameKey = 'name';
+  static String emailKey = 'email';
 
   static Future<bool> exists() async {
     final prefs = await SharedPreferences.getInstance();
@@ -17,25 +26,23 @@ class UserModel extends Equatable {
     return name ?? 'No saved username'; // TODO(mm): handle something better here
   }
 
-  static void setName(String username) async {
-    if (username != '') {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString(usernameKey, username);
-    }
-  }
-
-  static void logOut() async {
+  static Future<String> getEmail() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove(usernameKey);
+    return prefs.getString(emailKey);
   }
 
-  UserModel({@required this.id, @required this.name, @required this.email})
-      : super(<dynamic>[id, name, email]);
+  static Future<bool> setName(String username) async {
+    if (username == '') {
+      return Future.value(false);
+    }
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setString(usernameKey, username);
+  }
 
-  UserModel.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        email = json['email'],
-        id = json['id'];
+  static Future<bool> logOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove(usernameKey);
+  }
 
   final int id;
   final String name;

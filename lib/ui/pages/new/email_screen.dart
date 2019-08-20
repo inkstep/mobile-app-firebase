@@ -56,6 +56,7 @@ class EmailWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
+    // TODO(mm): modify this page if we already have email stored locally
     return ShortTextInputFormElement(
       textController: emailController,
       keyboardType: TextInputType.emailAddress,

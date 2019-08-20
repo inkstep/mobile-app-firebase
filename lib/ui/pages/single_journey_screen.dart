@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/theme.dart';
@@ -20,7 +19,7 @@ class DeleteJourneyDialog extends StatelessWidget {
   final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
-    // TODO(mm)
+    // TODO(mm): this
 //    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 //    journeyBloc.dispatch(RemoveJourney(card.journeyId));
 //    Navigator.pop(context);
@@ -147,9 +146,9 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'careBtn',
       onPressed: () {
-        // TODO(mdm
-//        final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//        nav.openCareScreen(context, widget.card.bookedDate);
+        // TODO(mm): this
+        // final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        // nav.openCareScreen(context, widget.card.bookedDate);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -294,9 +293,9 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
 //    final bool hasQuote = widget.card.quote != null;
-    final bool hasQuote = false;
+    const bool hasQuote = false;
 //    final bool hasDate = widget.card.bookedDate != null;
-    final bool hasDate = false;
+    const bool hasDate = false;
     return ListView(
       children: <Widget>[
         Container(
@@ -341,7 +340,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         Opacity(
                           opacity: 0.5,
                           child: DateBlock(
-                            date: DateTime(2001), // widget.card.bookedDate,
+                            date: DateTime(2001), // TODO(mm): widget.card.bookedDate,
                             onlyDate: true,
                             scale: 1.75,
                           ),
@@ -461,7 +460,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                         child: Text(
-//                          '£${widget.card.quote.start}-£${widget.card.quote.end}',
+                          // '£${widget.card.quote.start}-£${widget.card.quote.end}',
                           '£5',
                           style: Theme.of(context).accentTextTheme.body1,
                         ),
@@ -477,7 +476,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           .subtitle
                           .copyWith(fontWeight: FontWeight.w500)),
                 ),
-                // TODO: this
+                // TODO(mm): this
                 /*Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),

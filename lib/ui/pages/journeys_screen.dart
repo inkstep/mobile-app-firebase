@@ -186,7 +186,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: GestureDetector(
                   child: LargeTwoPartHeader(
                     largeText: 'Welcome back',
-                    name: this.username,
+                    name: username,
                   ),
                   onLongPress: () {
                     UserModel.logOut();
