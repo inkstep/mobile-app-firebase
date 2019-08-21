@@ -3,14 +3,12 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel extends Equatable {
-
-  UserModel({@required this.id, @required this.name, @required this.email})
-      : super(<dynamic>[id, name, email]);
-
-  UserModel.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        email = json['email'],
-        id = json['id'];
+  UserModel({
+    @required this.id,
+    @required this.name,
+    @required this.email,
+    @required this.token,
+  }) : super(<dynamic>[id, name, email, token]);
 
   static String usernameKey = 'name';
   static String emailKey = 'email';
@@ -46,5 +44,6 @@ class UserModel extends Equatable {
 
   final int id;
   final String name;
-  String email;
+  final String email;
+  final String token;
 }

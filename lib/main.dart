@@ -31,9 +31,9 @@ class Inkstep extends StatelessWidget {
       theme: appTheme,
       home: FutureBuilder<bool>(
         future: UserModel.exists(),
-        builder: (buildContext, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data) {
+        builder: (buildContext, user) {
+          if (user.hasData) {
+            if (user.data) {
               return JourneysScreen();
             }
             return Onboarding();
