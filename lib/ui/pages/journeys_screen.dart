@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -68,27 +69,34 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
       }
     };
 
-    return StreamBuilder<QuerySnapshot>(
-      // TODO(mm): load journeys for this user, not all
-      stream: Firestore.instance.collection('journeys').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return _buildLoading();
-        }
-
-        return FutureBuilder(
-          future: UserModel.getName(),
-          builder: (buildContext, user) {
-            if (user.hasData) {
-              return LoadedJourneyScreen(
-                username: user.data,
-                animation: _animation,
-                onNotification: onNotification,
-                swiperController: _swiperController,
-                journeys: snapshot.data.documents,
-              );
+    return FutureBuilder(
+      future: FirebaseAuth.instance.signInAnonymously(),
+      builder: (BuildContext context, AsyncSnapshot auth) {
+        return StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance
+              .collection('journeys')
+              // TODO(mm): proper security rules for firebase
+              .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return _buildLoading();
             }
-            return Center();
+            return FutureBuilder(
+              future: UserModel.getName(),
+              builder: (buildContext, user) {
+                if (user.hasData) {
+                  return LoadedJourneyScreen(
+                    username: user.data,
+                    animation: _animation,
+                    onNotification: onNotification,
+                    swiperController: _swiperController,
+                    journeys: snapshot.data.documents,
+                  );
+                }
+                return Center();
+              },
+            );
           },
         );
       },

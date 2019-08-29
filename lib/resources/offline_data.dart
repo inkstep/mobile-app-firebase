@@ -4,7 +4,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 
 // Users
-final UserModel offlineUser = UserModel(id: 0, name: 'Natasha', email: 'natasha@email.com');
+final UserModel offlineUser = UserModel(id: 0, name: 'Natasha', email: 'natasha@email.com', token: '');
 final List<UserModel> offlineUsers = [offlineUser];
 
 // Journeys
