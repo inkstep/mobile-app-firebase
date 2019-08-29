@@ -11,6 +11,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
+import 'package:inkstep/ui/pages/loading_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'journeys/journey_cards.dart';
@@ -44,18 +45,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     super.initState();
   }
 
-  Widget _buildLoading() {
-    return Container(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-      child: Center(
-        child: SpinKitChasingDots(
-          color: Theme.of(context).cardColor,
-          size: 50.0,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     _controller.forward();
@@ -81,7 +70,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return _buildLoading();
+              return LoadingScreen();
             }
             return FutureBuilder(
               future: UserModel.getName(),

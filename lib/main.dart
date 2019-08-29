@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
+import 'package:inkstep/ui/pages/loading_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 import 'models/user_model.dart';
@@ -38,14 +39,7 @@ class Inkstep extends StatelessWidget {
             }
             return Onboarding();
           } else {
-            return Center(
-              child: Center(
-                child: SpinKitChasingDots(
-                  color: Theme.of(context).cardColor,
-                  size: 50.0,
-                ),
-              ),
-            );
+            return LoadingScreen();
           }
         },
       ),
