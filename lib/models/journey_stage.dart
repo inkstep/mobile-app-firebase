@@ -13,12 +13,12 @@ abstract class JourneyStage extends Equatable {
 
   factory JourneyStage.fromInt(int stage) {
     if (stage != 0) {
-      return Finished();
+      return InvalidStage();
     }
     return WaitingForQuote();
   }
 
-  // TODO(mm): this
+  // TODO(mm): get stage from firebase
   /*factory JourneyStage.fromInt(int stage) {
     switch (stage) {
       case 0:
@@ -77,6 +77,12 @@ abstract class JourneyStageWithQuote extends JourneyStage {
   JourneyStageWithQuote(this.quote);
 
   final TextRange quote;
+}
+
+abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
+  JourneyStageWithBooking(TextRange quote, this.bookedDate) : super(quote);
+
+  final DateTime bookedDate;
 }
 
 class WaitingForQuote extends JourneyStage {
@@ -169,7 +175,7 @@ class QuoteReceived extends JourneyStageWithQuote {
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
       onAcceptance: () {
-        // TODO(mm): this
+        // TODO(mm): accept quote cloud function
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
         // card.stage = WaitingForAppointmentOffer(card.quote);
@@ -222,9 +228,8 @@ class WaitingForAppointmentOffer extends JourneyStageWithQuote {
       '${artistName.split(' ').first} will be notified that you do not want to proceed.';
 }
 
-class AppointmentOfferReceived extends JourneyStageWithQuote {
-  AppointmentOfferReceived(this.appointmentDate, TextRange quote) : super(quote);
-  final DateTime appointmentDate;
+class AppointmentOfferReceived extends JourneyStageWithBooking {
+  AppointmentOfferReceived(TextRange quote, DateTime booking) : super(quote, booking);
 
   @override
   int get progress => 40;
@@ -262,7 +267,7 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
         ),
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: DateBlock(date: appointmentDate),
+          child: DateBlock(date: this.bookedDate),
         ),
         Text(
           'You happy with this?',
@@ -276,14 +281,14 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(onAcceptance: () {
-      // TODO(mm): this
+      // TODO(mm): accept appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateAccepted(card.journeyId));
       // card.stage = BookedIn(card.bookedDate, card.quote);
       // final ScreenNavigator nav = sl.get<ScreenNavigator>();
       // nav.pop(context);
     }, onDenial: () {
-      // TODO(mm): this
+      // TODO(mm): reject appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateDenied(card.journey.id));
       // final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -292,9 +297,8 @@ class AppointmentOfferReceived extends JourneyStageWithQuote {
   }
 }
 
-class BookedIn extends JourneyStageWithQuote {
-  BookedIn(this.bookedDate, TextRange quote) : super(quote);
-  final DateTime bookedDate;
+class BookedIn extends JourneyStageWithBooking {
+  BookedIn(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
 
   @override
   int get progress => 60;
@@ -350,14 +354,12 @@ class WaitingList extends JourneyStageWithQuote {
   String deleteDialogBody(String artistName) => 'End Journey';
 }
 
-class Aftercare extends JourneyStage {
-  Aftercare(this.appointmentDate);
-
-  final DateTime appointmentDate;
+class Aftercare extends JourneyStageWithBooking {
+  Aftercare(TextRange quote, DateTime appointmentDate) : super(quote, appointmentDate);
 
   @override
   int get progress =>
-      60 + (DateTime.now().difference(appointmentDate).inDays * 30 ~/ 93).clamp(1, 35);
+      60 + (DateTime.now().difference(this.bookedDate).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
   String toString() => 'Tattoo healing';
@@ -383,7 +385,9 @@ class Aftercare extends JourneyStage {
       'artist if you proceed.';
 }
 
-class Healed extends JourneyStage {
+class Healed extends JourneyStageWithBooking {
+  Healed(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
+
   @override
   int get progress => 95;
 
@@ -441,7 +445,7 @@ class Healed extends JourneyStage {
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
       onAcceptance: () async {
-        // TODO(mm): this
+        // TODO(mm): send healed photo cloud function
         // final File image = await ImagePicker.pickImage(source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(SendPhoto(image, card.userId, card.artistId, card.journeyId));
@@ -457,7 +461,9 @@ class Healed extends JourneyStage {
   }
 }
 
-class Finished extends JourneyStage {
+class Finished extends JourneyStageWithBooking {
+  Finished(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
+
   @override
   int get progress => 100;
 

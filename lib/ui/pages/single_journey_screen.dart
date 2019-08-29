@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
@@ -19,7 +20,7 @@ class DeleteJourneyDialog extends StatelessWidget {
   final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
-    // TODO(mm): this
+    // TODO(mm): cancel journey cloud function
 //    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
 //    journeyBloc.dispatch(RemoveJourney(card.journeyId));
 //    Navigator.pop(context);
@@ -78,8 +79,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   void initState() {
-//    _numFabs = widget.card.bookedDate == null ? 2 : 3;
-    _numFabs = 2;
+    _numFabs = widget.card.stage is JourneyStageWithBooking ? 3 : 2;
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
@@ -146,9 +146,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'careBtn',
       onPressed: () {
-        // TODO(mm): this
-        // final ScreenNavigator nav = sl.get<ScreenNavigator>();
-        // nav.openCareScreen(context, widget.card.bookedDate);
+         final ScreenNavigator nav = sl.get<ScreenNavigator>();
+         nav.openCareScreen(context, (widget.card.stage as JourneyStageWithBooking).bookedDate);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -476,7 +475,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           .subtitle
                           .copyWith(fontWeight: FontWeight.w500)),
                 ),
-                // TODO(mm): this
+                // TODO(mm): journey images
                 /*Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),

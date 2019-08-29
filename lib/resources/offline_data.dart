@@ -4,10 +4,17 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 
 // Users
-final UserModel offlineUser = UserModel(id: 0, name: 'Natasha', email: 'natasha@email.com', token: '');
+final UserModel offlineUser = UserModel(
+  id: 0,
+  name: 'Natasha',
+  email: 'natasha@email.com',
+  token: '',
+);
 final List<UserModel> offlineUsers = [offlineUser];
 
 // Journeys
+final TextRange _quote = TextRange(start: 100, end: 120);
+final DateTime _date = DateTime(2019, 11, 14, 14);
 final JourneyEntity offlineCherub = JourneyEntity(
   id: 0,
   userId: 0,
@@ -39,7 +46,7 @@ final JourneyEntity offlineRose2 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: QuoteReceived(TextRange(start: 120, end: 140)),
+  stage: QuoteReceived(_quote),
 );
 final JourneyEntity offlineRose3 = JourneyEntity(
   id: 1,
@@ -50,7 +57,7 @@ final JourneyEntity offlineRose3 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: WaitingForAppointmentOffer(TextRange(start: 120, end: 140)),
+  stage: WaitingForAppointmentOffer(_quote),
 );
 final JourneyEntity offlineRose4 = JourneyEntity(
   id: 1,
@@ -61,7 +68,7 @@ final JourneyEntity offlineRose4 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: AppointmentOfferReceived(DateTime(2019, 11, 14, 14), TextRange(start: 120, end: 140)),
+  stage: AppointmentOfferReceived(_quote, _date),
 );
 final JourneyEntity offlineRose5 = JourneyEntity(
   id: 1,
@@ -72,7 +79,7 @@ final JourneyEntity offlineRose5 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: BookedIn(DateTime(2019, 10, 1, 15), TextRange(start: 120, end: 140)),
+  stage: BookedIn(_quote, _date),
 );
 final JourneyEntity offlineRose6 = JourneyEntity(
   id: 1,
@@ -83,7 +90,7 @@ final JourneyEntity offlineRose6 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: WaitingList(TextRange(start: 100, end: 120)),
+  stage: WaitingList(_quote),
 );
 final JourneyEntity offlineRose7 = JourneyEntity(
   id: 1,
@@ -94,7 +101,7 @@ final JourneyEntity offlineRose7 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: Aftercare(DateTime(2019, 7, 20, 15)),
+  stage: Aftercare(_quote, _date),
 );
 final JourneyEntity offlineRose8 = JourneyEntity(
   id: 1,
@@ -105,7 +112,7 @@ final JourneyEntity offlineRose8 = JourneyEntity(
   position: 'Sternum',
   availability: '0101001',
   noImages: 2,
-  stage: Healed(),
+  stage: Healed(_quote, _date),
 );
 final List<JourneyEntity> offlineJourneys = [
   offlineCherub,
