@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import 'artists_model.dart';
 import 'firestore.dart';
 import 'journey_stage.dart';
 
@@ -16,7 +17,7 @@ class CardModel extends Equatable {
   }) : super(<dynamic>[journey.id,]);
 
   final Journey journey;
-  final Artist artist;
+  final ArtistModel artist;
   final JourneyStage stage;
 
   List<Image> images;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/models/artists_model.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/firestore.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -139,10 +140,11 @@ class LoadedJourneyScreen extends StatelessWidget {
           if (journeys.isEmpty) {
             return AddCard();
           }
+          final Journey journey = Journey.fromMap(journeys[index].data);
           return JourneyCard(
             card: CardModel(
-              journey: Journey.fromMap(journeys[index].data),
-              artist: Artist(id: 0, name: 'Ricky'),
+              journey: journey,
+              artist: ArtistModel.fromId(journey.artistId),
               stage: WaitingForQuote(),
             ),
           );

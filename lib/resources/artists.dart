@@ -9,8 +9,8 @@ final Studio _offlineScmEntity = Studio(id: 0, name: 'South City Market');
 final List<Studio> offlineStudios = [_offlineScmEntity];
 
 // Artists
-final List<Artist> offlineArtists = [
-  Artist(
+final List<ArtistModel> offlineArtists = [
+  ArtistModel(
     email: 'ricky@email.com',
     name: 'Ricky',
     studioID: _offlineScmEntity.id,
@@ -20,7 +20,7 @@ final List<Artist> offlineArtists = [
       fit: BoxFit.cover,
     ),
   ),
-  Artist(
+  ArtistModel(
     email: 'loz@email.com',
     name: 'Loz',
     studioID: _offlineScmEntity.id,

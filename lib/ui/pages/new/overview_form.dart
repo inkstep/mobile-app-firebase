@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
@@ -33,8 +34,17 @@ class OverviewForm extends StatelessWidget {
   final InfoNavigator navigator;
 
   @override
-  Widget build(BuildContext context) => OverviewFormWidget(formData, descController,
-      emailController, widthController, heightController, styleController, images, navigator);
+  Widget build(BuildContext context) =>
+      OverviewFormWidget(
+        formData,
+        descController,
+        emailController,
+        widthController,
+        heightController,
+        styleController,
+        images,
+        navigator,
+      );
 }
 
 class OverviewFormWidget extends InfoWidget {
@@ -57,7 +67,6 @@ class OverviewFormWidget extends InfoWidget {
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
-
     formData['style'] = styleController.text ?? '';
 
     return Padding(
@@ -66,31 +75,34 @@ class OverviewFormWidget extends InfoWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Flexible(
-              flex: 2,
-              child: Text(
-                'Check your details',
-                style: Theme.of(context).primaryTextTheme.headline,
-              )),
+            flex: 2,
+            child: Text(
+              'Check your details',
+              style: Theme.of(context).primaryTextTheme.headline,
+            ),
+          ),
           Spacer(flex: 1),
           Expanded(
             flex: 12,
             child: Column(
               children: <Widget>[
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Email ', formData, 'email'),
-                    getData(context, formData, 'email'),
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      getLabel(context, 'Email ', formData, 'email'),
+                      getData(context, formData, 'email'),
+                    ],
+                  ),
+                ),
                 HorizontalDivider(),
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Images ', formData, 'noRefImgs'),
-                    getData(context, formData, 'noRefImgs'),
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      getLabel(context, 'Images ', formData, 'noRefImgs'),
+                      getData(context, formData, 'noRefImgs'),
+                    ],
+                  ),
+                ),
                 HorizontalDivider(),
                 Expanded(
                   child: Row(
@@ -102,12 +114,13 @@ class OverviewFormWidget extends InfoWidget {
                 ),
                 HorizontalDivider(),
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Description ', formData, 'mentalImage'),
-                    getData(context, formData, 'mentalImage'),
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      getLabel(context, 'Description ', formData, 'mentalImage'),
+                      getData(context, formData, 'mentalImage'),
+                    ],
+                  ),
+                ),
                 HorizontalDivider(),
                 Expanded(
                   child: Row(
@@ -119,25 +132,27 @@ class OverviewFormWidget extends InfoWidget {
                 ),
                 HorizontalDivider(),
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getSizeLabel(context, formData),
-                    getSizeData(context, formData),
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      getSizeLabel(context, formData),
+                      getSizeData(context, formData),
+                    ],
+                  ),
+                ),
                 HorizontalDivider(),
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Availability ', formData, 'availability'),
-                    getData(context, formData, 'availability'),
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      getLabel(context, 'Availability ', formData, 'availability'),
+                      getData(context, formData, 'availability'),
+                    ],
+                  ),
+                ),
                 HorizontalDivider(),
                 Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
                         flex: 2,
                         child: Container(
                           alignment: Alignment.centerRight,
@@ -145,50 +160,58 @@ class OverviewFormWidget extends InfoWidget {
                             'Deposit: ',
                             style: Theme.of(context).primaryTextTheme.subtitle,
                           ),
-                        )),
-                    Expanded(
+                        ),
+                      ),
+                      Expanded(
                         flex: 3,
                         child: Container(
                           alignment: Alignment.center,
-                          child: AutoSizeText('Is willing to leave a deposit',
-                              style: Theme.of(context).primaryTextTheme.body1),
-                        )),
-                  ],
-                )),
+                          child: AutoSizeText(
+                            'Is willing to leave a deposit',
+                            style: Theme.of(context).primaryTextTheme.body1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
           Spacer(flex: 1),
           Expanded(
-              flex: 2,
-              child: BoldCallToAction(
-                label: 'Contact Artist!',
-                color: Theme.of(context).cardColor,
-                textColor: Theme.of(context).primaryColorDark,
-                onTap: () {
-                  // TODO(mm): add journey
-
-//                    AddJourney(
-//                        result: FormResult(
-//                      name: formData['name'],
-//                      email: formData['email'],
-//                      size: formData['size'],
-//                      availability: formData['availability'],
-//                      description: formData['mentalImage'],
-//                      position: formData['position'],
-//                      images: images,
-//                      artistID: int.parse(formData['artistID']),
-//                      style: formData['style'],
-
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openViewJourneysScreen(context);
-                },
-              )),
+            flex: 2,
+            child: BoldCallToAction(
+              label: 'Contact Artist!',
+              color: Theme.of(context).cardColor,
+              textColor: Theme.of(context).primaryColorDark,
+              onTap: () {
+                // style: formData['style']
+                // images: images
+                Firestore.instance.collection('journeys').document().setData(<String, dynamic>{
+                  'artistId': int.parse(formData['artistID']),
+                  'auth_uid': '', // TODO(mm): get auth uid here
+                  'availability': formData['availability'],
+                  'clientEmail': formData['email'],
+                  'clientName': formData['name'],
+                  'clientPhone': '',
+                  'clientPhoneToken': '',
+                  'description': formData['mentalImage'],
+                  'position': formData['position'],
+                  'size': formData['size'],
+                  'stage': 0,
+                });
+                final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                nav.openViewJourneysScreen(context);
+              },
+            ),
+          ),
           Spacer(flex: 1),
         ],
       ),
     );
   }
+
 
   Widget getData(BuildContext context, Map formData, String param) {
     String data;
@@ -203,45 +226,44 @@ class OverviewFormWidget extends InfoWidget {
     }
 
     return Expanded(
-        flex: 3,
-        child: Container(
-          alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
-        ));
+      flex: 3,
+      child: Container(
+        alignment: Alignment.center,
+        child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
+      ),
+    );
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = (formData[param] == '' ||
-            formData[param] == '0000000' ||
-            (param == 'noRefImgs' && formData[param] == '1'))
+    final TextStyle style = (formData[param] == '' || formData[param] == '0000000' || (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).primaryTextTheme.subtitle;
-
     return Expanded(
-        flex: 2,
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            dataLabel + ': ',
-            style: style,
-          ),
-        ));
+      flex: 2,
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Text(
+          dataLabel + ': ',
+          style: style,
+        ),
+      ),
+    );
   }
 
   Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
     final TextStyle style = (formData['size'] == '')
         ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).primaryTextTheme.subtitle;
-
     return Expanded(
-        flex: 2,
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'Size: ',
-            style: style,
-          ),
-        ));
+      flex: 2,
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Text(
+          'Size: ',
+          style: style,
+        ),
+      ),
+    );
   }
 
   Widget getSizeData(BuildContext context, Map<String, String> formData) {
@@ -254,11 +276,12 @@ class OverviewFormWidget extends InfoWidget {
     }
 
     return Expanded(
-        flex: 3,
-        child: Container(
-          alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
-        ));
+      flex: 3,
+      child: Container(
+        alignment: Alignment.center,
+        child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
+      ),
+    );
   }
 
   @override
