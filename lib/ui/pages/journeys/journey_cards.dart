@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
@@ -83,9 +84,23 @@ class JourneyCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                ImageSnippet(
-                  images: card.images,
-                  axis: Axis.horizontal,
+                StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('images')
+                      .where('journeyId', isEqualTo: card.journey.id) // TODO(mm): sort out what IDs we want to use
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      return ImageSnippet(
+                        images: snapshot.data.images, // TODO(mm): get images stuff - see inside image snippet
+                        axis: Axis.horizontal,
+                      );
+                    }
+                    return ImageSnippet(
+                      images: [],
+                      axis: Axis.horizontal,
+                    );
+                  },
                 ),
                 Spacer(
                   flex: 8,
@@ -143,8 +158,8 @@ class JourneyCard extends StatelessWidget {
                       icon: Icons.healing,
                       featureId: card.aftercareID,
                       onPressed: () {
-                         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                         nav.openCareScreen(context, (card.stage as JourneyStageWithBooking).date);
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        nav.openCareScreen(context, (card.stage as JourneyStageWithBooking).date);
                       },
                     ),
                   ),

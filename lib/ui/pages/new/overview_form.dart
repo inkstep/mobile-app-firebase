@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
@@ -13,9 +17,43 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../../theme.dart';
 import 'info_widget.dart';
 
-class OverviewForm extends StatelessWidget {
-  const OverviewForm({
-    Key key,
+class SubmitFormButton extends StatefulWidget {
+  SubmitFormButton(this.callback);
+
+  Future<void> Function() callback;
+
+  @override
+  State<StatefulWidget> createState() => SubmitFormButtonState(callback);
+}
+
+class SubmitFormButtonState extends State<SubmitFormButton> {
+  SubmitFormButtonState(this.callback);
+
+  Future<void> Function() callback;
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? LoadingScreen()
+        : BoldCallToAction(
+            label: 'Contact Artist!',
+            color: Theme.of(context).cardColor,
+            textColor: Theme.of(context).primaryColorDark,
+            onTap: () {
+              setState(() {
+                _isLoading = true;
+              });
+              callback().then((_) => setState(() {
+                    _isLoading = false;
+                  }));
+            },
+          );
+  }
+}
+
+class OverviewForm extends InfoWidget {
+  OverviewForm({
     @required this.formData,
     @required this.descController,
     @required this.emailController,
@@ -24,34 +62,7 @@ class OverviewForm extends StatelessWidget {
     @required this.styleController,
     @required this.images,
     this.navigator,
-  }) : super(key: key);
-
-  final Map<String, String> formData;
-  final TextEditingController descController;
-  final TextEditingController emailController;
-  final TextEditingController widthController;
-  final TextEditingController heightController;
-  final TextEditingController styleController;
-  final List<Asset> images;
-  final InfoNavigator navigator;
-
-  @override
-  Widget build(BuildContext context) =>
-      OverviewFormWidget(
-        formData,
-        descController,
-        emailController,
-        widthController,
-        heightController,
-        styleController,
-        images,
-        navigator,
-      );
-}
-
-class OverviewFormWidget extends InfoWidget {
-  OverviewFormWidget(this.formData, this.descController, this.emailController, this.widthController,
-      this.heightController, this.styleController, this.images, this.navigator);
+  });
 
   final Map<String, String> formData;
   final TextEditingController descController;
@@ -72,160 +83,179 @@ class OverviewFormWidget extends InfoWidget {
     formData['style'] = styleController.text ?? '';
 
     return FutureBuilder(
-        future: FirebaseAuth.instance.signInAnonymously(),
-        builder: (BuildContext context, AsyncSnapshot auth) {
-          if (!auth.hasData) {
-            return LoadingScreen();
-          }
+      future: FirebaseAuth.instance.signInAnonymously(),
+      builder: (BuildContext context, AsyncSnapshot auth) {
+        if (!auth.hasData) {
+          return LoadingScreen();
+        }
 
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  flex: 2,
-                  child: Text(
-                    'Check your details',
-                    style: Theme.of(context).primaryTextTheme.headline,
-                  ),
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'Check your details',
+                  style: Theme.of(context).primaryTextTheme.headline,
                 ),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 12,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Email ', formData, 'email'),
-                            getData(context, formData, 'email'),
-                          ],
-                        ),
+              ),
+              Spacer(flex: 1),
+              Expanded(
+                flex: 12,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Email ', formData, 'email'),
+                          getData(context, formData, 'email'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Images ', formData, 'noRefImgs'),
-                            getData(context, formData, 'noRefImgs'),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Images ', formData, 'noRefImgs'),
+                          getData(context, formData, 'noRefImgs'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Style ', formData, 'style'),
-                            getData(context, formData, 'style'),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Style ', formData, 'style'),
+                          getData(context, formData, 'style'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Description ', formData, 'mentalImage'),
-                            getData(context, formData, 'mentalImage'),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Description ', formData, 'mentalImage'),
+                          getData(context, formData, 'mentalImage'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Position ', formData, 'position'),
-                            getData(context, formData, 'position'),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Position ', formData, 'position'),
+                          getData(context, formData, 'position'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getSizeLabel(context, formData),
-                            getSizeData(context, formData),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getSizeLabel(context, formData),
+                          getSizeData(context, formData),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            getLabel(context, 'Availability ', formData, 'availability'),
-                            getData(context, formData, 'availability'),
-                          ],
-                        ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Availability ', formData, 'availability'),
+                          getData(context, formData, 'availability'),
+                        ],
                       ),
-                      HorizontalDivider(),
-                      Expanded(
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Deposit: ',
-                                  style: Theme.of(context).primaryTextTheme.subtitle,
-                                ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'Deposit: ',
+                                style: Theme.of(context).primaryTextTheme.subtitle,
                               ),
                             ),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: AutoSizeText(
-                                  'Is willing to leave a deposit',
-                                  style: Theme.of(context).primaryTextTheme.body1,
-                                ),
-                              ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Icon(Icons.check)
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 2,
-                  child: BoldCallToAction(
-                    label: 'Contact Artist!',
-                    color: Theme.of(context).cardColor,
-                    textColor: Theme.of(context).primaryColorDark,
-                    onTap: () {
-                      // style: formData['style']
-                      // images: images
-                      Firestore.instance.collection('journeys').document().setData(
+              ),
+              Spacer(flex: 1),
+              Expanded(
+                flex: 2,
+                child: SubmitFormButton(
+                  () async {
+                    // Upload journey to firestore
+                    Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
+                      <String, dynamic>{
+                        'artistId': int.parse(formData['artistID']),
+                        'auth_uid': auth.data.user.uid,
+                        'availability': formData['availability'],
+                        'clientEmail': formData['email'],
+                        'clientName': formData['name'],
+                        'clientPhone': '',
+                        'clientPhoneToken': '',
+                        'description': formData['mentalImage'],
+                        'position': formData['position'],
+                        'size': formData['size'],
+                        'style': formData['style'],
+                        'stage': 0,
+                      },
+                    );
+
+                    // Upload images to firebase storage
+                    for (Asset image in images) {
+                      final String userId = auth.data.user.uid;
+                      final journeyId = (await doc).documentID;
+
+                      final filepath = await image.filePath;
+                      final filename = '${image.hashCode}${image.name}';
+                      final storageFileRef = "$userId/$journeyId/$filename";
+                      print('Uploading image to $storageFileRef');
+
+                      final StorageReference storageRef =
+                          FirebaseStorage.instance.ref().child(storageFileRef);
+                      final StorageUploadTask uploadTask = storageRef.putFile(File(filepath));
+                      final StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
+
+                      // Store download url in firestore since we can't query firebase storage
+                      final String url = await downloadUrl.ref.getDownloadURL();
+                      Firestore.instance.collection('images').add(
                         <String, dynamic>{
-                          'artistId': int.parse(formData['artistID']),
-                          'auth_uid': auth.data.user.uid,
-                          'availability': formData['availability'],
-                          'clientEmail': formData['email'],
-                          'clientName': formData['name'],
-                          'clientPhone': '',
-                          'clientPhoneToken': '',
-                          'description': formData['mentalImage'],
-                          'position': formData['position'],
-                          'size': formData['size'],
-                          'style': formData['style'],
-                          'stage': 0,
+                          'userId': userId,
+                          'journeyId': journeyId,
+                          'url': url,
                         },
                       );
-                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      nav.openViewJourneysScreen(context);
-                    },
-                  ),
+                    }
+
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openViewJourneysScreen(context);
+                  },
                 ),
-                Spacer(flex: 1),
-              ],
-            ),
-          );
-        },
+              ),
+              Spacer(flex: 1),
+            ],
+          ),
+        );
+      },
     );
   }
-
 
   Widget getData(BuildContext context, Map formData, String param) {
     String data;
@@ -249,7 +279,9 @@ class OverviewFormWidget extends InfoWidget {
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
-    final TextStyle style = (formData[param] == '' || formData[param] == '0000000' || (param == 'noRefImgs' && formData[param] == '1'))
+    final TextStyle style = (formData[param] == '' ||
+            formData[param] == '0000000' ||
+            (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).primaryTextTheme.subtitle;
     return Expanded(

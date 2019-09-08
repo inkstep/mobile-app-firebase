@@ -12,15 +12,12 @@ class CardModel extends Equatable {
     @required this.journey,
     @required this.artist,
     @required this.stage,
-    this.images,
     this.palette,
   }) : super(<dynamic>[journey.id,]);
 
   final Journey journey;
   final ArtistModel artist;
   final JourneyStage stage;
-
-  List<Image> images;
 
   PaletteGenerator palette;
 

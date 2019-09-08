@@ -39,7 +39,7 @@ dependencies:
   image_picker:
   speech_bubble: ^0.0.1
   flutter_spinkit: ^3.1.0 # Latest
-
+  firebase_storage: ^3.0.6
   cupertino_icons: ^0.1.2
 
 dev_dependencies:

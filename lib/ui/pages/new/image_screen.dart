@@ -122,7 +122,6 @@ class ImageWidget extends InfoWidget {
     Widget inner;
     if (i < inspirationImages.length) {
       final Asset asset = inspirationImages[i];
-      print(asset.name);
       inner = Container(
         decoration: BoxDecoration(
           boxShadow: const [
