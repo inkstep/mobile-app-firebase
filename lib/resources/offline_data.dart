@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/models/journey_entity.dart';
+import 'package:inkstep/models/firestore.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 
@@ -15,7 +15,7 @@ final List<UserModel> offlineUsers = [offlineUser];
 // Journeys
 final TextRange _quote = TextRange(start: 100, end: 120);
 final DateTime _date = DateTime(2019, 11, 14, 14);
-final JourneyEntity offlineCherub = JourneyEntity(
+final Journey offlineCherub = Journey(
   id: 0,
   userId: 0,
   artistId: 1,
@@ -23,10 +23,9 @@ final JourneyEntity offlineCherub = JourneyEntity(
   size: '8cm by 6cm',
   position: 'Bicep',
   availability: '0000011',
-  noImages: 2,
   stage: WaitingForQuote(),
 );
-final JourneyEntity offlineRose1 = JourneyEntity(
+final Journey offlineRose1 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -34,10 +33,9 @@ final JourneyEntity offlineRose1 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: WaitingForQuote(),
 );
-final JourneyEntity offlineRose2 = JourneyEntity(
+final Journey offlineRose2 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -45,10 +43,9 @@ final JourneyEntity offlineRose2 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: QuoteReceived(_quote),
 );
-final JourneyEntity offlineRose3 = JourneyEntity(
+final Journey offlineRose3 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -56,10 +53,9 @@ final JourneyEntity offlineRose3 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: WaitingForAppointmentOffer(_quote),
 );
-final JourneyEntity offlineRose4 = JourneyEntity(
+final Journey offlineRose4 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -67,10 +63,9 @@ final JourneyEntity offlineRose4 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: AppointmentOfferReceived(_quote, _date),
 );
-final JourneyEntity offlineRose5 = JourneyEntity(
+final Journey offlineRose5 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -78,10 +73,9 @@ final JourneyEntity offlineRose5 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: BookedIn(_quote, _date),
 );
-final JourneyEntity offlineRose6 = JourneyEntity(
+final Journey offlineRose6 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -89,10 +83,9 @@ final JourneyEntity offlineRose6 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: WaitingList(_quote),
 );
-final JourneyEntity offlineRose7 = JourneyEntity(
+final Journey offlineRose7 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -100,10 +93,9 @@ final JourneyEntity offlineRose7 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: Aftercare(_quote, _date),
 );
-final JourneyEntity offlineRose8 = JourneyEntity(
+final Journey offlineRose8 = Journey(
   id: 1,
   userId: 0,
   artistId: 2,
@@ -111,10 +103,9 @@ final JourneyEntity offlineRose8 = JourneyEntity(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  noImages: 2,
   stage: Healed(_quote, _date),
 );
-final List<JourneyEntity> offlineJourneys = [
+final List<Journey> offlineJourneys = [
   offlineCherub,
   offlineRose1,
   offlineRose2,

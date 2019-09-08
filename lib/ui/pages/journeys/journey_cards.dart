@@ -144,7 +144,7 @@ class JourneyCard extends StatelessWidget {
                       featureId: card.aftercareID,
                       onPressed: () {
                          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                         nav.openCareScreen(context, (card.stage as JourneyStageWithBooking).bookedDate);
+                         nav.openCareScreen(context, (card.stage as JourneyStageWithBooking).date);
                       },
                     ),
                   ),

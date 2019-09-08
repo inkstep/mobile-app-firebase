@@ -52,7 +52,7 @@ class Journey {
       size: map['size'],
       position: map['position'],
       availability: map['availability'],
-      stage: JourneyStage.fromInt(map['stage']),
+      stage: JourneyStage.fromMap(map),
     );
   }
 

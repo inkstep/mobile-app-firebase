@@ -11,41 +11,32 @@ import 'card_model.dart';
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
 
-  factory JourneyStage.fromInt(int stage) {
-    if (stage != 0) {
-      return InvalidStage();
-    }
-    return WaitingForQuote();
+  static bool _hasQuote(Map<String, dynamic> map) {
+    return map.containsKey('quoteLower') && map.containsKey('quoteUpper');
   }
 
-  // TODO(mm): get stage from firebase
-  /*factory JourneyStage.fromInt(int stage) {
-    switch (stage) {
+  static bool _hasDate(Map<String, dynamic> map) {
+    return _hasQuote(map) && map.containsKey('date');
+  }
+
+  factory JourneyStage.fromMap(Map<String, dynamic> map) {
+    switch (map['stage']) {
       case 0:
         return WaitingForQuote();
       case 1:
-        return QuoteReceived(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
       case 2:
-        return WaitingForAppointmentOffer(
-            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
-      case 3:
-        return AppointmentOfferReceived(DateTime.parse(json['bookingDate']),
-            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
-      case 4:
-        return BookedIn(DateTime.parse(json['bookingDate']),
-            TextRange(start: json['quoteLower'], end: json['quoteUpper']));
-      case 5:
-        return Aftercare(DateTime.parse(json['bookingDate']));
-      case 6:
-        return Healed();
-      case 7:
-        return Finished();
       case 8:
-        return WaitingList(TextRange(start: json['quoteLower'], end: json['quoteUpper']));
+        return _hasQuote(map) ? JourneyStageWithQuote.fromMap(map) : InvalidStage();
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+        return _hasDate(map) ? JourneyStageWithBooking.fromMap(map) : InvalidStage();
       default:
         return InvalidStage();
     }
-  }*/
+  }
 
   int get progress;
 
@@ -77,12 +68,43 @@ abstract class JourneyStageWithQuote extends JourneyStage {
   JourneyStageWithQuote(this.quote);
 
   final TextRange quote;
+
+  factory JourneyStageWithQuote.fromMap(Map<String, dynamic> map) {
+    final TextRange quote = TextRange(start: map['quoteLower'], end: map['quoteUpper']);
+    switch (map['stage']) {
+      case 1:
+        return QuoteReceived(quote);
+      case 2:
+        return WaitingForAppointmentOffer(quote);
+      case 8:
+        return WaitingList(quote);
+      default:
+        return null;
+    }
+  }
 }
 
 abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
-  JourneyStageWithBooking(TextRange quote, this.bookedDate) : super(quote);
+  JourneyStageWithBooking(TextRange quote, this.date) : super(quote);
 
-  final DateTime bookedDate;
+  factory JourneyStageWithBooking.fromMap(Map<String, dynamic> map) {
+    final TextRange quote = TextRange(start: map['quoteLower'], end: map['quoteUpper']);
+    final DateTime date = DateTime.parse(map['date']);
+    switch (map['stage']) {
+      case 3:
+        return AppointmentOfferReceived(quote, date);
+      case 4:
+        return BookedIn(quote, date);
+      case 6:
+        return Healed(quote, date);
+      case 7:
+        return Finished(quote, date);
+      default:
+        return null;
+    }
+  }
+
+  final DateTime date;
 }
 
 class WaitingForQuote extends JourneyStage {
@@ -155,9 +177,7 @@ class QuoteReceived extends JourneyStageWithQuote {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            (quote.start != quote.end)
-                ? '£${quote.start}-£${quote.end}.'
-                : '£${quote.start}.',
+            (quote.start != quote.end) ? '£${quote.start}-£${quote.end}.' : '£${quote.start}.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline,
           ),
@@ -267,7 +287,7 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
         ),
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: DateBlock(date: this.bookedDate),
+          child: DateBlock(date: this.date),
         ),
         Text(
           'You happy with this?',
@@ -284,7 +304,7 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
       // TODO(mm): accept appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateAccepted(card.journeyId));
-      // card.stage = BookedIn(card.bookedDate, card.quote);
+      // card.stage = BookedIn(card.date, card.quote);
       // final ScreenNavigator nav = sl.get<ScreenNavigator>();
       // nav.pop(context);
     }, onDenial: () {
@@ -298,7 +318,7 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
 }
 
 class BookedIn extends JourneyStageWithBooking {
-  BookedIn(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
+  BookedIn(TextRange quote, DateTime date) : super(quote, date);
 
   @override
   int get progress => 60;
@@ -358,8 +378,7 @@ class Aftercare extends JourneyStageWithBooking {
   Aftercare(TextRange quote, DateTime appointmentDate) : super(quote, appointmentDate);
 
   @override
-  int get progress =>
-      60 + (DateTime.now().difference(this.bookedDate).inDays * 30 ~/ 93).clamp(1, 35);
+  int get progress => 60 + (DateTime.now().difference(this.date).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
   String toString() => 'Tattoo healing';
@@ -386,7 +405,7 @@ class Aftercare extends JourneyStageWithBooking {
 }
 
 class Healed extends JourneyStageWithBooking {
-  Healed(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
+  Healed(TextRange quote, DateTime date) : super(quote, date);
 
   @override
   int get progress => 95;
@@ -462,7 +481,7 @@ class Healed extends JourneyStageWithBooking {
 }
 
 class Finished extends JourneyStageWithBooking {
-  Finished(TextRange quote, DateTime bookedDate) : super(quote, bookedDate);
+  Finished(TextRange quote, DateTime date) : super(quote, date);
 
   @override
   int get progress => 100;

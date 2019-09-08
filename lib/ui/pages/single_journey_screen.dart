@@ -147,7 +147,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       heroTag: 'careBtn',
       onPressed: () {
          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-         nav.openCareScreen(context, (widget.card.stage as JourneyStageWithBooking).bookedDate);
+         nav.openCareScreen(context, (widget.card.stage as JourneyStageWithBooking).date);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
