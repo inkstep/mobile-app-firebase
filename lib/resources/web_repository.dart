@@ -13,7 +13,7 @@ class WebRepository {
   final http.Client client;
   final Duration delay;
 
-  static const String url = 'http://inkstep.hails.info';
+  static const String url = 'http://inkstepdemo-env-1.xjz7muvpmy.eu-west-2.elasticbeanstalk.com/';
 
   //static const String url = 'http://localhost:4567';
 
