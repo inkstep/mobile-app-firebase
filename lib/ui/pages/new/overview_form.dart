@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -220,21 +220,22 @@ class OverviewForm extends InfoWidget {
 
                     // Upload images to firebase storage
                     for (Asset image in images) {
+                      // Get image data to store
+                      // TODO(mm): experiment with quality here
+                      final ByteData byteData = await image.getByteData();
+                      List<int> imageData = byteData.buffer.asUint8List();
+
+                      // Get storage path
                       final String userId = auth.data.user.uid;
                       final journeyId = (await doc).documentID;
-
-                      final filepath = await image.filePath;
                       final filename = '${image.hashCode}${image.name}';
                       final storageFileRef = "$userId/$journeyId/$filename";
-                      print('Uploading image to $storageFileRef');
 
-                      final StorageReference storageRef =
-                          FirebaseStorage.instance.ref().child(storageFileRef);
-                      final StorageUploadTask uploadTask = storageRef.putFile(File(filepath));
-                      final StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
+                      final StorageReference ref = FirebaseStorage.instance.ref().child(storageFileRef);
+                      final StorageUploadTask uploadTask = ref.putData(imageData);
+                      final String url = await (await uploadTask.onComplete).ref.getDownloadURL();
 
                       // Store download url in firestore since we can't query firebase storage
-                      final String url = await downloadUrl.ref.getDownloadURL();
                       Firestore.instance.collection('images').add(
                         <String, dynamic>{
                           'userId': userId,

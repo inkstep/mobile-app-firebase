@@ -3,21 +3,17 @@ import 'package:flutter/material.dart';
 class ImageSnippet extends StatelessWidget {
   const ImageSnippet({
     Key key,
-    @required this.images,
+    @required this.urls,
     @required this.axis,
   }) : super(key: key);
 
-  final List<Image> images;
+  final List<String> urls;
   final Axis axis;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-  }
-
-  // TODO(mm): journey images
-  /*@override
-  Widget build(BuildContext context) {
+    // TODO(mm): placeholder image and fade in
+    final List<Image> images = urls.map((url) => Image.network(url)).toList();
     final List<Image> imageSection = images.sublist(0, 2.clamp(0, images.length));
     final bool withOverlay = images.length > 3;
     final BoxDecoration overlay = withOverlay
@@ -51,5 +47,5 @@ class ImageSnippet extends StatelessWidget {
     ];
 
     return axis == Axis.horizontal ? Row(children: children) : Column(children: children);
-  }*/
+  }
 }

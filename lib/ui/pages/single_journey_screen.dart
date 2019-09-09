@@ -405,7 +405,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.journey.mentalImage,
+                    widget.card.journey.description,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),

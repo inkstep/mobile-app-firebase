@@ -87,17 +87,17 @@ class JourneyCard extends StatelessWidget {
                 StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance
                       .collection('images')
-                      .where('journeyId', isEqualTo: card.journey.id) // TODO(mm): sort out what IDs we want to use
+                      .where('journeyId', isEqualTo: card.journey.id)
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data.documents.length > 0) {
                       return ImageSnippet(
-                        images: snapshot.data.images, // TODO(mm): get images stuff - see inside image snippet
+                        urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
                         axis: Axis.horizontal,
                       );
                     }
                     return ImageSnippet(
-                      images: [],
+                      urls: [],
                       axis: Axis.horizontal,
                     );
                   },
@@ -121,7 +121,7 @@ class JourneyCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
                   child: Text(
-                    '${card.journey.mentalImage}',
+                    '${card.journey.description}',
                     style: Theme.of(context).accentTextTheme.title.copyWith(
                           color: accentColor,
                         ),

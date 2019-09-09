@@ -129,7 +129,12 @@ class LoadedJourneyScreen extends StatelessWidget {
           if (journeys.isEmpty) {
             return AddCard();
           }
-          final Journey journey = Journey.fromMap(journeys[index].data);
+
+          // Add document ID to map for use as journey ID in creating journey object
+          final Map<String, dynamic> journeyMap = journeys[index].data;
+          journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
+
+          final Journey journey = Journey.fromMap(journeyMap);
           return JourneyCard(
             card: CardModel(
               journey: journey,

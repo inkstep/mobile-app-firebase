@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:inkstep/resources/artists.dart';
 
 import 'journey_stage.dart';
 
@@ -24,31 +23,19 @@ class User {
 class Journey {
   Journey({
     @required this.id,
-    @required this.userId,
     @required this.artistId,
-    @required this.mentalImage,
+    @required this.description,
     @required this.size,
     @required this.position,
     @required this.availability,
     @required this.stage,
   });
 
-  // TODO(mm): make consistent with firestore
   factory Journey.fromMap(Map<String, dynamic> map) {
-
-    int id;
-    if (map['id'] is String) {
-      print('id for journey was string |:-O');
-      id = int.parse(map['id']);
-    } else {
-      id = map['id'];
-    }
-
     return Journey(
-      id: id,
-      userId: 0,
+      id: map['id'],
       artistId: map['artistId'],
-      mentalImage: map['description'],
+      description: map['description'],
       size: map['size'],
       position: map['position'],
       availability: map['availability'],
@@ -56,10 +43,9 @@ class Journey {
     );
   }
 
-  final int id;
-  final int userId;
+  final String id;
   final int artistId;
-  final String mentalImage;
+  final String description;
   final String size;
   final String position;
   final String availability;
