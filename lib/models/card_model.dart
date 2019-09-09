@@ -5,19 +5,16 @@ import 'package:palette_generator/palette_generator.dart';
 
 import 'artists_model.dart';
 import 'firestore.dart';
-import 'journey_stage.dart';
 
 class CardModel extends Equatable {
   CardModel({
     @required this.journey,
     @required this.artist,
-    @required this.stage,
     this.palette,
   }) : super(<dynamic>[journey.id,]);
 
   final Journey journey;
   final ArtistModel artist;
-  final JourneyStage stage;
 
   PaletteGenerator palette;
 

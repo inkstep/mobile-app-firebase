@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -32,9 +33,9 @@ class DeleteJourneyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedAlertDialog(
-        title: card.stage.deleteDialogHeader,
+        title: card.journey.stage.deleteDialogHeader,
         child: Text(
-          card.stage.deleteDialogBody(card.artist.name),
+          card.journey.stage.deleteDialogBody(card.artist.name),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle,
         ),
@@ -47,7 +48,7 @@ class DeleteJourneyDialog extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
             shape: RoundedRectangleBorder(borderRadius: largeBorderRadius),
             child: Text(
-              card.stage.deleteDialogConfirmText,
+              card.journey.stage.deleteDialogConfirmText,
               style: TextStyle(fontSize: 20, fontFamily: 'Signika').copyWith(color: Colors.red),
             ),
           ),
@@ -79,7 +80,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   void initState() {
-    _numFabs = widget.card.stage is JourneyStageWithBooking ? 3 : 2;
+    _numFabs = widget.card.journey.stage is JourneyStageWithBooking ? 3 : 2;
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
@@ -147,7 +148,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       heroTag: 'careBtn',
       onPressed: () {
          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-         nav.openCareScreen(context, (widget.card.stage as JourneyStageWithBooking).date);
+         nav.openCareScreen(context, (widget.card.journey.stage as JourneyStageWithBooking).date);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -291,10 +292,11 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
     final String artistFirstName = widget.card.artist.name.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
-//    final bool hasQuote = widget.card.quote != null;
-    const bool hasQuote = false;
-//    final bool hasDate = widget.card.bookedDate != null;
-    const bool hasDate = false;
+
+    final JourneyStage stage = widget.card.journey.stage;
+    final TextRange quote = stage is JourneyStageWithQuote ? (stage as JourneyStageWithQuote).quote : null;
+    final DateTime date = stage is JourneyStageWithBooking ? (stage as JourneyStageWithBooking).date : null;
+
     return ListView(
       children: <Widget>[
         Container(
@@ -332,14 +334,14 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       ],
                     ),
                   ),
-                  if (hasDate)
+                  if (date != null)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Opacity(
                           opacity: 0.5,
                           child: DateBlock(
-                            date: DateTime(2001), // TODO(mm): widget.card.bookedDate,
+                            date: date,
                             onlyDate: true,
                             scale: 1.75,
                           ),
@@ -378,12 +380,12 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(widget.card.stage.icon,
+                            Icon(stage.icon,
                                 color: Theme.of(context).accentTextTheme.subhead.color),
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                '${widget.card.stage.toString()}',
+                                '${stage.toString()}',
                                 style: Theme.of(context).accentTextTheme.subhead,
                               ),
                             ),
@@ -443,7 +445,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
-                if (hasQuote)
+                if (quote != null)
                   Column(
                     children: <Widget>[
                       Padding(
@@ -459,8 +461,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                         child: Text(
-                          // '£${widget.card.quote.start}-£${widget.card.quote.end}',
-                          '£5',
+                          '£${quote.start}-£${quote.end}',
                           style: Theme.of(context).accentTextTheme.body1,
                         ),
                       ),
@@ -476,18 +477,18 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           .copyWith(fontWeight: FontWeight.w500)),
                 ),
                 // TODO(mm): journey images
-                /*Flexible(
+                Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),
                     child: StaggeredGridView.countBuilder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
-                      itemCount: widget.card.images.length,
+                      itemCount: 0, // widget.card.images.length, // TODO(mm): images
                       itemBuilder: (BuildContext context, int index) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: widget.card.images[index].image,
+                                image: null, // widget.card.images[index].image, // TODO(mm): images
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -506,7 +507,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       crossAxisSpacing: 16.0,
                     ),
                   ),
-                ),*/
+                ),
               ],
             ),
           ),

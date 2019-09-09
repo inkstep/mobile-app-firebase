@@ -23,7 +23,7 @@ class JourneyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // final Color accentColor = card.palette?.vibrantColor?.color ?? Theme.of(context).accentColor;
     final Color accentColor = Theme.of(context).accentColor;
-    final bool showCare = card.stage is BookedIn || card.stage is Aftercare;
+    final bool showCare = card.journey.stage is BookedIn || card.journey.stage is Aftercare;
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
@@ -49,8 +49,8 @@ class JourneyCard extends StatelessWidget {
                         onTap: () {
                           final Widget dialog = RoundedAlertDialog(
                             title: null,
-                            child: card.stage.buildStageWidget(context, card),
-                            dismiss: card.stage.buildDismissStageWidget(context, card),
+                            child: card.journey.stage.buildStageWidget(context, card),
+                            dismiss: card.journey.stage.buildDismissStageWidget(context, card),
                           );
 
                           if (dialog != null) {
@@ -75,8 +75,8 @@ class JourneyCard extends StatelessWidget {
                           }
                         },
                         child: Chip(
-                          avatar: card.stage.userActionRequired ? Icon(Icons.error) : null,
-                          label: Text(card.stage.toString()),
+                          avatar: card.journey.stage.userActionRequired ? Icon(Icons.error) : null,
+                          label: Text(card.journey.stage.toString()),
                           backgroundColor: accentColor,
                           shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
                         ),
@@ -131,7 +131,7 @@ class JourneyCard extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 16.0, right: 32.0, top: 16.0, bottom: 16.0),
                   child: JourneyProgressIndicator(
                     color: accentColor,
-                    progress: card.stage.progress,
+                    progress: card.journey.stage.progress,
                     style: Theme.of(context).accentTextTheme.caption,
                   ),
                 ),
@@ -159,7 +159,7 @@ class JourneyCard extends StatelessWidget {
                       featureId: card.aftercareID,
                       onPressed: () {
                         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.openCareScreen(context, (card.stage as JourneyStageWithBooking).date);
+                        nav.openCareScreen(context, (card.journey.stage as JourneyStageWithBooking).date);
                       },
                     ),
                   ),

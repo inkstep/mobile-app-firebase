@@ -20,7 +20,7 @@ class JourneyMessagesScreen extends StatelessWidget {
           Card(
             color: Theme.of(context).primaryColor,
             margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-            child: card.stage.buildStageWidget(context, card),
+            child: card.journey.stage.buildStageWidget(context, card),
           ),
         ],
       ),

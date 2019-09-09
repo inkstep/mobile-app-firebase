@@ -139,7 +139,6 @@ class LoadedJourneyScreen extends StatelessWidget {
             card: CardModel(
               journey: journey,
               artist: ArtistModel.fromId(journey.artistId),
-              stage: JourneyStage.fromMap(journeys[index].data),
             ),
           );
         },
