@@ -90,14 +90,14 @@ class JourneyCard extends StatelessWidget {
                       .where('journeyId', isEqualTo: card.journey.id)
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasData && snapshot.data.documents.length > 0) {
+                    if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
                       return ImageSnippet(
                         urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
                         axis: Axis.horizontal,
                       );
                     }
                     return ImageSnippet(
-                      urls: [],
+                      urls: const [],
                       axis: Axis.horizontal,
                     );
                   },
@@ -159,7 +159,8 @@ class JourneyCard extends StatelessWidget {
                       featureId: card.aftercareID,
                       onPressed: () {
                         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                        nav.openCareScreen(context, (card.journey.stage as JourneyStageWithBooking).date);
+                        final JourneyStage stage = card.journey.stage;
+                        nav.openCareScreen(context, stage is JourneyStageWithBooking ? stage.date : null);
                       },
                     ),
                   ),

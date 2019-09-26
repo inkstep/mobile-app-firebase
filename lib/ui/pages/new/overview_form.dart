@@ -18,9 +18,9 @@ import '../../../theme.dart';
 import 'info_widget.dart';
 
 class SubmitFormButton extends StatefulWidget {
-  SubmitFormButton(this.callback);
+  const SubmitFormButton(this.callback);
 
-  Future<void> Function() callback;
+  final Future<void> Function() callback;
 
   @override
   State<StatefulWidget> createState() => SubmitFormButtonState(callback);
@@ -201,7 +201,7 @@ class OverviewForm extends InfoWidget {
                 child: SubmitFormButton(
                   () async {
                     // Upload journey to firestore
-                    Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
+                    final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
                       <String, dynamic>{
                         'artistId': int.parse(formData['artistID']),
                         'auth_uid': auth.data.user.uid,
@@ -223,13 +223,13 @@ class OverviewForm extends InfoWidget {
                       // Get image data to store
                       // TODO(mm): experiment with quality here
                       final ByteData byteData = await image.getByteData();
-                      List<int> imageData = byteData.buffer.asUint8List();
+                      final List<int> imageData = byteData.buffer.asUint8List();
 
                       // Get storage path
                       final String userId = auth.data.user.uid;
                       final journeyId = (await doc).documentID;
                       final filename = '${image.hashCode}${image.name}';
-                      final storageFileRef = "$userId/$journeyId/$filename";
+                      final storageFileRef = '$userId/$journeyId/$filename';
 
                       final StorageReference ref = FirebaseStorage.instance.ref().child(storageFileRef);
                       final StorageUploadTask uploadTask = ref.putData(imageData);

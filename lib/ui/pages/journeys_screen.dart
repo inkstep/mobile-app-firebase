@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artists_model.dart';
 import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/firestore.dart';
-import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/user_model.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';

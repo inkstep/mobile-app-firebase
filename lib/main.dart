@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';

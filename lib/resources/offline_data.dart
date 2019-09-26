@@ -16,8 +16,7 @@ final List<UserModel> offlineUsers = [offlineUser];
 final TextRange _quote = TextRange(start: 100, end: 120);
 final DateTime _date = DateTime(2019, 11, 14, 14);
 final Journey offlineCherub = Journey(
-  id: 0,
-  userId: 0,
+  id: '0',
   artistId: 1,
   description: 'Cherub',
   size: '8cm by 6cm',
@@ -26,8 +25,7 @@ final Journey offlineCherub = Journey(
   stage: WaitingForQuote(),
 );
 final Journey offlineRose1 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 1',
   size: '6cm by 3cm',
@@ -36,8 +34,7 @@ final Journey offlineRose1 = Journey(
   stage: WaitingForQuote(),
 );
 final Journey offlineRose2 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 2',
   size: '6cm by 3cm',
@@ -46,8 +43,7 @@ final Journey offlineRose2 = Journey(
   stage: QuoteReceived(_quote),
 );
 final Journey offlineRose3 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 3',
   size: '6cm by 3cm',
@@ -56,8 +52,7 @@ final Journey offlineRose3 = Journey(
   stage: WaitingForAppointmentOffer(_quote),
 );
 final Journey offlineRose4 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 4',
   size: '6cm by 3cm',
@@ -66,8 +61,7 @@ final Journey offlineRose4 = Journey(
   stage: AppointmentOfferReceived(_quote, _date),
 );
 final Journey offlineRose5 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 5',
   size: '6cm by 3cm',
@@ -76,8 +70,7 @@ final Journey offlineRose5 = Journey(
   stage: BookedIn(_quote, _date),
 );
 final Journey offlineRose6 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 6',
   size: '6cm by 3cm',
@@ -86,8 +79,7 @@ final Journey offlineRose6 = Journey(
   stage: WaitingList(_quote),
 );
 final Journey offlineRose7 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 7',
   size: '6cm by 3cm',
@@ -96,8 +88,7 @@ final Journey offlineRose7 = Journey(
   stage: Aftercare(_quote, _date),
 );
 final Journey offlineRose8 = Journey(
-  id: 1,
-  userId: 0,
+  id: '1',
   artistId: 2,
   description: 'Rose 8',
   size: '6cm by 3cm',

@@ -11,14 +11,6 @@ import 'card_model.dart';
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);
 
-  static bool _hasQuote(Map<String, dynamic> map) {
-    return map.containsKey('quoteLower') && map.containsKey('quoteUpper');
-  }
-
-  static bool _hasDate(Map<String, dynamic> map) {
-    return _hasQuote(map) && map.containsKey('date');
-  }
-
   factory JourneyStage.fromMap(Map<String, dynamic> map) {
     switch (map['stage']) {
       case 0:
@@ -36,6 +28,14 @@ abstract class JourneyStage extends Equatable {
       default:
         return InvalidStage();
     }
+  }
+
+  static bool _hasQuote(Map<String, dynamic> map) {
+    return map.containsKey('quoteLower') && map.containsKey('quoteUpper');
+  }
+
+  static bool _hasDate(Map<String, dynamic> map) {
+    return _hasQuote(map) && map.containsKey('date');
   }
 
   int get progress;
@@ -67,8 +67,6 @@ abstract class JourneyStage extends Equatable {
 abstract class JourneyStageWithQuote extends JourneyStage {
   JourneyStageWithQuote(this.quote);
 
-  final TextRange quote;
-
   factory JourneyStageWithQuote.fromMap(Map<String, dynamic> map) {
     final TextRange quote = TextRange(start: map['quoteLower'], end: map['quoteUpper']);
     switch (map['stage']) {
@@ -82,6 +80,8 @@ abstract class JourneyStageWithQuote extends JourneyStage {
         return null;
     }
   }
+
+  final TextRange quote;
 }
 
 abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
@@ -287,7 +287,7 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
         ),
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: DateBlock(date: this.date),
+          child: DateBlock(date: date),
         ),
         Text(
           'You happy with this?',
@@ -378,7 +378,7 @@ class Aftercare extends JourneyStageWithBooking {
   Aftercare(TextRange quote, DateTime appointmentDate) : super(quote, appointmentDate);
 
   @override
-  int get progress => 60 + (DateTime.now().difference(this.date).inDays * 30 ~/ 93).clamp(1, 35);
+  int get progress => 60 + (DateTime.now().difference(date).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
   String toString() => 'Tattoo healing';

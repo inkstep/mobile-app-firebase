@@ -148,7 +148,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       heroTag: 'careBtn',
       onPressed: () {
          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-         nav.openCareScreen(context, (widget.card.journey.stage as JourneyStageWithBooking).date);
+         final JourneyStage stage = widget.card.journey.stage;
+         nav.openCareScreen(context, stage is JourneyStageWithBooking ? stage.date : null);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -294,8 +295,8 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
     final double fullWidth = MediaQuery.of(context).size.width;
 
     final JourneyStage stage = widget.card.journey.stage;
-    final TextRange quote = stage is JourneyStageWithQuote ? (stage as JourneyStageWithQuote).quote : null;
-    final DateTime date = stage is JourneyStageWithBooking ? (stage as JourneyStageWithBooking).date : null;
+    final TextRange quote = stage is JourneyStageWithQuote ? stage.quote : null;
+    final DateTime date = stage is JourneyStageWithBooking ? stage.date : null;
 
     return ListView(
       children: <Widget>[
@@ -484,11 +485,11 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
-                      itemCount: 0, // widget.card.images.length, // TODO(mm): images
+                      itemCount: 0, // TODO(mm): images - widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: null, // widget.card.images[index].image, // TODO(mm): images
+                                image: null, // TODO(mm): images - widget.card.images[index].image,
                                 fit: BoxFit.cover,
                               ),
                             ),
