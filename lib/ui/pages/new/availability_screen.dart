@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/utils/info_navigator.dart';
@@ -86,7 +87,7 @@ class AvailabilityWidget extends InfoWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'What days of the week are you normally available?',
+              'What days of the week are you available?',
               style: Theme.of(context).primaryTextTheme.headline,
               textScaleFactor: 0.8,
               textAlign: TextAlign.center,
