@@ -95,12 +95,14 @@ abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
         return AppointmentOfferReceived(quote, date);
       case 4:
         return BookedIn(quote, date);
+      case 5:
+        return Aftercare(quote, date);
       case 6:
         return Healed(quote, date);
       case 7:
         return Finished(quote, date);
       default:
-        return null;
+        return null; // TODO(mm): use mixin for having 'with booking', 'with quote' to avoid null here
     }
   }
 
