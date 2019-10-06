@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';

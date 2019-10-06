@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/artists_model.dart';
-import 'package:inkstep/models/card_model.dart';
-import 'package:inkstep/models/firestore.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/artist.dart';
+import 'package:inkstep/models/card.dart';
+import 'package:inkstep/models/journey.dart';
+import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/ui/pages/loading_screen.dart';
@@ -71,7 +71,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
               return LoadingScreen();
             }
             return FutureBuilder(
-              future: UserModel.getName(),
+              future: User.getName(),
               builder: (buildContext, user) {
                 if (user.hasData) {
                   return LoadedJourneyScreen(
@@ -136,7 +136,7 @@ class LoadedJourneyScreen extends StatelessWidget {
           return JourneyCard(
             card: CardModel(
               journey: journey,
-              artist: ArtistModel.fromId(journey.artistId),
+              artist: Artist.fromId(journey.artistId),
             ),
           );
         },
@@ -190,7 +190,7 @@ class LoadedJourneyScreen extends StatelessWidget {
                     name: username,
                   ),
                   onLongPress: () {
-                    UserModel.logOut();
+                    User.logOut();
                     final ScreenNavigator nav = sl.get<ScreenNavigator>();
                     nav.restartApp(context);
                   },

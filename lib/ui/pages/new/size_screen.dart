@@ -161,7 +161,7 @@ class SizeSelectorWidget extends InfoWidget {
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
     return ShortTextInputFormElement(
       textController: textController,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.text,
       label: '',
       hint: '',
       maxLength: 3,

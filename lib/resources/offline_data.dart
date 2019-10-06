@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/models/firestore.dart';
+import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/models/journey_stage.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/user.dart';
 
 // Users
-final UserModel offlineUser = UserModel(
+final User offlineUser = User(
   id: 0,
   name: 'Natasha',
   email: 'natasha@email.com',
   token: '',
 );
-final List<UserModel> offlineUsers = [offlineUser];
+final List<User> offlineUsers = [offlineUser];
 
 // Journeys
 final TextRange _quote = TextRange(start: 100, end: 120);

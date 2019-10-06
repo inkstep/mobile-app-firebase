@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserModel extends Equatable {
-  UserModel({
+class User extends Equatable {
+  User({
     @required this.id,
     @required this.name,
     @required this.email,

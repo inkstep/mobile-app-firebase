@@ -6,7 +6,7 @@ import 'package:inkstep/ui/pages/journeys/sentiment_row.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
-import 'card_model.dart';
+import 'card.dart';
 
 abstract class JourneyStage extends Equatable {
   JourneyStage([List<dynamic> props = const <dynamic>[]]) : super(props);

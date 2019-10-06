@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';
@@ -112,7 +112,7 @@ class InfoNavigator {
         },
       ),
       FutureBuilder(
-        future: UserModel.getEmail(),
+        future: User.getEmail(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             emailController.text = snapshot.data;

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:palette_generator/palette_generator.dart';
 
-import 'artists_model.dart';
-import 'firestore.dart';
+import 'artist.dart';
+import 'journey.dart';
 
 class CardModel extends Equatable {
   CardModel({
@@ -14,7 +14,7 @@ class CardModel extends Equatable {
   }) : super(<dynamic>[journey.id,]);
 
   final Journey journey;
-  final ArtistModel artist;
+  final Artist artist;
 
   PaletteGenerator palette;
 

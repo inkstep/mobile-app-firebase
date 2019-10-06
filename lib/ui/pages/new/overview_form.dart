@@ -200,54 +200,11 @@ class OverviewForm extends InfoWidget {
                 flex: 2,
                 child: SubmitFormButton(
                   () async {
-                    // Upload journey to firestore
-                    final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
-                      <String, dynamic>{
-                        'artistId': int.parse(formData['artistID']),
-                        'auth_uid': auth.data.user.uid,
-                        'availability': formData['availability'],
-                        'clientEmail': formData['email'],
-                        'clientName': formData['name'],
-                        'clientPhone': '',
-                        'clientPhoneToken': '',
-                        'description': formData['mentalImage'],
-                        'position': formData['position'],
-                        'size': formData['size'],
-                        'style': formData['style'],
-                        'stage': 0,
-                      },
-                    );
-
-                    // Upload images to firebase storage
-                    for (Asset image in images) {
-                      // Get image data to store
-                      // TODO(mm): experiment with quality here
-                      final ByteData byteData = await image.getByteData();
-                      final List<int> imageData = byteData.buffer.asUint8List();
-
-                      // Get storage path
-                      final String userId = auth.data.user.uid;
-                      final journeyId = (await doc).documentID;
-                      final filename = '${image.hashCode}${image.name}';
-                      final storageFileRef = '$userId/$journeyId/$filename';
-
-                      final StorageReference ref = FirebaseStorage.instance.ref().child(storageFileRef);
-                      final StorageUploadTask uploadTask = ref.putData(imageData);
-                      final String url = await (await uploadTask.onComplete).ref.getDownloadURL();
-
-                      // Store download url in firestore since we can't query firebase storage
-                      Firestore.instance.collection('images').add(
-                        <String, dynamic>{
-                          'userId': userId,
-                          'journeyId': journeyId,
-                          'url': url,
-                        },
-                      );
-                    }
+                    uploadJourney(auth.data.user.uid);
 
                     final ScreenNavigator nav = sl.get<ScreenNavigator>();
                     nav.openViewJourneysScreen(context);
-                  },
+                  }
                 ),
               ),
               Spacer(flex: 1),
@@ -256,6 +213,66 @@ class OverviewForm extends InfoWidget {
         );
       },
     );
+  }
+
+  Future<void> uploadJourney(String authUid) async {
+    // Upload journey to firestore
+    final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
+      <String, dynamic>{
+        'artistId': int.parse(formData['artistID']),
+        'auth_uid': authUid,
+        'availability': formData['availability'],
+        'clientEmail': formData['email'],
+        'clientName': formData['name'],
+        'clientPhone': '',
+        'description': formData['mentalImage'],
+        'position': formData['position'],
+        'size': formData['size'],
+        'style': formData['style'],
+        'stage': 0,
+        // 'quoteLower': 100,
+        // 'quoteUpper': 120,
+        // 'date': '2019-11-22 13:00:00',
+      },
+    );
+
+    final journeyId = (await doc).documentID;
+
+    // Upload stage as first journey message
+    Firestore.instance.collection('journey_messages').add(
+        <String, dynamic>{
+          'auth_uid': authUid,
+          'journeyId': journeyId,
+          'content': 'Awaiting response', // TODO(mm): put a journey stage here somehow
+          'timestamp': DateTime.now(),
+        }
+    );
+
+    // Upload images to firebase storage
+    for (Asset image in images) {
+      // Get image data to store
+      // TODO(mm): experiment with quality here
+      final ByteData byteData = await image.getByteData();
+      final List<int> imageData = byteData.buffer.asUint8List();
+
+      // Get storage path
+      final String userId = authUid;
+      final filename = '${image.hashCode}${image.name}';
+      final storageFileRef = '$userId/$journeyId/$filename';
+
+      final StorageReference ref = FirebaseStorage.instance.ref().child(storageFileRef);
+      final StorageUploadTask uploadTask = ref.putData(imageData);
+      final String url = await (await uploadTask.onComplete).ref.getDownloadURL();
+
+      // Store download url in firestore since we can't query firebase storage
+      Firestore.instance.collection('images').add(
+        <String, dynamic>{
+          'userId': userId,
+          'journeyId': journeyId,
+          'url': url,
+        },
+      );
+    }
   }
 
   Widget getData(BuildContext context, Map formData, String param) {

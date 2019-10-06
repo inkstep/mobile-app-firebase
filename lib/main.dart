@@ -6,7 +6,7 @@ import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/loading_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
-import 'models/user_model.dart';
+import 'models/user.dart';
 
 void main() {
   // Set up Service Locator
@@ -30,7 +30,7 @@ class Inkstep extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       home: FutureBuilder<bool>(
-        future: UserModel.exists(),
+        future: User.exists(),
         builder: (buildContext, user) {
           if (user.hasData) {
             if (user.data) {

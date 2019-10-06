@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/user_model.dart';
+import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -45,7 +45,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
               // TODO(mm): shake the text box or something here
               return;
             }
-            UserModel.setName(name);
+            User.setName(name);
             final ScreenNavigator nav = sl.get<ScreenNavigator>();
             nav.openViewJourneysScreen(context);
           },

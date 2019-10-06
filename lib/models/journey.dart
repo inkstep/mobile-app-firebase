@@ -1,24 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 import 'journey_stage.dart';
-
-class User {
-  User({
-    @required this.id,
-    @required this.name,
-  });
-
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      id: map['id'],
-      name: map['name'],
-    );
-  }
-
-  final int id;
-  final String name;
-}
 
 class Journey {
   Journey({
@@ -50,21 +32,4 @@ class Journey {
   final String position;
   final String availability;
   final JourneyStage stage;
-}
-
-class Artist extends Equatable {
-  Artist({
-    @required this.id,
-    @required this.name
-  });
-
-  factory Artist.fromMap(Map<String, dynamic> map) {
-    return Artist(
-      id: map['id'],
-      name: map['name'],
-    );
-  }
-
-  final int id;
-  final String name;
 }
