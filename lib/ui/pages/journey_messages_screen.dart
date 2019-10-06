@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/card.dart';
+import 'package:inkstep/models/message.dart';
 
 class JourneyMessagesScreen extends StatelessWidget {
   const JourneyMessagesScreen({Key key, @required this.card}) : super(key: key);
@@ -31,10 +32,11 @@ class JourneyMessagesScreen extends StatelessWidget {
                 return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final Message message = Message.fromMap(snapshot.data.documents[index].data);
                     return Card(
                       color: Theme.of(context).primaryColor,
                       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                      child: Text(snapshot.data.documents[index].data['content']),
+                      child: Text(message.journeyId),
                     );
                   },
                 );

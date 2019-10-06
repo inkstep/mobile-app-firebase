@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/models/message.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/pages/loading_screen.dart';
@@ -239,14 +241,13 @@ class OverviewForm extends InfoWidget {
     final journeyId = (await doc).documentID;
 
     // Upload stage as first journey message
-    Firestore.instance.collection('journey_messages').add(
-        <String, dynamic>{
-          'auth_uid': authUid,
-          'journeyId': journeyId,
-          'content': 'Awaiting response', // TODO(mm): put a journey stage here somehow
-          'timestamp': DateTime.now(),
-        }
+    final Message firstMessage = Message(
+      authUid: authUid,
+      journeyId: journeyId,
+      timestamp: DateTime.now(),
+      content: WaitingForQuote().toMap(),
     );
+    Firestore.instance.collection('journey_messages').add(firstMessage.toMap());
 
     // Upload images to firebase storage
     for (Asset image in images) {
