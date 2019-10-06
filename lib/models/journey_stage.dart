@@ -38,8 +38,6 @@ abstract class JourneyStage extends Equatable {
     return _hasQuote(map) && map.containsKey('date');
   }
 
-  int get progress;
-
   bool get userActionRequired;
 
   int get numberRepresentation;
@@ -49,6 +47,12 @@ abstract class JourneyStage extends Equatable {
   String get deleteDialogHeader;
 
   String get deleteDialogConfirmText;
+
+  Map<String, dynamic> toMap() {
+    return <String , dynamic>{
+      'stage': this.numberRepresentation
+    };
+  }
 
   String deleteDialogBody(String artistName);
 
@@ -82,6 +86,18 @@ abstract class JourneyStageWithQuote extends JourneyStage {
   }
 
   final TextRange quote;
+
+  @override
+  Map<String, dynamic> toMap() {
+    final map = super.toMap();
+    map.addAll(
+      <String, dynamic>{
+        'quoteLower': quote.start,
+        'quoteUpper': quote.end,
+      }
+    );
+    return map;
+  }
 }
 
 abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
@@ -107,12 +123,20 @@ abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
   }
 
   final DateTime date;
+
+  @override
+  Map<String, dynamic> toMap() {
+    final map = super.toMap();
+    map.addAll(
+        <String, dynamic>{
+          'date': date.toIso8601String(),
+        }
+    );
+    return map;
+  }
 }
 
 class WaitingForQuote extends JourneyStage {
-  @override
-  int get progress => 20;
-
   @override
   String toString() => 'Awaiting response';
 
@@ -138,9 +162,6 @@ class WaitingForQuote extends JourneyStage {
 
 class QuoteReceived extends JourneyStageWithQuote {
   QuoteReceived(TextRange quote) : super(quote);
-
-  @override
-  int get progress => 30;
 
   // TODO(DJRHails): They => ArtistName
   @override
@@ -223,10 +244,6 @@ class QuoteReceived extends JourneyStageWithQuote {
 
 class WaitingForAppointmentOffer extends JourneyStageWithQuote {
   WaitingForAppointmentOffer(TextRange quote) : super(quote);
-
-  @override
-  int get progress => 35;
-
   @override
   String toString() => 'Awaiting appointment slot';
 
@@ -252,10 +269,6 @@ class WaitingForAppointmentOffer extends JourneyStageWithQuote {
 
 class AppointmentOfferReceived extends JourneyStageWithBooking {
   AppointmentOfferReceived(TextRange quote, DateTime booking) : super(quote, booking);
-
-  @override
-  int get progress => 40;
-
   @override
   String toString() => 'Appointment offered!';
 
@@ -321,10 +334,6 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
 
 class BookedIn extends JourneyStageWithBooking {
   BookedIn(TextRange quote, DateTime date) : super(quote, date);
-
-  @override
-  int get progress => 60;
-
   @override
   String toString() => 'Booked In';
 
@@ -358,9 +367,6 @@ class WaitingList extends JourneyStageWithQuote {
   int get numberRepresentation => 8;
 
   @override
-  int get progress => 50;
-
-  @override
   String toString() => 'Wating List';
 
   @override
@@ -378,9 +384,6 @@ class WaitingList extends JourneyStageWithQuote {
 
 class Aftercare extends JourneyStageWithBooking {
   Aftercare(TextRange quote, DateTime appointmentDate) : super(quote, appointmentDate);
-
-  @override
-  int get progress => 60 + (DateTime.now().difference(date).inDays * 30 ~/ 93).clamp(1, 35);
 
   @override
   String toString() => 'Tattoo healing';
@@ -408,9 +411,6 @@ class Aftercare extends JourneyStageWithBooking {
 
 class Healed extends JourneyStageWithBooking {
   Healed(TextRange quote, DateTime date) : super(quote, date);
-
-  @override
-  int get progress => 95;
 
   @override
   String toString() => 'You\'re fully healed!';
@@ -486,9 +486,6 @@ class Finished extends JourneyStageWithBooking {
   Finished(TextRange quote, DateTime date) : super(quote, date);
 
   @override
-  int get progress => 100;
-
-  @override
   String toString() => 'Journey Complete';
 
   @override
@@ -511,9 +508,6 @@ class Finished extends JourneyStageWithBooking {
 }
 
 class InvalidStage extends JourneyStage {
-  @override
-  int get progress => 0;
-
   @override
   String toString() => 'Invalid';
 

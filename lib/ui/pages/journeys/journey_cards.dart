@@ -127,11 +127,12 @@ class JourneyCard extends StatelessWidget {
                         ),
                   ),
                 ),
+                // TODO(mm): remove this
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 32.0, top: 16.0, bottom: 16.0),
                   child: JourneyProgressIndicator(
                     color: accentColor,
-                    progress: card.journey.stage.progress,
+                    progress: 100,
                     style: Theme.of(context).accentTextTheme.caption,
                   ),
                 ),
