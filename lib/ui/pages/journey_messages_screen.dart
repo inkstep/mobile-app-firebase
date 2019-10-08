@@ -25,7 +25,7 @@ class JourneyMessagesScreen extends StatelessWidget {
             stream: Firestore.instance
                 .collection('journey_messages')
                 .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-                .where('journeyId', isEqualTo: this.card.journey.id)
+                .where('journeyId', isEqualTo: card.journey.id)
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {

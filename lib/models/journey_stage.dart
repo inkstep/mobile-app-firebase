@@ -5,7 +5,6 @@ import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/pages/journeys/sentiment_row.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
-import 'package:intl/intl.dart';
 
 import 'card.dart';
 
@@ -53,7 +52,7 @@ abstract class JourneyStage extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String , dynamic>{
-      'stage': this.numberRepresentation,
+      'stage': numberRepresentation,
     };
   }
 

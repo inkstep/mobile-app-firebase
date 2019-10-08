@@ -245,7 +245,7 @@ class OverviewForm extends InfoWidget {
       authUid: authUid,
       journeyId: journeyId,
       timestamp: DateTime.now(),
-      content: WaitingForQuote().toMap(),
+      stage: WaitingForQuote(),
     );
     Firestore.instance.collection('journey_messages').add(firstMessage.toMap());
 
