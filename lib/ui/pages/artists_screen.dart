@@ -113,7 +113,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                                 splashColor: Colors.grey[50].withOpacity(0.2),
                                 onTap: () {
                                   final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                                  nav.openNewJourneyScreen(context, artist.artistID);
+                                  nav.openNewJourneyScreen(context, artist.artistId);
                                 },
                               ),
                             ),

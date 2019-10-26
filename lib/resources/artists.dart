@@ -14,7 +14,7 @@ final List<Artist> offlineArtists = [
     email: 'ricky@email.com',
     name: 'Ricky',
     studioID: _offlineScmEntity.id,
-    artistID: 0,
+    artistId: 0,
     profileImage: Image.asset(
       'assets/offline/ricky.jpg',
       fit: BoxFit.cover,
@@ -24,7 +24,7 @@ final List<Artist> offlineArtists = [
     email: 'loz@email.com',
     name: 'Loz',
     studioID: _offlineScmEntity.id,
-    artistID: 1,
+    artistId: 1,
     profileImage: Image.asset(
       'assets/offline/loz.jpg',
       fit: BoxFit.cover,

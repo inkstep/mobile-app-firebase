@@ -6,9 +6,7 @@ class User extends Equatable {
   User({
     @required this.id,
     @required this.name,
-    @required this.email,
-    @required this.token,
-  }) : super(<dynamic>[id, name, email, token]);
+  }) : super(<dynamic>[id, name]);
 
   static String usernameKey = 'name';
   static String emailKey = 'email';
@@ -44,6 +42,4 @@ class User extends Equatable {
 
   final int id;
   final String name;
-  final String email;
-  final String token;
 }

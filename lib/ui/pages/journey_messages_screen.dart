@@ -55,14 +55,14 @@ class JourneyMessagesScreen extends StatelessWidget {
     // Upload journey to firestore
     final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
       <String, dynamic>{
-        'artistId': int.parse(formData['artistID']),
+        'artistId': int.parse(formData['artistId']),
         'auth_uid': authUid,
         'availability': formData['availability'],
         'clientEmail': formData['email'],
         'clientName': formData['name'],
         'clientPhone': '',
         'clientPhoneToken': '',
-        'description': formData['mentalImage'],
+        'description': formData['description'],
         'position': formData['position'],
         'size': formData['size'],
         'style': formData['style'],

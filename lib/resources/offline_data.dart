@@ -7,8 +7,6 @@ import 'package:inkstep/models/user.dart';
 final User offlineUser = User(
   id: 0,
   name: 'Natasha',
-  email: 'natasha@email.com',
-  token: '',
 );
 final List<User> offlineUsers = [offlineUser];
 

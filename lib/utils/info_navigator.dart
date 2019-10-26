@@ -22,7 +22,7 @@ class InfoNavigator {
     styleController = TextEditingController();
     emailController = TextEditingController();
     inspirationImages = [];
-    formData['artistID'] = artistId.toString();
+    formData['artistId'] = artistId.toString();
   }
 
   TextEditingController descController;
@@ -35,7 +35,7 @@ class InfoNavigator {
   Map<String, String> formData = {
     'name': '',
     'email': '',
-    'mentalImage': '',
+    'description': '',
     'position': '',
     'generalPos': '',
     'size': '',
@@ -43,7 +43,7 @@ class InfoNavigator {
     'deposit': '',
     'email': '',
     'noRefImgs': '',
-    'artistID': '',
+    'artistId': '',
     'style': '',
   };
 

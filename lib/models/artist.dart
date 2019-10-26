@@ -5,18 +5,18 @@ import 'package:meta/meta.dart';
 
 class Artist extends Equatable {
   Artist({
-    @required this.artistID,
+    @required this.artistId,
     @required this.name,
     @required this.email,
     @required this.studioID,
     @required this.profileImage,
-  }) : super(<dynamic>[artistID]);
+  }) : super(<dynamic>[artistId]);
 
   factory Artist.fromId(int id) {
-    return offlineArtists.firstWhere((artist) => artist.artistID == id);
+    return offlineArtists.firstWhere((artist) => artist.artistId == id);
   }
 
-  final int artistID;
+  final int artistId;
   final String name;
   final String email;
   final int studioID;

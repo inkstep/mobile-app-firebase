@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/message.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
@@ -77,7 +78,7 @@ class OverviewForm extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    formData['mentalImage'] = descController.text;
+    formData['description'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
@@ -138,8 +139,8 @@ class OverviewForm extends InfoWidget {
                     Expanded(
                       child: Row(
                         children: <Widget>[
-                          getLabel(context, 'Description ', formData, 'mentalImage'),
-                          getData(context, formData, 'mentalImage'),
+                          getLabel(context, 'Description ', formData, 'description'),
+                          getData(context, formData, 'description'),
                         ],
                       ),
                     ),
@@ -219,26 +220,8 @@ class OverviewForm extends InfoWidget {
 
   Future<void> uploadJourney(String authUid) async {
     // Upload journey to firestore
-    final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
-      <String, dynamic>{
-        'artistId': int.parse(formData['artistID']),
-        'auth_uid': authUid,
-        'availability': formData['availability'],
-        'clientEmail': formData['email'],
-        'clientName': formData['name'],
-        'clientPhone': '',
-        'description': formData['mentalImage'],
-        'position': formData['position'],
-        'size': formData['size'],
-        'style': formData['style'],
-        'stage': 0,
-        // 'quoteLower': 100,
-        // 'quoteUpper': 120,
-        // 'date': '2019-11-22 13:00:00',
-      },
-    );
-
-    final journeyId = (await doc).documentID;
+    final Journey journey = Journey.fromMap(formData);
+    String journeyId = await journey.upload(authUid);
 
     // Upload stage as first journey message
     final Message firstMessage = Message(
@@ -253,7 +236,7 @@ class OverviewForm extends InfoWidget {
     for (Asset image in images) {
       // Get image data to store
       // TODO(mm): experiment with quality here
-      final ByteData byteData = await image.getByteData();
+      final ByteData byteData = await image.getByteData(quality: 40);
       final List<int> imageData = byteData.buffer.asUint8List();
 
       // Get storage path
