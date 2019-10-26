@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/journey.dart';
@@ -13,6 +11,7 @@ import 'package:inkstep/models/message.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/pages/loading_screen.dart';
+import 'package:inkstep/utils/image_utils.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -234,28 +233,7 @@ class OverviewForm extends InfoWidget {
 
     // Upload images to firebase storage
     for (Asset image in images) {
-      // Get image data to store
-      // TODO(mm): experiment with quality here
-      final ByteData byteData = await image.getByteData(quality: 40);
-      final List<int> imageData = byteData.buffer.asUint8List();
-
-      // Get storage path
-      final String userId = authUid;
-      final filename = '${image.hashCode}${image.name}';
-      final storageFileRef = '$userId/$journeyId/$filename';
-
-      final StorageReference ref = FirebaseStorage.instance.ref().child(storageFileRef);
-      final StorageUploadTask uploadTask = ref.putData(imageData);
-      final String url = await (await uploadTask.onComplete).ref.getDownloadURL();
-
-      // Store download url in firestore since we can't query firebase storage
-      Firestore.instance.collection('images').add(
-        <String, dynamic>{
-          'userId': userId,
-          'journeyId': journeyId,
-          'url': url,
-        },
-      );
+      ImageUtils.uploadAsset(image, forUser: authUid, forJourney: journeyId);
     }
   }
 

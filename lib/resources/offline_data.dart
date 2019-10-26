@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -20,6 +22,7 @@ final Journey offlineCherub = Journey(
   size: '8cm by 6cm',
   position: 'Bicep',
   availability: '0000011',
+  style: "Abstract",
   stage: WaitingForQuote(),
 );
 final Journey offlineRose1 = Journey(
@@ -29,6 +32,7 @@ final Journey offlineRose1 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: WaitingForQuote(),
 );
 final Journey offlineRose2 = Journey(
@@ -38,6 +42,7 @@ final Journey offlineRose2 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: QuoteReceived(_quote),
 );
 final Journey offlineRose3 = Journey(
@@ -47,6 +52,7 @@ final Journey offlineRose3 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: WaitingForAppointmentOffer(_quote),
 );
 final Journey offlineRose4 = Journey(
@@ -56,6 +62,7 @@ final Journey offlineRose4 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: AppointmentOfferReceived(_quote, _date),
 );
 final Journey offlineRose5 = Journey(
@@ -65,6 +72,7 @@ final Journey offlineRose5 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: BookedIn(_quote, _date),
 );
 final Journey offlineRose6 = Journey(
@@ -74,6 +82,7 @@ final Journey offlineRose6 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: WaitingList(_quote),
 );
 final Journey offlineRose7 = Journey(
@@ -83,6 +92,7 @@ final Journey offlineRose7 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: Aftercare(_quote, _date),
 );
 final Journey offlineRose8 = Journey(
@@ -92,6 +102,7 @@ final Journey offlineRose8 = Journey(
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
+  style: "Abstract",
   stage: Healed(_quote, _date),
 );
 final List<Journey> offlineJourneys = [

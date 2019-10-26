@@ -1,14 +1,18 @@
-import 'package:inkstep/resources/offline_data.dart';
+import 'dart:ui';
 
-import 'models/journey.dart';
+import 'package:inkstep/resources/offline_data.dart';
+import 'package:inkstep/utils/image_utils.dart';
 
 void main() {
-  // Upload the test journeys
   final String authUid = "-1";
-  for (Journey journey in offlineJourneys) {
-    journey.upload(authUid);
+
+  // Upload the test journeys and their images
+  for (int i = 0; i < offlineJourneys.length; i++) {
+    offlineJourneys[i].upload(authUid);
+
+    // Upload the images for this journey
+    for (Image image in offlineJourneyImages[i]) {
+      ImageUtils.uploadImage(image);
+    }
   }
-
-  // Add images
-
 }
