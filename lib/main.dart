@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
-import 'package:inkstep/ui/pages/loading_screen.dart';
+import 'package:inkstep/ui/pages/landing_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 
 import 'models/user.dart';
@@ -38,7 +38,7 @@ class Inkstep extends StatelessWidget {
             }
             return Onboarding();
           } else {
-            return LoadingScreen();
+            return LandingScreen();
           }
         },
       ),

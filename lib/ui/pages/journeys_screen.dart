@@ -9,7 +9,7 @@ import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
-import 'package:inkstep/ui/pages/loading_screen.dart';
+import 'package:inkstep/ui/pages/landing_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'journeys/journey_cards.dart';
@@ -60,29 +60,29 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     return FutureBuilder(
       future: FirebaseAuth.instance.signInAnonymously(),
       builder: (BuildContext context, AsyncSnapshot auth) {
-        return StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance
-              .collection('journeys')
-              // TODO(mm): proper security rules for firebase
-              .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-              .snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return LoadingScreen();
+        return FutureBuilder(
+          future: User.getName(),
+          builder: (buildContext, user) {
+            if (!user.hasData) {
+              return LandingScreen();
             }
-            return FutureBuilder(
-              future: User.getName(),
-              builder: (buildContext, user) {
-                if (user.hasData) {
-                  return LoadedJourneyScreen(
-                    username: user.data,
-                    animation: _animation,
-                    onNotification: onNotification,
-                    swiperController: _swiperController,
-                    journeys: snapshot.data.documents,
-                  );
+            return StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance
+                  .collection('journeys')
+                  // TODO(mm): proper security rules for firebase
+                  .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
+                  .snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return LandingScreen(name: user.data);
                 }
-                return Center();
+                return LoadedJourneyScreen(
+                  username: user.data,
+                  animation: _animation,
+                  onNotification: onNotification,
+                  swiperController: _swiperController,
+                  journeys: snapshot.data.documents,
+                );
               },
             );
           },

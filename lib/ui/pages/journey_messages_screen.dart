@@ -50,26 +50,4 @@ class JourneyMessagesScreen extends StatelessWidget {
       ),
     );
   }
-
-/*Future<void> uploadJourney(String authUid) async {
-    // Upload journey to firestore
-    final Future<DocumentReference> doc = Firestore.instance.collection('journeys').add(
-      <String, dynamic>{
-        'artistId': int.parse(formData['artistId']),
-        'auth_uid': authUid,
-        'availability': formData['availability'],
-        'clientEmail': formData['email'],
-        'clientName': formData['name'],
-        'clientPhone': '',
-        'clientPhoneToken': '',
-        'description': formData['description'],
-        'position': formData['position'],
-        'size': formData['size'],
-        'style': formData['style'],
-        'stage': 0,
-//        'quoteLower': 100,
-//        'quoteUpper': 120,
-//        'date': '2019-11-22 13:00:00',
-      },
-    );*/
 }

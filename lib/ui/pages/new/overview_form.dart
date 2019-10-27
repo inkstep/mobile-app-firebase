@@ -10,7 +10,7 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/models/message.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
-import 'package:inkstep/ui/pages/loading_screen.dart';
+import 'package:inkstep/ui/pages/landing_screen.dart';
 import 'package:inkstep/utils/image_utils.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -37,7 +37,7 @@ class SubmitFormButtonState extends State<SubmitFormButton> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? LoadingScreen()
+        ? LandingScreen()
         : BoldCallToAction(
             label: 'Contact Artist!',
             color: Theme.of(context).cardColor,
@@ -88,7 +88,7 @@ class OverviewForm extends InfoWidget {
       future: FirebaseAuth.instance.signInAnonymously(),
       builder: (BuildContext context, AsyncSnapshot auth) {
         if (!auth.hasData) {
-          return LoadingScreen();
+          return LandingScreen();
         }
 
         return Padding(
