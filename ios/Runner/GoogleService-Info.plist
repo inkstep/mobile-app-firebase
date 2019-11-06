@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>996931783883-4vtkcks0q15isu0c0cn4dnvp539meed7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.996931783883-4vtkcks0q15isu0c0cn4dnvp539meed7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCpbbqkEU-wGdIoPXbLsIAAPGK3XOIostA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>996931783883</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>uk.ac.imperial.Inkstep</string>
+	<key>PROJECT_ID</key>
+	<string>inkstep-2c4cc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>inkstep-2c4cc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:996931783883:ios:c9b9b57a97c2deaa</string>
+	<key>DATABASE_URL</key>
+	<string>https://inkstep-2c4cc.firebaseio.com</string>
+</dict>
+</plist>
