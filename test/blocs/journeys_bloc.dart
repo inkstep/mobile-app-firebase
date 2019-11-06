@@ -30,7 +30,6 @@ void main() {
       images: [],
       stage: WaitingForQuote(),
       index: 0,
-      palette: null,
       journeyId: null,
       bookedDate: DateTime.parse('2019-06-18 10:00:00'),
     ));
@@ -57,7 +56,6 @@ void main() {
       images: [],
       stage: WaitingForQuote(),
       index: 1,
-      palette: null,
       journeyId: null,
       bookedDate: DateTime.parse('2019-06-18 10:00:00'),
     ));
