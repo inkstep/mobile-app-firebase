@@ -146,7 +146,7 @@ class LoadedJourneyCard extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
+    final Color accentColor = Colors.blue; // card.palette.vibrantColor?.color ?? Theme.of(context).accentColor;
 
     bool showCare = false;
 

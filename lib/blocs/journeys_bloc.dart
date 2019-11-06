@@ -18,7 +18,6 @@ import 'package:inkstep/resources/journeys_repository.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:meta/meta.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'journeys_event.dart';
@@ -193,7 +192,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
           quote: TextRange(start: -1, end: -1),
           stage: WaitingForQuote(),
           index: null,
-          palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 100)]),
+          // palette: PaletteGenerator.fromColors([PaletteColor(Colors.blue, 100)]),
           journeyId: null,
           bookedDate: null))
     ] + oldCards, user: user, firstTime: firstTime);
@@ -339,7 +338,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
 
     final ArtistEntity artist = await journeysRepository.loadArtist(je.artistId);
 
-    final List<PaletteColor> palettes = <PaletteColor>[];
+    /*final List<PaletteColor> palettes = <PaletteColor>[];
     for (ImageProvider img in images.map((img) => img.image)) {
       final PaletteGenerator palette = await PaletteGenerator.fromImageProvider(
         img,
@@ -347,7 +346,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       );
       palettes.addAll(palette.paletteColors);
     }
-    final palette = PaletteGenerator.fromColors(palettes);
+    final palette = PaletteGenerator.fromColors(palettes);*/
 
     TextRange quote;
 
@@ -377,7 +376,7 @@ class JourneysBloc extends Bloc<JourneysEvent, JourneysState> {
       quote: quote,
       stage: je.stage,
       index: idx,
-      palette: palette,
+      // palette: palette,
       journeyId: je.id,
       bookedDate: bookedDate,
     );
