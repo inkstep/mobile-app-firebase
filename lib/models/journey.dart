@@ -19,7 +19,7 @@ class Journey {
   factory Journey.fromMap(Map<String, dynamic> map) {
     return Journey(
       id: map['id'],
-      artistId: map['artistId'],
+      artistId: (map['artistId'] is String) ? int.parse(map['artistId']) : map['artistId'],
       description: map['description'],
       size: map['size'],
       position: map['position'],
