@@ -11,4 +11,4 @@ with you every step of the way
 Mobile app designed to streamline the journey of your first tattoo, and be there like a friend throughout it.
 
 
-https://docs.google.com/presentation/d/1opLx9JsFNvtbFvzewIrgcovOuTjsMMMpG0Z0BGvckRA/edit#slide=id.g584679832c_0_269
+https://docs.google.com/presentation/d/1_Bgp7CnJ_q6jWPzrAc_4kEGzoyaPpX286UsP-v20ygI/edit#slide=id.g59a6c91def_0_0
