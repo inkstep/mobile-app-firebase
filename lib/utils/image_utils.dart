@@ -6,19 +6,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class ImageUtils {
-  static void uploadImage(Image image, {String forUser, String forJourney}) async {
+  static Future<void> uploadImage(Image image, {String forUser, String forJourney}) async {
     final filename = '${image.hashCode}';
     final ByteData byteData = await image.toByteData();
     _uploadImageByteData(byteData, filename, forUser, forJourney);
   }
 
-  static void uploadAsset(Asset image, {String forUser, String forJourney}) async {
+  static Future<void> uploadAsset(Asset image, {String forUser, String forJourney}) async {
     final filename = '${image.hashCode}${image.name}';
     final ByteData byteData = await image.getByteData(quality: 40);
     _uploadImageByteData(byteData, filename, forUser, forJourney);
   }
 
-  static void _uploadImageByteData(ByteData byteData, String filename, String authUid, String journeyId) async {
+  static Future<void> _uploadImageByteData(ByteData byteData, String filename, String authUid, String journeyId) async {
     final List<int> imageData = byteData.buffer.asUint8List();
 
     // Get storage path and upload

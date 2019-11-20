@@ -12,7 +12,7 @@ void main() {
             name: 'Ricky Williams',
             studioName: 'South City Market',
             imagePath: 'assets/ricky.png',
-            artistID: 1,
+            artistId: 1,
           )),
         ),
       );
@@ -26,7 +26,7 @@ void main() {
       final ProfileRow artistProfileRow = ProfileRow(
         name: 'Ricky Williams',
         studioName: 'South City Market',
-        artistID: 1,
+        artistId: 1,
       );
 
       await tester.pumpWidget(

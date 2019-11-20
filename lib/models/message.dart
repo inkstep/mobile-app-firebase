@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:inkstep/models/journey_stage.dart';
@@ -11,11 +12,12 @@ class Message extends Equatable {
   }) : super(<dynamic>[authUid, journeyId, timestamp]);
 
   factory Message.fromMap(Map<String, dynamic> map) {
+    final DateTime dateTime = (map['timestamp'] is Timestamp) ? map['timestamp'].toDate() : DateTime.parse(map['timestamp']);
     return Message(
       authUid: map['auth_uid'],
       journeyId: map['journeyId'],
-      timestamp: DateTime.parse(map['timestamp']),
-      stage: _decodeMessageContent(map),
+      timestamp: dateTime,
+      stage: JourneyStage.fromMap(map),
     );
   }
 
@@ -32,16 +34,5 @@ class Message extends Equatable {
     };
     map.addAll(stage.toMap());
     return map;
-  }
-
-  // TODO(mm): data model for a message instead of using Object here
-  static JourneyStage _decodeMessageContent(Map<String, dynamic> map) {
-    // Message is a journey stage
-    if (map['stage']) {
-      return JourneyStage.fromMap(map);
-    }
-
-    // TODO(mm): text only journey stage?
-    return (map['text']) ? map['text'] : InvalidStage();
   }
 }
