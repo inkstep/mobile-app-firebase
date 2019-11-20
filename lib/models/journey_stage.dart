@@ -5,6 +5,7 @@ import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/pages/journeys/sentiment_row.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'card.dart';
 
@@ -217,13 +218,19 @@ class QuoteReceived extends JourneyStageWithQuote {
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
-      onAcceptance: () {
+      onAcceptance: () async {
         // TODO(mm): accept quote cloud function
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
         // card.stage = WaitingForAppointmentOffer(card.quote);
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
         nav.pop(context);
+        final Map<String, int> toUpdate = {
+          'stage': 3,
+        };
+        card.journey.stage = AppointmentOfferReceived(quote, DateTime.parse('2019-11-22 13:00:00'));
+        final DocumentReference journey = Firestore.instance.collection('journeys').document(card.journey.id);
+        await journey.updateData(toUpdate);
       },
       onDenial: () {
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
