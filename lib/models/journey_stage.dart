@@ -228,7 +228,7 @@ class QuoteReceived extends JourneyStageWithQuote {
         final Map<String, int> toUpdate = {
           'stage': 3,
         };
-        card.journey.stage = AppointmentOfferReceived(quote, DateTime.parse('2019-11-22 13:00:00'));
+        card.journey.stage = WaitingForAppointmentOffer(quote);
         final DocumentReference journey = Firestore.instance.collection('journeys').document(card.journey.id);
         await journey.updateData(toUpdate);
       },
