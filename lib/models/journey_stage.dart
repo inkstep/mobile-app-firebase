@@ -322,19 +322,26 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
 
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
-    return SentimentRow(onAcceptance: () {
+    return SentimentRow(onAcceptance: () async {
       // TODO(mm): accept appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateAccepted(card.journeyId));
       // card.stage = BookedIn(card.date, card.quote);
-      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
-      // nav.pop(context);
+       final ScreenNavigator nav = sl.get<ScreenNavigator>();
+       nav.pop(context);
+       final Map<String, int> toUpdate = {
+         'stage': 4,
+       };
+       card.journey.stage = BookedIn(quote, date);
+       final DocumentReference journey = Firestore.instance.collection('journeys').document(card.journey.id);
+       await journey.updateData(toUpdate);
+
     }, onDenial: () {
       // TODO(mm): reject appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateDenied(card.journey.id));
-      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
-      // nav.pop(context);
+       final ScreenNavigator nav = sl.get<ScreenNavigator>();
+       nav.pop(context);
     });
   }
 }
