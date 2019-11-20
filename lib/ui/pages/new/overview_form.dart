@@ -220,7 +220,7 @@ class OverviewForm extends InfoWidget {
   Future<void> uploadJourney(String authUid) async {
     // Upload journey to firestore
     final Journey journey = Journey.fromMap(formData);
-    String journeyId = await journey.upload(authUid);
+    final String journeyId = await journey.upload(authUid);
 
     // Upload stage as first journey message
     final Message firstMessage = Message(

@@ -12,7 +12,7 @@ class Message extends Equatable {
   }) : super(<dynamic>[authUid, journeyId, timestamp]);
 
   factory Message.fromMap(Map<String, dynamic> map) {
-    DateTime dateTime = (map['timestamp'] is Timestamp) ? map['timestamp'].toDate() : DateTime.parse(map['timestamp']);
+    final DateTime dateTime = (map['timestamp'] is Timestamp) ? map['timestamp'].toDate() : DateTime.parse(map['timestamp']);
     return Message(
       authUid: map['auth_uid'],
       journeyId: map['journeyId'],
