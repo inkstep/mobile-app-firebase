@@ -76,6 +76,14 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
                 if (!snapshot.hasData) {
                   return LandingScreen(name: user.data);
                 }
+                snapshot.data.documents.sort((a, b) {
+                  if (a.data['stage'] > b.data['stage']) {
+                    return 1;
+                  } else if (a.data['stage'] < b.data['stage']) {
+                    return -1;
+                  }
+                  return 0;
+                });
                 return LoadedJourneyScreen(
                   username: user.data,
                   animation: _animation,
