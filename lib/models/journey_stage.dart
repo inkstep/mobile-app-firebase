@@ -5,6 +5,7 @@ import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/pages/journeys/sentiment_row.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'card.dart';
 
@@ -140,27 +141,27 @@ abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
 
 class MessageStage extends JourneyStage {
   @override
-  // TODO: implement deleteDialogConfirmText
+  // TODO(mm): implement deleteDialogConfirmText
   String get deleteDialogConfirmText => null;
 
   @override
-  // TODO: implement deleteDialogHeader
+  // TODO(mm): implement deleteDialogHeader
   String get deleteDialogHeader => null;
 
   @override
   IconData get icon => Icons.message;
 
   @override
-  // TODO: implement numberRepresentation
+  // TODO(mm): implement numberRepresentation
   int get numberRepresentation => 9;
 
   @override
-  // TODO: implement userActionRequired
+  // TODO(mm): implement userActionRequired
   bool get userActionRequired => null;
 
   @override
   String deleteDialogBody(String artistName) {
-    // TODO: implement deleteDialogBody
+    // TODO(mm): implement deleteDialogBody
     return null;
   }
 }
@@ -246,13 +247,19 @@ class QuoteReceived extends JourneyStageWithQuote {
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
-      onAcceptance: () {
+      onAcceptance: () async {
         // TODO(mm): accept quote cloud function
         // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
         // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
         // card.stage = WaitingForAppointmentOffer(card.quote);
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
         nav.pop(context);
+        final Map<String, int> toUpdate = {
+          'stage': 3,
+        };
+        card.journey.stage = WaitingForAppointmentOffer(quote);
+        final DocumentReference journey = Firestore.instance.collection('journeys').document(card.journey.id);
+        await journey.updateData(toUpdate);
       },
       onDenial: () {
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
@@ -344,19 +351,26 @@ class AppointmentOfferReceived extends JourneyStageWithBooking {
 
   @override
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
-    return SentimentRow(onAcceptance: () {
+    return SentimentRow(onAcceptance: () async {
       // TODO(mm): accept appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateAccepted(card.journeyId));
       // card.stage = BookedIn(card.date, card.quote);
-      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
-      // nav.pop(context);
+       final ScreenNavigator nav = sl.get<ScreenNavigator>();
+       nav.pop(context);
+       final Map<String, int> toUpdate = {
+         'stage': 4,
+       };
+       card.journey.stage = BookedIn(quote, date);
+       final DocumentReference journey = Firestore.instance.collection('journeys').document(card.journey.id);
+       await journey.updateData(toUpdate);
+
     }, onDenial: () {
       // TODO(mm): reject appointment cloud function
       // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
       // journeyBloc.dispatch(DateDenied(card.journey.id));
-      // final ScreenNavigator nav = sl.get<ScreenNavigator>();
-      // nav.pop(context);
+       final ScreenNavigator nav = sl.get<ScreenNavigator>();
+       nav.pop(context);
     });
   }
 }
