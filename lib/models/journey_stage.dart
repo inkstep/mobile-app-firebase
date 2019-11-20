@@ -248,10 +248,6 @@ class QuoteReceived extends JourneyStageWithQuote {
   Widget buildDismissStageWidget(BuildContext context, CardModel card) {
     return SentimentRow(
       onAcceptance: () async {
-        // TODO(mm): accept quote cloud function
-        // final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-        // journeyBloc.dispatch(QuoteAccepted(card.journey.id));
-        // card.stage = WaitingForAppointmentOffer(card.quote);
         final ScreenNavigator nav = sl.get<ScreenNavigator>();
         nav.pop(context);
         final Map<String, int> toUpdate = {
