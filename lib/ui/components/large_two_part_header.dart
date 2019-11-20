@@ -5,8 +5,7 @@ class LargeTwoPartHeader extends StatelessWidget {
   const LargeTwoPartHeader({
     Key key,
     @required this.largeText,
-    this.name,
-    this.taskStatus,
+    @required this.name, this.taskStatus
   }) : super(key: key);
 
   final String largeText;

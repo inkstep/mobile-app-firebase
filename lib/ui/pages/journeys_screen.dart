@@ -1,22 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/artist.dart';
-import 'package:inkstep/models/card.dart';
-import 'package:inkstep/models/journey.dart';
-import 'package:inkstep/models/user.dart';
+import 'package:inkstep/ui/components/feature_discovery.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
-import 'package:inkstep/ui/pages/landing_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'journeys/journey_cards.dart';
 
 class JourneysScreen extends StatefulWidget {
+  const JourneysScreen({Key key, this.onInit}) : super(key: key);
+
   @override
   _JourneysScreenState createState() => _JourneysScreenState();
+
+  final void Function() onInit;
 }
 
 class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
@@ -30,6 +31,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 
   @override
   void initState() {
+    widget.onInit();
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
@@ -45,49 +47,52 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
+    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+    return FeatureDiscovery(
+      child: BlocBuilder<JourneysEvent, JourneysState>(
+        bloc: journeyBloc,
+        builder: (BuildContext context, JourneysState state) {
+          if (state is JourneyError) {
+            print('JourneyError');
+            Navigator.pop(context);
+          }
 
-    // For firebase notification handler
-    final void Function(ScrollNotification) onNotification = (notification) {
-      if (notification is ScrollEndNotification) {
-        final currentPage = _swiperController.index;
-        if (_currentPageIndex != currentPage) {
-          setState(() => _currentPageIndex = currentPage);
-        }
-      }
-    };
-
-    return FutureBuilder(
-      future: FirebaseAuth.instance.signInAnonymously(),
-      builder: (BuildContext context, AsyncSnapshot auth) {
-        return FutureBuilder(
-          future: User.getName(),
-          builder: (buildContext, user) {
-            if (!user.hasData) {
-              return LandingScreen();
-            }
-            return StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
-                  .collection('journeys')
-                  // TODO(mm): proper security rules for firebase
-                  .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-                  .snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return LandingScreen(name: user.data);
-                }
-                return LoadedJourneyScreen(
-                  username: user.data,
-                  animation: _animation,
-                  onNotification: onNotification,
-                  swiperController: _swiperController,
-                  journeys: snapshot.data.documents,
-                );
-              },
+          if (state is JourneysNoUser) {
+            return Container(
+              decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+              child: Center(
+                child: SpinKitChasingDots(
+                  color: Theme.of(context).cardColor,
+                  size: 50.0,
+                ),
+              ),
             );
-          },
-        );
-      },
+          } else if (state is JourneysWithUser) {
+            final JourneysWithUser loadedState = state;
+            _controller.forward();
+
+            final void Function(ScrollNotification) onNotification = (notification) {
+              if (notification is ScrollEndNotification) {
+                final currentPage = _swiperController.index;
+                if (_currentPageIndex != currentPage) {
+                  setState(() => _currentPageIndex = currentPage);
+                }
+              }
+            };
+            return LoadedJourneyScreen(
+              animation: _animation,
+              loadedState: loadedState,
+              onNotification: onNotification,
+              swiperController: _swiperController,
+            );
+          } else {
+            print(state);
+            return Container(
+              child: Center(child: Text('Abort Mission')),
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -102,52 +107,18 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 class LoadedJourneyScreen extends StatelessWidget {
   const LoadedJourneyScreen({
     Key key,
-    @required this.username,
     @required Animation<double> animation,
+    @required this.loadedState,
     @required this.onNotification,
     @required SwiperController swiperController,
-    @required this.journeys,
   })  : _animation = animation,
         _swiperController = swiperController,
         super(key: key);
 
-  final void Function(ScrollNotification) onNotification;
-  final List<DocumentSnapshot> journeys;
-
-  final String username;
-
   final Animation<double> _animation;
+  final JourneysWithUser loadedState;
+  final void Function(ScrollNotification) onNotification;
   final SwiperController _swiperController;
-
-  Widget _buildJourneyCards() {
-    return NotificationListener<ScrollNotification>(
-      onNotification: onNotification,
-      child: Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          if (journeys.isEmpty) {
-            return AddCard();
-          }
-
-          // Add document ID to map for use as journey ID in creating journey object
-          final Map<String, dynamic> journeyMap = journeys[index].data;
-          journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
-
-          final Journey journey = Journey.fromMap(journeyMap);
-          return JourneyCard(
-            card: CardModel(
-              journey: journey,
-              artist: Artist.fromId(journey.artistId),
-            ),
-          );
-        },
-        loop: false,
-        controller: _swiperController,
-        itemCount: journeys.isEmpty ? 1 : journeys.length,
-        viewportFraction: 0.8,
-        scale: 0.9,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +127,7 @@ class LoadedJourneyScreen extends StatelessWidget {
     //  if (_swiperController.hasClients) {
     //    accentColor = loadedState.cards[_swiperController.page.toInt()].palette.vibrantColor?.color;
     //  }
-    final FloatingActionButton addJourneyButton = journeys.isEmpty
+    final FloatingActionButton addJourneyButton = loadedState.cards.isEmpty
         ? null
         : FloatingActionButton(
             child: Icon(
@@ -187,12 +158,11 @@ class LoadedJourneyScreen extends StatelessWidget {
                 child: GestureDetector(
                   child: LargeTwoPartHeader(
                     largeText: 'Welcome back',
-                    name: username,
+                    name: loadedState.user?.name,
                   ),
                   onLongPress: () {
-                    User.logOut();
-                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.restartApp(context);
+                    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+                    journeyBloc.dispatch(LogOut(context));
                   },
                 ),
               ),
@@ -207,7 +177,22 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 2),
               Expanded(
                 flex: 60,
-                child: _buildJourneyCards(),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: onNotification,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      if (loadedState.cards.isEmpty) {
+                        return AddCard();
+                      }
+                      return JourneyCard(model: loadedState.cards[index]);
+                    },
+                    loop: false,
+                    controller: _swiperController,
+                    itemCount: loadedState.cards.isEmpty ? 1 : loadedState.cards.length,
+                    viewportFraction: 0.8,
+                    scale: 0.9,
+                  ),
+                ),
               ),
               Spacer(flex: 4),
             ],

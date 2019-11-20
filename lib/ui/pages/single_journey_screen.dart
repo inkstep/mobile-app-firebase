@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/card.dart';
+import 'package:inkstep/models/card_model.dart';
 import 'package:inkstep/models/journey_stage.dart';
-import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
@@ -21,21 +22,20 @@ class DeleteJourneyDialog extends StatelessWidget {
   final bool doublePop;
 
   void _cancelJourney(BuildContext context) {
-    // TODO(mm): cancel journey cloud function
-//    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-//    journeyBloc.dispatch(RemoveJourney(card.journeyId));
-//    Navigator.pop(context);
-//    if (doublePop) {
-//      Navigator.pop(context);
-//    }
+    final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
+    journeyBloc.dispatch(RemoveJourney(card.journeyId));
+    Navigator.pop(context);
+    if (doublePop) {
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return RoundedAlertDialog(
-        title: card.journey.stage.deleteDialogHeader,
+        title: card.stage.deleteDialogHeader,
         child: Text(
-          card.journey.stage.deleteDialogBody(card.artist.name),
+          card.stage.deleteDialogBody(card.artistName),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle,
         ),
@@ -46,9 +46,9 @@ class DeleteJourneyDialog extends StatelessWidget {
             onPressed: () => _cancelJourney(context),
             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-            shape: RoundedRectangleBorder(borderRadius: largeBorderRadius),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
             child: Text(
-              card.journey.stage.deleteDialogConfirmText,
+              card.stage.deleteDialogConfirmText,
               style: TextStyle(fontSize: 20, fontFamily: 'Signika').copyWith(color: Colors.red),
             ),
           ),
@@ -80,7 +80,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   void initState() {
-    _numFabs = widget.card.journey.stage is JourneyStageWithBooking ? 3 : 2;
+    _numFabs = widget.card.bookedDate == null ? 2 : 3;
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
       ..addListener(() {
@@ -147,9 +147,8 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'careBtn',
       onPressed: () {
-         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-         final JourneyStage stage = widget.card.journey.stage;
-         nav.openCareScreen(context, stage is JourneyStageWithBooking ? stage.date : null);
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.openCareScreen(context, widget.card.bookedDate);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -290,14 +289,11 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
   }
 
   Widget _content(BuildContext context) {
-    final String artistFirstName = widget.card.artist.name.split(' ')[0];
+    final String artistFirstName = widget.card.artistName.split(' ')[0];
     final double fullHeight = MediaQuery.of(context).size.height;
     final double fullWidth = MediaQuery.of(context).size.width;
-
-    final JourneyStage stage = widget.card.journey.stage;
-    final TextRange quote = stage is JourneyStageWithQuote ? stage.quote : null;
-    final DateTime date = stage is JourneyStageWithBooking ? stage.date : null;
-
+    final bool hasQuote = widget.card.quote != null;
+    final bool hasDate = widget.card.bookedDate != null;
     return ListView(
       children: <Widget>[
         Container(
@@ -335,14 +331,14 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       ],
                     ),
                   ),
-                  if (date != null)
+                  if (hasDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Opacity(
                           opacity: 0.5,
                           child: DateBlock(
-                            date: date,
+                            date: widget.card.bookedDate,
                             onlyDate: true,
                             scale: 1.75,
                           ),
@@ -373,7 +369,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         decoration: BoxDecoration(
                           color: Colors.black26,
                           shape: BoxShape.rectangle,
-                          borderRadius: smallBorderRadius,
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
                       ),
                       Container(
@@ -381,12 +377,12 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(stage.icon,
+                            Icon(widget.card.stage.icon,
                                 color: Theme.of(context).accentTextTheme.subhead.color),
                             Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Text(
-                                '${stage.toString()}',
+                                '${widget.card.stage.toString()}',
                                 style: Theme.of(context).accentTextTheme.subhead,
                               ),
                             ),
@@ -408,7 +404,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.journey.description,
+                    widget.card.description,
                     style: Theme.of(context).accentTextTheme.subhead,
                   ),
                 ),
@@ -425,7 +421,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.journey.position ?? 'N/A',
+                    widget.card.bodyLocation ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
@@ -442,11 +438,11 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                   child: Text(
-                    widget.card.journey.size ?? 'N/A',
+                    widget.card.size ?? 'N/A',
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
-                if (quote != null)
+                if (hasQuote)
                   Column(
                     children: <Widget>[
                       Padding(
@@ -462,7 +458,7 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 16.0, bottom: 30.0),
                         child: Text(
-                          '£${quote.start}-£${quote.end}',
+                          '£${widget.card.quote.start}-£${widget.card.quote.end}',
                           style: Theme.of(context).accentTextTheme.body1,
                         ),
                       ),
@@ -477,7 +473,6 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                           .subtitle
                           .copyWith(fontWeight: FontWeight.w500)),
                 ),
-                // TODO(mm): journey images
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0),
@@ -485,11 +480,11 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
-                      itemCount: 0, // TODO(mm): images - widget.card.images.length,
+                      itemCount: widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: null, // TODO(mm): images - widget.card.images[index].image,
+                                image: widget.card.images[index].image,
                                 fit: BoxFit.cover,
                               ),
                             ),

@@ -5,14 +5,14 @@ class ProfileRow extends StatelessWidget {
     this.imagePath,
     @required this.name,
     @required this.studioName,
-    @required this.artistId,
+    @required this.artistID,
     Key key,
   }) : super(key: key);
 
   final String imagePath;
   final String name;
   final String studioName;
-  final int artistId;
+  final int artistID;
 
   @override
   Widget build(BuildContext context) {

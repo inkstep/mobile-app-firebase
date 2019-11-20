@@ -6,7 +6,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 class FormResult extends Equatable {
   FormResult({
     @required this.name,
-    @required this.artistId,
+    @required this.artistID,
     @required this.description,
     @required this.size,
     @required this.position,
@@ -17,7 +17,7 @@ class FormResult extends Equatable {
   }) : super(<dynamic>[name, description, size, position, email, availability, images, style]);
 
   final String name;
-  final int artistId;
+  final int artistID;
   final String description;
   final String size;
   final String position;

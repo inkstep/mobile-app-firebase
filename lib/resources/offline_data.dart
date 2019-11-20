@@ -1,111 +1,145 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
-import 'package:inkstep/models/journey.dart';
+import 'package:inkstep/models/artists_entity.dart';
+import 'package:inkstep/models/journey_entity.dart';
 import 'package:inkstep/models/journey_stage.dart';
-import 'package:inkstep/models/user.dart';
+import 'package:inkstep/models/studio_entity.dart';
+import 'package:inkstep/models/studio_model.dart';
+import 'package:inkstep/models/user_model.dart';
 
 // Users
-final User offlineUser = User(
-  id: 0,
-  name: 'Natasha',
-);
+final User offlineUser = User(id: 0, name: 'Natasha', email: 'natasha@email.com');
 final List<User> offlineUsers = [offlineUser];
 
+// Studios
+final Studio offlineScm = Studio(id: 0, name: 'South City Market');
+final StudioEntity offlineScmEntity = StudioEntity(id: 0, name: 'South City Market');
+final List<StudioEntity> offlineStudios = [offlineScmEntity];
+
+// Artists
+final List<ArtistEntity> offlineArtists = [
+  ArtistEntity(
+    email: 'ricky@email.com',
+    name: 'Ricky',
+    studioID: 0,
+    artistID: 2,
+    artistImage: Image.asset(
+      'assets/offline/ricky.jpg',
+      fit: BoxFit.cover,
+    ),
+  ),
+  ArtistEntity(
+    email: 'loz@email.com',
+    name: 'Loz',
+    studioID: 0,
+    artistID: 1,
+    artistImage: Image.asset(
+      'assets/offline/loz.jpg',
+      fit: BoxFit.cover,
+    ),
+  )
+];
+
 // Journeys
-final TextRange _quote = TextRange(start: 100, end: 120);
-final DateTime _date = DateTime(2019, 11, 14, 14);
-final Journey offlineCherub = Journey(
-  id: '0',
+final JourneyEntity offlineCherub = JourneyEntity(
+  id: 0,
+  userId: 0,
   artistId: 1,
-  description: 'Cherub',
+  mentalImage: 'Cherub',
   size: '8cm by 6cm',
   position: 'Bicep',
   availability: '0000011',
-  style: 'Abstract',
+  noImages: 2,
   stage: WaitingForQuote(),
 );
-final Journey offlineRose1 = Journey(
-  id: '1',
+final JourneyEntity offlineRose1 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 1',
+  mentalImage: 'Rose 1',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
+  noImages: 2,
   stage: WaitingForQuote(),
 );
-final Journey offlineRose2 = Journey(
-  id: '1',
+final JourneyEntity offlineRose2 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 2',
+  mentalImage: 'Rose 2',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: QuoteReceived(_quote),
+  noImages: 2,
+  stage: QuoteReceived(TextRange(start: 120, end: 140)),
 );
-final Journey offlineRose3 = Journey(
-  id: '1',
+final JourneyEntity offlineRose3 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 3',
+  mentalImage: 'Rose 3',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: WaitingForAppointmentOffer(_quote),
+  noImages: 2,
+  stage: WaitingForAppointmentOffer(TextRange(start: 120, end: 140)),
 );
-final Journey offlineRose4 = Journey(
-  id: '1',
+final JourneyEntity offlineRose4 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 4',
+  mentalImage: 'Rose 4',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: AppointmentOfferReceived(_quote, _date),
+  noImages: 2,
+  stage: AppointmentOfferReceived(DateTime(2019, 11, 14, 14), TextRange(start: 120, end: 140)),
 );
-final Journey offlineRose5 = Journey(
-  id: '1',
+final JourneyEntity offlineRose5 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 5',
+  mentalImage: 'Rose 5',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: BookedIn(_quote, _date),
+  noImages: 2,
+  stage: BookedIn(DateTime(2019, 10, 1, 15), TextRange(start: 120, end: 140)),
 );
-final Journey offlineRose6 = Journey(
-  id: '1',
+final JourneyEntity offlineRose6 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 6',
+  mentalImage: 'Rose 6',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: WaitingList(_quote),
+  noImages: 2,
+  stage: WaitingList(TextRange(start: 100, end: 120)),
 );
-final Journey offlineRose7 = Journey(
-  id: '1',
+final JourneyEntity offlineRose7 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 7',
+  mentalImage: 'Rose 7',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: Aftercare(_quote, _date),
+  noImages: 2,
+  stage: Aftercare(DateTime(2019, 7, 20, 15)),
 );
-final Journey offlineRose8 = Journey(
-  id: '1',
+final JourneyEntity offlineRose8 = JourneyEntity(
+  id: 1,
+  userId: 0,
   artistId: 2,
-  description: 'Rose 8',
+  mentalImage: 'Rose 8',
   size: '6cm by 3cm',
   position: 'Sternum',
   availability: '0101001',
-  style: 'Abstract',
-  stage: Healed(_quote, _date),
+  noImages: 2,
+  stage: Healed(),
 );
-final List<Journey> offlineJourneys = [
+final List<JourneyEntity> offlineJourneys = [
   offlineCherub,
   offlineRose1,
   offlineRose2,
