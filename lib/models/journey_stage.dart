@@ -25,6 +25,8 @@ abstract class JourneyStage extends Equatable {
       case 6:
       case 7:
         return _hasDate(map) ? JourneyStageWithBooking.fromMap(map) : InvalidStage();
+      case 9:
+        return MessageStage();
       default:
         return InvalidStage();
     }
@@ -133,6 +135,33 @@ abstract class JourneyStageWithBooking extends JourneyStageWithQuote {
         }
     );
     return map;
+  }
+}
+
+class MessageStage extends JourneyStage {
+  @override
+  // TODO: implement deleteDialogConfirmText
+  String get deleteDialogConfirmText => null;
+
+  @override
+  // TODO: implement deleteDialogHeader
+  String get deleteDialogHeader => null;
+
+  @override
+  IconData get icon => Icons.message;
+
+  @override
+  // TODO: implement numberRepresentation
+  int get numberRepresentation => 9;
+
+  @override
+  // TODO: implement userActionRequired
+  bool get userActionRequired => null;
+
+  @override
+  String deleteDialogBody(String artistName) {
+    // TODO: implement deleteDialogBody
+    return null;
   }
 }
 

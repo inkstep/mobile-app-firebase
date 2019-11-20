@@ -17,7 +17,7 @@ class Message extends Equatable {
       authUid: map['auth_uid'],
       journeyId: map['journeyId'],
       timestamp: dateTime,
-      stage: _decodeMessageContent(map),
+      stage: JourneyStage.fromMap(map),
     );
   }
 
@@ -34,16 +34,5 @@ class Message extends Equatable {
     };
     map.addAll(stage.toMap());
     return map;
-  }
-
-  // TODO(mm): data model for a message instead of using Object here
-  static JourneyStage _decodeMessageContent(Map<String, dynamic> map) {
-    // Message is a journey stage
-    if (map['stage'] != null) {
-      return JourneyStage.fromMap(map);
-    }
-
-    // TODO(mm): text only journey stage?
-    return (map['text']) ? map['text'] : InvalidStage();
   }
 }

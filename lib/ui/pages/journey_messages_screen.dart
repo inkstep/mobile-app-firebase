@@ -36,7 +36,7 @@ class JourneyMessagesScreen extends StatelessWidget {
                     return Card(
                       color: Theme.of(context).primaryColor,
                       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                      child: Text(message.journeyId),
+                      child: message.stage.buildStageWidget(context, card),
                     );
                   },
                 );
