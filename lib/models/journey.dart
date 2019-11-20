@@ -36,7 +36,7 @@ class Journey {
   final String position;
   final String availability;
   final String style;
-  final JourneyStage stage;
+  JourneyStage stage;
 
   // Upload this journey to firebase for the user given
   Future<String> upload(String authUid) async {
