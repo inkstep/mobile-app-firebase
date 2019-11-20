@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/theme.dart';
 
 class RoundedAlertDialog extends StatelessWidget {
   const RoundedAlertDialog({
@@ -19,7 +20,7 @@ class RoundedAlertDialog extends StatelessWidget {
       color: Colors.white,
       elevation: 15.0,
       padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      shape: RoundedRectangleBorder(borderRadius: largeBorderRadius),
       child: Text(
         'Ok',
         style: TextStyle(fontSize: 20, fontFamily: 'Signika', color: Colors.black),
@@ -28,7 +29,7 @@ class RoundedAlertDialog extends StatelessWidget {
     );
 
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(18.0))),
+      shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
       title: title != null
           ? Text(
               title,

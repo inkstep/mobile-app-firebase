@@ -1,11 +1,17 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/models/form_result_model.dart';
+import 'package:inkstep/models/journey.dart';
+import 'package:inkstep/models/journey_stage.dart';
+import 'package:inkstep/models/message.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/horizontal_divider.dart';
+import 'package:inkstep/ui/pages/landing_screen.dart';
+import 'package:inkstep/utils/image_utils.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -13,9 +19,43 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../../../theme.dart';
 import 'info_widget.dart';
 
-class OverviewForm extends StatelessWidget {
-  const OverviewForm({
-    Key key,
+class SubmitFormButton extends StatefulWidget {
+  const SubmitFormButton(this.callback);
+
+  final Future<void> Function() callback;
+
+  @override
+  State<StatefulWidget> createState() => SubmitFormButtonState(callback);
+}
+
+class SubmitFormButtonState extends State<SubmitFormButton> {
+  SubmitFormButtonState(this.callback);
+
+  Future<void> Function() callback;
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? LandingScreen()
+        : BoldCallToAction(
+            label: 'Contact Artist!',
+            color: Theme.of(context).cardColor,
+            textColor: Theme.of(context).primaryColorDark,
+            onTap: () {
+              setState(() {
+                _isLoading = true;
+              });
+              callback().then((_) => setState(() {
+                    _isLoading = false;
+                  }));
+            },
+          );
+  }
+}
+
+class OverviewForm extends InfoWidget {
+  OverviewForm({
     @required this.formData,
     @required this.descController,
     @required this.emailController,
@@ -24,25 +64,7 @@ class OverviewForm extends StatelessWidget {
     @required this.styleController,
     @required this.images,
     this.navigator,
-  }) : super(key: key);
-
-  final Map<String, String> formData;
-  final TextEditingController descController;
-  final TextEditingController emailController;
-  final TextEditingController widthController;
-  final TextEditingController heightController;
-  final TextEditingController styleController;
-  final List<Asset> images;
-  final InfoNavigator navigator;
-
-  @override
-  Widget build(BuildContext context) => OverviewFormWidget(formData, descController,
-      emailController, widthController, heightController, styleController, images, navigator);
-}
-
-class OverviewFormWidget extends InfoWidget {
-  OverviewFormWidget(this.formData, this.descController, this.emailController, this.widthController,
-      this.heightController, this.styleController, this.images, this.navigator);
+  });
 
   final Map<String, String> formData;
   final TextEditingController descController;
@@ -55,143 +77,164 @@ class OverviewFormWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    formData['mentalImage'] = descController.text;
+    formData['description'] = descController.text;
     formData['email'] = emailController.text;
     formData['size'] = widthController.text == '' || heightController.text == ''
         ? ''
         : widthController.text + 'cm by ' + heightController.text + 'cm';
-
     formData['style'] = styleController.text ?? '';
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Flexible(
-              flex: 2,
-              child: Text(
-                'Check your details',
-                style: Theme.of(context).primaryTextTheme.headline,
-              )),
-          Spacer(flex: 1),
-          Expanded(
-            flex: 12,
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Email ', formData, 'email'),
-                    getData(context, formData, 'email'),
-                  ],
-                )),
-                HorizontalDivider(),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Images ', formData, 'noRefImgs'),
-                    getData(context, formData, 'noRefImgs'),
-                  ],
-                )),
-                HorizontalDivider(),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      getLabel(context, 'Style ', formData, 'style'),
-                      getData(context, formData, 'style'),
-                    ],
-                  ),
+    return FutureBuilder(
+      future: FirebaseAuth.instance.signInAnonymously(),
+      builder: (BuildContext context, AsyncSnapshot auth) {
+        if (!auth.hasData) {
+          return LandingScreen();
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'Check your details',
+                  style: Theme.of(context).primaryTextTheme.headline,
                 ),
-                HorizontalDivider(),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Description ', formData, 'mentalImage'),
-                    getData(context, formData, 'mentalImage'),
-                  ],
-                )),
-                HorizontalDivider(),
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      getLabel(context, 'Position ', formData, 'position'),
-                      getData(context, formData, 'position'),
-                    ],
-                  ),
-                ),
-                HorizontalDivider(),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getSizeLabel(context, formData),
-                    getSizeData(context, formData),
-                  ],
-                )),
-                HorizontalDivider(),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    getLabel(context, 'Availability ', formData, 'availability'),
-                    getData(context, formData, 'availability'),
-                  ],
-                )),
-                HorizontalDivider(),
-                Expanded(
-                    child: Row(
+              ),
+              Spacer(flex: 1),
+              Expanded(
+                flex: 12,
+                child: Column(
                   children: <Widget>[
                     Expanded(
-                        flex: 2,
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Deposit: ',
-                            style: Theme.of(context).primaryTextTheme.subtitle,
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Email ', formData, 'email'),
+                          getData(context, formData, 'email'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Images ', formData, 'noRefImgs'),
+                          getData(context, formData, 'noRefImgs'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Style ', formData, 'style'),
+                          getData(context, formData, 'style'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Description ', formData, 'description'),
+                          getData(context, formData, 'description'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Position ', formData, 'position'),
+                          getData(context, formData, 'position'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getSizeLabel(context, formData),
+                          getSizeData(context, formData),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          getLabel(context, 'Availability ', formData, 'availability'),
+                          getData(context, formData, 'availability'),
+                        ],
+                      ),
+                    ),
+                    HorizontalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'Deposit: ',
+                                style: Theme.of(context).primaryTextTheme.subtitle,
+                              ),
+                            ),
                           ),
-                        )),
-                    Expanded(
-                        flex: 3,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: AutoSizeText('Is willing to leave a deposit',
-                              style: Theme.of(context).primaryTextTheme.body1),
-                        )),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Icon(Icons.check)
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                )),
-              ],
-            ),
+                ),
+              ),
+              Spacer(flex: 1),
+              Expanded(
+                flex: 2,
+                child: SubmitFormButton(
+                  () async {
+                    uploadJourney(auth.data.user.uid);
+
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openViewJourneysScreen(context);
+                  }
+                ),
+              ),
+              Spacer(flex: 1),
+            ],
           ),
-          Spacer(flex: 1),
-          Expanded(
-              flex: 2,
-              child: BoldCallToAction(
-                label: 'Contact Artist!',
-                color: Theme.of(context).cardColor,
-                textColor: Theme.of(context).primaryColorDark,
-                onTap: () {
-                  final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                  journeyBloc.dispatch(
-                    AddJourney(
-                        result: FormResult(
-                      name: formData['name'],
-                      email: formData['email'],
-                      size: formData['size'],
-                      availability: formData['availability'],
-                      description: formData['mentalImage'],
-                      position: formData['position'],
-                      images: images,
-                      artistID: int.parse(formData['artistID']),
-                      style: formData['style'],
-                    )),
-                  );
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openViewJourneysScreen(context);
-                },
-              )),
-          Spacer(flex: 1),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  Future<void> uploadJourney(String authUid) async {
+    // Upload journey to firestore
+    final Journey journey = Journey.fromMap(formData);
+    final String journeyId = await journey.upload(authUid);
+
+    // Upload stage as first journey message
+    final Message firstMessage = Message(
+      authUid: authUid,
+      journeyId: journeyId,
+      timestamp: DateTime.now(),
+      stage: WaitingForQuote(),
+    );
+    Firestore.instance.collection('journey_messages').add(firstMessage.toMap());
+
+    // Upload images to firebase storage
+    for (Asset image in images) {
+      ImageUtils.uploadAsset(image, forUser: authUid, forJourney: journeyId);
+    }
   }
 
   Widget getData(BuildContext context, Map formData, String param) {
@@ -207,11 +250,12 @@ class OverviewFormWidget extends InfoWidget {
     }
 
     return Expanded(
-        flex: 3,
-        child: Container(
-          alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
-        ));
+      flex: 3,
+      child: Container(
+        alignment: Alignment.center,
+        child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
+      ),
+    );
   }
 
   Widget getLabel(BuildContext context, String dataLabel, Map formData, String param) {
@@ -220,32 +264,32 @@ class OverviewFormWidget extends InfoWidget {
             (param == 'noRefImgs' && formData[param] == '1'))
         ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).primaryTextTheme.subtitle;
-
     return Expanded(
-        flex: 2,
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            dataLabel + ': ',
-            style: style,
-          ),
-        ));
+      flex: 2,
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Text(
+          dataLabel + ': ',
+          style: style,
+        ),
+      ),
+    );
   }
 
   Widget getSizeLabel(BuildContext context, Map<String, String> formData) {
     final TextStyle style = (formData['size'] == '')
         ? Theme.of(context).primaryTextTheme.subtitle.copyWith(color: baseColors['error'])
         : Theme.of(context).primaryTextTheme.subtitle;
-
     return Expanded(
-        flex: 2,
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'Size: ',
-            style: style,
-          ),
-        ));
+      flex: 2,
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Text(
+          'Size: ',
+          style: style,
+        ),
+      ),
+    );
   }
 
   Widget getSizeData(BuildContext context, Map<String, String> formData) {
@@ -258,11 +302,12 @@ class OverviewFormWidget extends InfoWidget {
     }
 
     return Expanded(
-        flex: 3,
-        child: Container(
-          alignment: Alignment.center,
-          child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
-        ));
+      flex: 3,
+      child: Container(
+        alignment: Alignment.center,
+        child: AutoSizeText(data, style: Theme.of(context).primaryTextTheme.body1),
+      ),
+    );
   }
 
   @override

@@ -75,72 +75,81 @@ class SizeSelectorWidget extends InfoWidget {
     final int width = int.tryParse(widthController.text);
     final int height = int.tryParse(heightController.text);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'How big would you like your tattoo to be?',
-          style: Theme.of(context).primaryTextTheme.headline,
-          textScaleFactor: 0.8,
-          textAlign: TextAlign.center,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
-            Spacer(),
-            Flexible(
-              flex: 3,
-              child: Text(
-                'by',
-                style: Theme.of(context).primaryTextTheme.subtitle,
-              ),
-            ),
-            Spacer(),
-            Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
-            Flexible(
-              flex: 2,
-              child: Text(
-                'cm',
-                style: Theme.of(context).primaryTextTheme.subtitle,
-              ),
-            ),
-          ],
-        ),
-        Flexible(
-          child: AutoSizeText(
-            'We recommend grabbing a ruler and '
-            'trying to measure out where you want the tattoo to be',
-            style: Theme.of(context).primaryTextTheme.subtitle,
-            maxLines: 2,
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            'How big would you like your tattoo to be?',
+            style: Theme.of(context).primaryTextTheme.headline,
+            textScaleFactor: 0.8,
+            textAlign: TextAlign.center,
           ),
-        ),
-        Spacer(),
-        if (checkSquareArea(width, height, 2, 13))
-          _buildSizeIndicator('assets/size-xs.jpg'), // 2
-        if (checkSquareArea(width, height, 13, 25))
-          _buildSizeIndicator('assets/size-s.jpg'), // 13
-        if (checkSquareArea(width, height, 25, 60))
-          _buildSizeIndicator('assets/size-m.jpg'), // 40
-        if (checkSquareArea(width, height, 60, 130))
-          _buildSizeIndicator('assets/size-l.jpg'), // 80
-        if (checkSquareArea(width, height, 130, 200))
-          _buildSizeIndicator('assets/size-xl.jpg'), // 190
-        if (checkSquareArea(width, height, 200, 500)) // 270
-          _buildSizeIndicator('assets/size-xxl.jpg'),
-        if (checkSquareArea(width, height, 500, 999 * 999)) // 270
-          _buildSizeIndicator('assets/size-xxxl.jpg'),
-        Spacer(),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: AutoSizeText(
+              'We recommend grabbing a ruler and '
+                  'trying to measure out where you want the tattoo to be',
+              style: Theme.of(context).primaryTextTheme.subtitle,
+              maxLines: 2,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(flex: 6, child: _buildNumberInputBox(widthController, context)),
+              Spacer(),
+              Flexible(
+                flex: 3,
+                child: Text(
+                  'by',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
+              ),
+              Spacer(),
+              Expanded(flex: 6, child: _buildNumberInputBox(heightController, context)),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  'cm',
+                  style: Theme.of(context).primaryTextTheme.subtitle,
+                ),
+              ),
+            ],
+          ),
+          Spacer(),
+          Expanded(
+            flex: 10,
+            child: _buildSizeIndicator(width, height),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildSizeIndicator(String path) => Container(
-        height: 150,
-        child: Image.asset(path),
-      );
+  Widget _buildSizeIndicator(int width, int height) {
+    String imagePath;
+    if (checkSquareArea(width, height, 2, 13)) // 2
+      imagePath = 'assets/size-xs.jpg';
+    if (checkSquareArea(width, height, 13, 25)) // 13
+      imagePath = 'assets/size-s.jpg';
+    if (checkSquareArea(width, height, 25, 60)) // 40
+      imagePath = 'assets/size-m.jpg';
+    if (checkSquareArea(width, height, 60, 130)) // 80
+      imagePath = 'assets/size-l.jpg';
+    if (checkSquareArea(width, height, 130, 200)) // 190
+      imagePath = 'assets/size-xl.jpg';
+    if (checkSquareArea(width, height, 200, 500)) // 270
+      imagePath = 'assets/size-xxl.jpg';
+    if (checkSquareArea(width, height, 500, 999 * 999)) // 270
+      imagePath = 'assets/size-xxxl.jpg';
+
+    if (imagePath != null) {
+      return Image.asset(imagePath);
+    }
+    return Container();
+  }
 
   bool checkSquareArea(int width, int height, int lower, int upper) {
     if (width == null || height == null) {
@@ -150,20 +159,17 @@ class SizeSelectorWidget extends InfoWidget {
   }
 
   Widget _buildNumberInputBox(TextEditingController textController, BuildContext context) {
-    return Container(
-      width: 430.0,
-      child: ShortTextInputFormElement(
-        textController: textController,
-        keyboardType: TextInputType.number,
-        label: '',
-        hint: '',
-        maxLength: 3,
-        callback: (text) {
-          SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
-          callback(text);
-        },
-        capitalisation: TextCapitalization.words,
-      ),
+    return ShortTextInputFormElement(
+      textController: textController,
+      keyboardType: TextInputType.text,
+      label: '',
+      hint: '',
+      maxLength: 3,
+      callback: (text) {
+        SystemChannels.textInput.invokeMethod<dynamic>('TextInput.hide');
+        callback(text);
+      },
+      capitalisation: TextCapitalization.words,
     );
   }
 

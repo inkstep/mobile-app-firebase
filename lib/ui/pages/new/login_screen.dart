@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/form_element_builder.dart';
 import 'package:inkstep/ui/components/short_text_input.dart';
@@ -60,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                 },
                 elevation: 15.0,
                 padding: EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
                 child: Text(
                   'Next',
                   style: TextStyle(

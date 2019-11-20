@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
+import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/binary_input.dart';
 import 'package:inkstep/ui/pages/new/availability_screen.dart';
 import 'package:inkstep/ui/pages/new/deposit_screen.dart';
@@ -16,27 +15,14 @@ import 'package:inkstep/ui/routes/fade_page_route.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class InfoNavigator {
-  InfoNavigator(int artistId, BuildContext context) {
+  InfoNavigator(int artistId) {
     descController = TextEditingController();
     widthController = TextEditingController();
     heightController = TextEditingController();
     styleController = TextEditingController();
-
+    emailController = TextEditingController();
     inspirationImages = [];
-    formData['artistID'] = artistId.toString();
-
-    _journeyBloc = BlocProvider.of<JourneysBloc>(context);
-
-    if (_journeyBloc.currentState is JourneysWithUser) {
-      final JourneysWithUser state = _journeyBloc.currentState;
-      if (state.user.email != '') {
-        emailController = TextEditingController(text: state.user.email);
-      } else {
-        emailController = TextEditingController();
-      }
-    } else {
-      emailController = TextEditingController();
-    }
+    formData['artistId'] = artistId.toString();
   }
 
   TextEditingController descController;
@@ -49,7 +35,7 @@ class InfoNavigator {
   Map<String, String> formData = {
     'name': '',
     'email': '',
-    'mentalImage': '',
+    'description': '',
     'position': '',
     'generalPos': '',
     'size': '',
@@ -57,7 +43,7 @@ class InfoNavigator {
     'deposit': '',
     'email': '',
     'noRefImgs': '',
-    'artistID': '',
+    'artistId': '',
     'style': '',
   };
 
@@ -71,16 +57,7 @@ class InfoNavigator {
   // It's worth selecting what style of tattoo you like so that artists knows what's involved
   // for them
 
-  JourneysBloc _journeyBloc;
-
   List<Widget> getScreens(BuildContext context) {
-    bool displayEmail = true;
-
-    if (_journeyBloc.currentState is JourneysWithUser) {
-      final JourneysWithUser state = _journeyBloc.currentState;
-      displayEmail = state.user.email == '';
-    }
-
     return [
       DescriptionScreen(
         descController: descController,
@@ -134,11 +111,18 @@ class InfoNavigator {
           }
         },
       ),
-      if (displayEmail)
-        EmailScreen(
-          navigator: this,
-          emailController: emailController,
-        ),
+      FutureBuilder(
+        future: User.getEmail(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            emailController.text = snapshot.data;
+          }
+          return EmailScreen(
+            navigator: this,
+            emailController: emailController,
+          );
+        },
+      ),
       OverviewForm(
         emailController: emailController,
         heightController: heightController,

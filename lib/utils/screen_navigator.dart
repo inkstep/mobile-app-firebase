@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inkstep/blocs/journeys_bloc.dart';
-import 'package:inkstep/models/card_model.dart';
+import 'package:inkstep/models/card.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
 import 'package:inkstep/ui/pages/journey_messages_screen.dart';
@@ -13,6 +11,7 @@ import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
 
+import '../main.dart';
 import 'info_navigator.dart';
 
 class ScreenNavigator {
@@ -20,26 +19,35 @@ class ScreenNavigator {
     Navigator.pop(context);
   }
 
+  void restartApp(BuildContext context) {
+    Navigator.pushAndRemoveUntil<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => Inkstep()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   void openOnboardingPage(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
-        context, MaterialPageRoute<dynamic>(builder: (context) => Onboarding()));
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => Onboarding()),
+    );
   }
 
   void openOnboardingRequiredInfoPage(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
-        context,
-        MaterialPageRoute<dynamic>(
-            builder: (context) => OnboardingRequiredInfo(), fullscreenDialog: true));
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (context) => OnboardingRequiredInfo(),
+        fullscreenDialog: true,
+      ),
+    );
   }
 
   void openViewJourneysScreen(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      MaterialPageRoute<dynamic>(
-        builder: (context) => JourneysScreen(
-              onInit: () {},
-            ),
-      ),
+      MaterialPageRoute<dynamic>(builder: (context) => JourneysScreen()),
     );
   }
 
@@ -53,13 +61,7 @@ class ScreenNavigator {
   void openViewJourneysScreenWithNewDevice(BuildContext context, int userId) {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      MaterialPageRoute<dynamic>(
-          builder: (context) => JourneysScreen(
-                onInit: () {
-                  final JourneysBloc journeyBloc = BlocProvider.of<JourneysBloc>(context);
-                  journeyBloc.dispatch(LoadUser(userId));
-                },
-              )),
+      MaterialPageRoute<dynamic>(builder: (context) => JourneysScreen()),
     );
   }
 
@@ -87,18 +89,17 @@ class ScreenNavigator {
     );
   }
 
-  void openNewJourneyScreen(BuildContext context, int artistID) {
-    InfoNavigator(artistID, context).start(context);
+  void openNewJourneyScreen(BuildContext context, int artistId) {
+    InfoNavigator(artistId).start(context);
   }
 
   void openCareScreen(BuildContext context, DateTime bookedTime) {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-          builder: (context) => CareScreen(
-                bookedTime: bookedTime,
-              ),
-          fullscreenDialog: true),
+        builder: (context) => CareScreen(bookedTime: bookedTime),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -106,7 +107,9 @@ class ScreenNavigator {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-          builder: (context) => SingleJourneyScreen(card: card), fullscreenDialog: true),
+        builder: (context) => SingleJourneyScreen(card: card),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -114,8 +117,9 @@ class ScreenNavigator {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-          builder: (context) => JourneyMessagesScreen(card: card),
-          fullscreenDialog: true),
+        builder: (context) => JourneyMessagesScreen(card: card),
+        fullscreenDialog: true,
+      ),
     );
   }
 }

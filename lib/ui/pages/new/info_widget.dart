@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/ui/components/text_button.dart';
+import 'package:inkstep/ui/pages/new/size_screen.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -10,6 +11,13 @@ import 'help_screen.dart';
 abstract class InfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    int flexOfMain = isForm() ? 15 : 25;
+    int flexOfButton = isForm() ? 1 : 3;
+    if (this is SizeSelectorWidget) {
+      flexOfMain = 140;
+      flexOfButton = 20;
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       resizeToAvoidBottomPadding: false,
@@ -59,11 +67,11 @@ abstract class InfoWidget extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(flex: isForm() ? 15 : 25, child: getWidget(context)),
+          Expanded(flex: flexOfMain, child: getWidget(context)),
           if (shouldHaveNext()) Spacer(),
           if (shouldHaveNext())
             Expanded(
-                flex: isForm() ? 1 : 3,
+                flex: flexOfButton,
                 child: valid()
                     ? BoldCallToAction(
                         label: 'Next',
@@ -84,7 +92,7 @@ abstract class InfoWidget extends StatelessWidget {
 
   Widget setButtonHeight(BuildContext context) {
     return Spacer(
-      flex: 2,
+      flex: 1,
     );
   }
 

@@ -53,7 +53,7 @@ class ShortTextInput extends StatelessWidget {
               autofocus: true,
               maxLength: maxLength,
               style: theme.primaryTextTheme.title,
-              cursorColor: theme.backgroundColor,
+              cursorColor: theme.cardColor,
               decoration: InputDecoration(
                 hintText: hint,
                 focusedBorder: underline,
