@@ -97,7 +97,7 @@ class JourneyCard extends StatelessWidget {
                       );
                     }
                     return ImageSnippet(
-                      urls: const [],
+                      urls: const ['https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815', 'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815'],
                       axis: Axis.horizontal,
                     );
                   },
