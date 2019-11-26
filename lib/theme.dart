@@ -43,31 +43,43 @@ var largeBorderRadius = BorderRadius.circular(32.0);
 TextTheme _getTextWithColor(Color color) => TextTheme(
   headline: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 40,
     fontWeight: FontWeight.w600,
   ),
   subhead: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 28,
     fontWeight: FontWeight.w300,
   ),
   title: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 28,
     fontWeight: FontWeight.w300,
   ),
   subtitle: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 20,
     fontWeight: FontWeight.w400,
   ),
   body1: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 18,
     fontWeight: FontWeight.w400,
   ),
   caption: TextStyle(
     color: color,
+    fontFamily: 'Velocista',
+    fontFamilyFallback: ['Roboto'],
     fontSize: 12,
     fontWeight: FontWeight.w400,
   )

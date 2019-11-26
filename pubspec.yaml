@@ -59,3 +59,8 @@ flutter:
     - assets/
     - assets/icon/
     - assets/offline/
+
+  fonts:
+    - family: Velocista
+      fonts:
+        - asset: fonts/Velocista-Demo-FFP.ttf

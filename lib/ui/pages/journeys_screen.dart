@@ -21,6 +21,11 @@ class JourneysScreen extends StatefulWidget {
 
 class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
   int _currentPageIndex = 0;
+  AuthResult _auth = null;
+  String _name = null;
+
+  bool _shouldHoldSplash = true;
+  bool _shouldHoldLoading = false;
 
   AnimationController _controller;
   Animation<double> _animation;
@@ -30,6 +35,8 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 
   @override
   void initState() {
+    super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
@@ -40,7 +47,16 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
     loopController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
     loopController.forward();
 
-    super.initState();
+    Future<dynamic>.delayed(
+      const Duration(seconds: 2),
+      () => setState(() {
+        this._shouldHoldSplash = false;
+      }),
+    );
+
+    // Load other async data here
+    User.getName().then((name) => setState(() => _name = name));
+    FirebaseAuth.instance.signInAnonymously().then((user) => setState(() => _auth = user));
   }
 
   @override
@@ -57,43 +73,40 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
       }
     };
 
-    return FutureBuilder(
-      future: FirebaseAuth.instance.signInAnonymously(),
-      builder: (BuildContext context, AsyncSnapshot auth) {
-        return FutureBuilder(
-          future: User.getName(),
-          builder: (buildContext, user) {
-            if (!user.hasData) {
-              return LandingScreen();
-            }
-            return StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
-                  .collection('journeys')
-                  // TODO(mm): proper security rules for firebase
-                  .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-                  .snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return LandingScreen(name: user.data);
-                }
-                snapshot.data.documents.sort((a, b) {
-                  if (a.data['stage'] > b.data['stage']) {
-                    return 1;
-                  } else if (a.data['stage'] < b.data['stage']) {
-                    return -1;
-                  }
-                  return 0;
-                });
-                return LoadedJourneyScreen(
-                  username: user.data,
-                  animation: _animation,
-                  onNotification: onNotification,
-                  swiperController: _swiperController,
-                  journeys: snapshot.data.documents,
-                );
-              },
-            );
-          },
+    // TODO(mm): proper security rules for firebase
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance
+          .collection('journeys')
+          .where('auth_uid', isEqualTo: _auth == null ? '-1' : _auth.user.uid)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+        // Display splash screen for a minimum of k seconds
+        if (_shouldHoldSplash) {
+          return LandingScreen(name: _name, loading: false);
+        }
+
+        // Check if we are done loading by the time splash screen has been displayed
+        if (_auth == null || !snapshot.hasData) {
+          _shouldHoldLoading = true;
+          Future<dynamic>.delayed(
+            const Duration(seconds: 2),
+            () => setState(() => this._shouldHoldLoading = false),
+          );
+          return LandingScreen(name: _name, loading: true);
+        }
+
+        // If we had to display loading, display it for minimum of k seconds
+        if (_shouldHoldLoading) {
+          return LandingScreen(name: _name, loading: true);
+        }
+
+        return LoadedJourneyScreen(
+          username: _name,
+          animation: _animation,
+          onNotification: onNotification,
+          swiperController: _swiperController,
+          journeys: snapshot.data.documents,
         );
       },
     );
@@ -193,9 +206,9 @@ class LoadedJourneyScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: paddingSize),
                 child: GestureDetector(
+                  // TODO(mm): Add swipe tabs at top instead of using 2 part header
                   child: LargeTwoPartHeader(
-                    largeText: 'Welcome back',
-                    name: username,
+                    largeText: 'Journeys',
                   ),
                   onLongPress: () {
                     User.logOut();

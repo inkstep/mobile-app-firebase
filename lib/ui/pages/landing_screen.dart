@@ -4,9 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 
 class LandingScreen extends StatelessWidget {
-  const LandingScreen({Key key, this.name}) : super(key: key);
+  const LandingScreen({Key key, this.name, this.loading = false}) : super(key: key);
 
   final String name;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class LandingScreen extends StatelessWidget {
           ),
           Spacer(flex: 1),
           Spacer(flex: 6),
+          if (loading)
           SpinKitChasingDots(
             color: Theme.of(context).cardColor,
             size: 50.0,
