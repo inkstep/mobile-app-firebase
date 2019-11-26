@@ -25,13 +25,12 @@ class _NotifyingPageViewState extends State<NotifyingPageView> {
 
   @override
   void initState() {
+    super.initState();
     final PageController defaultPageController = PageController(
       initialPage: 0,
       viewportFraction: 0.9,
     );
     _pageController = (widget.pageController ?? defaultPageController)..addListener(_onScroll);
-
-    super.initState();
   }
 
   @override

@@ -80,6 +80,7 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
 
   @override
   void initState() {
+    super.initState();
     _numFabs = widget.card.journey.stage is JourneyStageWithBooking ? 3 : 2;
 
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
@@ -112,8 +113,6 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
         curve: _curve,
       ),
     ));
-
-    super.initState();
   }
 
   @override

@@ -23,8 +23,8 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
 
   @override
   void initState() {
-    _client = http.Client();
     super.initState();
+    _client = http.Client();
   }
 
   @override

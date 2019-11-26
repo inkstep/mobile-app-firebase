@@ -80,7 +80,6 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
           .where('auth_uid', isEqualTo: _auth == null ? '-1' : _auth.user.uid)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
         // Display splash screen for a minimum of k seconds
         if (_shouldHoldSplash) {
           return LandingScreen(name: _name, loading: false);
@@ -202,30 +201,25 @@ class LoadedJourneyScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Spacer(flex: 4),
-              Padding(
-                padding: EdgeInsets.only(left: paddingSize),
-                child: GestureDetector(
-                  // TODO(mm): Add swipe tabs at top instead of using 2 part header
-                  child: LargeTwoPartHeader(
-                    largeText: 'Journeys',
-                  ),
-                  onLongPress: () {
-                    User.logOut();
-                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.restartApp(context);
-                  },
-                ),
-              ),
-              Spacer(flex: 1),
-              HorizontalDivider(
-                thickness: 4.0,
-                percentage: 30,
-                alignment: MainAxisAlignment.start,
-                padding: EdgeInsets.only(left: paddingSize),
-                color: Colors.white54,
-              ),
               Spacer(flex: 2),
+              DefaultTabController(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0), // TODO(mm): fade out at edge
+                  child: TabBar(
+                    isScrollable: true,
+                    labelStyle: Theme.of(context).textTheme.title,
+                    unselectedLabelStyle: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(0.7)),
+                    indicatorColor: Colors.white,
+                    tabs: <Widget>[
+                      Tab(text: 'Journeys'),
+                      Tab(text: 'Messages'),
+                      Tab(text: 'Settings'),
+                    ],
+                  ),
+                ),
+                length: 3,
+              ),
+              Spacer(flex: 3),
               Expanded(
                 flex: 60,
                 child: _buildJourneyCards(),
