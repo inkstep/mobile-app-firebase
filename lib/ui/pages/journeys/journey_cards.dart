@@ -127,32 +127,35 @@ class JourneyCard extends StatelessWidget {
                   ArtistCard(artist: card.artist).buildItems(context)
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              DescribedIconButton(
-                icon: Icons.mail_outline,
-                featureId: card.messagesID,
-                onPressed: () {
-                  final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                  nav.openJourneyMessagesScreen(context, card);
-                },
-              ),
-              if (showCare)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: DescribedIconButton(
-                    icon: Icons.healing,
-                    featureId: card.aftercareID,
-                    onPressed: () {
-                      final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                      final JourneyStage stage = card.journey.stage;
-                      nav.openCareScreen(
-                          context, stage is JourneyStageWithBooking ? stage.date : null);
-                    },
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                DescribedIconButton(
+                  icon: Icons.mail_outline,
+                  featureId: card.messagesID,
+                  onPressed: () {
+                    final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                    nav.openJourneyMessagesScreen(context, card);
+                  },
                 ),
-            ],
+                if (showCare)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DescribedIconButton(
+                      icon: Icons.healing,
+                      featureId: card.aftercareID,
+                      onPressed: () {
+                        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+                        final JourneyStage stage = card.journey.stage;
+                        nav.openCareScreen(
+                            context, stage is JourneyStageWithBooking ? stage.date : null);
+                      },
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),
