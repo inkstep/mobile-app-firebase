@@ -154,6 +154,7 @@ class LoadedJourneyScreen extends StatelessWidget {
 
           final Journey journey = Journey.fromMap(journeyMap);
           return JourneyCard(
+            key: ObjectKey(journey),
             card: CardModel(
               journey: journey,
               artist: Artist.fromId(journey.artistId),

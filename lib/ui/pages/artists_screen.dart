@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/artists.dart';
 import 'package:inkstep/theme.dart';
+import 'package:inkstep/ui/components/artist_card.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistSelectionScreen extends StatefulWidget {
@@ -81,31 +82,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                         itemHeight: height,
                         itemBuilder: (context, idx) {
                           final artist = offlineArtists[idx];
-                          final card = Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Card(
-                                  color: Colors.black,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: offlineArtists[idx].profileImage,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: smallBorderRadius,
-                                  ),
-                                  elevation: 10,
-                                  margin: EdgeInsets.all(10),
-                                ),
-                              ),
-                              Text(
-                                artist.name,
-                                style: Theme.of(context).textTheme.title,
-                              ),
-                              Text(
-                                offlineStudios[offlineArtists[idx].studioID].name,
-                                style: Theme.of(context).textTheme.subtitle,
-                              )
-                            ],
-                          );
+                          // TODO(mm): put inkwell on card not over the top of everything in stack
                           final well = Positioned.fill(
                             child: Material(
                               color: Colors.transparent,
@@ -120,7 +97,7 @@ class ArtistSelectionScreenState extends State<ArtistSelectionScreen> {
                           );
                           return Stack(
                             children: <Widget>[
-                              card,
+                              ArtistCard(artist: artist),
                               well,
                             ],
                           );
