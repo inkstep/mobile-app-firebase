@@ -71,14 +71,14 @@ TextTheme _getTextWithColor(Color color) => TextTheme(
   ),
   body1: TextStyle(
     color: color,
-    fontFamily: 'Velocista',
+    fontFamily: 'Roboto',
     fontFamilyFallback: ['Roboto'],
     fontSize: 18,
     fontWeight: FontWeight.w400,
   ),
   caption: TextStyle(
     color: color,
-    fontFamily: 'Velocista',
+    fontFamily: 'Roboto',
     fontFamilyFallback: ['Roboto'],
     fontSize: 12,
     fontWeight: FontWeight.w400,

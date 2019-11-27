@@ -4,6 +4,25 @@ import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/resources/artists.dart';
 import 'package:inkstep/theme.dart';
 
+class ArtistImage extends StatelessWidget {
+
+  const ArtistImage(this.artist, {Key key}) : super(key: key);
+
+  final Artist artist;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.black,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: artist.profileImage,
+      shape: CircleBorder(),
+      elevation: 0,
+      margin: EdgeInsets.all(10),
+    );
+  }
+}
+
 class ArtistCard extends StatelessWidget {
 
   const ArtistCard({Key key, this.artist}) : super(key: key);
@@ -15,16 +34,7 @@ class ArtistCard extends StatelessWidget {
       Expanded(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Card(
-            color: Colors.black,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: artist.profileImage,
-            shape: RoundedRectangleBorder(
-              borderRadius: smallBorderRadius,
-            ),
-            elevation: 10,
-            margin: EdgeInsets.all(10),
-          ),
+          child: ArtistImage(artist),
         ),
       ),
       Padding(
