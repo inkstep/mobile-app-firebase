@@ -41,7 +41,7 @@ class ShortTextInput extends StatelessWidget {
         children: <Widget>[
           AutoSizeText(
             label,
-            style: Theme.of(context).primaryTextTheme.headline,
+            style: Theme.of(context).primaryTextTheme.body1,
             textScaleFactor: 0.8,
           ),
           Padding(
@@ -52,7 +52,7 @@ class ShortTextInput extends StatelessWidget {
               textCapitalization: capitalisation,
               autofocus: true,
               maxLength: maxLength,
-              style: theme.primaryTextTheme.title,
+              style: theme.primaryTextTheme.body1,
               cursorColor: theme.cardColor,
               decoration: InputDecoration(
                 hintText: hint,
