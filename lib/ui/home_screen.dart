@@ -18,6 +18,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   HomeScreenState(this.journeys);
 
   final List<DocumentSnapshot> journeys;
+  final int _numTabs = 3;
 
   TabController _tabController;
 
@@ -25,14 +26,30 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: _numTabs);
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: _numTabs,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('SOUTHCITYMARKET', style: Theme.of(context).textTheme.title.copyWith(fontSize: 22)),
+          backgroundColor: Colors.black,
+          bottom: TabBar(
+            isScrollable: true,
+            labelStyle: Theme.of(context).textTheme.subtitle,
+            unselectedLabelStyle:
+                Theme.of(context).textTheme.subtitle.copyWith(color: Colors.white.withOpacity(0.7)),
+            indicatorColor: Colors.white,
+            tabs: const <Widget>[
+              Tab(text: 'Journeys'),
+              Tab(text: 'Messages'),
+              Tab(text: 'Settings'),
+            ],
+          ),
+        ),
         floatingActionButton: _tabController.index == 0 && journeys.isNotEmpty
             ? FloatingActionButton(
                 child: Icon(
@@ -46,32 +63,13 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
                 },
               )
             : null,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Colors.black, // Theme.of(context).backgroundColor,
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Spacer(flex: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                // TODO(mm): fade out at edge
-                child: TabBar(
-                  isScrollable: true,
-                  labelStyle: Theme.of(context).textTheme.title,
-                  unselectedLabelStyle: Theme.of(context)
-                      .textTheme
-                      .title
-                      .copyWith(color: Colors.white.withOpacity(0.7)),
-                  indicatorColor: Colors.white,
-                  tabs: const <Widget>[
-                    Tab(text: 'Journeys'),
-                    Tab(text: 'Messages'),
-                    Tab(text: 'Settings'),
-                  ],
-                ),
-              ),
-              Spacer(flex: 3),
+              Spacer(flex: 6),
               Expanded(
                 flex: 60,
                 child: TabBarView(
@@ -82,7 +80,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
                   ],
                 ),
               ),
-              Spacer(flex: 4),
+              Spacer(flex: 8),
             ],
           ),
         ),
