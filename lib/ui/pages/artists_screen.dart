@@ -4,7 +4,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/resources/artists.dart';
-import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/artist_card.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 

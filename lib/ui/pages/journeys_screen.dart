@@ -7,8 +7,6 @@ import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/models/user.dart';
-import 'package:inkstep/ui/components/horizontal_divider.dart';
-import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/ui/pages/landing_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -21,8 +19,8 @@ class JourneysScreen extends StatefulWidget {
 
 class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
   int _currentPageIndex = 0;
-  AuthResult _auth = null;
-  String _name = null;
+  AuthResult _auth;
+  String _name;
 
   bool _shouldHoldSplash = true;
   bool _shouldHoldLoading = false;
@@ -49,9 +47,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
 
     Future<dynamic>.delayed(
       const Duration(seconds: 2),
-      () => setState(() {
-        this._shouldHoldSplash = false;
-      }),
+      () => setState(() => _shouldHoldSplash = false),
     );
 
     // Load other async data here
@@ -90,7 +86,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
           _shouldHoldLoading = true;
           Future<dynamic>.delayed(
             const Duration(seconds: 2),
-            () => setState(() => this._shouldHoldLoading = false),
+            () => setState(() => _shouldHoldLoading = false),
           );
           return LandingScreen(name: _name, loading: true);
         }
@@ -191,7 +187,6 @@ class LoadedJourneyScreen extends StatelessWidget {
             },
           );
 
-    final double paddingSize = MediaQuery.of(context).size.width * (1 - 0.8) / 2;
     return Scaffold(
       floatingActionButton: addJourneyButton,
       backgroundColor: Theme.of(context).backgroundColor,
@@ -205,13 +200,17 @@ class LoadedJourneyScreen extends StatelessWidget {
               Spacer(flex: 2),
               DefaultTabController(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0), // TODO(mm): fade out at edge
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  // TODO(mm): fade out at edge
                   child: TabBar(
                     isScrollable: true,
                     labelStyle: Theme.of(context).textTheme.title,
-                    unselectedLabelStyle: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(0.7)),
+                    unselectedLabelStyle: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(color: Colors.white.withOpacity(0.7)),
                     indicatorColor: Colors.white,
-                    tabs: <Widget>[
+                    tabs: const <Widget>[
                       Tab(text: 'Journeys'),
                       Tab(text: 'Messages'),
                       Tab(text: 'Settings'),
