@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/theme.dart';
-import 'package:inkstep/ui/pages/journeys_screen.dart';
-import 'package:inkstep/ui/pages/landing_screen.dart';
-import 'package:inkstep/ui/pages/onboarding.dart';
-
-import 'models/user.dart';
+import 'package:inkstep/ui/splash_screen.dart';
 
 void main() {
   // Set up Service Locator
@@ -29,19 +25,7 @@ class Inkstep extends StatelessWidget {
       title: 'inkstep',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: FutureBuilder<bool>(
-        future: User.exists(),
-        builder: (buildContext, user) {
-          if (user.hasData) {
-            if (user.data) {
-              return JourneysScreen();
-            }
-            return Onboarding();
-          } else {
-            return LandingScreen();
-          }
-        },
-      ),
+      home: SplashScreen(),
     );
   }
 }
