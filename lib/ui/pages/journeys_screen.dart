@@ -55,30 +55,41 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
         }
         return false;
       },
-      child: Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          if (journeys.isEmpty) {
-            return AddCard();
-          }
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Spacer(flex: 6),
+          Expanded(
+            flex: 60,
+            child: Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                if (journeys.isEmpty) {
+                  return AddCard();
+                }
 
-          // Add document ID to map for use as journey ID in creating journey object
-          final Map<String, dynamic> journeyMap = journeys[index].data;
-          journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
+                // Add document ID to map for use as journey ID in creating journey object
+                final Map<String, dynamic> journeyMap = journeys[index].data;
+                journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
 
-          final Journey journey = Journey.fromMap(journeyMap);
-          return JourneyCard(
-            key: ObjectKey(journey),
-            card: CardModel(
-              journey: journey,
-              artist: Artist.fromId(journey.artistId),
+                final Journey journey = Journey.fromMap(journeyMap);
+                return JourneyCard(
+                  key: ObjectKey(journey),
+                  card: CardModel(
+                    journey: journey,
+                    artist: Artist.fromId(journey.artistId),
+                  ),
+                );
+              },
+              loop: false,
+              controller: _swiperController,
+              itemCount: journeys.isEmpty ? 1 : journeys.length,
+              viewportFraction: 0.8,
+              scale: 0.9,
             ),
-          );
-        },
-        loop: false,
-        controller: _swiperController,
-        itemCount: journeys.isEmpty ? 1 : journeys.length,
-        viewportFraction: 0.8,
-        scale: 0.9,
+          ),
+          Spacer(flex: 6),
+        ],
       ),
     );
   }

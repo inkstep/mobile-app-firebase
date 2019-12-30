@@ -66,25 +66,12 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               )
             : null,
         backgroundColor: Theme.of(context).backgroundColor,
-        body: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Spacer(flex: 6),
-              Expanded(
-                flex: 60,
-                child: TabBarView(
-                  children: <Widget>[
-                    JourneysScreen(journeys: journeys),
-                    Text('Messages'),
-                    Text('Settings'),
-                  ],
-                ),
-              ),
-              Spacer(flex: 8),
-            ],
-          ),
+        body: TabBarView(
+          children: <Widget>[
+            JourneysScreen(journeys: journeys),
+            MessagesScreen(),
+            Text('Settings'),
+          ],
         ),
       ),
     );
