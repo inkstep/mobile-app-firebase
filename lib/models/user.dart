@@ -19,7 +19,7 @@ class User extends Equatable {
   static Future<String> getName() async {
     final prefs = await SharedPreferences.getInstance();
     final name = prefs.getString(usernameKey);
-    return name ?? 'No saved username'; // TODO(mm): handle something better here
+    return name ?? '';
   }
 
   static Future<String> getEmail() async {

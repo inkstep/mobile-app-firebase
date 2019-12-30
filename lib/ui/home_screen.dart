@@ -36,7 +36,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
       child: Scaffold(
         appBar: AppBar(
           title: Text('SOUTHCITYMARKET', style: Theme.of(context).textTheme.title.copyWith(fontSize: 22)),
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).backgroundColor,
           bottom: TabBar(
             isScrollable: true,
             labelStyle: Theme.of(context).textTheme.subtitle,
@@ -63,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
                 },
               )
             : null,
-        backgroundColor: Colors.black, // Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,

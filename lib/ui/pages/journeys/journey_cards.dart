@@ -170,6 +170,7 @@ class AddCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       child: Material(
+        clipBehavior: Clip.antiAlias,
         borderRadius: smallBorderRadius,
         color: Theme.of(context).cardColor,
         child: InkWell(

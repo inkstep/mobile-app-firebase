@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const baseColors = ColorSwatch<String>(0xFF0A0D18, {
-  'dark': Color(0xFF202431),
+  // 'dark': Color(0xFF202431),
+  'dark': Colors.black,
   'gray': Color(0xFF4E586E),
   'light': Color(0xFFFFFFFF),
   'error': Color(0xFFFF0000),
