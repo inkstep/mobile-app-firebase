@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/models/user.dart';
-import 'package:inkstep/ui/home_screen.dart';
+import 'package:inkstep/ui/pages/home_screen.dart';
 import 'package:inkstep/ui/pages/landing_screen.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -47,7 +47,7 @@ class OnboardingRequiredInfoState extends State<OnboardingRequiredInfo> {
             }
             User.setName(name);
             final ScreenNavigator nav = sl.get<ScreenNavigator>();
-            nav.openViewJourneysScreen(context);
+            nav.openHomeScreen(context);
           },
         ),
       ),

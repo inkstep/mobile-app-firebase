@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/models/card.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
+import 'package:inkstep/ui/pages/home_screen.dart';
 import 'package:inkstep/ui/pages/journey_messages_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
+import 'package:inkstep/ui/pages/splash_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
 
 import '../main.dart';
@@ -44,10 +46,10 @@ class ScreenNavigator {
     );
   }
 
-  void openViewJourneysScreen(BuildContext context) {
+  void openHomeScreen(BuildContext context) {
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      MaterialPageRoute<dynamic>(builder: (context) => JourneysScreen()),
+      MaterialPageRoute<dynamic>(builder: (context) => SplashScreen()),
     );
   }
 

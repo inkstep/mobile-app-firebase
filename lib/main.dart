@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/theme.dart';
-import 'package:inkstep/ui/splash_screen.dart';
+import 'package:inkstep/ui/pages/splash_screen.dart';
 
 void main() {
   // Set up Service Locator

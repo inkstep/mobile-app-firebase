@@ -5,6 +5,8 @@ import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
+import 'messages_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key, this.journeys}) : super(key: key);
 

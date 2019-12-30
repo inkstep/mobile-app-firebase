@@ -205,7 +205,7 @@ class OverviewForm extends InfoWidget {
                     uploadJourney(auth.data.user.uid);
 
                     final ScreenNavigator nav = sl.get<ScreenNavigator>();
-                    nav.openViewJourneysScreen(context);
+                    nav.openHomeScreen(context);
                   }
                 ),
               ),
