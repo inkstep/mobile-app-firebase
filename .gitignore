@@ -78,3 +78,7 @@ android/app/.settings/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Extra things to ignore since updating flutter
+**/ios/Flutter/Flutter.podspec
+.flutter-plugins-dependencies
