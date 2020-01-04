@@ -12,7 +12,7 @@ final List<Studio> offlineStudios = [_offlineScmEntity];
 final List<Artist> offlineArtists = [
   Artist(
     email: 'ricky@email.com',
-    name: 'Ricky',
+    name: 'Ricky Williams',
     studioID: _offlineScmEntity.id,
     artistId: 0,
     profileImage: Image.asset(
@@ -22,7 +22,7 @@ final List<Artist> offlineArtists = [
   ),
   Artist(
     email: 'loz@email.com',
-    name: 'Loz',
+    name: 'Loz McLean',
     studioID: _offlineScmEntity.id,
     artistId: 1,
     profileImage: Image.asset(

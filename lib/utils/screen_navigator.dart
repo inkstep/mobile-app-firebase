@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/models/card.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/care_screen.dart';
+import 'package:inkstep/ui/pages/confirm_artist_screen.dart';
 import 'package:inkstep/ui/pages/journey_messages_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/ui/pages/new/login_screen.dart';
 import 'package:inkstep/ui/pages/onboarding.dart';
 import 'package:inkstep/ui/pages/onboarding_required_info.dart';
+import 'package:inkstep/ui/pages/single_artist_screen.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/splash_screen.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
@@ -121,6 +124,23 @@ class ScreenNavigator {
         builder: (context) => JourneyMessagesScreen(card: card),
         fullscreenDialog: true,
       ),
+    );
+  }
+
+  void openSingleArtistScreen(BuildContext context, Artist artist) {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (context) => SingleArtistScreen(artist: artist),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
+  void openArtistConfirmScreen(BuildContext context, Artist artist) {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => ConfirmArtistScreen(artist: artist)),
     );
   }
 }
