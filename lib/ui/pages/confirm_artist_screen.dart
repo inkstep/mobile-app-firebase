@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artist.dart';
-import 'package:inkstep/ui/components/artist_card.dart';
 import 'package:inkstep/ui/components/bold_call_to_action.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
@@ -23,9 +22,7 @@ class ConfirmArtistScreen extends StatelessWidget {
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: ArtistCard(
-                artist: artist,
-              ).buildItems(context) +
+          children:
               [
                 Spacer(flex: 2),
                 BoldCallToAction(

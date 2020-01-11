@@ -6,7 +6,6 @@ import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
-import 'package:inkstep/ui/components/artist_card.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -123,8 +122,8 @@ class JourneyCard extends StatelessWidget {
                         style: Theme.of(context).accentTextTheme.subtitle,
                       ),
                     ),
-                  ] +
-                  ArtistCard(artist: card.artist).buildItems(context)
+                  ] // +
+                  // ArtistCard(artist: card.artist) // .buildItems(context)
             ),
           ),
           Padding(

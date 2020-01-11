@@ -18,7 +18,10 @@ class SingleArtistScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(artist.name),
+        title: Text(
+          artist.name.toUpperCase(),
+          style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 40,
       ),

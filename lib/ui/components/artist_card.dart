@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artist.dart';
-import 'package:inkstep/resources/artists.dart';
 import 'package:inkstep/theme.dart';
+import 'package:inkstep/ui/components/scale_on_tap.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class ArtistImage extends StatelessWidget {
-
   const ArtistImage(this.artist, {Key key}) : super(key: key);
 
   final Artist artist;
@@ -24,64 +25,45 @@ class ArtistImage extends StatelessWidget {
 }
 
 class ArtistCard extends StatelessWidget {
-
-  const ArtistCard({Key key, this.artist}) : super(key: key);
+  const ArtistCard(this.artist, {Key key}) : super(key: key);
 
   final Artist artist;
 
-  List<Widget> buildItems(BuildContext context) {
-    return <Widget>[
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ArtistImage(artist),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Text(
-          artist.name,
-          style: Theme.of(context).accentTextTheme.title,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
-        child: Text(
-          offlineStudios[artist.studioID].name,
-          style: Theme.of(context).accentTextTheme.subtitle,
-        ),
-      )
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          child: Card(
-            color: Colors.black,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: artist.profileImage,
-            shape: RoundedRectangleBorder(
-              borderRadius: smallBorderRadius,
+    return ScaleOnTap(
+      onTap: () {
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.openSingleArtistScreen(context, artist);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Hero(
+            tag: artist.artistId,
+            child: Card(
+              color: Colors.black,
+              clipBehavior: Clip.antiAlias,
+              child: artist.profileImage,
+              shape: RoundedRectangleBorder(
+                borderRadius: smallBorderRadius,
+              ),
+              elevation: 10,
+              margin: EdgeInsets.all(10),
             ),
-            elevation: 10,
-            margin: EdgeInsets.all(10),
           ),
-        ),
-        Text(
-          artist.name,
-          style: Theme.of(context).textTheme.title,
-        ),
-        Text(
-          offlineStudios[artist.studioID].name,
-          style: Theme.of(context).textTheme.subtitle,
-        )
-      ],
-    );
+          Padding(
+            padding: const EdgeInsets.only(left: 24.0),
+            child: Text(
+              artist.name.toUpperCase(),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .title,
+            ),
+          ),
+        ],
+      ),);
   }
-
 }
