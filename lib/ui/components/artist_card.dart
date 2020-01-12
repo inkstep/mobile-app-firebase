@@ -27,7 +27,12 @@ class ArtistCard extends StatelessWidget {
             child: Card(
               color: Colors.black,
               clipBehavior: Clip.antiAlias,
-              child: artist.profileImage,
+              // TODO(mm): must be a better way than this container
+              child: Container(
+                height: 200,
+                width: 100000,
+                child: artist.profileImage,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: smallBorderRadius,
               ),

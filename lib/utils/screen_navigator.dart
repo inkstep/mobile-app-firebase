@@ -13,6 +13,7 @@ import 'package:inkstep/ui/pages/onboarding_required_info.dart';
 import 'package:inkstep/ui/pages/single_artist_screen.dart';
 import 'package:inkstep/ui/pages/single_journey_screen.dart';
 import 'package:inkstep/ui/pages/splash_screen.dart';
+import 'package:inkstep/ui/routes/fade_page_route.dart';
 import 'package:inkstep/ui/routes/scale_page_route.dart';
 
 import '../main.dart';
@@ -130,9 +131,9 @@ class ScreenNavigator {
   void openSingleArtistScreen(BuildContext context, Artist artist) {
     Navigator.push<dynamic>(
       context,
-      MaterialPageRoute<dynamic>(
-        builder: (context) => SingleArtistScreen(artist: artist),
-        fullscreenDialog: true,
+      FadeRoute(
+        page: SingleArtistScreen(artist: artist),
+        fullscreen: true,
       ),
     );
   }

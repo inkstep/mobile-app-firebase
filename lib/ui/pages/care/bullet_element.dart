@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/components/bullet.dart';
 
 class BulletElement extends StatelessWidget {
   const BulletElement(this.text);
@@ -13,7 +12,14 @@ class BulletElement extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-          child: Bullet(),
+          child: Container(
+            height: 10.0,
+            width: 10.0,
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              shape: BoxShape.circle,
+            ),
+          ),
         ),
         Flexible(
           child: Text(

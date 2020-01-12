@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/ui/components/alert_dialog.dart';
+import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -32,7 +34,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
 
   List<Widget> get _tabBodies => <Widget>[
     ArtistSelectionScreen(),
-    Text('Events!'),
+    Text('Events'),
     JourneysScreen(journeys: journeys),
     MessagesScreen(),
   ];
