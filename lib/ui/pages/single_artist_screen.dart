@@ -41,13 +41,16 @@ class SingleArtistScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: ListView(
           children: <Widget>[
-            Card(
-              child: artist.profileImage,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                borderRadius: largeBorderRadius,
+            Hero(
+              tag: artist,
+              child: Card(
+                child: artist.profileImage,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: largeBorderRadius,
+                ),
+                elevation: 10,
               ),
-              elevation: 10,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
