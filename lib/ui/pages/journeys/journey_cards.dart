@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey_stage.dart';
-import 'package:inkstep/resources/artists.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
@@ -131,7 +130,7 @@ class JourneyCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: smallBorderRadius,
                     ),
-                    elevation: 2,
+                    elevation: 1,
                     margin: EdgeInsets.all(10),
                   ),
                 ),

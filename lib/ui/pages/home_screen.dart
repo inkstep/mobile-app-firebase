@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inkstep/di/service_locator.dart';
-import 'package:inkstep/ui/components/alert_dialog.dart';
-import 'package:inkstep/ui/components/logo.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -45,23 +43,13 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   @override
   void initState() {
     super.initState();
-
     _tabController = TabController(vsync: this, length: _numTabs);
-    _tabController.addListener(_handleTabSelection);
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabSelection);
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _handleTabSelection() {
-    setState(() {
-      _currentIndex = _tabController.index;
-      print('index: $_currentIndex');
-    });
   }
 
   @override
@@ -76,6 +64,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
           ),
           backgroundColor: Theme.of(context).backgroundColor,
           bottom: TabBar(
+            onTap: (index) => setState(() => _currentIndex = index),
             isScrollable: true,
             labelStyle: Theme.of(context).textTheme.subhead.copyWith(fontSize: 22),
             unselectedLabelStyle:
