@@ -60,7 +60,6 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
-    _tabController.notifyListeners();
     return Scaffold(
       appBar: AppBar(
         title: Text(
