@@ -14,12 +14,26 @@ class MessagesScreen extends StatefulWidget {
 class MessagesScreenState extends State<MessagesScreen> {
   bool _shouldHoldLoading = false;
 
+  bool disposed = false;
+
   Widget _buildLoading() {
     return Center(
         child: SpinKitChasingDots(
       color: Theme.of(context).cardColor,
       size: 50.0,
     ));
+  }
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }
+
+  void _safeSetHolding() {
+    if (!disposed) {
+      setState(() => _shouldHoldLoading = false);
+    }
   }
 
   @override
@@ -31,7 +45,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           _shouldHoldLoading = true;
           Future<dynamic>.delayed(
             const Duration(seconds: 1),
-            () => setState(() => _shouldHoldLoading = false),
+            _safeSetHolding,
           );
           return _buildLoading();
         }
@@ -47,7 +61,7 @@ class MessagesScreenState extends State<MessagesScreen> {
               _shouldHoldLoading = true;
               Future<dynamic>.delayed(
                 const Duration(seconds: 1),
-                () => setState(() => _shouldHoldLoading = false),
+                _safeSetHolding,
               );
               return _buildLoading();
             }

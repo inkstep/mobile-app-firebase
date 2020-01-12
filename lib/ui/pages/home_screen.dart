@@ -43,53 +43,58 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: _numTabs);
+    _tabController = TabController(vsync: this, length: _numTabs, initialIndex: 2);
+    _tabController.addListener(_handleTabChanged);
+  }
+
+  void _handleTabChanged() {
+    setState(() => _currentIndex = _tabController.index);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChanged);
     _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: _numTabs,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'SOUTHCITYMARKET',
-            style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
-          ),
-          backgroundColor: Theme.of(context).backgroundColor,
-          bottom: TabBar(
-            onTap: (index) => setState(() => _currentIndex = index),
-            isScrollable: true,
-            labelStyle: Theme.of(context).textTheme.subhead.copyWith(fontSize: 22),
-            unselectedLabelStyle:
-                Theme.of(context).textTheme.subhead.copyWith(fontSize: 22, color: Colors.white.withOpacity(0.7)),
-            indicatorColor: Colors.white,
-            tabs: _tabs,
-          ),
+    _tabController.notifyListeners();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'SOUTHCITYMARKET',
+          style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
         ),
-        floatingActionButton: _currentIndex == 2 && journeys.isNotEmpty
-            ? FloatingActionButton(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                backgroundColor: Theme.of(context).accentColor,
-                onPressed: () {
-                  final nav = sl.get<ScreenNavigator>();
-                  nav.openArtistSelection(context);
-                },
-              )
-            : null,
         backgroundColor: Theme.of(context).backgroundColor,
-        body: TabBarView(
-          children: _tabBodies,
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          labelStyle: Theme.of(context).textTheme.subhead.copyWith(fontSize: 22),
+          unselectedLabelStyle:
+              Theme.of(context).textTheme.subhead.copyWith(fontSize: 22, color: Colors.white.withOpacity(0.7)),
+          indicatorColor: Colors.white,
+          tabs: _tabs,
         ),
+      ),
+      floatingActionButton: _currentIndex == 2 && journeys.isNotEmpty
+          ? FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              backgroundColor: Theme.of(context).accentColor,
+              onPressed: () {
+                final nav = sl.get<ScreenNavigator>();
+                nav.openArtistSelection(context);
+              },
+            )
+          : null,
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: TabBarView(
+        controller: _tabController,
+        children: _tabBodies,
       ),
     );
   }
