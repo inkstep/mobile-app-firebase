@@ -8,24 +8,24 @@ import 'package:inkstep/models/journey.dart';
 import 'journeys/journey_cards.dart';
 
 class JourneysScreen extends StatefulWidget {
-  const JourneysScreen({Key key, this.journeys}) : super(key: key);
+  const JourneysScreen({Key key, this.journeys, this.newJourneyFunc}) : super(key: key);
 
   final List<DocumentSnapshot> journeys;
+  final Function newJourneyFunc;
 
   @override
-  _JourneysScreenState createState() => _JourneysScreenState(journeys);
+  _JourneysScreenState createState() => _JourneysScreenState(journeys, newJourneyFunc);
 }
 
 class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStateMixin {
-  _JourneysScreenState(this.journeys);
-
-  int _currentPageIndex = 0;
+  _JourneysScreenState(this.journeys, this.newJourneyFunc);
 
   final List<DocumentSnapshot> journeys;
+  final Function newJourneyFunc;
+
+  int _currentPageIndex = 0;
   AnimationController _controller;
-
   SwiperController _swiperController;
-
   AnimationController loopController;
 
   @override
@@ -65,7 +65,7 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
             child: Swiper(
               itemBuilder: (BuildContext context, int index) {
                 if (journeys.isEmpty) {
-                  return AddCard();
+                  return AddCard(newJourneyFunc);
                 }
 
                 // Add document ID to map for use as journey ID in creating journey object

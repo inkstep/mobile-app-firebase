@@ -70,20 +70,6 @@ class ScreenNavigator {
     );
   }
 
-  void openArtistSelectionReplace(BuildContext context) {
-    Navigator.pushReplacement<dynamic, dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(builder: (context) => ArtistSelectionScreen()),
-    );
-  }
-
-  void openArtistSelection(BuildContext context) {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(builder: (context) => ArtistSelectionScreen()),
-    );
-  }
-
   void expandArtistSelection(BuildContext context, RelativeRect rect) {
     Navigator.push<dynamic>(
       context,

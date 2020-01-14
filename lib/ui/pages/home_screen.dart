@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
-import 'package:inkstep/utils/screen_navigator.dart';
 
 import 'messages_screen.dart';
 
@@ -21,19 +19,17 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   HomeScreenState(this.journeys);
 
   final List<DocumentSnapshot> journeys;
-  final int _numTabs = 4;
-  final int _journeysIndex = 2;
+  final int _numTabs = 3;
+  final int _journeysIndex = 1;
 
   final _tabs = const <Widget>[
     Tab(text: 'Artists'),
-    Tab(text: 'Events'),
     Tab(text: 'Journeys'),
     Tab(text: 'Messages'),
   ];
 
   List<Widget> get _tabBodies => <Widget>[
     ArtistSelectionScreen(),
-    Text('Events'),
     JourneysScreen(journeys: journeys),
     MessagesScreen(),
   ];
@@ -87,8 +83,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               ),
               backgroundColor: Theme.of(context).accentColor,
               onPressed: () {
-                final nav = sl.get<ScreenNavigator>();
-                nav.openArtistSelection(context);
+                _tabController.index = 0;
               },
             )
           : null,

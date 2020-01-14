@@ -183,6 +183,10 @@ class JourneyCard extends StatelessWidget {
 }
 
 class AddCard extends StatelessWidget {
+  const AddCard(this._onTap, {Key key}) : super(key: key);
+
+  final Function _onTap;
+
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).backgroundColor;
@@ -193,10 +197,7 @@ class AddCard extends StatelessWidget {
         borderRadius: smallBorderRadius,
         color: Theme.of(context).cardColor,
         child: InkWell(
-          onTap: () {
-            final nav = sl.get<ScreenNavigator>();
-            nav.openArtistSelection(context);
-          },
+          onTap: _onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Column(
