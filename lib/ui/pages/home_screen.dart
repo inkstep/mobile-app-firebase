@@ -22,6 +22,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
 
   final List<DocumentSnapshot> journeys;
   final int _numTabs = 4;
+  final int _journeysIndex = 2;
 
   final _tabs = const <Widget>[
     Tab(text: 'Artists'),
@@ -43,8 +44,9 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: _numTabs, initialIndex: 2);
+    _tabController = TabController(vsync: this, length: _numTabs, initialIndex: _journeysIndex);
     _tabController.addListener(_handleTabChanged);
+    _currentIndex = _journeysIndex;
   }
 
   void _handleTabChanged() {
@@ -77,7 +79,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
           tabs: _tabs,
         ),
       ),
-      floatingActionButton: _currentIndex == 2 && journeys.isNotEmpty
+      floatingActionButton: _currentIndex == _journeysIndex && journeys.isNotEmpty
           ? FloatingActionButton(
               child: Icon(
                 Icons.add,

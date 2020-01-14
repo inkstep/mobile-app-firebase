@@ -121,21 +121,23 @@ class JourneyCard extends StatelessWidget {
                     style: Theme.of(context).accentTextTheme.subtitle,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 32.0),
-                  child: Card(
-                    color: Colors.black,
-                    clipBehavior: Clip.antiAlias,
-                    child: card.artist.profileImage,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: smallBorderRadius,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 32.0),
+                    child: Card(
+                      color: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      child: card.artist.profileImage,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: smallBorderRadius,
+                      ),
+                      elevation: 1,
+                      margin: EdgeInsets.all(10),
                     ),
-                    elevation: 1,
-                    margin: EdgeInsets.all(10),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 24.0),
+                  padding: const EdgeInsets.only(left: 24.0, bottom: 24.0),
                   child: Text(
                     card.artist.name.toUpperCase(),
                     style: Theme.of(context).textTheme.title.copyWith(color: Colors.black),
