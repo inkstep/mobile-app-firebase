@@ -67,3 +67,5 @@ flutter:
     - family: Heebo
       fonts:
         - asset: fonts/Heebo-Regular.ttf
+        # - asset: fonts/Heebo-Light.tff
+          # size: 14
