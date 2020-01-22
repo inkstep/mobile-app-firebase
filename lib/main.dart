@@ -22,7 +22,7 @@ class Inkstep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'inkstep',
+      title: 'SOUTHCITYMARKET',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       home: SplashScreen(),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/models/user.dart';
 import 'package:inkstep/ui/components/gentle_loader.dart';
 import 'package:inkstep/ui/pages/home_screen.dart';
-import 'package:inkstep/ui/pages/landing_screen.dart';
+import 'package:inkstep/ui/pages/welcome_back_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -33,6 +33,10 @@ class SplashScreenState extends State<SplashScreen> {
     FirebaseAuth.instance.signInAnonymously().then((user) => setState(() => _auth = user));
   }
 
+  // TODO(mm): should display SCM in centre as splash, animate up into app bar then either welcome
+  // TODO(mm):   back <NAME> or enter name screen.
+
+
   // Display splash screen while loading, before displaying the home screen
   @override
   Widget build(BuildContext context) {
@@ -45,12 +49,12 @@ class SplashScreenState extends State<SplashScreen> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         // Display splash screen for a minimum of k seconds
         if (_shouldHoldSplash) {
-          return LandingScreen(name: _name, loading: false);
+          return WelcomeBackScreen(name: _name, loading: false);
         }
 
         return GentleLoader(
           loaded: HomeScreen(journeys: snapshot.data.documents),
-          loading: LandingScreen(name: _name, loading: true),
+          loading: WelcomeBackScreen(name: _name, loading: true),
           loadConditions: [_auth != null, snapshot.hasData],
         );
       },

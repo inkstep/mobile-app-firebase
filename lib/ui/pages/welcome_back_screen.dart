@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inkstep/ui/components/large_two_part_header.dart';
 
-class LandingScreen extends StatelessWidget {
-  const LandingScreen({Key key, this.name, this.loading = false}) : super(key: key);
+class WelcomeBackScreen extends StatelessWidget {
+  const WelcomeBackScreen({Key key, this.name, this.loading = false}) : super(key: key);
 
   final String name;
   final bool loading;

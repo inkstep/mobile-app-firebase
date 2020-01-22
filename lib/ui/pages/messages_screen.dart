@@ -101,7 +101,7 @@ class MessagesScreenState extends State<MessagesScreen> {
                         journeys[index].description +
                             ' with ' +
                             offlineArtists[journeys[index].artistId].name,
-                        style: Theme.of(context).accentTextTheme.body1,
+                        style: Theme.of(context).accentTextTheme.body2,
                         textAlign: TextAlign.center,
                       ),
                     ),
