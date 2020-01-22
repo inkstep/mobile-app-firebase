@@ -29,10 +29,10 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   ];
 
   List<Widget> get _tabBodies => <Widget>[
-    ArtistSelectionScreen(),
-    JourneysScreen(journeys: journeys),
-    MessagesScreen(),
-  ];
+        ArtistSelectionScreen(),
+        JourneysScreen(journeys: journeys),
+        MessagesScreen(),
+      ];
 
   TabController _tabController;
   int _currentIndex = 0;
@@ -60,17 +60,22 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'SOUTHCITYMARKET',
-          style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
+        title: Hero(
+          tag: 'SOUTHCITYMARKET',
+          child: Text(
+            'SOUTHCITYMARKET',
+            style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
+          ),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
           labelStyle: Theme.of(context).textTheme.subhead.copyWith(fontSize: 22),
-          unselectedLabelStyle:
-              Theme.of(context).textTheme.subhead.copyWith(fontSize: 22, color: Colors.white.withOpacity(0.7)),
+          unselectedLabelStyle: Theme.of(context)
+              .textTheme
+              .subhead
+              .copyWith(fontSize: 22, color: Colors.white.withOpacity(0.7)),
           indicatorColor: Colors.white,
           tabs: _tabs,
         ),

@@ -7,7 +7,6 @@ import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
 import 'package:inkstep/ui/components/date_block.dart';
-import 'package:inkstep/ui/components/large_two_part_header.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
 
 class DeleteJourneyDialog extends StatelessWidget {
@@ -146,9 +145,9 @@ class _DropdownFloatingActionButtonsState extends State<DropdownFloatingActionBu
       backgroundColor: _disappearingBtnColour.value,
       heroTag: 'careBtn',
       onPressed: () {
-         final ScreenNavigator nav = sl.get<ScreenNavigator>();
-         final JourneyStage stage = widget.card.journey.stage;
-         nav.openCareScreen(context, stage is JourneyStageWithBooking ? stage.date : null);
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        final JourneyStage stage = widget.card.journey.stage;
+        nav.openCareScreen(context, stage is JourneyStageWithBooking ? stage.date : null);
       },
       tooltip: 'Care',
       child: Icon(Icons.healing),
@@ -330,7 +329,16 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        LargeTwoPartHeader(largeText: 'Your Journey with', name: artistFirstName),
+                        Text(
+                          'Your Journey with ',
+                          style: Theme.of(context).textTheme.headline,
+                        ),
+                        Container(
+                          child: Text(
+                            artistFirstName,
+                            style: Theme.of(context).textTheme.headline,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -484,23 +492,24 @@ class _SingleJourneyScreenState extends State<SingleJourneyScreen> {
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       crossAxisCount: 4,
-                      itemCount: 0, // TODO(mm): images - widget.card.images.length,
+                      itemCount: 0,
+                      // TODO(mm): images - widget.card.images.length,
                       itemBuilder: (BuildContext context, int index) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: null, // TODO(mm): images - widget.card.images[index].image,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Container(
-                              transform: Matrix4.translationValues(10, 10, 10),
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Text('${index + 1}'),
-                              ),
-                            ),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: null, // TODO(mm): images - widget.card.images[index].image,
+                            fit: BoxFit.cover,
                           ),
+                        ),
+                        child: Container(
+                          transform: Matrix4.translationValues(10, 10, 10),
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Text('${index + 1}'),
+                          ),
+                        ),
+                      ),
                       staggeredTileBuilder: (int index) =>
                           StaggeredTile.count(2, index.isEven ? 2 : 1),
                       mainAxisSpacing: 16.0,
