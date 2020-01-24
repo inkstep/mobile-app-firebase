@@ -64,3 +64,8 @@ flutter:
     - family: Velocista
       fonts:
         - asset: fonts/Velocista-Demo-FFP.ttf
+    - family: Heebo
+      fonts:
+        - asset: fonts/Heebo-Regular.ttf
+        # - asset: fonts/Heebo-Light.tff
+          # size: 14

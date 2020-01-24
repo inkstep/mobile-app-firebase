@@ -18,7 +18,10 @@ class SingleArtistScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(artist.name),
+        title: Text(
+          artist.name.toUpperCase(),
+          style: Theme.of(context).textTheme.headline.copyWith(fontSize: 22),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 40,
       ),
@@ -38,13 +41,16 @@ class SingleArtistScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: ListView(
           children: <Widget>[
-            Card(
-              child: artist.profileImage,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                borderRadius: largeBorderRadius,
+            Hero(
+              tag: artist,
+              child: Card(
+                child: artist.profileImage,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: largeBorderRadius,
+                ),
+                elevation: 10,
               ),
-              elevation: 10,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

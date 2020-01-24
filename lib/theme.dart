@@ -10,9 +10,9 @@ const baseColors = ColorSwatch<String>(0xFF0A0D18, {
   'accent2': Color(0xFFF78361),
 });
 
-var hintStyle = TextStyle(color: baseColors['gray']);
+final hintStyle = TextStyle(color: baseColors['gray']);
 
-var appTheme = ThemeData(
+final appTheme = ThemeData(
   brightness: Brightness.dark,
   accentColor: baseColors['accent1'],
   primaryColor: baseColors['dark'],
@@ -36,9 +36,9 @@ var appTheme = ThemeData(
   ),
 );
 
-var smallBorderRadius = BorderRadius.circular(16.0);
-var mediumBorderRadius = BorderRadius.circular(24.0);
-var largeBorderRadius = BorderRadius.circular(32.0);
+final smallBorderRadius = BorderRadius.circular(16.0);
+final mediumBorderRadius = BorderRadius.circular(24.0);
+final largeBorderRadius = BorderRadius.circular(32.0);
 
 TextTheme _getTextWithColor(Color color) => TextTheme(
   headline: TextStyle(
@@ -57,28 +57,35 @@ TextTheme _getTextWithColor(Color color) => TextTheme(
   ),
   title: TextStyle(
     color: color,
-    fontFamily: 'Velocista',
+    fontFamily: 'Heebo',
     fontFamilyFallback: const ['Roboto'],
     fontSize: 28,
     fontWeight: FontWeight.w300,
   ),
   subtitle: TextStyle(
     color: color,
-    fontFamily: 'Velocista',
+    fontFamily: 'Heebo',
     fontFamilyFallback: const ['Roboto'],
     fontSize: 20,
     fontWeight: FontWeight.w400,
   ),
   body1: TextStyle(
     color: color,
-    fontFamily: 'Roboto',
+    fontFamily: 'Velocista',
+    fontFamilyFallback: const ['Roboto'],
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  ),
+  body2: TextStyle(
+    color: color,
+    fontFamily: 'Heebo',
     fontFamilyFallback: const ['Roboto'],
     fontSize: 18,
     fontWeight: FontWeight.w400,
   ),
   caption: TextStyle(
     color: color,
-    fontFamily: 'Roboto',
+    fontFamily: 'Heebo',
     fontFamilyFallback: const ['Roboto'],
     fontSize: 12,
     fontWeight: FontWeight.w400,

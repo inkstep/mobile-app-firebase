@@ -6,7 +6,6 @@ import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey_stage.dart';
 import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/components/alert_dialog.dart';
-import 'package:inkstep/ui/components/artist_card.dart';
 import 'package:inkstep/ui/pages/journeys/described_icon.dart';
 import 'package:inkstep/ui/pages/journeys/image_snippet.dart';
 import 'package:inkstep/utils/screen_navigator.dart';
@@ -41,90 +40,110 @@ class JourneyCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              final Widget dialog = RoundedAlertDialog(
-                                title: null,
-                                child: card.journey.stage.buildStageWidget(context, card),
-                                dismiss: card.journey.stage.buildDismissStageWidget(context, card),
-                              );
-
-                              if (dialog != null) {
-                                showGeneralDialog<void>(
-                                  barrierColor: Colors.black.withOpacity(0.4),
-                                  transitionBuilder: (context, a1, a2, widget) {
-                                    return Transform.scale(
-                                      scale: a1.value,
-                                      child: Opacity(
-                                        opacity: a1.value,
-                                        child: dialog,
-                                      ),
-                                    );
-                                  },
-                                  transitionDuration: Duration(milliseconds: 300),
-                                  barrierDismissible: true,
-                                  barrierLabel: '',
-                                  context: context,
-                                  // ignore: missing_return
-                                  pageBuilder: (context, animation1, animation2) {},
-                                );
-                              }
-                            },
-                            child: Chip(
-                              avatar:
-                                  card.journey.stage.userActionRequired ? Icon(Icons.error) : null,
-                              label: Text(card.journey.stage.toString()),
-                              backgroundColor: accentColor,
-                              shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance
-                          .collection('images')
-                          .where('journeyId', isEqualTo: card.journey.id)
-                          .snapshots(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
-                          return ImageSnippet(
-                            urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
-                            axis: Axis.horizontal,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          final Widget dialog = RoundedAlertDialog(
+                            title: null,
+                            child: card.journey.stage.buildStageWidget(context, card),
+                            dismiss: card.journey.stage.buildDismissStageWidget(context, card),
                           );
-                        }
-                        return ImageSnippet(
-                          urls: const [
-                            'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815',
-                            'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815'
-                          ],
-                          axis: Axis.horizontal,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-                      child: Text(
-                        '${card.journey.description}',
-                        style: Theme.of(context).accentTextTheme.title.copyWith(
-                              color: accentColor,
-                            ),
+
+                          if (dialog != null) {
+                            showGeneralDialog<void>(
+                              barrierColor: Colors.black.withOpacity(0.4),
+                              transitionBuilder: (context, a1, a2, widget) {
+                                return Transform.scale(
+                                  scale: a1.value,
+                                  child: Opacity(
+                                    opacity: a1.value,
+                                    child: dialog,
+                                  ),
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 300),
+                              barrierDismissible: true,
+                              barrierLabel: '',
+                              context: context,
+                              // ignore: missing_return
+                              pageBuilder: (context, animation1, animation2) {},
+                            );
+                          }
+                        },
+                        child: Chip(
+                          avatar: card.journey.stage.userActionRequired ? Icon(Icons.error) : null,
+                          label: Text(card.journey.stage.toString()),
+                          backgroundColor: accentColor,
+                          shape: RoundedRectangleBorder(borderRadius: smallBorderRadius),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                      child: Text(
-                        'with',
-                        style: Theme.of(context).accentTextTheme.subtitle,
+                    ],
+                  ),
+                ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance
+                      .collection('images')
+                      .where('journeyId', isEqualTo: card.journey.id)
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
+                      return ImageSnippet(
+                        urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
+                        axis: Axis.horizontal,
+                      );
+                    }
+                    return ImageSnippet(
+                      urls: const [
+                        'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815',
+                        'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815'
+                      ],
+                      axis: Axis.horizontal,
+                    );
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                  child: Text(
+                    '${card.journey.description}',
+                    style: Theme.of(context).accentTextTheme.title.copyWith(
+                          color: accentColor,
+                        ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Text(
+                    'with',
+                    style: Theme.of(context).accentTextTheme.subtitle,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 32.0),
+                    child: Card(
+                      color: Colors.black,
+                      clipBehavior: Clip.antiAlias,
+                      child: card.artist.profileImage,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: smallBorderRadius,
                       ),
+                      elevation: 1,
+                      margin: EdgeInsets.all(10),
                     ),
-                  ] +
-                  ArtistCard(artist: card.artist).buildItems(context)
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24.0, bottom: 24.0),
+                  child: Text(
+                    card.artist.name.toUpperCase(),
+                    style: Theme.of(context).textTheme.title.copyWith(color: Colors.black),
+                  ),
+                ),
+              ],
             ),
           ),
           Padding(
@@ -164,6 +183,10 @@ class JourneyCard extends StatelessWidget {
 }
 
 class AddCard extends StatelessWidget {
+  const AddCard(this._onTap, {Key key}) : super(key: key);
+
+  final Function _onTap;
+
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).backgroundColor;
@@ -174,10 +197,7 @@ class AddCard extends StatelessWidget {
         borderRadius: smallBorderRadius,
         color: Theme.of(context).cardColor,
         child: InkWell(
-          onTap: () {
-            final nav = sl.get<ScreenNavigator>();
-            nav.openArtistSelection(context);
-          },
+          onTap: _onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Column(

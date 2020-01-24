@@ -22,19 +22,19 @@ class DateBlock extends StatelessWidget {
             Text(
               DateFormat.E().format(date),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.subtitle,
               textScaleFactor: scale,
             ),
             Text(
               DateFormat.d().format(date),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline,
+              style: Theme.of(context).textTheme.title,
               textScaleFactor: scale,
             ),
             Text(
               DateFormat.LLLL().format(date),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.subtitle,
               textScaleFactor: scale,
             ),
           ],
@@ -50,7 +50,7 @@ class DateBlock extends StatelessWidget {
             child: Text(
               DateFormat.jm().format(date),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.subtitle,
               textScaleFactor: scale,
             ),
           ),

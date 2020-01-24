@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FadeRoute extends PageRouteBuilder<dynamic> {
-  FadeRoute({this.page})
+  FadeRoute({@required Widget page, bool fullscreen})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -9,6 +9,7 @@ class FadeRoute extends PageRouteBuilder<dynamic> {
             Animation<double> secondaryAnimation,
           ) =>
               page,
+          fullscreenDialog: fullscreen,
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -27,6 +28,4 @@ class FadeRoute extends PageRouteBuilder<dynamic> {
                 child: child,
               ),
         );
-
-  final Widget page;
 }
