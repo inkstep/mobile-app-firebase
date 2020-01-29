@@ -24,7 +24,6 @@ dependencies:
   firebase_messaging: ^5.1.2
   cloud_firestore: ^0.13.0
   firebase_auth: ^0.14.0+2
-  flutter_swiper: ^1.1.6 # Latest
   multi_image_picker: ^4.5.3 # Latest
   auto_size_text: ^2.0.0 # Latest
   bloc: ^0.14.1 # Latest

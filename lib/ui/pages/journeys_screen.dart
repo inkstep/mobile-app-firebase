@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey.dart';
@@ -23,81 +22,63 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
   final List<DocumentSnapshot> journeys;
   final Function newJourneyFunc;
 
-  int _currentPageIndex = 0;
-  AnimationController _controller;
-  SwiperController _swiperController;
-  AnimationController loopController;
+  PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 300),
+    _pageController = PageController(
+      initialPage: 0,
+      viewportFraction: 0.9,
     );
-    _swiperController = SwiperController();
+  }
 
-    loopController = AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    loopController.forward();
+  Widget _buildPageView() {
+    if (journeys.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: AddCard(newJourneyFunc),
+      );
+    }
+
+    return PageView.builder(
+      controller: _pageController,
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: journeys.length,
+      itemBuilder: (BuildContext context, int index) {
+        // Add document ID to map for use as journey ID in creating journey object
+        final Map<String, dynamic> journeyMap = journeys[index].data;
+        journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
+
+        final Journey journey = Journey.fromMap(journeyMap);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: JourneyCard(
+            key: ObjectKey(journey),
+            card: CardModel(
+              journey: journey,
+              artist: Artist.fromId(journey.artistId),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
-        if (notification is ScrollEndNotification) {
-          final currentPage = _swiperController.index;
-          if (_currentPageIndex != currentPage) {
-            setState(() => _currentPageIndex = currentPage);
-          }
-          return true;
-        }
-        return false;
+        return true;
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Spacer(flex: 6),
-          Expanded(
-            flex: 60,
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                if (journeys.isEmpty) {
-                  return AddCard(newJourneyFunc);
-                }
-
-                // Add document ID to map for use as journey ID in creating journey object
-                final Map<String, dynamic> journeyMap = journeys[index].data;
-                journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
-
-                final Journey journey = Journey.fromMap(journeyMap);
-                return JourneyCard(
-                  key: ObjectKey(journey),
-                  card: CardModel(
-                    journey: journey,
-                    artist: Artist.fromId(journey.artistId),
-                  ),
-                );
-              },
-              loop: false,
-              controller: _swiperController,
-              itemCount: journeys.isEmpty ? 1 : journeys.length,
-              viewportFraction: 0.8,
-              scale: 0.9,
-            ),
-          ),
-          Spacer(flex: 6),
-        ],
-      ),
+      child: _buildPageView(),
     );
   }
 
   @override
   void dispose() {
-    loopController.dispose();
-    _controller.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 }
