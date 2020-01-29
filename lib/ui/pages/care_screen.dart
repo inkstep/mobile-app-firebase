@@ -10,7 +10,7 @@ class BodyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('', style: Theme.of(context).textTheme.body1);
+    return Text('', style: Theme.of(context).textTheme.body2);
   }
 }
 

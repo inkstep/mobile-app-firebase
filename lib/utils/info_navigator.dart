@@ -157,7 +157,7 @@ class InfoNavigator {
     screenNum++;
     Navigator.pushReplacement<dynamic, dynamic>(
       context,
-      FadeRoute(page: getScreen(context, screenNum)),
+      FadeRoute(page: getScreen(context, screenNum), fullscreen: true),
     );
   }
 

@@ -13,8 +13,8 @@ class SingleArtistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle body = Theme.of(context).textTheme.body1;
-    final TextStyle subheading = Theme.of(context).textTheme.subtitle;
+    final TextStyle body = Theme.of(context).textTheme.body2;
+    final TextStyle subheading = Theme.of(context).textTheme.subhead;
 
     return Scaffold(
       appBar: AppBar(

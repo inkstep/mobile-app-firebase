@@ -24,7 +24,7 @@ class BulletElement extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            style:  Theme.of(context).textTheme.body1,
+            style:  Theme.of(context).textTheme.body2,
           ),
         ),
       ],
