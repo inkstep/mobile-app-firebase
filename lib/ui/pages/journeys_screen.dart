@@ -73,18 +73,21 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
                 journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
 
                 final Journey journey = Journey.fromMap(journeyMap);
-                return JourneyCard(
-                  key: ObjectKey(journey),
-                  card: CardModel(
-                    journey: journey,
-                    artist: Artist.fromId(journey.artistId),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: JourneyCard(
+                    key: ObjectKey(journey),
+                    card: CardModel(
+                      journey: journey,
+                      artist: Artist.fromId(journey.artistId),
+                    ),
                   ),
                 );
               },
               loop: false,
               controller: _swiperController,
               itemCount: journeys.isEmpty ? 1 : journeys.length,
-              viewportFraction: 0.8,
+              viewportFraction: 0.85,
               scale: 0.9,
             ),
           ),
