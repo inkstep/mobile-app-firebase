@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:inkstep/di/service_locator.dart';
+import 'package:inkstep/models/card.dart';
 import 'package:inkstep/models/journey.dart';
 import 'package:inkstep/resources/artists.dart';
+import 'package:inkstep/utils/screen_navigator.dart';
 
 class MessagesScreen extends StatefulWidget {
   @override
@@ -72,7 +75,7 @@ class MessagesScreenState extends State<MessagesScreen> {
             }
 
             final journeys =
-                snapshot.data.documents.map((doc) => Journey.fromMap(doc.data)).toList();
+                snapshot.data.documents.map((doc) => Journey.fromMap(doc.data, id: doc.documentID)).toList();
 
             if (journeys.isEmpty) {
               return Card(
@@ -94,24 +97,65 @@ class MessagesScreenState extends State<MessagesScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        journeys[index].description +
-                            ' with ' +
-                            offlineArtists[journeys[index].artistId].name,
-                        style: Theme.of(context).accentTextTheme.body2,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+                  child: JourneyConvoCard(journey: journeys[index]),
                 );
               },
             );
           },
         );
       },
+    );
+  }
+}
+
+class JourneyConvoCard extends StatelessWidget {
+  const JourneyConvoCard({
+    Key key,
+    @required this.journey,
+  }) : super(key: key);
+
+  final Journey journey;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        final ScreenNavigator nav = sl.get<ScreenNavigator>();
+        nav.openJourneyMessagesScreen(
+          context,
+          CardModel(
+            journey: journey,
+            artist: offlineArtists[journey.artistId],
+          ),
+        );
+      },
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 120,
+              child: Card(
+                color: Colors.black,
+                clipBehavior: Clip.antiAlias,
+                child: offlineArtists[journey.artistId].profileImage,
+                shape: CircleBorder(),
+                elevation: 1,
+                margin: EdgeInsets.all(10),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, left: 8.0),
+              child: Text(
+                journey.description + ' with ' + offlineArtists[journey.artistId].name,
+                style: Theme.of(context).accentTextTheme.body2,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

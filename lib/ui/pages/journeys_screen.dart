@@ -68,11 +68,10 @@ class _JourneysScreenState extends State<JourneysScreen> with TickerProviderStat
                   return AddCard(newJourneyFunc);
                 }
 
-                // Add document ID to map for use as journey ID in creating journey object
-                final Map<String, dynamic> journeyMap = journeys[index].data;
-                journeyMap.addAll(<String, dynamic>{'id': journeys[index].documentID});
-
-                final Journey journey = Journey.fromMap(journeyMap);
+                final Journey journey = Journey.fromMap(
+                  journeys[index].data,
+                  id: journeys[index].documentID,
+                );
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: JourneyCard(

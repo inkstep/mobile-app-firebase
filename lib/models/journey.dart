@@ -16,9 +16,9 @@ class Journey {
     @required this.stage,
   });
 
-  factory Journey.fromMap(Map<String, dynamic> map) {
+  factory Journey.fromMap(Map<String, dynamic> map, {String id}) {
     return Journey(
-      id: map['id'],
+      id: id,
       artistId: (map['artistId'] is String) ? int.parse(map['artistId']) : map['artistId'],
       description: map['description'],
       size: map['size'],

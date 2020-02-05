@@ -91,6 +91,7 @@ class JourneyCard extends StatelessWidget {
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
+                      print('found ${snapshot.data.documents.length} images for journey: ${card.journey.id}');
                       return ImageSnippet(
                         urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
                         axis: Axis.horizontal,
