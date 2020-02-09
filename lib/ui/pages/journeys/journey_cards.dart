@@ -90,17 +90,18 @@ class JourneyCard extends StatelessWidget {
                       .where('journeyId', isEqualTo: card.journey.id)
                       .snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
+                    /*if (snapshot.hasData && snapshot.data.documents.isNotEmpty) {
                       print('found ${snapshot.data.documents.length} images for journey: ${card.journey.id}');
+                      snapshot.data.documents.forEach((doc) => print('${doc["url"]}'));
                       return ImageSnippet(
                         urls: snapshot.data.documents.map<String>((doc) => doc['url']).toList(),
                         axis: Axis.horizontal,
                       );
-                    }
+                    }*/
                     return ImageSnippet(
                       urls: const [
                         'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815',
-                        'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/KwmLEnTZpzO5RJkUxSH02Vn0NYv1%2Fsao2pFEwis3yucabvoYr%2F402445307rose1.png?alt=media&token=59122bdd-1269-4191-93c8-20b1d9ec8815'
+                        'https://firebasestorage.googleapis.com/v0/b/inkstep-2c4cc.appspot.com/o/y6yDkDJ7LlcqV1DftVW8Oj0EZkn1%2F5ScBnDgPOBFCpIuEElDu%2F118011505IMG_0010.JPG?alt=media&token=04feef80-cc23-4f8e-b61d-12e43c14a074'
                       ],
                       axis: Axis.horizontal,
                     );
