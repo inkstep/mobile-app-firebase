@@ -5,21 +5,22 @@ import 'package:flutter/material.dart';
 
 class PlatformSwitch extends StatefulWidget {
 
-  const PlatformSwitch({Key key, this.callback}) : super(key: key);
+  const PlatformSwitch({Key key, this.initialValue, this.callback}) : super(key: key);
 
   final void Function(bool calue) callback;
+  final bool initialValue;
 
   @override
-  State<StatefulWidget> createState() => PlatformSwitchState(callback);
+  State<StatefulWidget> createState() => PlatformSwitchState(initialValue, callback);
 }
 
 class PlatformSwitchState extends State<PlatformSwitch> {
 
-  PlatformSwitchState(this.callback);
+  PlatformSwitchState(this._value, this.callback);
 
   final void Function(bool calue) callback;
 
-  bool _value = false;
+  bool _value;
 
   void _onChanged(bool value) {
     setState(() => _value = value);
