@@ -26,6 +26,7 @@ class JourneyCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.zero,
+      elevation: 10.0,
       child: Stack(
         children: <Widget>[
           InkWell(
@@ -193,6 +194,7 @@ class AddCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).backgroundColor;
     return Card(
+      elevation: 10.0,
       margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       child: Material(
         clipBehavior: Clip.antiAlias,
