@@ -18,6 +18,7 @@ class DateBlock extends StatelessWidget {
     return Row(
       children: <Widget>[
         Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               DateFormat.E().format(date),
