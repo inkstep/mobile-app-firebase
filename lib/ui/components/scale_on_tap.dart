@@ -22,13 +22,11 @@ class ScaleOnTapState extends State<ScaleOnTap> with SingleTickerProviderStateMi
 
   void _onTapDown(TapDownDetails details) {
     _controller.forward();
-    Future<dynamic>.delayed(
-      const Duration(milliseconds: 100),
-      () {
-        _controller.reverse();
-        onTap();
-      },
-    );
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    _controller.reverse();
+    onTap();
   }
 
   @override
@@ -52,6 +50,7 @@ class ScaleOnTapState extends State<ScaleOnTap> with SingleTickerProviderStateMi
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
       child: Transform.scale(
         scale: 1 - _controller.value,
         child: child,
