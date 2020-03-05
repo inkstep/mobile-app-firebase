@@ -29,17 +29,17 @@ class SingleArtistScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 40,
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.keyboard_arrow_right,
-          color: Colors.white,
-        ),
-        backgroundColor: Theme.of(context).accentColor,
-        onPressed: () {
-          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-          nav.openArtistConfirmScreen(context, artist);
-        },
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        child: Icon(
+//          Icons.keyboard_arrow_right,
+//          color: Colors.white,
+//        ),
+//        backgroundColor: Theme.of(context).accentColor,
+//        onPressed: () {
+//          final ScreenNavigator nav = sl.get<ScreenNavigator>();
+//          nav.openArtistConfirmScreen(context, artist);
+//        },
+//      ),
       backgroundColor: Color.fromRGBO(40, 40, 40, 1.0), // Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       body: Padding(

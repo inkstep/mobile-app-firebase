@@ -39,7 +39,7 @@ class EventCard extends StatelessWidget {
           children: <Widget>[
             Text(
               event.name,
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.title,
             ),
             Expanded(
               child: Container(height: 0),

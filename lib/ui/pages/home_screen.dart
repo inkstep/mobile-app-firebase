@@ -32,7 +32,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
 
   List<Widget> get _tabBodies => <Widget>[
         ArtistSelectionScreen(),
-        JourneysScreen(journeys: journeys),
+        JourneysScreen(journeys: journeys, newJourneyFunc: () => _tabController.index = 0,),
         // MessagesScreen(),
         EventsScreen(),
       ];

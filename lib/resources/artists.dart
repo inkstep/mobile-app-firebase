@@ -29,5 +29,15 @@ final List<Artist> offlineArtists = [
       'assets/offline/loz.jpg',
       fit: BoxFit.cover,
     ),
+  ),
+  Artist(
+    email: 'peter@email.com',
+    name: 'Peter Laeviv',
+    studioID: _offlineScmEntity.id,
+    artistId: 2,
+    profileImage: Image.asset(
+      'assets/offline/peter.jpg',
+      fit: BoxFit.cover,
+    ),
   )
 ];
