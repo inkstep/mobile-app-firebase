@@ -3,8 +3,8 @@ import 'package:inkstep/ui/components/form_element_builder.dart';
 
 import 'long_text_input.dart';
 
-class LongTextInputFormElement extends StatelessWidget {
-  const LongTextInputFormElement({
+class DescribeConceptFormElement extends StatelessWidget {
+  const DescribeConceptFormElement({
     @required this.textController,
     @required this.label,
     @required this.hint,

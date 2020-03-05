@@ -40,6 +40,7 @@ class SingleArtistScreen extends StatelessWidget {
           nav.openArtistConfirmScreen(context, artist);
         },
       ),
+      backgroundColor: Color.fromRGBO(40, 40, 40, 1.0), // Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

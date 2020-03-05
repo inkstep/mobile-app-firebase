@@ -207,17 +207,20 @@ class AddCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.add,
-                  size: 52.0,
-                  color: textColor,
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Icon(
+                    Icons.add,
+                    size: 52.0,
+                    color: textColor,
+                  ),
                 ),
-                Container(
-                  height: 8.0,
-                ),
-                Text(
-                  'Start a new journey',
-                  style: TextStyle(color: textColor),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Start a new journey',
+                    style: Theme.of(context).textTheme.subtitle.copyWith(color: textColor),
+                  ),
                 ),
               ],
             ),

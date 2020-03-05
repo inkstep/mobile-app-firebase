@@ -40,7 +40,7 @@ class LongTextInput extends StatelessWidget {
         fillColor: Colors.green,
       ),
       focusNode: focus,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       onFieldSubmitted: callback,
     );
   }

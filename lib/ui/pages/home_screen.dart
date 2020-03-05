@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:inkstep/ui/pages/artists_screen.dart';
 import 'package:inkstep/ui/pages/journeys_screen.dart';
 
-import 'messages_screen.dart';
+import 'events_screen.dart';
+// import 'messages_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key, this.journeys}) : super(key: key);
@@ -25,13 +26,15 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   final _tabs = const <Widget>[
     Tab(text: 'Artists'),
     Tab(text: 'Journeys'),
-    Tab(text: 'Messages'),
+    // Tab(text: 'Messages'),
+    Tab(text: 'Events'),
   ];
 
   List<Widget> get _tabBodies => <Widget>[
         ArtistSelectionScreen(),
         JourneysScreen(journeys: journeys),
-        MessagesScreen(),
+        // MessagesScreen(),
+        EventsScreen(),
       ];
 
   TabController _tabController;
@@ -92,7 +95,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               },
             )
           : null,
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Color.fromRGBO(40, 40, 40, 1.0), // Theme.of(context).backgroundColor,
       body: TabBarView(
         controller: _tabController,
         children: _tabBodies,

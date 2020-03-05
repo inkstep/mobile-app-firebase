@@ -18,20 +18,19 @@ class FormElementBuilder extends StatelessWidget {
     @required this.onSubmitCallback,
   });
 
-  final SubmitCallback onSubmitCallback;
-
+  // TODO: use fieldKey and scroll properly?
   final Key fieldKey;
-  final int duration;
   final bool scroll;
   final FocusNode focus = FocusNode();
   final ElementBuilder builder;
+  final SubmitCallback onSubmitCallback;
 
-  final EdgeInsets kPadding = const EdgeInsets.all(20);
+  final int duration;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: kPadding,
+      padding: const EdgeInsets.all(24.0),
       child: Center(child: builder(context, focus, _attachFocusNext(onSubmitCallback))),
     );
   }

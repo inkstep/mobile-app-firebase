@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inkstep/ui/components/long_text_input_form_element.dart';
+import 'package:inkstep/ui/components/describe_concept.dart';
 import 'package:inkstep/utils/info_navigator.dart';
 
 import 'info_widget.dart';
@@ -56,7 +56,7 @@ class DescriptionWidget extends InfoWidget {
 
   @override
   Widget getWidget(BuildContext context) {
-    return LongTextInputFormElement(
+    return DescribeConceptFormElement(
       textController: descController,
       label: 'Tell your artist the inspiration behind your idea!',
       hint: '',
