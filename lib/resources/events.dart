@@ -5,7 +5,7 @@ final List<Event> offlineEvents = [
 ];
 
 class Event {
-  Event({@required this.name = 'default', @required this.date});
+  Event({@required this.name, @required this.date});
 
   final String name;
   final DateTime date;

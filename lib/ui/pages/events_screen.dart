@@ -22,7 +22,7 @@ class EventsScreen extends StatelessWidget {
 }
 
 class EventCard extends StatelessWidget {
-  EventCard({@required this.event});
+  const EventCard({@required this.event});
 
   final Event event;
 

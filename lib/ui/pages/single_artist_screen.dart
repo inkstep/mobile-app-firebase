@@ -3,10 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:inkstep/di/service_locator.dart';
 import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/ui/components/platform_switch.dart';
-import 'package:inkstep/utils/screen_navigator.dart';
 
 import '../../theme.dart';
 
@@ -14,6 +12,42 @@ class SingleArtistScreen extends StatelessWidget {
   const SingleArtistScreen({Key key, this.artist}) : super(key: key);
 
   final Artist artist;
+
+  // Update whether or not this user should get notifications for this artist
+  Future<void> updateSubscriptions(bool subscribe, String uid) async {
+    // Get current artist subscriptions
+    final QuerySnapshot subs = await Firestore.instance
+        .collection('artist_subs')
+        .where('auth_uid', isEqualTo: uid)
+        .getDocuments();
+
+    if (subs.documents.isEmpty) {
+      final List<int> subscriptions = subscribe ? [artist.artistId] : [];
+      Firestore.instance
+          .collection('artist_subs')
+          .add(<String, dynamic>{'auth_uid': uid, 'artistIds': subscriptions});
+    } else {
+      final List<dynamic> existing = subs.documents[0].data['artistIds'];
+      final List<int> subscriptions = [];
+      existing.forEach(subscriptions.add);
+
+      if (subscribe) {
+        // Add to list if not already there
+        if (!subscriptions.contains(artist.artistId)) {
+          subscriptions.add(artist.artistId);
+        }
+      } else {
+        // Remove from list if there
+        subscriptions.removeWhere((dynamic id) => id == artist.artistId);
+      }
+
+      // Update existing doc
+      Firestore.instance
+          .collection('artist_subs')
+          .document(subs.documents[0].documentID)
+          .updateData(<String, dynamic>{'artistIds': subscriptions});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,31 +119,14 @@ class SingleArtistScreen extends StatelessWidget {
                         stream: Firestore.instance
                             .collection('artist_subs')
                             .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-                            .where('artistId', isEqualTo: artist.artistId)
                             .snapshots(),
                         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasData) {
+                            // Check if subscribed to this artist, check first doc only
+                            final List<dynamic> ids = snapshot.data.documents[0].data['artistIds'];
                             return PlatformSwitch(
-                              initialValue: snapshot.data.documents.isNotEmpty,
-                              callback: (_value) {
-                                // Update whether or not this user should get notifications for this artist
-                                if (_value) {
-                                  Firestore.instance.collection('artist_subs').add(
-                                    <String, dynamic>{
-                                      'auth_uid': auth.data.user.uid,
-                                      'artistId': artist.artistId,
-                                    },
-                                  );
-                                } else {
-                                  // TODO(mm): delete subscription document if present
-                                  Stream<QuerySnapshot> subs = Firestore.instance
-                                      .collection('artist_subs')
-                                      .where('auth_uid', isEqualTo: auth.data.user.uid)
-                                      .where('artistId', isEqualTo: artist.artistId)
-                                      .snapshots();
-                                  // subs.forEach((doc) => doc.documents[0].);
-                                }
-                              },
+                              initialValue: ids.contains(artist.artistId),
+                              callback: (value) => updateSubscriptions(value, auth.data.user.uid),
                             );
                           }
                           return SpinKitChasingDots(

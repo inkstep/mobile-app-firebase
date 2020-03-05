@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkstep/ui/components/long_text_input_form_element.dart';
+import 'package:inkstep/ui/components/describe_concept.dart';
 import 'package:mockito/mockito.dart';
 
 class MockController extends Mock implements PageController {}
@@ -11,7 +11,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: LongTextInputFormElement(
+            body: DescribeConceptFormElement(
               textController: null,
               label: 'label',
               hint: 'hint',
@@ -32,7 +32,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: LongTextInputFormElement(
+            body: DescribeConceptFormElement(
               key: inputKey,
               textController: null,
               label: 'label',
