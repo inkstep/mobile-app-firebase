@@ -34,20 +34,16 @@ class AppMiddleware extends MiddlewareClass<AppState>{
     } else if (action is VerifyAuthStatus) {
       appRepository.getAuthenticationStateChange().listen((user) {
         if (user == null) {
-          print('no user yet');
           store.dispatch(LoginAnonymously());
         } else {
-          print('user: ${store.state.authUid}');
           store.dispatch(OnAuthentication(user));
           store.dispatch(ConnectToDataSource());
         }
       });
-      print('listening to auth status changes');
 
     } else if (action is LoginAnonymously) {
       final authUid = await appRepository.signInAnonymously();
       store.dispatch(OnAuthentication(authUid));
-      print('logged in anonymously');
     }
   }
 }

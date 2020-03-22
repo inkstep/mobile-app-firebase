@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,8 +8,8 @@ import 'package:inkstep/theme.dart';
 import 'package:inkstep/ui/pages/splash_screen.dart';
 import 'package:redux/redux.dart';
 
-import 'domain/redux/add_middleware.dart';
 import 'domain/redux/app_actions.dart';
+import 'domain/redux/app_middleware.dart';
 import 'domain/redux/app_state.dart';
 
 void main() {
