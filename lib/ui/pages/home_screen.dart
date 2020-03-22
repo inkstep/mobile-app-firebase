@@ -24,18 +24,14 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   final int _journeysIndex = 1;
 
   final _tabs = const <Widget>[
-    Tab(text: 'Artists'),
-    // Tab(text: 'Journeys'),
     Tab (text: 'Guests'),
-    // Tab(text: 'Messages'),
+    Tab(text: 'Artists'),
     Tab(text: 'Events'),
   ];
 
   List<Widget> get _tabBodies => <Widget>[
-        ArtistSelectionScreen(),
-        // JourneysScreen(journeys: journeys, newJourneyFunc: () => _tabController.index = 0,),
         GuestsScreen(),
-        // MessagesScreen(),
+        ArtistSelectionScreen(),
         EventsScreen(),
       ];
 

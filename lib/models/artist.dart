@@ -8,7 +8,6 @@ class Artist extends Equatable {
     @required this.artistId,
     @required this.name,
     @required this.email,
-    @required this.studioID,
     @required this.profileImage,
   }) : super(<dynamic>[artistId]);
 
@@ -19,6 +18,5 @@ class Artist extends Equatable {
   final int artistId;
   final String name;
   final String email;
-  final int studioID;
   Widget profileImage;
 }
