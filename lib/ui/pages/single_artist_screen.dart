@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inkstep/domain/redux/app_state.dart';
 import 'package:inkstep/models/artist.dart';
 import 'package:inkstep/ui/components/platform_switch.dart';
+import 'package:inkstep/ui/pages/single_artist_screen_viewmodel.dart';
 
 import '../../theme.dart';
 
@@ -111,29 +112,13 @@ class SingleArtistScreen extends StatelessWidget {
                     child: Text('Subscribe to updates', style: subheading),
                   ),
 
-                  // TODO(mm): messy, need to use persistent state model to get this stuff
-                  FutureBuilder(
-                    future: FirebaseAuth.instance.signInAnonymously(),
-                    builder: (BuildContext context, AsyncSnapshot auth) {
-                      return StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('artist_subs')
-                            .where('auth_uid', isEqualTo: auth.hasData ? auth.data.user.uid : '-1')
-                            .snapshots(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            // Check if subscribed to this artist, check first doc only
-                            final List<dynamic> ids = snapshot.data.documents[0].data['artistIds'];
-                            return PlatformSwitch(
-                              initialValue: ids.contains(artist.artistId),
-                              callback: (value) => updateSubscriptions(value, auth.data.user.uid),
-                            );
-                          }
-                          return SpinKitChasingDots(
-                            color: Theme.of(context).cardColor,
-                            size: 50.0,
-                          );
-                        },
+                  StoreConnector<AppState, ArtistScreenViewModel>(
+                    converter: ArtistScreenViewModel.fromStore,
+                    builder: (BuildContext context, ArtistScreenViewModel vm) {
+                      return PlatformSwitch(
+                        initialValue: vm.subscriptions.contains(artist.artistId),
+                        callback: (value) =>
+                            value ? vm.subscribe(artist.artistId) : vm.unsubscribe(artist.artistId),
                       );
                     },
                   ),
