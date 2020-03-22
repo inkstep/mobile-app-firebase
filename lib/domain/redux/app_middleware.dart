@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inkstep/data/app_repository.dart';
 import 'package:inkstep/domain/redux/app_actions.dart';
+import 'package:inkstep/models/artist.dart';
 import 'package:redux/redux.dart';
 
 import 'app_state.dart';
@@ -44,6 +46,10 @@ class AppMiddleware extends MiddlewareClass<AppState>{
     } else if (action is LoginAnonymously) {
       final authUid = await appRepository.signInAnonymously();
       store.dispatch(OnAuthentication(authUid));
+
+    } else if (action is ConnectToDataSource) {
+      // Dispatch all other load actions
+      store.dispatch(LoadArtistSubscriptions());
     }
   }
 }

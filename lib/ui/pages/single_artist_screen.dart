@@ -14,42 +14,6 @@ class SingleArtistScreen extends StatelessWidget {
 
   final Artist artist;
 
-  // Update whether or not this user should get notifications for this artist
-  Future<void> updateSubscriptions(bool subscribe, String uid) async {
-    // Get current artist subscriptions
-    final QuerySnapshot subs = await Firestore.instance
-        .collection('artist_subs')
-        .where('auth_uid', isEqualTo: uid)
-        .getDocuments();
-
-    if (subs.documents.isEmpty) {
-      final List<int> subscriptions = subscribe ? [artist.artistId] : [];
-      Firestore.instance
-          .collection('artist_subs')
-          .add(<String, dynamic>{'auth_uid': uid, 'artistIds': subscriptions});
-    } else {
-      final List<dynamic> existing = subs.documents[0].data['artistIds'];
-      final List<int> subscriptions = [];
-      existing.forEach(subscriptions.add);
-
-      if (subscribe) {
-        // Add to list if not already there
-        if (!subscriptions.contains(artist.artistId)) {
-          subscriptions.add(artist.artistId);
-        }
-      } else {
-        // Remove from list if there
-        subscriptions.removeWhere((dynamic id) => id == artist.artistId);
-      }
-
-      // Update existing doc
-      Firestore.instance
-          .collection('artist_subs')
-          .document(subs.documents[0].documentID)
-          .updateData(<String, dynamic>{'artistIds': subscriptions});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final TextStyle body = Theme.of(context).textTheme.body2;
@@ -64,17 +28,6 @@ class SingleArtistScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 40,
       ),
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(
-//          Icons.keyboard_arrow_right,
-//          color: Colors.white,
-//        ),
-//        backgroundColor: Theme.of(context).accentColor,
-//        onPressed: () {
-//          final ScreenNavigator nav = sl.get<ScreenNavigator>();
-//          nav.openArtistConfirmScreen(context, artist);
-//        },
-//      ),
       backgroundColor: Color.fromRGBO(40, 40, 40, 1.0), // Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       body: Padding(

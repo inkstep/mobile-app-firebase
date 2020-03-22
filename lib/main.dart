@@ -35,7 +35,6 @@ class Inkstep extends StatelessWidget {
       middleware: [AppMiddleware(AppRepository())],
     );
     store.dispatch(VerifyAuthStatus());
-    store.dispatch(LoadArtistSubscriptions());
     return StoreProvider(
       store: store,
       child: MaterialApp(
