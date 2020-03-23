@@ -17,9 +17,8 @@ class AppMiddleware extends MiddlewareClass<AppState>{
     next(action);
 
     if (action is LoadArtistSubscriptions) {
-      appRepository.getArtistSubscriptions('7qt3KSYbmIYP7yUJZf2NB7k5mvh2').listen(
-          (data) => store.dispatch(LoadedArtistSubscriptions(data.expand((i) => i).toList()))
-      );
+      final List<int> ids = await appRepository.getArtistSubscriptions(store.state.authUid);
+      store.dispatch(LoadedArtistSubscriptions(ids));
 
     } else if (action is SubscribeToArtist) {
       await appRepository.subscribeToArtist(

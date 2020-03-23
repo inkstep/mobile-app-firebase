@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class AppRepository {
-
   Stream<String> getAuthenticationStateChange() {
     return FirebaseAuth.instance.onAuthStateChanged.asyncMap((user) => user.uid);
   }
@@ -13,55 +12,35 @@ class AppRepository {
     return auth?.user.uid;
   }
 
-  Stream<List<List<int>>> getArtistSubscriptions(String authUid) {
-    return Firestore.instance
+  Future<List<int>> getArtistSubscriptions(String authUid) async {
+    DocumentSnapshot doc = await Firestore.instance
         .collection('artist_subs')
-        .where('auth_uid', isEqualTo: authUid)
-        .snapshots()
-        .map<List<List<int>>>((querySnapshot) {
-      return querySnapshot.documents
-          .map<List<int>>((documentSnapshot) {
-            List<dynamic> ids = documentSnapshot.data['artistIds'];
-            return ids.map((dynamic i) => i as int).toList();
-          })
-          .toList();
-    });
+        .document(authUid)
+        .get();
+    if (doc.exists) {
+      List<dynamic> ids = doc.data['artistIds'];
+      return ids.map((dynamic i) => i as int).toList();
+    }
+    return Future.value([]);
   }
 
   // Update whether or not this user should get notifications for this artist
   Future<void> _updateSubscriptions(int artistId, String uid, {@required bool subscribe}) async {
-    // Get current artist subscriptions
-    final QuerySnapshot subs = await Firestore.instance
-        .collection('artist_subs')
-        .where('auth_uid', isEqualTo: uid)
-        .getDocuments();
+    final DocumentReference doc = Firestore.instance.collection('artist_subs').document(uid);
+    final DocumentSnapshot e = await doc.get();
 
-    if (subs.documents.isEmpty) {
-      final List<int> subscriptions = subscribe ? [artistId] : [];
-      Firestore.instance
-          .collection('artist_subs')
-          .add(<String, dynamic>{'auth_uid': uid, 'artistIds': subscriptions});
-    } else {
-      final List<dynamic> existing = subs.documents[0].data['artistIds'];
-      final List<int> subscriptions = [];
-      existing.forEach(subscriptions.add);
-
-      if (subscribe) {
-        // Add to list if not already there
-        if (!subscriptions.contains(artistId)) {
-          subscriptions.add(artistId);
-        }
-      } else {
-        // Remove from list if there
-        subscriptions.removeWhere((dynamic id) => id == artistId);
-      }
-
-      // Update existing doc
-      Firestore.instance
-          .collection('artist_subs')
-          .document(subs.documents[0].documentID)
-          .updateData(<String, dynamic>{'artistIds': subscriptions});
+    // Does not exist, create
+    if (!e.exists) {
+      await doc.setData(<String, dynamic>{
+        'artistIds': <int>[],
+      });
     }
+
+    await doc.updateData(<String, dynamic>{
+      'artistIds': subscribe
+          ? FieldValue.arrayUnion(<int>[artistId])
+          : FieldValue.arrayRemove(<int>[artistId]),
+    });
   }
 
   void subscribeToArtist({@required String authUid, @required int artistId}) async {
